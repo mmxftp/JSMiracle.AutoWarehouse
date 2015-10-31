@@ -1,0 +1,9 @@
+﻿@model List<JsMiracle.WebUI.Models.MenuModel>
+@using JsMiracle.WebUI.HtmlHelpers
+
+<link rel="stylesheet" type="text/css" href="~/Content/menuTree.css" />
+
+<div class="easyui-accordion" style="width:100%;height:95%;overflow:hidden;">
+
+    @Html.MenuLinks(Model)
+</div>
