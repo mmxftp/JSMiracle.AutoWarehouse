@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.Entities", "JsMiracle.Entities\JsMiracle.Entities.csproj", "{AA0525A6-1245-4D83-A127-535C7F29D5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.Dal", "JsMiracle.Dal\JsMiracle.Dal.csproj", "{07E50CD6-7CFE-44F5-88E6-E55B41B64966}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.WebUI", "JsMiracle.WebUI\JsMiracle.WebUI.csproj", "{EA17367B-1635-4867-9526-DEBE74799715}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA0525A6-1245-4D83-A127-535C7F29D5B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0525A6-1245-4D83-A127-535C7F29D5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0525A6-1245-4D83-A127-535C7F29D5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0525A6-1245-4D83-A127-535C7F29D5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07E50CD6-7CFE-44F5-88E6-E55B41B64966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E50CD6-7CFE-44F5-88E6-E55B41B64966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E50CD6-7CFE-44F5-88E6-E55B41B64966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E50CD6-7CFE-44F5-88E6-E55B41B64966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA17367B-1635-4867-9526-DEBE74799715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA17367B-1635-4867-9526-DEBE74799715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA17367B-1635-4867-9526-DEBE74799715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA17367B-1635-4867-9526-DEBE74799715}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
