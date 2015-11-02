@@ -154,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\favicon_32.ico" />
     <Content Include="Content\images\ViewForm.GIF" />
     <Content Include="Content\menuTree.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -589,6 +590,7 @@
     <Content Include="jquery-easyui-1.4.3\themes\metro\validatebox.css" />
     <Content Include="jquery-easyui-1.4.3\themes\metro\window.css" />
     <Content Include="jquery-easyui-1.4.3\themes\mobile.css" />
+    <Content Include="Scripts\CustomScripts\common.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -622,6 +624,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Nav\Menu.cshtml" />
     <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

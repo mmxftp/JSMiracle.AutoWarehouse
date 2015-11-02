@@ -10,9 +10,6 @@
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Permission" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_UserInfo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_ItemSet" Width="1.5" PointX="4.5" PointY="3.75" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_IventorySet" Width="1.5" PointX="6.25" PointY="3.75" />
-        <AssociationConnector Association="IIMS_ORGModel.FK_IMS_TB_ItemIMS_TB_Iventory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

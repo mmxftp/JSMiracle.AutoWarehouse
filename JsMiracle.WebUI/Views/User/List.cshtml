@@ -11,26 +11,19 @@
             <td>
                 <input type="text" id="txt" class="easyui-textbox" style="width:100%;height:32px" />
             </td>
-            <td><input id="btn" type="button" class="easyui-linkbutton" style="width:80px;height:20px;" value="查询" onclick="reloadGrid()" /></td>
-            <td><input id="btnShowDlg" type="button" class="easyui-linkbutton" value="test" onclick="showDialog()" /></td>
+            <td>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search"
+                   onclick="reloadGrid()">查询</a>
+            </td>
+            <td>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
+                   onclick="showWindow('用户信息新增', '@Url.Action("Create")', 400, 350)">新增</a>
+            </td>
         </tr>
     </table>
 
     <div>
-            <table id="userGrid" style="padding:10px"></table>
-        @*<table id="userGrid1" class="easyui-datagrid" title="用户信息" style="height:650px;"
-               singleselect="true" collapsible="false" , url="@Url.Action("GetUserList")"
-               pagination="true" pagesize="1" pagelist="[1]">
-            <thead>
-                <tr>
-                    <th field="ID" ,align="center" width="80">ID</th>
-                    <th field="UserID" align="center" width="80">员工号</th>
-                    <th field="UserName" align="center" width="80">员工姓名</th>
-                    <th field="Email" align="center" width="150">Email</th>
-                    <th field="CreateDate" align="center" width="150" formatter="DateTimeFormatter">创建日期</th>
-                </tr>
-            </thead>
-        </table>*@
+        <table id="userGrid" style="padding:10px"></table>
     </div>
 </div>
 @*<div id="dd" class="easyui-window" style="width:900px;height:600px;">Dialog Content.</div>*@
@@ -57,7 +50,7 @@
         });
     }
 
-    window.onload = function() {
+    $(function () {
         // 必须在页面加载后执行，否则边框画不全，应该是easyui加载时边框距离计算错误的原因
         $("#userGrid").datagrid(
               {
@@ -66,17 +59,64 @@
                   singleSelect: true,
                   loadMsg: '数据载入中...',
                   pagination: true, // 是否显示分页控件
-                  pagesize: 1,      // 每页行数
-                  pageList: [1],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+                  pagesize: 10,      // 每页行数
+                  pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
                   height: '650px',
                   columns: [[
+                      {
+                          field: '_operate', title: '操作', width: 150, align: 'center'
+                          , formatter: function (value, row, index) {
+                              var editActionUrl = '\'' + '@Url.Action("Edit")' + '?id=' + row.ID + '\'';
+                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" onclick="removeUser(\'' + row.ID + '\',\'' + row.UserName + '\')" >删除</a>'
+                                        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                        + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                        + ' onclick="showWindow(\'用户信息编辑\',' + editActionUrl + ', 400,350);" >修改</a>';
+                              console.log(html);
+                              return html;
+                          }
+                      },
                       { field: 'ID', title: 'ID', width: 100, align: 'center' },
                       { field: 'UserID', title: '员工号', width: 100, align: 'center' },
-                      { field: 'UserName', title: '员工姓名', width: 100, align: 'center' },
+                      {
+                          field: 'UserName', title: '员工姓名', width: 100, align: 'center'
+                          , formatter: function (value, row, index) {
+                              var editActionUrl = '\'' + '@Url.Action("Edit")' + '?id=' + row.ID + '\'';
+                              var html = '<a href="###"  onclick="showWindow(\'用户信息编辑\',' + editActionUrl + ', 400,350);" >'
+                                        + value + '</a>';
+                              //console.log(html);
+                              return html;
+                          }
+                      },
                       { field: 'Email', title: 'Email', width: 150, align: 'center' },
-                      // DateTimeFormatter 在 ~/Views/Shared/_Layout.cshtml中定义好的方法，用于格式化数据字符串
-                      { field: 'CreateDate', title: '创建日期', width: 150, align: 'center',formatter:DateTimeFormatter }
-                  ]]
+                      // dateTimeFormatter 在 ~/Scripts/CustomScripts/common.js 中定义好的方法，用于格式化数据字符串
+                      {
+                          field: 'CreateDate', title: '创建日期', width: 150, align: 'center'
+                            , formatter: dateTimeFormatter
+                      }
+                  ]],
+                  onLoadSuccess: function (data) {
+                      $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                      $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+                  }
               });
+    });
+
+    function removeUser(id,name) {
+        $.messager.confirm('Confirm', '确定删除用户' + name + '?'
+            , function (r) {
+                if (r) {
+                    $.post('@Url.Action("Remove")', { id: id }, function (result) {
+                        if (result.success) {
+                            $('#userGrid').datagrid('reload');    // 重新加载用户数据
+                        } else {
+                            $.messager.show({    // 显示错误信息
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
     }
+
 </script>

@@ -13,6 +13,7 @@ namespace JsMiracle.Dal.Concrete
         { 
         }
 
+        //public IMS_TB_UserInfo Save(IMS_TB_UserInfo entity)
         public override IMS_TB_UserInfo Update(IMS_TB_UserInfo entity)
         {
             IMS_TB_UserInfo ent = null;

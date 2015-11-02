@@ -5,50 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="IMS_TB_ItemSet">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemCode" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ItemType" Type="int" Nullable="false" />
-          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ABCRate" Type="int" Nullable="false" />
-          <Property Name="LifeTime" Type="int" Nullable="false" />
-          <Property Name="MinPackUnit" Type="int" />
-          <Property Name="MaxInventory" Type="bigint" />
-          <Property Name="MinInventory" Type="bigint" Nullable="false" />
-          <Property Name="WeightLVL" Type="int" Nullable="false" />
-          <Property Name="RiskLVL" Type="int" Nullable="false" />
-          <Property Name="BarCode" Type="nvarchar" MaxLength="100" />
-          <Property Name="Creator" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="LastModifier" Type="nvarchar" MaxLength="20" />
-          <Property Name="CreateTime" Type="datetime" Nullable="false" />
-          <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="IMS_TB_IventorySet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IMS_TB_ItemID" Type="bigint" Nullable="false" />
-          <Property Name="HUCode" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Qty" Type="decimal" Precision="2" Scale="0" Nullable="false" />
-          <Property Name="AvailableQty" Type="decimal" Precision="2" Scale="0" Nullable="false" />
-          <Property Name="BatchNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Owner" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PacketNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PuductNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="QCSts" Type="int" Nullable="false" />
-          <Property Name="QASts" Type="int" Nullable="false" />
-          <Property Name="LockStatus" Type="int" Nullable="false" />
-          <Property Name="AvailableStatus" Type="int" Nullable="false" />
-          <Property Name="InPerson" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="InTime" Type="datetime" Nullable="false" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-        </EntityType>
         <EntityType Name="IMS_TB_Module">
           <Key>
             <PropertyRef Name="ID" />
@@ -99,33 +55,15 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
-          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="LastModDate" Type="datetime" />
         </EntityType>
-        <Association Name="FK_IMS_TB_ItemIMS_TB_Iventory">
-          <End Role="IMS_TB_ItemSet" Type="Self.IMS_TB_ItemSet" Multiplicity="1" />
-          <End Role="IMS_TB_IventorySet" Type="Self.IMS_TB_IventorySet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_TB_ItemSet">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="IMS_TB_IventorySet">
-              <PropertyRef Name="IMS_TB_ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
-          <EntitySet Name="IMS_TB_ItemSet" EntityType="Self.IMS_TB_ItemSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_IventorySet" EntityType="Self.IMS_TB_IventorySet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_Module" EntityType="Self.IMS_TB_Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_ModuleFunction" EntityType="Self.IMS_TB_ModuleFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_IMS_TB_ItemIMS_TB_Iventory" Association="Self.FK_IMS_TB_ItemIMS_TB_Iventory">
-            <End Role="IMS_TB_ItemSet" EntitySet="IMS_TB_ItemSet" />
-            <End Role="IMS_TB_IventorySet" EntitySet="IMS_TB_IventorySet" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -181,7 +119,7 @@
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="LastModDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGEntities" annotation:LazyLoadingEnabled="true">
@@ -190,71 +128,7 @@
           <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" />
           <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" />
           <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" />
-          <EntitySet Name="IMS_TB_ItemSet" EntityType="IIMS_ORGModel.IMS_TB_ItemSet" />
-          <EntitySet Name="IMS_TB_IventorySet" EntityType="IIMS_ORGModel.IMS_TB_IventorySet" />
-          <AssociationSet Name="FK_IMS_TB_ItemIMS_TB_Iventory" Association="IIMS_ORGModel.FK_IMS_TB_ItemIMS_TB_Iventory">
-            <End Role="IMS_TB_ItemSet" EntitySet="IMS_TB_ItemSet" />
-            <End Role="IMS_TB_IventorySet" EntitySet="IMS_TB_IventorySet" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="IMS_TB_ItemSet">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ItemType" Type="Int32" Nullable="false" />
-          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ABCRate" Type="Int32" Nullable="false" />
-          <Property Name="LifeTime" Type="Int32" Nullable="false" />
-          <Property Name="MinPackUnit" Type="Int32" />
-          <Property Name="MaxInventory" Type="Int64" />
-          <Property Name="MinInventory" Type="Int64" Nullable="false" />
-          <Property Name="WeightLVL" Type="Int32" Nullable="false" />
-          <Property Name="RiskLVL" Type="Int32" Nullable="false" />
-          <Property Name="BarCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Creator" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LastModifier" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMS_TB_IventorySet" Relationship="IIMS_ORGModel.FK_IMS_TB_ItemIMS_TB_Iventory" FromRole="IMS_TB_ItemSet" ToRole="IMS_TB_IventorySet" />
-        </EntityType>
-        <EntityType Name="IMS_TB_IventorySet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IMS_TB_ItemID" Type="Int64" Nullable="false" />
-          <Property Name="HUCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Qty" Type="Decimal" Nullable="false" Precision="2" Scale="0" />
-          <Property Name="AvailableQty" Type="Decimal" Nullable="false" Precision="2" Scale="0" />
-          <Property Name="BatchNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Owner" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PacketNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PuductNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="QCSts" Type="Int32" Nullable="false" />
-          <Property Name="QASts" Type="Int32" Nullable="false" />
-          <Property Name="LockStatus" Type="Int32" Nullable="false" />
-          <Property Name="AvailableStatus" Type="Int32" Nullable="false" />
-          <Property Name="InPerson" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="InTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMS_TB_ItemSet" Relationship="IIMS_ORGModel.FK_IMS_TB_ItemIMS_TB_Iventory" FromRole="IMS_TB_IventorySet" ToRole="IMS_TB_ItemSet" />
-        </EntityType>
-        <Association Name="FK_IMS_TB_ItemIMS_TB_Iventory">
-          <End Type="IIMS_ORGModel.IMS_TB_ItemSet" Role="IMS_TB_ItemSet" Multiplicity="1" />
-          <End Type="IIMS_ORGModel.IMS_TB_IventorySet" Role="IMS_TB_IventorySet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_TB_ItemSet">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="IMS_TB_IventorySet">
-              <PropertyRef Name="IMS_TB_ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -319,53 +193,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_ItemSet">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_ItemSet">
-              <MappingFragment StoreEntitySet="IMS_TB_ItemSet">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-                <ScalarProperty Name="RiskLVL" ColumnName="RiskLVL" />
-                <ScalarProperty Name="WeightLVL" ColumnName="WeightLVL" />
-                <ScalarProperty Name="MinInventory" ColumnName="MinInventory" />
-                <ScalarProperty Name="MaxInventory" ColumnName="MaxInventory" />
-                <ScalarProperty Name="MinPackUnit" ColumnName="MinPackUnit" />
-                <ScalarProperty Name="LifeTime" ColumnName="LifeTime" />
-                <ScalarProperty Name="ABCRate" ColumnName="ABCRate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_IventorySet">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_IventorySet">
-              <MappingFragment StoreEntitySet="IMS_TB_IventorySet">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="InTime" ColumnName="InTime" />
-                <ScalarProperty Name="InPerson" ColumnName="InPerson" />
-                <ScalarProperty Name="AvailableStatus" ColumnName="AvailableStatus" />
-                <ScalarProperty Name="LockStatus" ColumnName="LockStatus" />
-                <ScalarProperty Name="QASts" ColumnName="QASts" />
-                <ScalarProperty Name="QCSts" ColumnName="QCSts" />
-                <ScalarProperty Name="PuductNo" ColumnName="PuductNo" />
-                <ScalarProperty Name="PacketNo" ColumnName="PacketNo" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
-                <ScalarProperty Name="AvailableQty" ColumnName="AvailableQty" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="HUCode" ColumnName="HUCode" />
-                <ScalarProperty Name="IMS_TB_ItemID" ColumnName="IMS_TB_ItemID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

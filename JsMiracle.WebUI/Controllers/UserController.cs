@@ -66,5 +66,60 @@ namespace JsMiracle.WebUI.Controllers
             return Json(info);
         }
 
+
+        public ViewResult Edit(int id)
+        {
+            var user = userInfo.Find(id);
+            return View(user);
+        }
+
+        public JsonResult Save(IMS_TB_UserInfo user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    userInfo.Update(user);
+                }
+                //catch (System.Data.Entity.Validation.DbEntityValidationException ve)
+                //{
+                //    return Json(new { success = false, message = "操作失败" + ve.Message });
+                //}
+                catch (Exception ex)
+                {
+                    return Json(new { success = true, message = "操作失败" + ex.Message });
+                }
+
+                return Json(new { success = true, message = "操作成功" });
+            }
+            else
+            {
+                return Json(user);
+            }
+
+        }
+
+        public ViewResult Create()
+        {
+            return View("Edit", new IMS_TB_UserInfo());
+        }
+
+
+        public JsonResult Remove(int id)
+        {
+            var user = userInfo.Find(id);
+
+            try
+            {
+                if (user != null)
+                    userInfo.Delete(user);
+
+                return Json(new { success = true });
+            }
+            catch(Exception ex )
+            {
+                return Json(new { success = false, errorMsg = ex.Message });
+            }
+        }
     }
 }

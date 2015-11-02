@@ -59,3 +59,8 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+        
+/*input[type=submit], input[type=button]{
+    width: 100px;
+    height: 30px;
+}*/
