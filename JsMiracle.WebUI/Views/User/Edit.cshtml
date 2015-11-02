@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+
+@model  JsMiracle.Entities.IMS_TB_UserInfo
+
+
+@using (Ajax.BeginForm("Save", "User"
+        , new AjaxOptions()
+        , new { enctype = "multipart/form-data", id = "ff" }))
+{
+    @Html.HiddenFor(n => n.ID);
+    <table>
+        <tr style="height:50px">
+            <td>员工编号</td>
+            <td>@Html.EditorFor(n => n.UserID)</td>
+        </tr>
+        <tr style="height:50px">
+            <td>员工姓名</td>
+            <td>@Html.EditorFor(n => n.UserName)</td>
+        </tr>
+        <tr style="height:50px">
+            <td>Email</td>
+            <td>@Html.EditorFor(n => n.Email)</td>
+        </tr>
+        <tr style="height:50px">
+            <td>登录密码</td>
+            <td>@Html.EditorFor(n => n.Password)</td>
+        </tr>
+        <tr style="text-align:center">
+            <td colspan="2"><input type="submit" value="提交" class="easyui-linkbutton" /></td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#ff').form({
+            success: function (data) {
+                console.log(data);
+                var data = eval('(' + data + ')');
+                if (data.success) {
+                    $.messager.alert('用户信息', data.message, "info",  function () {
+                        // 关闭当前div 刷新父窗体
+                        parent.$('#myWindow').window('close'); parent.location.reload();
+                    });
+                }
+                //else {
+                //    $.messager.alert('用户信息', data.message);
+                //}
+
+            }
+        });
+    });
+</script>
