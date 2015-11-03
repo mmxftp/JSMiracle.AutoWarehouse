@@ -43,13 +43,9 @@
                 if (data.success) {
                     $.messager.alert('用户信息', data.message, "info",  function () {
                         // 关闭当前div 刷新父窗体
-                        parent.$('#myWindow').window('close'); parent.location.reload();
+                        parent.$('#floatingLayerWindow').window('close'); parent.location.reload();
                     });
                 }
-                //else {
-                //    $.messager.alert('用户信息', data.message);
-                //}
-
             }
         });
     });

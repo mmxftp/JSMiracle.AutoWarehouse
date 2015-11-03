@@ -9,11 +9,11 @@ namespace JsMiracle.Dal.Concrete
 {
     public class IMS_TB_UserInfo_Dal:DataLayerBase<IMS_TB_UserInfo>
     {
-        public IMS_TB_UserInfo_Dal(IIMS_ORGEntities entity) : base(entity) 
-        { 
+        public IMS_TB_UserInfo_Dal(IIMS_ORGEntities context)
+            : base(context)
+        {
         }
 
-        //public IMS_TB_UserInfo Save(IMS_TB_UserInfo entity)
         public override IMS_TB_UserInfo Update(IMS_TB_UserInfo entity)
         {
             IMS_TB_UserInfo ent = null;

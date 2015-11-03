@@ -10,11 +10,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="300" />
-          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="ModuleID" Type="int" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="SortID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IMS_TB_ModuleFunction">
           <Key>
@@ -74,11 +76,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ModuleID" Type="Int32" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="SortID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="IMS_TB_ModuleFunction">
           <Key>
@@ -138,6 +142,8 @@
           <EntitySetMapping Name="IMS_TB_Module">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_Module">
               <MappingFragment StoreEntitySet="IMS_TB_Module">
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
                 <ScalarProperty Name="URL" ColumnName="URL" />

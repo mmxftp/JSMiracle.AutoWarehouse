@@ -58,7 +58,7 @@ namespace JsMiracle.WebUI.Controllers
                 filter, pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new UserModel();
+            var info = new PaginationModel<IMS_TB_UserInfo>();
             info.total = totalCount;
             info.rows = dataList;
 
@@ -83,7 +83,7 @@ namespace JsMiracle.WebUI.Controllers
                 }
                 //catch (System.Data.Entity.Validation.DbEntityValidationException ve)
                 //{
-                //    return Json(new { success = false, message = "操作失败" + ve.Message });
+                //    return Json(new { success = false, message = "操作失败" + ve.Messgage });
                 //}
                 catch (Exception ex)
                 {
@@ -107,12 +107,12 @@ namespace JsMiracle.WebUI.Controllers
 
         public JsonResult Remove(int id)
         {
-            var user = userInfo.Find(id);
+            var ent = userInfo.Find(id);
 
             try
             {
-                if (user != null)
-                    userInfo.Delete(user);
+                if (ent != null)
+                    userInfo.Delete(ent);
 
                 return Json(new { success = true });
             }

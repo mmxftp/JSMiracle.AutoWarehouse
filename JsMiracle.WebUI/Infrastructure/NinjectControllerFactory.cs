@@ -35,6 +35,8 @@ namespace JsMiracle.WebUI.Infrastructure
             ninjectKernel.Bind<IDataLayer<IMS_TB_UserInfo>>()
                 .To<IMS_TB_UserInfo_Dal>().WithConstructorArgument(ent);
 
+            ninjectKernel.Bind<IDataLayer<IMS_TB_Module>>()
+                .To<IMS_TB_Module_Dal>().WithConstructorArgument(ent);
         }
 
 

@@ -40,6 +40,14 @@ namespace JsMiracle.WebUI.Controllers
             menuList.Add(new MenuModel()
             {
                 ID = 3,
+                Name = "Module",
+                Url = "/module/index",
+                Parentid = 1
+            });
+
+            menuList.Add(new MenuModel()
+            {
+                ID = 3,
                 Name = "UserInfo",
                 Url = "/user/list",
                 Parentid = 1

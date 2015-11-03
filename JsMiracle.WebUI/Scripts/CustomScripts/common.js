@@ -28,7 +28,7 @@ function showWindow(title, href, width, height, modal, minimizable, maximizable)
 
         content: '<iframe scrolling="yes" frameborder="0"  src="'
                 + href
-                + '" style="width:90%;height:90%;" ></iframe>',
+                + '" style="width:98%;height:98%;" ></iframe>',
 
         modal: modal === undefined ? true : modal,
         minimizable: minimizable === undefined ? false

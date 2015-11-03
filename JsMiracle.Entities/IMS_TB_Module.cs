@@ -19,6 +19,8 @@ namespace JsMiracle.Entities
         public string URL { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Description { get; set; }
-        public Nullable<int> ModuleID { get; set; }
+        public int ModuleID { get; set; }
+        public int ParentID { get; set; }
+        public int SortID { get; set; }
     }
 }

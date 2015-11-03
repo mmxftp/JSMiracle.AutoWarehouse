@@ -14,5 +14,7 @@ namespace JsMiracle.WebUI.Models
         public string Url { get; set; }
 
         public int? Parentid { get; set; } 
+
+        
     }
 }

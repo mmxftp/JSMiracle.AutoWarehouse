@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Abstract\DataLayerBase.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
+    <Compile Include="Concrete\IMS_TB_Module_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

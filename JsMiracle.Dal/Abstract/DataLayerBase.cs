@@ -17,11 +17,6 @@ namespace JsMiracle.Dal.Abstract
             this.context = context;
         }
 
-        public virtual T Create()
-        {
-            return context.Set<T>().Create();
-
-        }
 
         public virtual T Update(T entity)
         {
@@ -48,6 +43,17 @@ namespace JsMiracle.Dal.Abstract
         public virtual T Find(params object[] keyValues)
         {
             return context.Set<T>().Find(keyValues);
+
+        }
+
+        public virtual IList<T> FindWhere(Expression<Func<T, bool>> filter)
+        {
+            // 条件为空返回所有记录
+            if (filter == null)
+                return context.Set<T>().ToList();
+
+            // 条件不为空，按条件返回数据
+            return context.Set<T>().Where(filter).ToList();
         }
 
         /// <summary>
