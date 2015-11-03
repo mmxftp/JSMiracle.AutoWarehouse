@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <table>
+        <tr>
+            <td>模块大类</td>
+            <td>
+                <select id="cboModule" name="cboModule" class="easyui-combobox" style="width:200px;"></select>
+            </td>
+            <td>
+                <a href="###" class="easyui-linkbutton" iconcls="icon-edit"
+                   onclick="showEdit('modM')">编辑模块大类</a>
+            </td>
+            <td>
+                <a href="###" class="easyui-linkbutton" iconcls="icon-remove"
+                   onclick="removeModuleByCombo()">
+                    删除模块大类
+                </a>
+            </td>
+            <td>
+                <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                   onclick="showEdit('addM')">新增模块大类</a>
+            </td>
+        </tr>
+        <tr>
+            <td><a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="showEdit('addC')">新增子模块类</a></td>
+        </tr>
+    </table>
+
+    <table id="tabChildModule"></table>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#cboModule").combobox(
+            {
+                url: '@Url.Action("GetModuleList")',
+                valueField: 'ID',
+                textField: 'ModuleName',
+                onSelect: function (rec) {
+                    $("#tabChildModule").datagrid('reload',
+                        {
+                            parentid: rec.ModuleID
+                        });
+                },
+                onLoadSuccess: function () { //加载完成后,设置选中第一项
+                    var val = $(this).combobox("getData");
+                    $(this).combobox("select", val[0].ID);
+                }
+            });
+
+        $("#tabChildModule").datagrid({
+            url: '@Url.Action("GetChildModuleList")',
+            title: '子模块信息',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '650px',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var editActionUrl = '\'' + '@Url.Action("Edit")' + '?id=' + row.ID + '\'';
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button" onclick="removeModule(\'' + row.ID + '\',\'' + row.ModuleName + '\')" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="showWindow(\'模块信息编辑\',' + editActionUrl + ', 400,400);" >修改</a>';
+                        console.log(html);
+                        return html;
+                    }
+                },
+                { field: 'ID', title: 'ID', width: 100, align: 'center' },
+                { field: 'ModuleID', title: '子模块号', width: 100, align: 'center' },
+                { field: 'ModuleName', title: '子模块名称', width: 100, align: 'center' },
+                { field: 'URL', title: '访问地址', width: 250, align: 'center' },
+                { field: 'SortID', title: '排序号', width: 100, aligh: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            }
+        });
+    });
+
+    function removeModuleByCombo(){
+        var id = $('#cboModule').combobox('getValue');
+        var name = $('#cboModule').combobox('getText');
+        removeModule(id,name);
+    }
+
+    function removeModule(id, name) {
+        $.messager.confirm('Confirm', '确定删除模块' + name + '?'
+            , function (r) {
+                if (r) {
+                    $.post('@Url.Action("Remove")', { id: id }, function (result) {
+                        if (result.success) {
+                            $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
+                        } else {
+                            $.messager.show({    // 显示错误信息
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+    }
+
+    function showEdit(isAdd) {
+        var width = 500;
+        var height = 400;
+
+        if (isAdd == 'addM') {
+            showWindow('新增模块大类', '@Url.Action("Create")', width, height);
+        }
+        else if (isAdd == 'modM' || isAdd == 'addC') {
+            var id = $('#cboModule').combobox('getValue');
+
+            if (id == null || id == '') {
+                $.messager.alert('信息', '请选择模块大类', "info");
+                return;
+            }
+
+            if (isAdd == 'modM') {
+                var url = '@Url.Action("Edit")' + '?id=' + id;
+                showWindow('编辑模块大类', url, width, height);
+            }
+            else if (isAdd == 'addC') {
+                var url = '@Url.Action("Create")' + '?parentid=' + id;
+                showWindow('编辑模块', url, width, height);
+            }
+        }
+    }
+</script>
