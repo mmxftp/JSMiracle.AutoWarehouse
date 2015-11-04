@@ -20,16 +20,16 @@ namespace JsMiracle.WebUI.Controllers
             return View();
         }
 
-        private IDataLayer<IMS_TB_ModuleFunction> funInfo;
+        private IDataLayer<IMS_TB_ModuleFunction> dal;
 
         public ModuleFunctionController(IDataLayer<IMS_TB_ModuleFunction> repo)
         {
-            funInfo = repo;
+            dal = repo;
         }
 
         public JsonResult GetModuleFunctionList(int moduleid)
         {
-            var data = funInfo.FindWhere(n => n.ModuleID == moduleid);
+            var data = dal.FindWhere(n => n.ModuleID == moduleid);
 
             var info = new PaginationModel<IMS_TB_ModuleFunction>();
 
@@ -46,7 +46,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Edit(int id)
         {
-            var user = funInfo.Find(id);
+            var user = dal.Find(id);
             return View(user);
         }
 
@@ -59,12 +59,12 @@ namespace JsMiracle.WebUI.Controllers
                     // 新增时自动计算模块号
                     if ( module.FunctionID == 0)
                     {
-                        var itemCount = funInfo.FindWhere(n => n.ModuleID == module.ModuleID).Count;
+                        var itemCount = dal.FindWhere(n => n.ModuleID == module.ModuleID).Count;
                         // 得到同类的子项的记数加1
                         module.FunctionID = module.ModuleID * 10 + itemCount + 11;
                     }
 
-                    funInfo.Update(module);
+                    dal.Update(module);
                 }
                 catch (Exception ex)
                 {
@@ -82,13 +82,13 @@ namespace JsMiracle.WebUI.Controllers
 
         public JsonResult Remove(int id)
         {
-            var ent = funInfo.Find(id);
+            var ent = dal.Find(id);
 
             try
             {
                 if (ent != null)
                 {
-                    funInfo.Delete(ent);
+                    dal.Delete(ent);
                 }
 
                 return Json(new { success = true });

@@ -53,6 +53,7 @@
     <Compile Include="Abstract\IDataLayer.cs" />
     <Compile Include="Concrete\IMS_TB_ModuleFunction_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_Module_Dal.cs" />
+    <Compile Include="Concrete\IMS_TB_RoleInfo_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Concrete;
 using JsMiracle.Entities;
 using JsMiracle.WebUI.Models;
 using System;
@@ -10,54 +11,41 @@ using System.Web.Mvc;
 
 namespace JsMiracle.WebUI.Controllers
 {
-    public class UserController : Controller
+    public class RoleController : Controller
     {
-        private IDataLayer<IMS_TB_UserInfo> dal;
-
-        public UserController(IDataLayer<IMS_TB_UserInfo> repo){
-            this.dal = repo;
-        }
-
         //
-        // GET: /User/
+        // GET: /Role/
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult List()
+        private IDataLayer<IMS_TB_RoleInfo> dal;
+
+        public RoleController(IDataLayer<IMS_TB_RoleInfo> repo)
         {
-            return View();
+            dal = repo;
         }
 
-        public JsonResult GetUserList(int? rows, int? page, string txt)
+        public JsonResult GetRoleList(int? rows, int? page)
         {
+            //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
+            var info = new PaginationModel<IMS_TB_RoleInfo>();
+
             int totalCount = 0;
 
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            //if (!int.TryParse(Request.Params["rows"], out pageSize))
-            //    pageSize = 10;
-
-            //if (!int.TryParse(Request.Params["page"], out pageIndex))
-            //    pageIndex = 1;
-
-            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
-            //var txt = Request.Params["txt"];
-            if (!string.IsNullOrEmpty(txt)) {
-                filter = 
-                    f => f.UserID == txt || f.UserName.Contains(txt);
-            }
-
-
+            Expression<Func<IMS_TB_RoleInfo, bool>> filter = null;
+            
             var dataList = dal.GetDataByPage(
-                p => p.UserID,
+                p => p.ID,
                 filter, pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_TB_UserInfo>();
+
             info.total = totalCount;
             info.rows = dataList;
 
@@ -65,25 +53,25 @@ namespace JsMiracle.WebUI.Controllers
             return Json(info);
         }
 
+        public ViewResult Create()
+        {
+            return View("Edit", new IMS_TB_RoleInfo() );
+        }
 
         public ViewResult Edit(int id)
         {
-            var user = dal.Find(id);
-            return View(user);
+            var role = dal.Find(id);
+            return View(role);
         }
 
-        public JsonResult Save(IMS_TB_UserInfo user)
+        public JsonResult Save(IMS_TB_RoleInfo module)
         {
             if (ModelState.IsValid)
             {
                 try
-                {
-                    dal.Update(user);
+                {    
+                    dal.Update(module);
                 }
-                //catch (System.Data.Entity.Validation.DbEntityValidationException ve)
-                //{
-                //    return Json(new { success = false, message = "操作失败" + ve.Messgage });
-                //}
                 catch (Exception ex)
                 {
                     return Json(new { success = true, message = "操作失败" + ex.Message });
@@ -93,14 +81,8 @@ namespace JsMiracle.WebUI.Controllers
             }
             else
             {
-                return Json(user);
+                return Json(module);
             }
-
-        }
-
-        public ViewResult Create()
-        {
-            return View("Edit", new IMS_TB_UserInfo());
         }
 
 
@@ -111,11 +93,13 @@ namespace JsMiracle.WebUI.Controllers
             try
             {
                 if (ent != null)
+                {
                     dal.Delete(ent);
+                }
 
                 return Json(new { success = true });
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 return Json(new { success = false, errorMsg = ex.Message });
             }

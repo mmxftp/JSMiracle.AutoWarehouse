@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ModuleFunctionController.cs" />
     <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -630,6 +631,8 @@
     <Content Include="Views\Module\Edit.cshtml" />
     <Content Include="Views\ModuleFunction\Index.cshtml" />
     <Content Include="Views\ModuleFunction\Edit.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

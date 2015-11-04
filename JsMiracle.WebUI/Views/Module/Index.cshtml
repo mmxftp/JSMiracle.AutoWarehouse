@@ -102,7 +102,7 @@
     }
 
     function removeModule(id, name) {
-        $.messager.confirm('Confirm', '确定删除模块' + name + '?'
+        $.messager.confirm('Confirm', '确定删除模块\'' + name + '\'?'
             , function (r) {
                 if (r) {
                     $.post('@Url.Action("Remove")', { id: id }, function (result) {

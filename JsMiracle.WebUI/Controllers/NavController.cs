@@ -56,8 +56,8 @@ namespace JsMiracle.WebUI.Controllers
             menuList.Add(new MenuModel()
             {
                 ID= 3,
-                Name="extJs6",
-                Url= "http://localhost/extjs6",
+                Name="roleInfo",
+                Url= "/role/index",
                 Parentid = 1
             });
             menuList.Add(new MenuModel()

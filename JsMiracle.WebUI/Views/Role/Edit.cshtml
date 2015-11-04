@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model  JsMiracle.Entities.IMS_TB_RoleInfo 
+
+<div>
+    @using (Ajax.BeginForm("Save", "Module"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "ff" }))
+    {
+        @Html.HiddenFor(n => n.ID);
+
+        <table class="TB">
+            <tr>
+                <td>
+                    角色名称
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.RoleName, new { id= "txtRole"})
+                </td>
+            </tr>
+            <tr>
+                <td>描述</td>
+                <td>@Html.TextBoxFor(n => n.Description)</td>
+            </tr>
+            <tr style="text-align:center;display:table-row;">
+                <td colspan="2">
+                    <input type="submit" value="提交" class="easyui-linkbutton" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#ff').form({
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                if (data.success) {
+                    $.messager.alert('角色编辑', data.message, "info", function () {
+                        // 关闭当前div 刷新父窗体
+                        closeWindow();
+                    });
+                }
+            }
+        });
+
+        $("#txtRole").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+    });
+
+
+</script>
