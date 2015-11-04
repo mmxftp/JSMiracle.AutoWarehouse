@@ -16,6 +16,11 @@ namespace JsMiracle.Dal.Concrete
 
         public override IMS_TB_UserInfo Update(IMS_TB_UserInfo entity)
         {
+            //var data = from m in context.IMS_TB_Module
+            //           join f in context.IMS_TB_ModuleFunction
+            //           on m.ModuleID equals f.ModelID
+            //           select m;
+
             IMS_TB_UserInfo ent = null;
             if (entity.ID == 0)
             {

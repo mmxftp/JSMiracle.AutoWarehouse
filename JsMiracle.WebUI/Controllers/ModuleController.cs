@@ -36,9 +36,13 @@ namespace JsMiracle.WebUI.Controllers
         public JsonResult GetChildModuleList(int? rows, int? page, int? parentid)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
+            var info = new PaginationModel<IMS_TB_Module>();
 
-            if (parentid == null)
-                return Json(null);
+            if (parentid == null) {
+                info.total = 0;
+                info.rows = new List<IMS_TB_Module>();   // 解决easyui length的问题
+                return Json(info);
+            }
 
             int totalCount = 0;
 
@@ -53,7 +57,7 @@ namespace JsMiracle.WebUI.Controllers
                 filter, pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_TB_Module>();
+
             info.total = totalCount;
             info.rows = dataList;
 
@@ -73,6 +77,14 @@ namespace JsMiracle.WebUI.Controllers
             {
                 try
                 {
+                    // 新增时自动计算模块号
+                    if (module.ParentID != -1 && module.ModuleID ==0 )
+                    {
+                        var itemCount = moduleInfo.FindWhere(n => n.ParentID == module.ParentID).Count;
+                        // 得到同类的子项的记数加1
+                        module.ModuleID = module.ParentID * 100 + itemCount + 101;
+                    }
+
                     moduleInfo.Update(module);
                 }
                 catch (Exception ex)
@@ -90,7 +102,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Create(int parentid=-1)
         {
-            // parentid 与 moduleid 是主从关系, 数据表中的id只是主键不健关系
+            // parentid 与 moduleid 是主从关系, 数据表中的id只是主键没有业务关系
             if (parentid !=-1 )
             {
                 var ent = moduleInfo.Find(parentid);

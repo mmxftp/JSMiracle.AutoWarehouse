@@ -23,11 +23,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ModelID" Type="int" Nullable="false" />
-          <Property Name="FunctionName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ControlID" Type="nvarchar" MaxLength="100" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="FunctionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ControlID" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="FunctionID" Type="int" />
+          <Property Name="FunctionID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IMS_TB_Permission">
           <Key>
@@ -89,11 +89,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModelID" Type="Int32" Nullable="false" />
-          <Property Name="FunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ControlID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ControlID" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FunctionID" Type="Int32" />
+          <Property Name="FunctionID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="IMS_TB_Permission">
           <Key>
@@ -156,8 +156,8 @@
           <EntitySetMapping Name="IMS_TB_ModuleFunction">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_ModuleFunction">
               <MappingFragment StoreEntitySet="IMS_TB_ModuleFunction">
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
                 <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
                 <ScalarProperty Name="ControlID" ColumnName="ControlID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
