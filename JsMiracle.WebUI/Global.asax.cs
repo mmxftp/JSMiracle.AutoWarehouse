@@ -43,8 +43,6 @@ namespace JsMiracle.WebUI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
-
             //API注入包
             //GlobalConfiguration.Configuration.Services.Replace(
             //    typeof(IHttpControllerActivator),
