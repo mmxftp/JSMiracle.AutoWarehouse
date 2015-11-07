@@ -9,10 +9,10 @@ namespace JsMiracle.Dal.Concrete
 {
     public class IMS_TB_RoleInfo_Dal : DataLayerBase<IMS_TB_RoleInfo>
     {
-        public IMS_TB_RoleInfo_Dal(IIMS_ORGEntities context)
-            : base(context)
-        {
-        }
+        //public IMS_TB_RoleInfo_Dal(IIMS_ORGEntities context)
+        //    : base(context)
+        //{
+        //}
 
         public override IMS_TB_RoleInfo Update(IMS_TB_RoleInfo entity)
         {

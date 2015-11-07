@@ -82,7 +82,7 @@ namespace JsMiracle.WebUI.Controllers
                     {
                         var itemCount = dal.FindWhere(n => n.ParentID == module.ParentID).Count;
                         // 得到同类的子项的记数加1
-                        module.ModuleID = module.ParentID * 100 + itemCount + 101;
+                        module.ModuleID = module.ParentID * 1000 + itemCount + 101;
                     }
 
                     dal.Update(module);

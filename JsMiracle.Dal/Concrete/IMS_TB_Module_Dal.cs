@@ -9,11 +9,7 @@ namespace JsMiracle.Dal.Concrete
 {
     public class IMS_TB_Module_Dal : DataLayerBase<IMS_TB_Module>
     {
-        public IMS_TB_Module_Dal(IIMS_ORGEntities context)
-            : base(context)
-        {
-        }
-
+ 
         public override IMS_TB_Module Update(IMS_TB_Module entity)
         {
             IMS_TB_Module ent = null;

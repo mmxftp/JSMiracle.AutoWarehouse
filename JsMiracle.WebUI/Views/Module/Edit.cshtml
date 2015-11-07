@@ -90,10 +90,10 @@
             }
         });
 
-        var init =  (@Model.ParentID != -1);
+        var rootModule =  (@Model.ParentID == -1);
         var moduleAdd = (@Model.ModuleID == 0 );
 
-        if (init){
+        if (!rootModule){
             $("#txtUrl").validatebox({
                 required: true,
                 missingMessage:'此框不得为空'
@@ -101,7 +101,7 @@
         }
 
 
-        if (moduleAdd){
+        if (moduleAdd && rootModule){
             $("#txtModuleID").validatebox({
                 required :true,
                 validType:'minLength[3]'

@@ -10,10 +10,10 @@ namespace JsMiracle.Dal.Concrete
     public class IMS_TB_ModuleFunction_Dal:DataLayerBase<IMS_TB_ModuleFunction>
     {
 
-        public IMS_TB_ModuleFunction_Dal(IIMS_ORGEntities context)
-            : base(context)
-        {
-        }
+        //public IMS_TB_ModuleFunction_Dal(IIMS_ORGEntities context)
+        //    : base(context)
+        //{
+        //}
 
         public override IMS_TB_ModuleFunction Update(IMS_TB_ModuleFunction entity)
         {

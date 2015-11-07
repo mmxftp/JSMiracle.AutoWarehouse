@@ -28,6 +28,12 @@ namespace JsMiracle.WebUI.Controllers
             dal = repo;
         }
 
+        public JsonResult GetRolesAll()
+        {
+            var data =dal.FindWhere(null);
+            return Json(data);
+        }
+     
         public JsonResult GetRoleList(int? rows, int? page)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);

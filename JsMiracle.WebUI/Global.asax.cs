@@ -1,9 +1,11 @@
-﻿using JsMiracle.WebUI.Infrastructure;
+﻿using Castle.Windsor;
+using JsMiracle.WebUI.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -15,6 +17,23 @@ namespace JsMiracle.WebUI
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        //private readonly IWindsorContainer containerByApi;
+        private readonly IWindsorContainer containerByCon;
+
+        public MvcApplication()
+        {
+            //this.containerByApi = new WindsorContainer().Install(new DependencyInstaller());
+            this.containerByCon = new WindsorContainer().Install(new DependencyInstaller());
+        }
+
+        public override void Dispose()
+        {
+            //this.containerByApi.Dispose();
+            this.containerByCon.Dispose();
+            base.Dispose();
+        }
+
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -24,7 +43,15 @@ namespace JsMiracle.WebUI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+            //ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+
+            //API注入包
+            //GlobalConfiguration.Configuration.Services.Replace(
+            //    typeof(IHttpControllerActivator),
+            //    new WindsorActivator(this.containerByApi));
+            //controller 注入包
+            var controllerFactory = new WindsorControllerFactory(containerByCon.Kernel);
+            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
         }
     }
 }

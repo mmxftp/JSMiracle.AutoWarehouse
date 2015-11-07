@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
 
 
 namespace JsMiracle.Dal.Abstract
@@ -11,18 +13,23 @@ namespace JsMiracle.Dal.Abstract
     public abstract class DataLayerBase<T> : IDataLayer<T> where T : class,new()
     {
         protected IIMS_ORGEntities context;
+        protected ObjectContext objContext;
 
-        internal DataLayerBase(IIMS_ORGEntities context)
+        internal DataLayerBase()
         {
-            this.context = context;
-        }
+            context = new IIMS_ORGEntities();
 
+            //this.context = context;
+            objContext = ((IObjectContextAdapter)context).ObjectContext;            
+        }
+        public ObjectContext ObjContext { get { return objContext; } }
+
+        public IIMS_ORGEntities Context { get { return context; } }
 
         public virtual T Update(T entity)
         {
             if (context.Entry<T>(entity).State == EntityState.Modified)
                 context.SaveChanges();
-
 
             return entity;
         }

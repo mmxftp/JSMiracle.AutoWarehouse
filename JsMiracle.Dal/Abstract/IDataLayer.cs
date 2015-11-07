@@ -1,5 +1,8 @@
-﻿using System;
+﻿using JsMiracle.Entities;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -9,6 +12,16 @@ namespace JsMiracle.Dal.Abstract
 {
     public interface IDataLayer<T> where T : class, new()
     {
+        /// <summary>
+        /// 得到数据处理层类
+        /// </summary>
+        ObjectContext ObjContext { get; }
+
+        /// <summary>
+        /// 得到数据处理类
+        /// </summary>
+        IIMS_ORGEntities Context { get; }
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -39,7 +52,7 @@ namespace JsMiracle.Dal.Abstract
         /// <summary>
         /// 根据条件得数据
         /// </summary>
-        /// <param name="filter">查询条件</param>
+        /// <param name="filter">查询条件 ,filter == null 返回的所有记录</param>
         /// <returns></returns>
         IList<T> FindWhere(Expression<Func<T, bool>> filter);
 
