@@ -142,6 +142,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Filter\AuthorizeFilterAttribute.cs" />
+    <Compile Include="Controllers\Filter\ViewPageAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ModuleFunctionController.cs" />
@@ -154,7 +156,6 @@
     </Compile>
     <Compile Include="HtmlHelpers\MenuHelpers.cs" />
     <Compile Include="Infrastructure\DependencyInstaller.cs" />
-    <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\WindsorActivator.cs" />
     <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\PaginationModel.cs" />

@@ -22,10 +22,11 @@
             url: '@Url.Action("GetRolesAll", "Role")',
             title: '用户角色',
             lines: true,
-            valueField: 'ID',
+            valueField: 'roleid',
             textField: 'RoleName',
             onClickRow: function (index, row) {
-                $('#tt').tree({ url: '@Url.Action("PermissionInfo" )' + '?roleid=' + row.ID });
+                console.log(row);
+                $('#tt').tree({ url: '@Url.Action("PermissionInfo" )' + '?roleid=' + row.RoleID });
                 //$('#tt').tree('reload');
             }
         });
@@ -44,7 +45,7 @@
                 var row = $('#dl').datalist('getSelected');
 
                 if (row) {                 
-                    var params = { 'check': check, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.ID };
+                    var params = { 'check': check, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.RoleID };
                     console.log(JSON.stringify(params));
                     $.ajax({
                         url: '@Url.Action("SavePermission")',

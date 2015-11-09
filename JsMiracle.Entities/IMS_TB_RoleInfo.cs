@@ -18,5 +18,6 @@ namespace JsMiracle.Entities
         public string RoleName { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Description { get; set; }
+        public string RoleID { get; set; }
     }
 }

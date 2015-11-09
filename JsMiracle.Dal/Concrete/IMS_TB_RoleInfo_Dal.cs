@@ -28,6 +28,7 @@ namespace JsMiracle.Dal.Concrete
                 if (ent != null)
                 {
                     ent.ID = entity.ID;
+                    ent.RoleID = entity.RoleID;
                     ent.RoleName = entity.RoleName;
                     ent.Description = entity.Description;
                     ent = base.Update(ent);

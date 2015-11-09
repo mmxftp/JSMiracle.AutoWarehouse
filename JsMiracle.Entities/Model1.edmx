@@ -34,7 +34,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="FunctionID" Type="int" />
           <Property Name="LastModDate" Type="datetime" />
@@ -44,6 +44,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="36" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
@@ -100,7 +101,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="String" Nullable="false" Unicode="true" MaxLength="36" FixedLength="false" />
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="FunctionID" Type="Int32" />
           <Property Name="LastModDate" Type="DateTime" Precision="3" />
@@ -113,6 +114,7 @@
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" Unicode="true" MaxLength="36" FixedLength="false" />
         </EntityType>
         <EntityType Name="IMS_TB_UserInfo">
           <Key>
@@ -179,6 +181,7 @@
           <EntitySetMapping Name="IMS_TB_RoleInfo">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_RoleInfo">
               <MappingFragment StoreEntitySet="IMS_TB_RoleInfo">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />

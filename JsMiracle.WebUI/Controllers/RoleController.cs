@@ -47,7 +47,7 @@ namespace JsMiracle.WebUI.Controllers
             Expression<Func<IMS_TB_RoleInfo, bool>> filter = null;
             
             var dataList = dal.GetDataByPage(
-                p => p.ID,
+                p => p.RoleName,
                 filter, pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
@@ -75,7 +75,12 @@ namespace JsMiracle.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {    
+                {
+                    if (string.IsNullOrEmpty(module.RoleID))
+                    {
+                        module.RoleID = Guid.NewGuid().ToString();
+                    }
+
                     dal.Update(module);
                 }
                 catch (Exception ex)

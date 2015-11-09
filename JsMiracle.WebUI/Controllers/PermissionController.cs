@@ -30,7 +30,7 @@ namespace JsMiracle.WebUI.Controllers
             this.dal = repo;
         }
 
-        public JsonResult PermissionInfo(int roleid = -1)
+        public JsonResult PermissionInfo(string roleid)
         {
             // 根节点
             var rootQueryable = dal.Context.IMS_TB_Module.Where(n => n.ParentID == -1).OrderBy(n => n.SortID);
@@ -41,7 +41,8 @@ namespace JsMiracle.WebUI.Controllers
             tm.id = -1;
 
             IQueryable<IMS_TB_Permission> perList = dal.Context.IMS_TB_Permission;
-            perList = perList.Where(n => n.RoleId == roleid);
+            if (string.IsNullOrEmpty(roleid))
+                perList = perList.Where(n => n.RoleId == roleid);
 
             /// select * from  IMS_TB_Module m
             /// left join IMS_TB_Permission p
@@ -60,7 +61,7 @@ namespace JsMiracle.WebUI.Controllers
                                       ModuleID = m.ModuleID,
                                       ModuleName = m.ModuleName,
                                       ParentID = m.ParentID,
-                                      RoleID = (int?)v.RoleId,
+                                      RoleID = v.RoleId,
                                       HasPermission = v.ID == null ? false : true
                                   };
 
@@ -73,7 +74,7 @@ namespace JsMiracle.WebUI.Controllers
                                    FunctionID = f.FunctionID,
                                    FunctionName = f.FunctionName,
                                    ModuleID = f.ModuleID,
-                                   RoleID = (int?)v.RoleId,
+                                   RoleID = v.RoleId,
                                    HasPermission = v.ID == null ? false : true
                                };
             //Time(() => { });
@@ -142,9 +143,9 @@ namespace JsMiracle.WebUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult SavePermission(bool check = false, int moduleid = -1, int functionid = -1, int roleid = -1)
+        public JsonResult SavePermission(bool check = false, int moduleid = -1, int functionid = -1, string roleid = "")
         {
-            var role = dal.Context.IMS_TB_RoleInfo.Find(roleid);
+            var role = dal.Context.IMS_TB_RoleInfo.Where(n => string.Equals(n.RoleID , roleid, StringComparison.CurrentCultureIgnoreCase));
             if (role == null)
                 return Json(new { success = true });
 
