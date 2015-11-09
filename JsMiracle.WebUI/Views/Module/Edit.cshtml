@@ -9,11 +9,13 @@
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "ff" }))
 {
-    
-    @Html.HiddenFor(n => n.ID);
-    @*@Html.HiddenFor(n => n.ParentID);*@
 
-    <table border="0" align="center" cellpadding="0" cellspacing="0" class="TB">
+    @Html.ValidationSummary();
+    @Html.HiddenFor(n => n.ID);
+
+    @Html.HiddenFor(n => n.ParentID, new { @Value = Model.ParentID });
+
+    <table class="TB">
         @if (Model.ParentID != -1)
         {
             <tr>
@@ -21,8 +23,7 @@
                     父模块号
                 </td>
                 <td>
-                    @*<input type="text" disabled="disabled" value="@Model.ParentID">*@
-                @Html.TextBoxFor(n => n.ParentID, new { @Value = Model.ParentID ,@Disabled="disabled"})
+                    @Html.TextBoxFor(n => n.ParentID, new { @Value = Model.ParentID , @disabled ="disabled"})
                 </td>
             </tr>
         }
@@ -56,8 +57,8 @@
                 @Html.TextAreaFor(n => n.Description, new { id = "txtDesc", rows = "2" })
             </td>
         </tr>
-        <tr style="text-align:center">
-            <td colspan="2">
+        <tr>
+            <td colspan="2" style="padding-left:180px;">
                 <input type="submit" value="提交" class="easyui-linkbutton" />
             </td>
         </tr>
@@ -65,6 +66,15 @@
 }
 
 <script type="text/javascript">
+    // 增加长度验证方法
+    $.extend($.fn.validatebox.defaults.rules, {
+        minLength: {
+            validator: function(value,param){
+                return value.length >= param[0];
+            },
+            message: '此框内容不得小于{0}长度'
+        }
+    });
 
     $(function () {
         $('#ff').form({
@@ -74,25 +84,33 @@
                 if (data.success) {
                     $.messager.alert('模块编辑', data.message, "info", function () {
                         // 关闭当前div 刷新父窗体
-                        parent.$('#floatingLayerWindow').window('close'); parent.location.reload();
+                        closeWindow();
                     });
                 }
             }
         });
 
-        var init =  (@Model.ParentID != -1);
+        var rootModule =  (@Model.ParentID == -1);
+        var moduleAdd = (@Model.ModuleID == 0 );
 
-        if (init){
+        if (!rootModule){
             $("#txtUrl").validatebox({
                 required: true,
                 missingMessage:'此框不得为空'
-            });
+            });          
         }
 
-        $("#txtModuleID").validatebox({
-            required :true,
-            missingMessage:'此框不得为空'
-        });
+
+        if (moduleAdd && rootModule){
+            $("#txtModuleID").validatebox({
+                required :true,
+                validType:'minLength[3]'
+            });
+        }
+        else {
+            $("#txtModuleID").attr("readonly","readonly");
+        }
+
 
         $("#txtModuleName").validatebox({
             required :true,

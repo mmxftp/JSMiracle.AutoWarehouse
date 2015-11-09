@@ -20,25 +20,29 @@ namespace JsMiracle.WebUI.Controllers
             return View();
         }
 
-        private IDataLayer<IMS_TB_Module> moduleInfo;
+        private IDataLayer<IMS_TB_Module> dal;
 
         public ModuleController(IDataLayer<IMS_TB_Module> repo)
         {
-            this.moduleInfo = repo;
+            this.dal = repo;
         }
 
         public JsonResult GetModuleList()
         {
-            var data = moduleInfo.FindWhere(n => n.ParentID == -1);
+            var data = dal.FindWhere(n => n.ParentID == -1);
             return Json(data);
         }
 
         public JsonResult GetChildModuleList(int? rows, int? page, int? parentid)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
+            var info = new PaginationModel<IMS_TB_Module>();
 
-            if (parentid == null)
-                return Json(null);
+            if (parentid == null) {
+                info.total = 0;
+                info.rows = new List<IMS_TB_Module>();   // 解决easyui length的问题
+                return Json(info);
+            }
 
             int totalCount = 0;
 
@@ -48,12 +52,12 @@ namespace JsMiracle.WebUI.Controllers
             Expression<Func<IMS_TB_Module, bool>> filter =
                 f => f.ParentID == parentid;
 
-            var dataList = moduleInfo.GetDataByPage(
+            var dataList = dal.GetDataByPage(
                 p => p.SortID,
                 filter, pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_TB_Module>();
+
             info.total = totalCount;
             info.rows = dataList;
 
@@ -63,7 +67,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Edit(int id)
         {
-            var user = moduleInfo.Find(id);
+            var user = dal.Find(id);
             return View(user);
         }
 
@@ -73,7 +77,15 @@ namespace JsMiracle.WebUI.Controllers
             {
                 try
                 {
-                    moduleInfo.Update(module);
+                    // 新增时自动计算模块号
+                    if (module.ParentID != -1 && module.ModuleID ==0 )
+                    {
+                        var itemCount = dal.FindWhere(n => n.ParentID == module.ParentID).Count;
+                        // 得到同类的子项的记数加1
+                        module.ModuleID = module.ParentID * 1000 + itemCount + 101;
+                    }
+
+                    dal.Update(module);
                 }
                 catch (Exception ex)
                 {
@@ -90,10 +102,10 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Create(int parentid=-1)
         {
-            // parentid 与 moduleid 是主从关系, 数据表中的id只是主键不健关系
+            // parentid 与 moduleid 是主从关系, 数据表中的id只是主键没有业务关系
             if (parentid !=-1 )
             {
-                var ent = moduleInfo.Find(parentid);
+                var ent = dal.Find(parentid);
                 if (ent != null)
                     parentid = ent.ModuleID;
             }
@@ -106,7 +118,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public JsonResult Remove(int id)
         {
-            var ent = moduleInfo.Find(id);
+            var ent = dal.Find(id);
 
             try
             {
@@ -114,11 +126,11 @@ namespace JsMiracle.WebUI.Controllers
                 {
                     if (ent.ParentID == -1)
                     {
-                        var childModule = moduleInfo.FindWhere(f => f.ParentID == ent.ModuleID);
+                        var childModule = dal.FindWhere(f => f.ParentID == ent.ModuleID);
                         if (childModule != null && childModule.Count > 0)
                             throw new Exception("请先删除子模块数据");
                     }
-                    moduleInfo.Delete(ent);
+                    dal.Delete(ent);
                 }
 
                 return Json(new { success = true });

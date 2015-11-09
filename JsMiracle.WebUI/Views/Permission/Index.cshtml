@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west'" style="width:250px">
+        <div id="dl"></div>
+    </div>
+    <div data-options="region:'center'" style="overflow: hidden;">
+
+        <div id="tt" class="easyui-tree" style="padding:10px;">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+
+    $(function () {
+        $("#dl").datalist({
+            url: '@Url.Action("GetRolesAll", "Role")',
+            title: '用户角色',
+            lines: true,
+            valueField: 'roleid',
+            textField: 'RoleName',
+            onClickRow: function (index, row) {
+                console.log(row);
+                $('#tt').tree({ url: '@Url.Action("PermissionInfo" )' + '?roleid=' + row.RoleID });
+                //$('#tt').tree('reload');
+            }
+        });
+
+        $('#tt').tree({
+            url: '@Url.Action("PermissionInfo" )',
+            checkbox: true,
+            onCheck: function (node, checked) {
+                //$.messager.alert({    // 显示错误信息
+                //    title: node.text,
+                //    msg: node.id + checked.toString()
+                moduleid = node.attributes.moduleid;
+                functionid = node.attributes.functionid;
+                check = checked;
+
+                var row = $('#dl').datalist('getSelected');
+
+                if (row) {                 
+                    var params = { 'check': check, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.RoleID };
+                    console.log(JSON.stringify(params));
+                    $.ajax({
+                        url: '@Url.Action("SavePermission")',
+                        type: 'POST',
+                        data: params,
+                        dataType: 'json',
+                        success: function (rec) {
+                            if (!rec.success) {
+                                $.messager.alert({
+                                    title: rec.title,
+                                    msg: rec.err
+                                });
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+</script>

@@ -65,11 +65,12 @@
                     field: '_operate', title: '操作', width: 150, align: 'center'
                     , formatter: function (value, row, index) {
                         var editActionUrl = '\'' + '@Url.Action("Edit")' + '?id=' + row.ID + '\'';
-                        var html = '<a href="javascript:void(0)"  class="loan_remove_button" onclick="removeModule(\'' + row.ID + '\',\'' + row.ModuleName + '\')" >删除</a>'
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="removeModule(\'' + row.ID + '\',\'' + row.ModuleName + '\')" >删除</a>'
                                   + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                   + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                  + ' onclick="showWindow(\'模块信息编辑\',' + editActionUrl + ', 400,400);" >修改</a>';
-                        console.log(html);
+                                  + ' onclick="showWindow(\'模块信息编辑\',' + editActionUrl + ', 500,420);" >修改</a>';
+                        //alert(JSON.stringify(row));
                         return html;
                     }
                 },
@@ -77,7 +78,15 @@
                 { field: 'ModuleID', title: '子模块号', width: 100, align: 'center' },
                 { field: 'ModuleName', title: '子模块名称', width: 100, align: 'center' },
                 { field: 'URL', title: '访问地址', width: 250, align: 'center' },
-                { field: 'SortID', title: '排序号', width: 100, aligh: 'center' }
+                { field: 'SortID', title: '排序号', width: 100, aligh: 'center' },
+                {
+                    field: '_funOperate', title: '功能操作', width: 150, align: 'center',
+                    formatter: function (value, row, index) {
+                        var moduleFunctionUrl = '@Url.Action("Index", "ModuleFunction")' + '?moduleid=' + row.ModuleID;
+                        var html = '<a href="' + moduleFunctionUrl + '" >子功能</a>'
+                        return html;
+                    }
+                }
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
@@ -86,21 +95,21 @@
         });
     });
 
-    function removeModuleByCombo(){
+    function removeModuleByCombo() {
         var id = $('#cboModule').combobox('getValue');
         var name = $('#cboModule').combobox('getText');
-        removeModule(id,name);
+        removeModule(id, name);
     }
 
     function removeModule(id, name) {
-        $.messager.confirm('Confirm', '确定删除模块' + name + '?'
+        $.messager.confirm('Confirm', '确定删除模块\'' + name + '\'?'
             , function (r) {
                 if (r) {
                     $.post('@Url.Action("Remove")', { id: id }, function (result) {
                         if (result.success) {
                             $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
                         } else {
-                            $.messager.show({    // 显示错误信息
+                            $.messager.alert({    // 显示错误信息
                                 title: 'Error',
                                 msg: result.errorMsg
                             });
@@ -112,10 +121,14 @@
 
     function showEdit(isAdd) {
         var width = 500;
-        var height = 400;
+        var height = 420;
+        var title = '';
+        var url = '';
 
         if (isAdd == 'addM') {
-            showWindow('新增模块大类', '@Url.Action("Create")', width, height);
+            url = '@Url.Action("Create")';
+            title = '新增模块大类';
+            height = 380;
         }
         else if (isAdd == 'modM' || isAdd == 'addC') {
             var id = $('#cboModule').combobox('getValue');
@@ -126,13 +139,15 @@
             }
 
             if (isAdd == 'modM') {
-                var url = '@Url.Action("Edit")' + '?id=' + id;
-                showWindow('编辑模块大类', url, width, height);
+                url = '@Url.Action("Edit")' + '?id=' + id;
+                title = '编辑模块大类';
             }
             else if (isAdd == 'addC') {
-                var url = '@Url.Action("Create")' + '?parentid=' + id;
-                showWindow('编辑模块', url, width, height);
+                url = '@Url.Action("Create")' + '?parentid=' + id;
+                title = '编辑模块';
             }
         }
+
+        showWindow(title, url, width, height);
     }
 </script>

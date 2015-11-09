@@ -102,14 +102,14 @@
     });
 
     function removeUser(id,name) {
-        $.messager.confirm('Confirm', '确定删除用户' + name + '?'
+        $.messager.confirm('Confirm', '确定删除用户\'' + name + '\'?'
             , function (r) {
                 if (r) {
                     $.post('@Url.Action("Remove")', { id: id }, function (result) {
                         if (result.success) {
                             $('#userGrid').datagrid('reload');    // 重新加载用户数据
                         } else {
-                            $.messager.show({    // 显示错误信息
+                            $.messager.alert({    // 显示错误信息
                                 title: 'Error',
                                 msg: result.errorMsg
                             });

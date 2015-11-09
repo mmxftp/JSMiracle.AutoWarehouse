@@ -10,15 +10,22 @@ function dateTimeFormatter(value, row, index) {
 
 
 // 弹出浮层
+var layerWindowName = 'floatingLayerWindow';
+
+// 关闭当前子窗体, 并刷新父窗体
+function closeWindow() {
+    parent.$('#' + layerWindowName).window('close');
+    parent.location.reload();
+}
 
 // 页面初始化时加入新的用于显示浮动页面的层。
 $(function () {
-    $('body').append('<div id="floatingLayerWindow" closed="true"></div>')
+    $('body').append('<div id="' + layerWindowName + '" closed="true"></div>')
 })
 
 // 加入需显示的内容，并打开此层
 function showWindow(title, href, width, height, modal, minimizable, maximizable) {
-    $('#floatingLayerWindow').window(
+    $('#'+layerWindowName).window(
     {
         title: title,
         //href: href,
@@ -38,5 +45,5 @@ function showWindow(title, href, width, height, modal, minimizable, maximizable)
         closed: true,
         loadingMessage: '正在加载数据，请稍等片刻......'
     });
-    $('#floatingLayerWindow').window('open');
+    $('#' + layerWindowName).window('open');
 }

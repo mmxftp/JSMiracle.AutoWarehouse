@@ -14,13 +14,14 @@
     <link rel="icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
 </head>
-<body class="easyui-layout">
-    <div data-options="region:'north'" style="height:100px"></div>
-    <div data-options="region:'west',split:true" title="菜单" style="width:300px;height:100%;">
-        @{Html.RenderAction("Menu", "Nav");}
-    </div>
-    <div data-options="region:'center',title:'主窗体'" style="overflow: hidden;">
-        <iframe id="ibody" name="ibody" src="" frameborder="0" scrolling="yes" style=" height:100%;width:100%;overflow:visible"></iframe>
-    </div>
+<body class ="easyui-layout">
+    
+        <div data-options="region:'north'" style="height:100px"></div>
+        <div data-options="region:'west',split:true" title="菜单" style="width:300px;height:100%;">
+            @{Html.RenderAction("Menu", "Nav");}
+        </div>
+        <div data-options="region:'center',title:'主窗体'" style="overflow: hidden;">
+            <iframe id="ibody" name="ibody" src="" frameborder="0" scrolling="yes" style=" height:100%;width:100%;overflow:visible"></iframe>
+        </div>
 </body>
 </html>
