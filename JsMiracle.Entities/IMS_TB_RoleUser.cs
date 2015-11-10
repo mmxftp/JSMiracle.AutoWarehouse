@@ -12,15 +12,10 @@ namespace JsMiracle.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class IMS_TB_Module
+    public partial class IMS_TB_RoleUser
     {
         public int ID { get; set; }
-        public string ModuleName { get; set; }
-        public string URL { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public string Description { get; set; }
-        public int ModuleID { get; set; }
-        public int ParentID { get; set; }
-        public int SortID { get; set; }
+        public string RoleID { get; set; }
+        public string UserID { get; set; }
     }
 }

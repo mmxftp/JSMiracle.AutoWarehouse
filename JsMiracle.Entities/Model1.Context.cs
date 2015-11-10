@@ -30,5 +30,6 @@ namespace JsMiracle.Entities
         public virtual DbSet<IMS_TB_Permission> IMS_TB_Permission { get; set; }
         public virtual DbSet<IMS_TB_RoleInfo> IMS_TB_RoleInfo { get; set; }
         public virtual DbSet<IMS_TB_UserInfo> IMS_TB_UserInfo { get; set; }
+        public virtual DbSet<IMS_TB_RoleUser> IMS_TB_RoleUser { get; set; }
     }
 }

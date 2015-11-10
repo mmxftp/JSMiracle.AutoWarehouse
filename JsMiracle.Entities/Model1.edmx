@@ -49,6 +49,14 @@
           <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="IMS_TB_RoleUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="IMS_TB_UserInfo">
           <Key>
             <PropertyRef Name="ID" />
@@ -66,6 +74,7 @@
           <EntitySet Name="IMS_TB_ModuleFunction" EntityType="Self.IMS_TB_ModuleFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_RoleUser" EntityType="Self.IMS_TB_RoleUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -129,12 +138,21 @@
           <Property Name="LastModDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="IMS_TB_Module" EntityType="Self.IMS_TB_Module" />
+          <EntitySet Name="IMS_TB_Module" EntityType="IIMS_ORGModel.IMS_TB_Module" />
           <EntitySet Name="IMS_TB_ModuleFunction" EntityType="Self.IMS_TB_ModuleFunction" />
           <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" />
           <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" />
           <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" />
+          <EntitySet Name="IMS_TB_RoleUser" EntityType="IIMS_ORGModel.IMS_TB_RoleUser" />
         </EntityContainer>
+        <EntityType Name="IMS_TB_RoleUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -199,6 +217,15 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_TB_RoleUser">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_RoleUser">
+              <MappingFragment StoreEntitySet="IMS_TB_RoleUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

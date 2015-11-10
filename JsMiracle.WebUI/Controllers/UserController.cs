@@ -12,18 +12,20 @@ namespace JsMiracle.WebUI.Controllers
 {
     public class UserController : Controller
     {
-        private IDataLayer<IMS_TB_UserInfo> dal;
+        private IUser dal;
 
-        public UserController(IDataLayer<IMS_TB_UserInfo> repo){
+        public UserController(IUser repo)
+        {
             this.dal = repo;
         }
 
         //
         // GET: /User/
 
-        public ActionResult Index()
+        public JsonResult GetAllUserList(bool userNameFormatter = false)
         {
-            return View();
+            var usrList = dal.GetAllUserList(userNameFormatter);
+            return Json(usrList);
         }
 
         public ActionResult List()
@@ -44,17 +46,7 @@ namespace JsMiracle.WebUI.Controllers
             //if (!int.TryParse(Request.Params["page"], out pageIndex))
             //    pageIndex = 1;
 
-            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
-            //var txt = Request.Params["txt"];
-            if (!string.IsNullOrEmpty(txt)) {
-                filter = 
-                    f => f.UserID == txt || f.UserName.Contains(txt);
-            }
-
-
-            var dataList = dal.GetDataByPage(
-                p => p.UserID,
-                filter, pageIndex, pageSize, out totalCount);
+             var dataList = dal.GetUserList(pageIndex, pageSize, txt, out totalCount);
 
             //数据组装到viewModel
             var info = new PaginationModel<IMS_TB_UserInfo>();
@@ -68,7 +60,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Edit(int id)
         {
-            var user = dal.Find(id);
+            var user = dal.GetEntity(id);
             return View(user);
         }
 
@@ -78,12 +70,8 @@ namespace JsMiracle.WebUI.Controllers
             {
                 try
                 {
-                    dal.Update(user);
+                    dal.Save(user);
                 }
-                //catch (System.Data.Entity.Validation.DbEntityValidationException ve)
-                //{
-                //    return Json(new { success = false, message = "操作失败" + ve.Messgage });
-                //}
                 catch (Exception ex)
                 {
                     return Json(new { success = true, message = "操作失败" + ex.Message });
@@ -106,16 +94,12 @@ namespace JsMiracle.WebUI.Controllers
 
         public JsonResult Remove(int id)
         {
-            var ent = dal.Find(id);
-
             try
             {
-                if (ent != null)
-                    dal.Delete(ent);
-
+                dal.Remove(id);
                 return Json(new { success = true });
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 return Json(new { success = false, errorMsg = ex.Message });
             }

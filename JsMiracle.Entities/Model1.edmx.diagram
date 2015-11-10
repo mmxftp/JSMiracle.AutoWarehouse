@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Permission" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_UserInfo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleUser" Width="1.5" PointX="4.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

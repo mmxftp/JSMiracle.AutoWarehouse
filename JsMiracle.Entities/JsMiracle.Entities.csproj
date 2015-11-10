@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="IMS_TB_Module.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -62,6 +63,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IMS_TB_RoleInfo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_TB_RoleUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IMS_TB_UserInfo.cs">

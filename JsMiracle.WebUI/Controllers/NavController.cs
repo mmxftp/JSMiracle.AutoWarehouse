@@ -21,21 +21,19 @@ namespace JsMiracle.WebUI.Controllers
             return View();
         }
 
-        private IDataLayer<IMS_TB_Module> dal;
+        private IModule dal;
 
-        public NavController(IDataLayer<IMS_TB_Module> repo)
+        public NavController(IModule repo)
         {
             this.dal = repo;
         }
 
         public PartialViewResult Menu()
         {
-            var rootModuleList = dal.FindWhere(n=>n.ParentID == -1);
-
+            var rootModuleList = dal.GetRootModule();
+                
             if (rootModuleList == null)
                 return PartialView(null);
-
-            var moduleList = dal.FindWhere(n => n.ParentID != -1);
 
             var data = rootModuleList.OrderBy(n => n.SortID);
 
@@ -43,9 +41,7 @@ namespace JsMiracle.WebUI.Controllers
 
             foreach (var m in data)
             {
-                var x = from b in moduleList
-                        where b.ParentID == m.ModuleID
-                        select b;
+                var x = dal.GetChildModuleList(m.ModuleID);
 
                 menuList.Add(m);
                 menuList.AddRange(x);

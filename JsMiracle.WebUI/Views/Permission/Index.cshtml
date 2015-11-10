@@ -60,8 +60,11 @@
                                 });
                             }
                         },
-                        error: function () {
-
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $.messager.alert({
+                                title: XMLHttpRequest.statusCode ,
+                                msg: XMLHttpRequest.error
+                            });
                         }
                     });
                 }

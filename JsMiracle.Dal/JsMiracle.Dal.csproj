@@ -51,13 +51,19 @@
   <ItemGroup>
     <Compile Include="Abstract\DataLayerBase.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
+    <Compile Include="Abstract\IModule.cs" />
+    <Compile Include="Abstract\IModuleFunction.cs" />
     <Compile Include="Abstract\IPermission.cs" />
+    <Compile Include="Abstract\IRole.cs" />
+    <Compile Include="Abstract\IRoleUser.cs" />
+    <Compile Include="Abstract\IUser.cs" />
     <Compile Include="Concrete\IMS_TB_ModuleFunction_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_Module_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_Permission_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_RoleInfo_Dal.cs" />
+    <Compile Include="Concrete\IMS_TB_RoleUser_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
-    <Compile Include="Models\PermissionModel.cs" />
+    <Compile Include="Models\EasyUI_TreeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,16 +21,16 @@ namespace JsMiracle.WebUI.Controllers
             return View();
         }
 
-        private IDataLayer<IMS_TB_RoleInfo> dal;
+        private IRole dal;
 
-        public RoleController(IDataLayer<IMS_TB_RoleInfo> repo)
+        public RoleController(IRole repo)
         {
             dal = repo;
         }
 
         public JsonResult GetRolesAll()
         {
-            var data =dal.FindWhere(null);
+            var data = dal.GetAllRole();
             return Json(data);
         }
      
@@ -44,14 +44,9 @@ namespace JsMiracle.WebUI.Controllers
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            Expression<Func<IMS_TB_RoleInfo, bool>> filter = null;
-            
-            var dataList = dal.GetDataByPage(
-                p => p.RoleName,
-                filter, pageIndex, pageSize, out totalCount);
+            var dataList = dal.GetRoleList(pageIndex, pageSize);
 
             //数据组装到viewModel
-
             info.total = totalCount;
             info.rows = dataList;
 
@@ -66,7 +61,7 @@ namespace JsMiracle.WebUI.Controllers
 
         public ViewResult Edit(int id)
         {
-            var role = dal.Find(id);
+            var role = dal.GetEntity(id);
             return View(role);
         }
 
@@ -76,12 +71,7 @@ namespace JsMiracle.WebUI.Controllers
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(module.RoleID))
-                    {
-                        module.RoleID = Guid.NewGuid().ToString();
-                    }
-
-                    dal.Update(module);
+                    dal.Save(module);
                 }
                 catch (Exception ex)
                 {
@@ -99,14 +89,9 @@ namespace JsMiracle.WebUI.Controllers
 
         public JsonResult Remove(int id)
         {
-            var ent = dal.Find(id);
-
             try
             {
-                if (ent != null)
-                {
-                    dal.Delete(ent);
-                }
+                dal.Remove(id);
 
                 return Json(new { success = true });
             }

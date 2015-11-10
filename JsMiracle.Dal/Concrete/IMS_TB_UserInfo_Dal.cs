@@ -3,18 +3,20 @@ using JsMiracle.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_UserInfo_Dal:DataLayerBase<IMS_TB_UserInfo>
+    public class IMS_TB_UserInfo_Dal : DataLayerBase, IUser
     {
         //public IMS_TB_UserInfo_Dal(IIMS_ORGEntities context)
         //    : base(context)
         //{
         //}
 
-        public override IMS_TB_UserInfo Update(IMS_TB_UserInfo entity)
+
+        private IMS_TB_UserInfo Update(IMS_TB_UserInfo entity)
         {
             //var data = from m in context.IMS_TB_Module
             //           join f in context.IMS_TB_ModuleFunction
@@ -24,11 +26,11 @@ namespace JsMiracle.Dal.Concrete
             IMS_TB_UserInfo ent = null;
             if (entity.ID == 0)
             {
-                ent = base.Insert(entity);
+                ent = DataLayerBase.Insert(this, entity);
             }
             else
             {
-                ent = Find(entity.ID);
+                ent = IMS_TB_UserInfo.Find(entity.ID);
                 if (ent != null)
                 {
                     ent.UserID = entity.UserID;
@@ -36,10 +38,73 @@ namespace JsMiracle.Dal.Concrete
                     ent.Email = entity.Email;
                     ent.Password = entity.Password;
                     ent.LastModDate = System.DateTime.Now;
-                    ent = base.Update(ent);
+                    ent = DataLayerBase.Update(this, ent);
                 }
             }
             return ent;
+        }
+
+        public IList<IMS_TB_UserInfo> GetAllUserList(bool userNameFormatter = false)
+        {
+            var data = IMS_TB_UserInfo.ToList();
+            if (userNameFormatter)
+            {
+                data = data.Select(u => new IMS_TB_UserInfo
+                {
+                    UserName = string.Format("{0}({1})", u.UserName, u.UserID),
+                    UserID = u.UserID,
+                    ID = u.ID,
+                    CreateDate = u.CreateDate,
+                    LastModDate = u.LastModDate,
+                    Email = u.Email,
+                    Password = u.Password
+                }).ToList();
+
+
+            }
+
+
+            return data;
+        }
+
+        public IMS_TB_UserInfo GetEntity(int id)
+        {
+            return IMS_TB_UserInfo.Find(id);
+        }
+
+        public IList<IMS_TB_UserInfo> GetUserList(int pageIndex, int pageSize, string txt, out int totalCount)
+        {
+            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
+
+            if (!string.IsNullOrEmpty(txt))
+            {
+                filter =
+                    f => f.UserID == txt || f.UserName.Contains(txt);
+            }
+
+            var dataList = DataLayerBase.GetDataByPage(
+                this,
+                p => p.UserID,
+                filter, pageIndex, pageSize, out totalCount);
+
+            return dataList;
+        }
+
+        public int Save(IMS_TB_UserInfo user)
+        {
+            Update(user);
+            return 1;
+        }
+
+        public int Remove(int id)
+        {
+            var ent = IMS_TB_UserInfo.Find(id);
+
+            if (ent == null)
+                return 0;
+
+            DataLayerBase.Delete(this, ent);
+            return 1;
         }
     }
 }

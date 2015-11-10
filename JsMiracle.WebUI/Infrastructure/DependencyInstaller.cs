@@ -19,20 +19,23 @@ namespace JsMiracle.WebUI.Infrastructure
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IDataLayer<IMS_TB_UserInfo>>()
+                Component.For<IUser>()
                 .ImplementedBy<IMS_TB_UserInfo_Dal>().LifeStyle.PerWebRequest,
 
-                Component.For<IDataLayer<IMS_TB_Module>>()
+                Component.For<IModule>()
                 .ImplementedBy<IMS_TB_Module_Dal>().LifeStyle.PerWebRequest,
 
-                Component.For<IDataLayer<IMS_TB_ModuleFunction>>()
+                Component.For<IModuleFunction>()
                 .ImplementedBy<IMS_TB_ModuleFunction_Dal>().LifeStyle.PerWebRequest,
 
-                Component.For<IDataLayer<IMS_TB_RoleInfo>>()
+                Component.For<IRole>()
                 .ImplementedBy<IMS_TB_RoleInfo_Dal>().LifeStyle.PerWebRequest,
 
-                Component.For<IDataLayer<IMS_TB_Permission>>()
+                Component.For<IPermission>()
                 .ImplementedBy<IMS_TB_Permission_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<IRoleUser>()
+                .ImplementedBy<IMS_TB_RoleUser_Dal>().LifeStyle.PerWebRequest,
 
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()

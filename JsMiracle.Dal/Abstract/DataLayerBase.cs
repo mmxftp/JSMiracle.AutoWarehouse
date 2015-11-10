@@ -10,57 +10,70 @@ using System.Data.Entity.Core.Objects;
 
 namespace JsMiracle.Dal.Abstract
 {
-    public abstract class DataLayerBase<T> : IDataLayer<T> where T : class,new()
+    //public abstract class DataLayerBase<T> : IDataLayer<T> where T : class,new()
+    public class DataLayerBase : IIMS_ORGEntities
     {
-        protected IIMS_ORGEntities context;
-        protected ObjectContext objContext;
+        //protected IIMS_ORGEntities context;
+        //protected ObjectContext objContext;
 
-        internal DataLayerBase()
+        //internal DataLayerBase()
+        //{
+        //    context = new IIMS_ORGEntities();
+
+        //    //this.context = context;
+        //    objContext = ((IObjectContextAdapter)context).ObjectContext;
+        //}
+        //public ObjectContext ObjContext { get { return objContext; } }
+
+        //public IIMS_ORGEntities Context { get { return context; } }
+
+        //public DbSet<T> GetTable
+        //{
+        //    get { return context.Set<T>(); }
+        //}
+        //public T Update1(T entity)
+        //{
+        //    if (this.Entry(entity).State == EntityState.Modified)
+        //        this.SaveChanges();
+
+        //    return entity;
+        //}
+
+
+        public static T Update<T>(DbContext context, T entity) where T : class,new()
         {
-            context = new IIMS_ORGEntities();
-
-            //this.context = context;
-            objContext = ((IObjectContextAdapter)context).ObjectContext;            
-        }
-        public ObjectContext ObjContext { get { return objContext; } }
-
-        public IIMS_ORGEntities Context { get { return context; } }
-
-        public virtual T Update(T entity)
-        {
-            if (context.Entry<T>(entity).State == EntityState.Modified)
+            if (context.Entry(entity).State == EntityState.Modified)
                 context.SaveChanges();
 
             return entity;
         }
 
-        public virtual T Insert(T entity)
+        public static T Insert<T>(DbContext context, T entity) where T : class,new()
         {
             context.Set<T>().Add(entity);
             context.SaveChanges();
             return entity;
         }
 
-        public virtual void Delete(T entity)
+        public static int Delete<T>(DbContext context,T entity) where T : class,new()
         {
             context.Set<T>().Remove(entity);
-            context.SaveChanges();
+            return context.SaveChanges();                
         }
 
-        public virtual T Find(params object[] keyValues)
+        public static T Find<T>(DbContext context, params object[] keyValues)where T:class ,new ()
         {
             return context.Set<T>().Find(keyValues);
-
         }
 
-        public virtual IList<T> FindWhere(Expression<Func<T, bool>> filter)
+        public static IList<T> FindWhere<T>(DbContext context, Expression<Func<T, bool>> filter) where T :class, new ()
         {
             // 条件为空返回所有记录
             if (filter == null)
                 return context.Set<T>().ToList();
 
             // 条件不为空，按条件返回数据
-            return context.Set<T>().Where(filter).ToList();
+            return context.Set<T>().Where(filter).ToList();           
         }
 
         /// <summary>
@@ -73,12 +86,13 @@ namespace JsMiracle.Dal.Abstract
         /// <param name="intPageSize">每页行数</param>
         /// <param name="rowCount">总计行数</param>
         /// <returns></returns>
-        public virtual IList<T> GetDataByPage<TKey>(
+        public static IList<T> GetDataByPage<T, TKey>(
+            DbContext context,
             Expression<Func<T, TKey>> orderBy
             , Expression<Func<T, bool>> filter
             , int intPageIndex
             , int intPageSize
-            , out int rowCount)
+            , out int rowCount) where T : class,new()
         {
             IQueryable<T> query = null;
 
