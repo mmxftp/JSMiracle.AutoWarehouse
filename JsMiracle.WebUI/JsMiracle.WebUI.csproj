@@ -160,7 +160,6 @@
     <Compile Include="Infrastructure\WindsorActivator.cs" />
     <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\PaginationModel.cs" />
-    <Compile Include="Models\TreeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
