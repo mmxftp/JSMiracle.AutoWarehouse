@@ -11,20 +11,20 @@ using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_Permission_Dal : DataLayerBase, IPermission
+    public class IMS_TB_Permission_Dal : IIMS_ORGEntities, IPermission
     {
         public IList<TreeModel> GetPermissionInfo(string roleid)
         {
             // 根节点
             var rootQueryable =
-                IMS_TB_Module.Where(n => n.ParentID == -1).OrderBy(n => n.SortID);
+                IMS_TB_ModuleSet.Where(n => n.ParentID == -1).OrderBy(n => n.SortID);
 
             List<TreeModel> data = new List<TreeModel>();
             TreeModel tm = new TreeModel();
             data.Add(tm);
             tm.id = -1;
 
-            var perList = IMS_TB_Permission.Where(n => n.RoleId == roleid);
+            var perList = IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
 
             /// select * from  IMS_TB_Module m
             /// left join IMS_TB_Permission p
@@ -32,11 +32,11 @@ namespace JsMiracle.Dal.Concrete
             /// /*  perList.Where(n => n.RoleId == roleid); */  => and p.roleid = roleid
             /// order by m.sortid
 
-            var moduleQueryable = from m in IMS_TB_Module
-                                  join p in perList
+            var moduleQueryable = from m in IMS_TB_ModuleSet
+                                  join p in perList.Where(n=> n.FunctionID == -1 )
                                   on m.ModuleID equals p.ModuleID into p_join
                                   from v in p_join.DefaultIfEmpty()
-                                  where m.ParentID != -1 && (v.FunctionID == null || v.FunctionID == -1)
+                                  where m.ParentID != -1 
                                   orderby m.SortID
                                   select new
                                   {
@@ -47,7 +47,7 @@ namespace JsMiracle.Dal.Concrete
                                       HasPermission = v.ID == null ? false : true
                                   };
 
-            var funQueryable = from f in IMS_TB_ModuleFunction
+            var funQueryable = from f in IMS_TB_ModuleFunctionSet
                                join p in perList
                                 on f.FunctionID equals p.FunctionID into p_join
                                from v in p_join.DefaultIfEmpty()
@@ -69,6 +69,10 @@ namespace JsMiracle.Dal.Concrete
 
             tm.text = "权限模块";
             tm.children = new List<TreeModel>();
+            tm.attributes = new Dictionary<string, int>();
+            tm.attributes.Add("parentid", -1);
+            tm.attributes.Add("moduleid", -1);
+            tm.attributes.Add("functionid", -1);
 
             foreach (var root in rootModuleList)
             {
@@ -76,9 +80,10 @@ namespace JsMiracle.Dal.Concrete
                 modeNode.id = root.ModuleID;
                 modeNode.text = root.ModuleName;
                 tm.children.Add(modeNode);
-                tm.attributes = new Dictionary<string, int>();
-                tm.attributes.Add("functionid", -1);
-                tm.attributes.Add("moduleid", root.ModuleID);
+                modeNode.attributes = new Dictionary<string, int>();
+                modeNode.attributes.Add("parentid", -1);
+                modeNode.attributes.Add("moduleid", root.ModuleID);
+                modeNode.attributes.Add("functionid", -1);
 
                 var childmodeList = moduleList.Where(n => n.ParentID == root.ModuleID);
 
@@ -94,8 +99,9 @@ namespace JsMiracle.Dal.Concrete
                     modeNode.children.Add(cNode);
                     cNode.children = new List<TreeModel>();
                     cNode.attributes = new Dictionary<string, int>();
-                    cNode.attributes.Add("functionid", -1);
+                    cNode.attributes.Add("parentid", root.ModuleID);
                     cNode.attributes.Add("moduleid", cm.ModuleID);
+                    cNode.attributes.Add("functionid", -1);
 
                     var functionList = funList.Where(n => n.ModuleID == cm.ModuleID);
                     if (functionList == null || functionList.Count() == 0)
@@ -112,8 +118,9 @@ namespace JsMiracle.Dal.Concrete
                         fun.text = f.FunctionName;
                         fun.@checked = f.HasPermission;
                         fun.attributes = new Dictionary<string, int>();
+                        fun.attributes.Add("parentid", root.ModuleID);
+                        fun.attributes.Add("moduleid", cm.ModuleID);
                         fun.attributes.Add("functionid", f.FunctionID);
-                        fun.attributes.Add("moduleid", -1);
                         cNode.children.Add(fun);
                     }
                 }
@@ -122,53 +129,138 @@ namespace JsMiracle.Dal.Concrete
             return data;
         }
 
-        public int SavePermission(bool check, int moduleid, int functionid, string roleid)
+        private void FillFunctionList(string roleid, int moduleid, ref List<IMS_TB_Permission> permissionAllQueryable)
         {
-            var role = IMS_TB_RoleInfo.Where(n => n.RoleID == roleid);
+            if (permissionAllQueryable == null)
+                permissionAllQueryable = new List<IMS_TB_Permission>();
+
+            permissionAllQueryable.Add(new IMS_TB_Permission()
+            {
+                ModuleID = moduleid,
+                RoleId = roleid,
+                FunctionID = -1
+            });
+
+            var functionQuery = from f in IMS_TB_ModuleFunctionSet
+                                where f.ModuleID == moduleid
+                                select f;
+
+            foreach (var f in functionQuery)
+            {
+                permissionAllQueryable.Add(new IMS_TB_Permission()
+                {
+                    RoleId = roleid,
+                    ModuleID = f.ModuleID,
+                    FunctionID = f.FunctionID
+                });
+            }
+        }
+
+        public int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
+        {
+            var role = IMS_TB_RoleInfoSet.Where(n => n.RoleID == roleid);
             int effectRowCount = 0;
 
             if (role == null || role.Count() == 0)
                 return effectRowCount;
 
+            var perList = IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
 
-            var permissionQueryable = IMS_TB_Permission.Where(
-                n => n.RoleId == roleid);
+            // 当前角色的所有权限
+            var permissionExistsQueryable = from p in IMS_TB_PermissionSet
+                                            where p.RoleId == roleid
+                                            select p;
 
-            if (moduleid != -1)
-                permissionQueryable = permissionQueryable.Where(
-                    n => n.ModuleID == moduleid);
+            //var permissionExistsQueryable = pQuery.ToList();
 
-            if (functionid != -1)
-                permissionQueryable = permissionQueryable.Where(
-                    n => n.FunctionID == functionid);
+            // 所有需处理的权限
+            List<IMS_TB_Permission> permissionAllQueryable = new List<IMS_TB_Permission>();
 
-
-            var data = permissionQueryable.ToList();
-
-            // 选中且数据表中数据不存在
-            if (check && (data == null || data.Count == 0))
+            // 根节点
+            if (parentid == -1 && moduleid == -1 && functionid == -1)
             {
-                // 新增数据
-                var ent = new IMS_TB_Permission()
+                var rootModuleQuery = IMS_TB_ModuleSet.Where(n => n.ParentID == -1);
+
+                foreach (var r in rootModuleQuery)
+                {
+                    var moduleQuery = from n in IMS_TB_ModuleSet
+                                      where n.ParentID == r.ModuleID
+                                      select n;
+
+                    foreach (var q in moduleQuery)
+                    {
+                        FillFunctionList(roleid, q.ModuleID, ref permissionAllQueryable);
+                    }
+                }
+            }
+            // 父节点
+            if (parentid == -1 && moduleid != -1 && functionid == -1)
+            {
+                var moduleQuery = from n in IMS_TB_ModuleSet
+                                  where n.ParentID == moduleid
+                                  select n;
+
+                foreach (var q in moduleQuery)
+                {
+                    FillFunctionList(roleid, q.ModuleID, ref permissionAllQueryable);
+                }
+            }
+            // 第一级子节点
+            else if (parentid != -1 && moduleid != -1 && functionid == -1)
+            {
+                FillFunctionList(roleid, moduleid, ref permissionAllQueryable);
+            }
+            // 第二级子节点
+            else if (parentid != -1 && moduleid != -1 && functionid != -1)
+            {
+                permissionAllQueryable.Add(new IMS_TB_Permission()
                 {
                     RoleId = roleid,
                     ModuleID = moduleid,
-                    FunctionID = functionid,
-                    LastModDate = System.DateTime.Now
-                };
-
-                DataLayerBase.Insert(this,ent);
-                effectRowCount++;
+                    FunctionID = functionid
+                });
             }
-            // 去除选中找到数据
-            else if (!check && data != null && data.Count > 0)
+
+            // 加权限的处理
+            if (check)
             {
-                // 找到的数据全删除
-                foreach (var d in data)
+                foreach (var n in permissionAllQueryable)
                 {
-                    DataLayerBase.Delete(this, d);
-                    effectRowCount++;
+                    // 不存在此权限加入权限表
+                    if (!permissionExistsQueryable.Any(p => p.ModuleID == n.ModuleID && p.FunctionID == n.FunctionID))
+                    {
+                        n.LastModDate = System.DateTime.Now;
+                        IMS_TB_PermissionSet.Add(n);
+                        effectRowCount++;
+                    }
                 }
+
+                // 提交数据库
+                SaveChanges();
+            }
+            else
+            {
+                effectRowCount += permissionAllQueryable.Count();
+
+                // 因为permissionAllQueryable 为List<T>类型 , EF 中必须写在第一个from 语句中
+                // join中写EF的DbSet<T>
+                var removePermissionList = from a in permissionAllQueryable
+                                           join p in IMS_TB_PermissionSet
+                                           on new {
+                                               a.RoleId, 
+                                               a.ModuleID,
+                                               a.FunctionID }
+                                           equals new
+                                           {
+                                               p.RoleId,
+                                               p.ModuleID,
+                                               p.FunctionID
+                                           }
+                                           select p;
+
+                IMS_TB_PermissionSet.RemoveRange(removePermissionList);
+                // 提交数据库
+                SaveChanges();
             }
 
             return effectRowCount;

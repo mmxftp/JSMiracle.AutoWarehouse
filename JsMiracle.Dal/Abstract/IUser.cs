@@ -17,5 +17,7 @@ namespace JsMiracle.Dal.Abstract
         int Save(IMS_TB_UserInfo user);
 
         int Remove(int id);
+
+        bool Validating(string user, string password);
     }
 }

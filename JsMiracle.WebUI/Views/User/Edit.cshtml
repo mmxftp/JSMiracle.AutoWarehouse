@@ -11,22 +11,23 @@
         , new { enctype = "multipart/form-data", id = "ff" }))
 {
     @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.State);
     <table>
         <tr style="height:50px">
             <td>员工编号</td>
-            <td>@Html.EditorFor(n => n.UserID)</td>
+            <td>@Html.TextBoxFor(n => n.UserID, new { id = "txtUserId" })</td>
         </tr>
         <tr style="height:50px">
             <td>员工姓名</td>
-            <td>@Html.EditorFor(n => n.UserName)</td>
+            <td>@Html.TextBoxFor(n => n.UserName, new { id = "txtUserName" })</td>
         </tr>
         <tr style="height:50px">
             <td>Email</td>
-            <td>@Html.EditorFor(n => n.Email)</td>
+            <td>@Html.TextBoxFor(n => n.Email, new { id = "txtEmail" })</td>
         </tr>
         <tr style="height:50px">
             <td>登录密码</td>
-            <td>@Html.EditorFor(n => n.Password)</td>
+            <td>@Html.TextBoxFor(n => n.Password, new { id = "txtPwd" ,type="password"})</td>
         </tr>
         <tr style="text-align:center">
             <td colspan="2"><input type="submit" value="提交" class="easyui-linkbutton" /></td>
@@ -41,12 +42,27 @@
                 console.log(data);
                 var data = eval('(' + data + ')');
                 if (data.success) {
-                    $.messager.alert('用户信息', data.message, "info",  function () {
+                    $.messager.alert('用户信息', data.msg, "info",  function () {
                         // 关闭当前div 刷新父窗体
                         parent.$('#floatingLayerWindow').window('close'); parent.location.reload();
                     });
                 }
             }
+        });
+
+        $("#txtUserId").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtUserName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtPwd").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
         });
     });
 </script>

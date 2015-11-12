@@ -25,11 +25,11 @@ namespace JsMiracle.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IMS_TB_Module> IMS_TB_Module { get; set; }
-        public virtual DbSet<IMS_TB_ModuleFunction> IMS_TB_ModuleFunction { get; set; }
-        public virtual DbSet<IMS_TB_Permission> IMS_TB_Permission { get; set; }
-        public virtual DbSet<IMS_TB_RoleInfo> IMS_TB_RoleInfo { get; set; }
-        public virtual DbSet<IMS_TB_UserInfo> IMS_TB_UserInfo { get; set; }
-        public virtual DbSet<IMS_TB_RoleUser> IMS_TB_RoleUser { get; set; }
+        public virtual DbSet<IMS_TB_ModuleFunction> IMS_TB_ModuleFunctionSet { get; set; }
+        public virtual DbSet<IMS_TB_Module> IMS_TB_ModuleSet { get; set; }
+        public virtual DbSet<IMS_TB_Permission> IMS_TB_PermissionSet { get; set; }
+        public virtual DbSet<IMS_TB_RoleInfo> IMS_TB_RoleInfoSet { get; set; }
+        public virtual DbSet<IMS_TB_RoleUser> IMS_TB_RoleUserSet { get; set; }
+        public virtual DbSet<IMS_TB_UserInfo> IMS_TB_UserInfoSet { get; set; }
     }
 }

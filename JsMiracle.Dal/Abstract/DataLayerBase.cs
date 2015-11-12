@@ -10,36 +10,8 @@ using System.Data.Entity.Core.Objects;
 
 namespace JsMiracle.Dal.Abstract
 {
-    //public abstract class DataLayerBase<T> : IDataLayer<T> where T : class,new()
-    public class DataLayerBase : IIMS_ORGEntities
-    {
-        //protected IIMS_ORGEntities context;
-        //protected ObjectContext objContext;
-
-        //internal DataLayerBase()
-        //{
-        //    context = new IIMS_ORGEntities();
-
-        //    //this.context = context;
-        //    objContext = ((IObjectContextAdapter)context).ObjectContext;
-        //}
-        //public ObjectContext ObjContext { get { return objContext; } }
-
-        //public IIMS_ORGEntities Context { get { return context; } }
-
-        //public DbSet<T> GetTable
-        //{
-        //    get { return context.Set<T>(); }
-        //}
-        //public T Update1(T entity)
-        //{
-        //    if (this.Entry(entity).State == EntityState.Modified)
-        //        this.SaveChanges();
-
-        //    return entity;
-        //}
-
-
+    public class DataLayerBase 
+    {      
         public static T Update<T>(DbContext context, T entity) where T : class,new()
         {
             if (context.Entry(entity).State == EntityState.Modified)

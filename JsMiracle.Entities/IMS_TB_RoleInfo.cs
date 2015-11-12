@@ -15,9 +15,9 @@ namespace JsMiracle.Entities
     public partial class IMS_TB_RoleInfo
     {
         public int ID { get; set; }
+        public string RoleID { get; set; }
         public string RoleName { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Description { get; set; }
-        public string RoleID { get; set; }
     }
 }

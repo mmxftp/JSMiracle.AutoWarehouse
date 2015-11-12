@@ -43,17 +43,17 @@ namespace JsMiracle.WebUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult SavePermission(bool check, int moduleid, int functionid, string roleid)
+        public JsonResult SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
         {
             try
             {
-                dalPermission.SavePermission(check, moduleid, functionid, roleid);
+                var effectRowCount = dalPermission.SavePermission(check,parentid, moduleid, functionid, roleid);
 
-                return Json(new { success = true });
+                return Json(new ExtResult { success = true, effectRowCount = effectRowCount });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, err = ex.Message });
+                return Json(new ExtResult { success = false, msg = ex.Message });
             }
         }
 

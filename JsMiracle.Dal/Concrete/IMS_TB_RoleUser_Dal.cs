@@ -7,13 +7,15 @@ using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_RoleUser_Dal : DataLayerBase, IRoleUser
+    public class IMS_TB_RoleUser_Dal : IIMS_ORGEntities, IRoleUser
     {
 
         public IList<IMS_TB_UserInfo> GetUserList(string roleid)
         {
-            var data = from r in IMS_TB_RoleUser
-                       join u in IMS_TB_UserInfo
+
+   
+            var data = from r in IMS_TB_RoleUserSet
+                       join u in IMS_TB_UserInfoSet
                        on r.UserID equals u.UserID
                        where r.RoleID == roleid
                        select u;
@@ -39,7 +41,7 @@ namespace JsMiracle.Dal.Concrete
         public int SaveRoleUser(string roleid, string userid)
         {
             var ents =
-                IMS_TB_RoleUser.Where(n => n.RoleID == roleid
+                IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
                                 && n.UserID == userid);
 
 
@@ -60,7 +62,7 @@ namespace JsMiracle.Dal.Concrete
         public int RemoveRoleUser(string roleid, string userid)
         {
             var ents =
-                IMS_TB_RoleUser.Where(n => n.RoleID == roleid
+                IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
                      && n.UserID == userid).ToList();
 
             if (ents == null || ents.Count == 0)

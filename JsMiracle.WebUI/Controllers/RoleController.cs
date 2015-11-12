@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Dal.Concrete;
 using JsMiracle.Entities;
+using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.WebUI.Models;
 using System;
 using System.Collections.Generic;
@@ -75,10 +76,10 @@ namespace JsMiracle.WebUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = true, message = "操作失败" + ex.Message });
+                    return Json(new ExtResult { success = true, msg = "操作失败" + ex.Message });
                 }
 
-                return Json(new { success = true, message = "操作成功" });
+                return Json(new ExtResult { success = true, msg = "操作成功" });
             }
             else
             {
@@ -93,11 +94,11 @@ namespace JsMiracle.WebUI.Controllers
             {
                 dal.Remove(id);
 
-                return Json(new { success = true });
+                return Json(new ExtResult { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, errorMsg = ex.Message });
+                return Json(new ExtResult { success = false, msg = ex.Message });
             }
         }
     }

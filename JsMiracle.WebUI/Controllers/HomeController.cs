@@ -8,6 +8,12 @@ namespace JsMiracle.WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+            //System.Web.Security.MembershipProvider
+            //System.Web.Profile.SqlProfileProvider
+        }
+
         //
         // GET: /Home/
 
@@ -15,6 +21,17 @@ namespace JsMiracle.WebUI.Controllers
         {
             return View();
         }
+
+        public ActionResult LogIn()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public ActionResult Login(string user, string password, string returnUrl)
+        //{
+
+        //}
 
     }
 }

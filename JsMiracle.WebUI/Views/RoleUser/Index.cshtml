@@ -30,7 +30,7 @@
 
     $(function () {
         $("#tabRole").datagrid({
-            url: '@Url.Action("GetRoleList","Role")',
+            url: '@Url.Action("GetRoleList")',
             title: '角色信息',
             singleSelect: true,
             loadMsg: '数据载入中...',
@@ -61,7 +61,7 @@
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
             },
             onClickRow: function (rowIndex, rowData) {
-                $('#tt').tree({ url: '@Url.Action("PermissionInfo", "Permission")' + '?roleid=' + rowData.RoleID });
+                $('#tt').tree({ url: '@Url.Action("PermissionInfo")' + '?roleid=' + rowData.RoleID });
 
                 $('#tabUser').datagrid('reload', {
                     roleid: rowData.RoleID
@@ -110,32 +110,36 @@
 
 
         $('#tt').tree({
-            url: '@Url.Action("PermissionInfo","Permission" )',
+            url: '@Url.Action("PermissionInfo")',
             checkbox: true,
             onCheck: function (node, checked) {
-                moduleid = node.attributes.moduleid;
-                functionid = node.attributes.functionid;
+                console.log(node);
+                var parentid = node.attributes.parentid;
+                var moduleid = node.attributes.moduleid;
+                var functionid = node.attributes.functionid;
                 check = checked;
 
                 var row = $('#tabRole').datagrid('getSelected');
 
                 if (row) {
-                    var params = { 'check': check, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.RoleID };
+                    var params = { 'check': check, 'parentid': parentid, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.RoleID };
                     console.log(JSON.stringify(params));
                     $.ajax({
-                        url: '@Url.Action("SavePermission", "Permission")',
+                        url: '@Url.Action("SavePermission")',
                         type: 'POST',
                         data: params,
                         dataType: 'json',
                         success: function (rec) {
+                            console.log(rec);
                             if (!rec.success) {
                                 $.messager.alert({
                                     title: rec.title,
-                                    msg: rec.err
+                                    msg: rec.msg,
                                 });
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest);
                             $.messager.alert({
                                 title: XMLHttpRequest.statusCode,
                                 msg: XMLHttpRequest.error
@@ -153,10 +157,10 @@
         var height = 250;
 
         var title = '新增角色';
-        var editActionUrl = '@Url.Action("Create", "Role")';
+        var editActionUrl = '@Url.Action("CreateRole")';
 
         if (id != null) {
-            editActionUrl = '@Url.Action("Edit", "Role")' + '?id=' + id;
+            editActionUrl = '@Url.Action("EditRole")' + '?id=' + id;
             title = '编辑角色';
         }
 
@@ -165,16 +169,17 @@
 
 
     function removeRole(id, name) {
+        console.log(id, name);
         $.messager.confirm('Confirm', '确定删除角色\'' + name + '\'?'
             , function (r) {
                 if (r) {
-                    $.post('@Url.Action("Remove","Role")', { id: id }, function (result) {
+                    $.post('@Url.Action("RemoveRole")', { id: id }, function (result) {
                         if (result.success) {
                             $('#tabRole').datagrid('reload');    // 重新加载用户数据
                         } else {
                             $.messager.alert({    // 显示错误信息
                                 title: 'Error',
-                                msg: result.errorMsg
+                                msg: result.msg
                             });
                         }
                     }, 'json');
@@ -206,7 +211,7 @@
                 if (!rec.success) {
                     $.messager.alert({
                         title: rec.title,
-                        msg: rec.err,
+                        msg: rec.msg,
                         icon: 'info'
                     });
                 }

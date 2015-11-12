@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +65,7 @@
     <Compile Include="Concrete\IMS_TB_RoleUser_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
     <Compile Include="Models\EasyUI_TreeModel.cs" />
+    <Compile Include="Models\UserStateEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

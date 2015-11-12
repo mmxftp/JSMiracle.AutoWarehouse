@@ -146,10 +146,7 @@
     <Compile Include="Controllers\Filter\ViewPageAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
-    <Compile Include="Controllers\ModuleFunctionController.cs" />
     <Compile Include="Controllers\NavController.cs" />
-    <Compile Include="Controllers\PermissionController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RoleUserController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -637,13 +634,12 @@
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
-    <Content Include="Views\Module\Edit.cshtml" />
-    <Content Include="Views\ModuleFunction\Index.cshtml" />
-    <Content Include="Views\ModuleFunction\Edit.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\Edit.cshtml" />
-    <Content Include="Views\Permission\Index.cshtml" />
     <Content Include="Views\RoleUser\Index.cshtml" />
+    <Content Include="Views\Home\LogIn.cshtml" />
+    <Content Include="Views\RoleUser\EditRole.cshtml" />
+    <Content Include="Views\Module\EditFunction.cshtml" />
+    <Content Include="Views\Module\EditModule.cshtml" />
+    <Content Include="Views\Module\IndexFunction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

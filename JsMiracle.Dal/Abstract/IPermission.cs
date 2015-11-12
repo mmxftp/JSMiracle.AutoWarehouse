@@ -12,6 +12,6 @@ namespace JsMiracle.Dal.Abstract
     {
         IList<TreeModel> GetPermissionInfo(string roleid);
 
-        int SavePermission(bool check, int moduleid, int functionid, string roleid);
+        int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid);
     }
 }

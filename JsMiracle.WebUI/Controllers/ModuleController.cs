@@ -7,6 +7,7 @@ using JsMiracle.Entities;
 using System.Linq.Expressions;
 using JsMiracle.Dal.Abstract;
 using JsMiracle.WebUI.Models;
+using JsMiracle.Entities.EasyUI_Model;
 
 namespace JsMiracle.WebUI.Controllers
 {
@@ -20,16 +21,21 @@ namespace JsMiracle.WebUI.Controllers
             return View();
         }
 
-        private IModule dal;
+        private IModule dalModule;
+        private IModuleFunction dalFunction;
 
-        public ModuleController(IModule repo)
+        public ModuleController(IModule repoModule,IModuleFunction repoFun)
         {
-            this.dal = repo;
+            dalModule = repoModule;
+            dalFunction = repoFun;
         }
+
+
+        #region IMS_TB_ModuleSet 表操作
 
         public JsonResult GetModuleList()
         {
-            var data = dal.GetRootModule();
+            var data = dalModule.GetRootModule();
             return Json(data);
         }
 
@@ -51,7 +57,7 @@ namespace JsMiracle.WebUI.Controllers
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            var dataList = dal.GetChildModuleList(pageIndex, pageSize, parentid.Value, out totalCount);
+            var dataList = dalModule.GetChildModuleList(pageIndex, pageSize, parentid.Value, out totalCount);
 
             //数据组装到viewModel
 
@@ -62,26 +68,26 @@ namespace JsMiracle.WebUI.Controllers
             return Json(info);
         }
 
-        public ViewResult Edit(int id)
+        public ViewResult EditModule(int id)
         {
-            var user = dal.GetEntity(id);
+            var user = dalModule.GetEntity(id);
             return View(user);
         }
 
-        public JsonResult Save(IMS_TB_Module module)
+        public JsonResult SaveModule(IMS_TB_Module module)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    dal.Save(module);
+                    dalModule.Save(module);
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = true, message = "操作失败" + ex.Message });
+                    return Json(new ExtResult { success = true, msg = "操作失败" + ex.Message });
                 }
 
-                return Json(new { success = true, message = "操作成功" });
+                return Json(new ExtResult { success = true, msg = "操作成功" });
             }
             else
             {
@@ -89,33 +95,105 @@ namespace JsMiracle.WebUI.Controllers
             }
         }
 
-        public ViewResult Create(int parentid = -1)
+        public ViewResult CreateModule(int parentid = -1)
         {
             // parentid 与 moduleid 是主从关系, 数据表中的id只是主键没有业务关系
             if (parentid != -1)
             {
-                var ent = dal.GetEntity(parentid);
+                var ent = dalModule.GetEntity(parentid);
                 if (ent != null)
                     parentid = ent.ModuleID;
             }
 
             var newEnt = new IMS_TB_Module() { ParentID = parentid };
 
-            return View("Edit", newEnt);
+            return View("EditModule", newEnt);
         }
 
 
-        public JsonResult Remove(int id)
+        public JsonResult RemoveModule(int id)
         {
             try
             {
-                dal.Remove(id);
+                dalModule.Remove(id);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, errorMsg = ex.Message });
+                return Json(new ExtResult { success = false, msg = ex.Message });
             }
         }
+
+        #endregion
+
+        #region IMS_TB_ModuleFunctionSet 表操作
+
+
+        public ActionResult IndexFunction(int moduleid)
+        {
+            ViewData["moduleid"] = moduleid;
+            return View();
+        }
+
+        public JsonResult GetModuleFunctionList(int moduleid)
+        {
+            var data = dalFunction.GetModuleFunctionList(moduleid);
+
+            var info = new PaginationModel<IMS_TB_ModuleFunction>();
+
+            info.total = (data != null) ? data.Count : 0;
+            info.rows = data;
+
+            return Json(data);
+        }
+
+        public ViewResult CreateFunction(int moduleid)
+        {
+            return View("EditFunction", new IMS_TB_ModuleFunction() { ModuleID = moduleid });
+        }
+
+        public ViewResult EditFunction(int id)
+        {
+            var fun = dalFunction.GetEntity(id);
+            return View(fun);
+        }
+
+        public JsonResult SaveFunction(IMS_TB_ModuleFunction module)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    dalFunction.Save(module);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new ExtResult { success = true, msg = "操作失败" + ex.Message });
+                }
+
+                return Json(new ExtResult { success = true, msg = "操作成功" });
+            }
+            else
+            {
+                return Json(module);
+            }
+        }
+
+
+        public JsonResult RemoveFunction(int id)
+        {
+            try
+            {
+                dalFunction.Remove(id);
+
+                return Json(new ExtResult { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new ExtResult { success = false, msg = ex.Message });
+            }
+        }
+
+        #endregion
     }
 }

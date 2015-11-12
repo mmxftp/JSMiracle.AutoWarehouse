@@ -7,6 +7,7 @@
 
 //namespace JsMiracle.WebUI.Controllers.Filter
 //{
+//    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 //    public class AuthorizeFilterAttribute : AuthorizeAttribute
 //    {
 //        public override void OnAuthorization(AuthorizationContext filterContext)
@@ -34,9 +35,9 @@
 //                }
 //                else
 //                {
-//                    filterContext.Result = new ContentResult 
+//                    filterContext.Result = new ContentResult
 //                        {
-//                            Content = @"$.messager.alert('系统信息', '抱歉,你不具有当前操作的权限!', 'info')" 
+//                            Content = @"$.messager.alert('系统信息', '抱歉,你不具有当前操作的权限!', 'info')"
 //                        };
 //                }
 //            }
@@ -55,6 +56,11 @@
 //                return false;//判定用户是否登录
 //            }
 
+//            //System.Web.Security.FormsAuthentication.SetAuthCookie("", false);
+
+//            //System.Web.Security.FormsAuthentication.("", true);
+
+//            //FormsAuthenticationService
 //            var user = new CurrentUser();//获取当前用户信息
 //            var controllerName = filterContext.RouteData.Values["controller"].ToString();
 //            var actionName = filterContext.RouteData.Values["action"].ToString();

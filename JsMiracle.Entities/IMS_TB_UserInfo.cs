@@ -21,5 +21,6 @@ namespace JsMiracle.Entities
         public string Email { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> LastModDate { get; set; }
+        public int State { get; set; }
     }
 }

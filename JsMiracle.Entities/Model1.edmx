@@ -5,20 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="IMS_TB_Module">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="URL" Type="nvarchar" MaxLength="300" />
-          <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="ParentID" Type="int" Nullable="false" />
-          <Property Name="SortID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IMS_TB_ModuleFunction">
+        <EntityType Name="IMS_TB_ModuleFunctionSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -29,7 +16,20 @@
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
           <Property Name="FunctionID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="IMS_TB_Permission">
+        <EntityType Name="IMS_TB_ModuleSet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="300" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="SortID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IMS_TB_PermissionSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -39,17 +39,17 @@
           <Property Name="FunctionID" Type="int" />
           <Property Name="LastModDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="IMS_TB_RoleInfo">
+        <EntityType Name="IMS_TB_RoleInfoSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="nvarchar" MaxLength="36" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="CreateDate" Type="datetime" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="IMS_TB_RoleUser">
+        <EntityType Name="IMS_TB_RoleUserSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -57,7 +57,7 @@
           <Property Name="RoleID" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="IMS_TB_UserInfo">
+        <EntityType Name="IMS_TB_UserInfoSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -66,51 +66,60 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
-          <Property Name="CreateDate" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="CreateDate" Type="datetime" />
           <Property Name="LastModDate" Type="datetime" />
+          <Property Name="State" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
-          <EntitySet Name="IMS_TB_Module" EntityType="Self.IMS_TB_Module" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_ModuleFunction" EntityType="Self.IMS_TB_ModuleFunction" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_RoleUser" EntityType="Self.IMS_TB_RoleUser" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_ModuleFunctionSet" EntityType="Self.IMS_TB_ModuleFunctionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_ModuleSet" EntityType="Self.IMS_TB_ModuleSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_PermissionSet" EntityType="Self.IMS_TB_PermissionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_RoleInfoSet" EntityType="Self.IMS_TB_RoleInfoSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_RoleUserSet" EntityType="Self.IMS_TB_RoleUserSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_TB_UserInfoSet" EntityType="Self.IMS_TB_UserInfoSet" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IIMS_ORGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="IMS_TB_Module">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="ParentID" Type="Int32" Nullable="false" />
-          <Property Name="SortID" Type="Int32" Nullable="false" />
-        </EntityType>
+        <EntityContainer Name="IIMS_ORGEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IMS_TB_ModuleFunctionSet" EntityType="IIMS_ORGModel.IMS_TB_ModuleFunction" />
+          <EntitySet Name="IMS_TB_ModuleSet" EntityType="IIMS_ORGModel.IMS_TB_Module" />
+          <EntitySet Name="IMS_TB_PermissionSet" EntityType="IIMS_ORGModel.IMS_TB_Permission" />
+          <EntitySet Name="IMS_TB_RoleInfoSet" EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" />
+          <EntitySet Name="IMS_TB_RoleUserSet" EntityType="IIMS_ORGModel.IMS_TB_RoleUser" />
+          <EntitySet Name="IMS_TB_UserInfoSet" EntityType="IIMS_ORGModel.IMS_TB_UserInfo" />
+        </EntityContainer>
         <EntityType Name="IMS_TB_ModuleFunction">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ControlID" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ControlID" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FunctionID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IMS_TB_Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="SortID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="IMS_TB_Permission">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="String" Nullable="false" Unicode="true" MaxLength="36" FixedLength="false" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="FunctionID" Type="Int32" />
           <Property Name="LastModDate" Type="DateTime" Precision="3" />
@@ -120,10 +129,18 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RoleID" Type="String" Unicode="true" MaxLength="36" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="IMS_TB_RoleUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_TB_UserInfo">
           <Key>
@@ -134,24 +151,9 @@
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="LastModDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityContainer Name="IIMS_ORGEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="IMS_TB_Module" EntityType="IIMS_ORGModel.IMS_TB_Module" />
-          <EntitySet Name="IMS_TB_ModuleFunction" EntityType="Self.IMS_TB_ModuleFunction" />
-          <EntitySet Name="IMS_TB_Permission" EntityType="Self.IMS_TB_Permission" />
-          <EntitySet Name="IMS_TB_RoleInfo" EntityType="Self.IMS_TB_RoleInfo" />
-          <EntitySet Name="IMS_TB_UserInfo" EntityType="Self.IMS_TB_UserInfo" />
-          <EntitySet Name="IMS_TB_RoleUser" EntityType="IIMS_ORGModel.IMS_TB_RoleUser" />
-        </EntityContainer>
-        <EntityType Name="IMS_TB_RoleUser">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -159,77 +161,78 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IIMS_ORGModelStoreContainer" CdmEntityContainer="IIMS_ORGEntities">
-          <EntitySetMapping Name="IMS_TB_Module">
+          <EntitySetMapping Name="IMS_TB_ModuleFunctionSet">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_ModuleFunction">
+              <MappingFragment StoreEntitySet="IMS_TB_ModuleFunctionSet">
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ControlID" ColumnName="ControlID" />
+                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_TB_ModuleSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_Module">
-              <MappingFragment StoreEntitySet="IMS_TB_Module">
+              <MappingFragment StoreEntitySet="IMS_TB_ModuleSet">
                 <ScalarProperty Name="SortID" ColumnName="SortID" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_ModuleFunction">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_ModuleFunction">
-              <MappingFragment StoreEntitySet="IMS_TB_ModuleFunction">
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
-                <ScalarProperty Name="ControlID" ColumnName="ControlID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_Permission">
+          <EntitySetMapping Name="IMS_TB_PermissionSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_Permission">
-              <MappingFragment StoreEntitySet="IMS_TB_Permission">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+              <MappingFragment StoreEntitySet="IMS_TB_PermissionSet">
+                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
                 <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
-                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_RoleInfo">
+          <EntitySetMapping Name="IMS_TB_RoleInfoSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_RoleInfo">
-              <MappingFragment StoreEntitySet="IMS_TB_RoleInfo">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              <MappingFragment StoreEntitySet="IMS_TB_RoleInfoSet">
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_UserInfo">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_UserInfo">
-              <MappingFragment StoreEntitySet="IMS_TB_UserInfo">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_TB_RoleUser">
+          <EntitySetMapping Name="IMS_TB_RoleUserSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_RoleUser">
-              <MappingFragment StoreEntitySet="IMS_TB_RoleUser">
+              <MappingFragment StoreEntitySet="IMS_TB_RoleUserSet">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="IMS_TB_UserInfoSet">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_UserInfo">
+              <MappingFragment StoreEntitySet="IMS_TB_UserInfoSet">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -243,7 +246,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />

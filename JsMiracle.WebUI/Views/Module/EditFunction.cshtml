@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "EditFunction";
+}
+
+@model  JsMiracle.Entities.IMS_TB_ModuleFunction
+
+<div>
+    @using (Ajax.BeginForm("SaveFunction", "Module"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "ff" }))
+    {
+        @Html.HiddenFor(n => n.ID);
+        @Html.HiddenFor(n => n.ModuleID, new { @Value = Model.ModuleID });
+        @Html.HiddenFor(n => n.FunctionID, new { @Value = Model.FunctionID });
+
+        <table class="TB">
+            <tr>
+                <td>
+                    父模块号
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.ModuleID, new { @Value = Model.ModuleID, @disabled = "disabled" })
+                </td>
+            </tr>
+            <tr>
+                <td>功能编号</td>
+                <td>@Html.TextBoxFor(n => n.FunctionID, new { @Value = Model.FunctionID, @disabled = "disabled" })</td>
+            </tr>
+            <tr>
+                <td>功能名称</td>
+                <td>@Html.TextBoxFor(n => n.FunctionName, new { id = "txtFunName" })</td>
+            </tr>
+            <tr>
+                <td>控件名称</td>
+                <td>@Html.TextBoxFor(n => n.ControlID, new { id = "txtConId" })</td>
+            </tr>
+            <tr>
+                <td>描述</td>
+                <td>@Html.TextAreaFor(n => n.Description, new { id = "txtDesc", rows = "2" })</td>
+            </tr>
+            <tr style="text-align:center;display:table-row;">
+                <td colspan="2">
+                    <input type="submit" value="提交" class="easyui-linkbutton" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#ff').form({
+            success: function (data) {
+                console.log(data);
+                var data = eval('(' + data + ')');
+                if (data.success) {
+                    $.messager.alert('模块编辑', data.msg, "info", function () {
+                        // 关闭当前div 刷新父窗体
+                        closeWindow();
+                    });
+                }
+            }
+        });
+
+        $("#txtFunName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtConId").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+    });
+
+
+</script>

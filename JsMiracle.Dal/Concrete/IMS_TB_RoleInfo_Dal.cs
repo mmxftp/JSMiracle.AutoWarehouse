@@ -8,7 +8,7 @@ using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_RoleInfo_Dal : DataLayerBase, IRole
+    public class IMS_TB_RoleInfo_Dal : IIMS_ORGEntities, IRole
     {
         //public IMS_TB_RoleInfo_Dal(IIMS_ORGEntities context)
         //    : base(context)
@@ -25,14 +25,14 @@ namespace JsMiracle.Dal.Concrete
             }
             else
             {
-                ent = IMS_TB_RoleInfo.Find(entity.ID);
+                ent = IMS_TB_RoleInfoSet.Find(entity.ID);
                 if (ent != null)
                 {
                     ent.ID = entity.ID;
                     ent.RoleID = entity.RoleID;
                     ent.RoleName = entity.RoleName;
                     ent.Description = entity.Description;
-                    ent = DataLayerBase.Update(this, entity);
+                    ent = DataLayerBase.Update(this, ent);
                 }
             }
             return ent;
@@ -65,7 +65,7 @@ namespace JsMiracle.Dal.Concrete
 
         public int Remove(int id)
         {
-            var ent = IMS_TB_Module.Find(id);
+            var ent = IMS_TB_RoleInfoSet.Find(id);
 
             if (ent == null)
                 return 0;
@@ -77,13 +77,13 @@ namespace JsMiracle.Dal.Concrete
 
         public IMS_TB_RoleInfo GetEntity(int id)
         {
-            return IMS_TB_RoleInfo.Find(id);
+            return IMS_TB_RoleInfoSet.Find(id);
         }
 
 
         public IList<IMS_TB_RoleInfo> GetAllRole()
         {
-            return IMS_TB_RoleInfo.ToList();
+            return IMS_TB_RoleInfoSet.ToList();
         }
     }
 }
