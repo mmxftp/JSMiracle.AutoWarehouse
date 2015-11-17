@@ -18,7 +18,14 @@ namespace JsMiracle.Dal.Abstract
 
         int Remove(int id);
 
-        IMS_TB_Module GetEntity(int id);
+        /// <summary>
+        /// 得到模块实例
+        /// </summary>
+        /// <param name="id">表主键</param>
+        /// <param name="moduleid">模块编号不可重覆</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">id 和moduleid 参数中必须有一个参数有值</exception>
+        IMS_TB_Module GetEntity(int? id, int moduleid=-1);
 
         IList<IMS_TB_Module> GetChildModuleList(int parentid);
     }

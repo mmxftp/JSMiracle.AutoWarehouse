@@ -15,6 +15,8 @@
           <Property Name="ControlID" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
           <Property Name="FunctionID" Type="int" Nullable="false" />
+          <Property Name="Controller_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Action_Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="IMS_TB_ModuleSet">
           <Key>
@@ -28,6 +30,8 @@
           <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="ParentID" Type="int" Nullable="false" />
           <Property Name="SortID" Type="int" Nullable="false" />
+          <Property Name="Controller_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Action_Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="IMS_TB_PermissionSet">
           <Key>
@@ -100,6 +104,8 @@
           <Property Name="ControlID" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FunctionID" Type="Int32" Nullable="false" />
+          <Property Name="Controller_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Action_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_TB_Module">
           <Key>
@@ -113,6 +119,8 @@
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="ParentID" Type="Int32" Nullable="false" />
           <Property Name="SortID" Type="Int32" Nullable="false" />
+          <Property Name="Controller_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Action_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_TB_Permission">
           <Key>
@@ -164,6 +172,8 @@
           <EntitySetMapping Name="IMS_TB_ModuleFunctionSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_ModuleFunction">
               <MappingFragment StoreEntitySet="IMS_TB_ModuleFunctionSet">
+                <ScalarProperty Name="Action_Name" ColumnName="Action_Name" />
+                <ScalarProperty Name="Controller_Name" ColumnName="Controller_Name" />
                 <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ControlID" ColumnName="ControlID" />
@@ -176,6 +186,8 @@
           <EntitySetMapping Name="IMS_TB_ModuleSet">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_Module">
               <MappingFragment StoreEntitySet="IMS_TB_ModuleSet">
+                <ScalarProperty Name="Action_Name" ColumnName="Action_Name" />
+                <ScalarProperty Name="Controller_Name" ColumnName="Controller_Name" />
                 <ScalarProperty Name="SortID" ColumnName="SortID" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />

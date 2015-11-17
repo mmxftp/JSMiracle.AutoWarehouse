@@ -16,8 +16,5 @@ namespace JsMiracle.Dal.Abstract
         IMS_TB_ModuleFunction Save(IMS_TB_ModuleFunction module);
 
         int Remove(int id);
-
-
-
     }
 }

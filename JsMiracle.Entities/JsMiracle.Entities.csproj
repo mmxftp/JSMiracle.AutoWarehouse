@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="EasyUI_Model\ExtResult.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
+    <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="IMS_TB_Module.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -88,8 +89,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Partial\IMS_TB_ModuleSet.cs" />
     <Compile Include="Partial\IMS_TB_UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\PermissionViewModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

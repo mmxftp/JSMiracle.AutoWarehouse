@@ -1,0 +1,29 @@
+﻿<style type="text/css">
+    #login {
+        float:right;
+        width:300px;
+        padding-top:50px;
+    }
+    
+    #logoutForm{
+        display:inline;
+    }
+
+    #site-title{
+        float:left;
+    }
+</style>
+
+<div id="site-title" >
+    <img src="~/Content/images/Logo.jpg" />
+</div>
+<div id="login">
+    <b>
+        你好:@User.Identity.Name
+    </b>
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+    }
+</div>

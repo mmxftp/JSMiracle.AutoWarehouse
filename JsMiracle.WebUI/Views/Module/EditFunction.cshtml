@@ -15,11 +15,9 @@
 
         <table class="TB">
             <tr>
+                <td>父模块</td>
                 <td>
-                    父模块号
-                </td>
-                <td>
-                    @Html.TextBoxFor(n => n.ModuleID, new { @Value = Model.ModuleID, @disabled = "disabled" })
+                    @Html.TextBoxFor(n => n.ModuleID, new { @Value = string.Format("{0}({1})",ViewBag.ModName, Model.ModuleID), @disabled = "disabled" })
                 </td>
             </tr>
             <tr>
@@ -29,6 +27,14 @@
             <tr>
                 <td>功能名称</td>
                 <td>@Html.TextBoxFor(n => n.FunctionName, new { id = "txtFunName" })</td>
+            </tr>
+            <tr>
+                <td>Controller</td>
+                <td>@Html.TextBoxFor(n => n.Controller_Name, new { id = "txtControllerName" })</td>
+            </tr>
+            <tr>
+                <td>Action</td>
+                <td>@Html.TextBoxFor(n => n.Action_Name, new { id = "txtActionName" })</td>
             </tr>
             <tr>
                 <td>控件名称</td>
@@ -53,10 +59,9 @@
     $(function () {
         $('#ff').form({
             success: function (data) {
-                console.log(data);
-                var data = eval('(' + data + ')');
-                if (data.success) {
-                    $.messager.alert('模块编辑', data.msg, "info", function () {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('模块编辑', ret.msg, "info", function () {
                         // 关闭当前div 刷新父窗体
                         closeWindow();
                     });
@@ -74,6 +79,15 @@
             missingMessage: '此框不得为空'
         });
 
+        $("#txtControllerName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtActionName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
     });
 
 

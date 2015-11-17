@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,27 +53,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\DataLayerBase.cs" />
+    <Compile Include="Abstract\IActionPermission.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
+    <Compile Include="Abstract\IFormsAuthentication.cs" />
+    <Compile Include="Abstract\IMembershipService.cs" />
     <Compile Include="Abstract\IModule.cs" />
     <Compile Include="Abstract\IModuleFunction.cs" />
     <Compile Include="Abstract\IPermission.cs" />
     <Compile Include="Abstract\IRole.cs" />
     <Compile Include="Abstract\IRoleUser.cs" />
     <Compile Include="Abstract\IUser.cs" />
+    <Compile Include="Concrete\FormsAuthenticationService.cs" />
     <Compile Include="Concrete\IMS_TB_ModuleFunction_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_Module_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_Permission_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_RoleInfo_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_RoleUser_Dal.cs" />
     <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
-    <Compile Include="Models\EasyUI_TreeModel.cs" />
-    <Compile Include="Models\UserStateEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsMiracle.Entities\JsMiracle.Entities.csproj">
       <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
       <Name>JsMiracle.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.Framework\JsMiracle.Framework.csproj">
+      <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>
+      <Name>JsMiracle.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -22,5 +22,7 @@ namespace JsMiracle.Entities
         public int ModuleID { get; set; }
         public int ParentID { get; set; }
         public int SortID { get; set; }
+        public string Controller_Name { get; set; }
+        public string Action_Name { get; set; }
     }
 }

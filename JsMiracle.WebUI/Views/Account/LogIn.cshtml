@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "LogIn";
+    Layout = null;
+}
+
+@model JsMiracle.WebUI.Models.LoginModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LogIn</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/EasyUI/themes/base")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/easyui")
+    @*<script type="text/javascript" src="~/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/CustomScripts/common.js"></script>
+    <link rel="icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
+    <style type="text/css">
+        .row {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body style="padding-bottom: 0px; background-color: #c8e5f7; margin: 0px;">
+    @using (Ajax.BeginForm("LogIn", "Account", new AjaxOptions()
+    , new { returnUrl = ViewBag, enctype = "multipart/form-data", id = "ff"
+    }))
+    {
+        @Html.AntiForgeryToken()
+
+        <table width="476" style="margin-left: auto; margin-right: auto; margin-top: 300px;
+            padding: 5px; border: 10px solid #BCD4F2;" border="0" bgcolor="#ffffff" id="tb">
+            <tr>
+                <td colspan="2">
+                    <img src="~/Content/images/Title.png" width="450" height="50" alt="" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="~/Content/images/u.gif" width="65" height="59" alt="" />
+                </td>
+                <td>
+                    <table>
+                        <tr class="row">
+                            <td style="width:80px;">
+                                @Html.LabelFor(m => m.UserID)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.UserID, new { id = "txtUser" })
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td style="width:80px;">
+                                @Html.LabelFor(m => m.Password)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.Password, new { id = "txtPwd", type = "password" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center;">
+                                <input type="submit" value="登录" class="easyui-linkbutton" style="width:100px;height:30px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    }
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#txtUser').validatebox({
+            required: true,
+            iconCls: 'icon-man',
+            iconAlign: 'left',
+            missingMessage: '员工号不得为空'
+        });
+
+        $('#txtPwd').validatebox({
+            required: true,
+            iconCls: 'icon-lock',
+            iconAlign: 'left',
+            missingMessage: '密码不得为空'
+        });
+
+        $('#ff').form({
+
+            success: function (data) {
+
+                var ret = JSON.parse(data);
+                console.log(ret.msg);
+                if (!ret.success) {
+                    $.messager.alert('登录信息', ret.msg, "info");
+                }
+                else {
+                    window.location.href = ret.msg;
+                }
+            },
+
+        });
+    });
+</script>

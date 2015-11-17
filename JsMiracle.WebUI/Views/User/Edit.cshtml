@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Edit";
+    //Layout = null;
 }
 
 
@@ -12,24 +13,24 @@
 {
     @Html.HiddenFor(n => n.ID);
     @Html.HiddenFor(n => n.State);
-    <table>
-        <tr style="height:50px">
+    <table class="TB" style="height:230px;">
+        <tr>
             <td>员工编号</td>
             <td>@Html.TextBoxFor(n => n.UserID, new { id = "txtUserId" })</td>
         </tr>
-        <tr style="height:50px">
+        <tr>
             <td>员工姓名</td>
             <td>@Html.TextBoxFor(n => n.UserName, new { id = "txtUserName" })</td>
         </tr>
-        <tr style="height:50px">
+        <tr>
             <td>Email</td>
             <td>@Html.TextBoxFor(n => n.Email, new { id = "txtEmail" })</td>
         </tr>
-        <tr style="height:50px">
+        <tr>
             <td>登录密码</td>
-            <td>@Html.TextBoxFor(n => n.Password, new { id = "txtPwd" ,type="password"})</td>
+            <td>@Html.TextBoxFor(n => n.Password, new { id = "txtPwd", type = "password" })</td>
         </tr>
-        <tr style="text-align:center">
+        <tr style="text-align:center;display:table-row;">
             <td colspan="2"><input type="submit" value="提交" class="easyui-linkbutton" /></td>
         </tr>
     </table>
@@ -42,9 +43,9 @@
                 console.log(data);
                 var data = eval('(' + data + ')');
                 if (data.success) {
-                    $.messager.alert('用户信息', data.msg, "info",  function () {
-                        // 关闭当前div 刷新父窗体
-                        parent.$('#floatingLayerWindow').window('close'); parent.location.reload();
+                    $.messager.alert('用户信息', data.msg, "info", function () {
+                        //closeWindow('0001');
+                        closeWindow();
                     });
                 }
             }

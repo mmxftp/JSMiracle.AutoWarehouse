@@ -45,12 +45,33 @@
                 @Html.TextBoxFor(n => n.SortID, new { id = "txtSortID" })
             </td>
         </tr>
-        <tr>
-            <td>URL</td>
-            <td>
-                @Html.TextBoxFor(n => n.URL, new { id = "txtUrl", style = "width:250px;" })
-            </td>
-        </tr>
+        @if (Model.ParentID != -1)
+        {
+            <tr>
+                <td>
+                    Controller
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.Controller_Name, new { id = "txtController" })
+                </td>
+            </tr>
+            <tr>
+                <td>Action</td>
+                <td>@Html.TextBoxFor(n => n.Action_Name, new { id = "txtAction" })</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>
+                    @Html.TextBoxFor(n => n.URL, new { id = "txtUrl", style = "width:250px;" })
+                </td>
+            </tr>
+        }
+        else
+        {
+            @Html.HiddenFor(n => n.Controller_Name, new { @Value = Model.Controller_Name });
+            @Html.HiddenFor(n => n.Action_Name, new { @Value = Model.Action_Name });
+            @Html.HiddenFor(n => n.URL, new { @Value = Model.URL });
+        }
         <tr>
             <td>描述</td>
             <td>
@@ -79,12 +100,15 @@
     $(function () {
         $('#ff').form({
             success: function (data) {
-                console.log(data);
-                var data = eval('(' + data + ')');
-                if (data.success) {
-                    $.messager.alert('模块编辑', data.msg, "info", function () {
+                //console.log(data);
+                //var data = eval('(' + data + ')');
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('模块编辑', ret.msg, "info", function () {
+                        //console.log(ret);
                         // 关闭当前div 刷新父窗体
-                        closeWindow();
+                        //closeWindow('reloadDataGrid(' + ret.parentid+ ')');
+                        closeWindow( ret.parentid);
                     });
                 }
             }
@@ -95,6 +119,16 @@
 
         if (!rootModule){
             $("#txtUrl").validatebox({
+                required: true,
+                missingMessage:'此框不得为空'
+            });
+
+            $("#txtController").validatebox({
+                required: true,
+                missingMessage:'此框不得为空'
+            });
+
+            $("#txtAction").validatebox({
                 required: true,
                 missingMessage:'此框不得为空'
             });

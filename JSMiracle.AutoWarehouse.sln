@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.WebUI", "JsMiracl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.UnitTests", "JsMiracle.UnitTests\JsMiracle.UnitTests.csproj", "{9EEDD3FC-1418-4211-B1FE-966144091986}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsMiracle.Framework", "JsMiracle.Framework\JsMiracle.Framework.csproj", "{64474A41-6745-4DDB-801E-9F745AA20742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9EEDD3FC-1418-4211-B1FE-966144091986}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EEDD3FC-1418-4211-B1FE-966144091986}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EEDD3FC-1418-4211-B1FE-966144091986}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64474A41-6745-4DDB-801E-9F745AA20742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64474A41-6745-4DDB-801E-9F745AA20742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64474A41-6745-4DDB-801E-9F745AA20742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64474A41-6745-4DDB-801E-9F745AA20742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d74cf76dcabb438ea6ac26022dda83d1" Name="Diagram1">
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_ModuleFunction" Width="1.5" PointX="0.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Module" Width="1.5" PointX="2.375" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Permission" Width="1.5" PointX="4.125" PointY="4" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" Width="1.5" PointX="4.125" PointY="6.5" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleUser" Width="1.5" PointX="0.5" PointY="6.625" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_UserInfo" Width="1.5" PointX="2.375" PointY="6.625" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_ModuleFunction" Width="1.875" PointX="0.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Module" Width="1.625" PointX="2.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_Permission" Width="1.875" PointX="5.125" PointY="0.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" Width="1.875" PointX="5.125" PointY="3.125" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_RoleUser" Width="1.5" PointX="0.5" PointY="3.125" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_TB_UserInfo" Width="1.625" PointX="2.875" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,23 +17,6 @@ namespace JsMiracle.WebUI
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        //private readonly IWindsorContainer containerByApi;
-        private readonly IWindsorContainer containerByCon;
-
-        public MvcApplication()
-        {
-            //this.containerByApi = new WindsorContainer().Install(new DependencyInstaller());
-            this.containerByCon = new WindsorContainer().Install(new DependencyInstaller());
-        }
-
-        public override void Dispose()
-        {
-            //this.containerByApi.Dispose();
-            this.containerByCon.Dispose();
-            base.Dispose();
-        }
-
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -48,8 +31,10 @@ namespace JsMiracle.WebUI
             //    typeof(IHttpControllerActivator),
             //    new WindsorActivator(this.containerByApi));
             //controller 注入包
-            var controllerFactory = new WindsorControllerFactory(containerByCon.Kernel);
+            var controllerFactory = new WindsorControllerFactory(WindsorContaineFactory.GetContainer().Kernel);
+
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+
         }
     }
 }

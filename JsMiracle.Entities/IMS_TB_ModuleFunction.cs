@@ -20,5 +20,7 @@ namespace JsMiracle.Entities
         public string ControlID { get; set; }
         public string Description { get; set; }
         public int FunctionID { get; set; }
+        public string Controller_Name { get; set; }
+        public string Action_Name { get; set; }
     }
 }

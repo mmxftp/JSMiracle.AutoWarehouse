@@ -25,6 +25,8 @@ namespace JsMiracle.Dal.Concrete
                     ent.FunctionID = entity.FunctionID;
                     ent.FunctionName = entity.FunctionName;
                     ent.ControlID = entity.ControlID;
+                    ent.Controller_Name = entity.Controller_Name;
+                    ent.Action_Name = entity.Action_Name;
                     ent.Description = entity.Description;
                     ent = DataLayerBase.Update(this, ent);
                 }

@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Entities;
+using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace JsMiracle.Dal.Concrete
                     ent.URL = entity.URL;
                     ent.SortID = entity.SortID;
                     ent.Description = entity.Description;
+                    ent.Controller_Name = entity.Controller_Name;
+                    ent.Action_Name = entity.Action_Name;
                     ent = DataLayerBase.Update(this, ent);
                 }
             }
@@ -79,14 +82,14 @@ namespace JsMiracle.Dal.Concrete
 
                 // CreateQuery 中 返回一个值时必须要把此值定义为VALUE才能得到数据
                 // 如select VALUE a.ModuleID from  IMS_TB_ModuleSet
-//                string sql = string.Format(
-//                    @"select VALUE  (min(a.ModuleID)+ 1) % {0} + {0} 
-//                        from IMS_TB_ModuleSet as a
-//                        where a.parentid = {1} 
-//                            and not exists (select 'f' from IMS_TB_ModuleSet as b
-//	                        where b.parentid =  {1}  and b.ModuleID  =  (a.ModuleID+ 1) % {0} + {0}
-//                        	AND A.ModuleID >= {2} )	"
-//                    , parentGroupNumber, module.ParentID, parentGroupNumber + 101);
+                //                string sql = string.Format(
+                //                    @"select VALUE  (min(a.ModuleID)+ 1) % {0} + {0} 
+                //                        from IMS_TB_ModuleSet as a
+                //                        where a.parentid = {1} 
+                //                            and not exists (select 'f' from IMS_TB_ModuleSet as b
+                //	                        where b.parentid =  {1}  and b.ModuleID  =  (a.ModuleID+ 1) % {0} + {0}
+                //                        	AND A.ModuleID >= {2} )	"
+                //                    , parentGroupNumber, module.ParentID, parentGroupNumber + 101);
 
 
                 // 得到可用的最小号码
@@ -101,9 +104,9 @@ namespace JsMiracle.Dal.Concrete
                 // 得到当前序号中断开的最小号码
                 // 如:   1,2,3,4,6 , => 5
                 //       1,2,3       => 4 
-                var nextModuleIDQueryable = 
-                    from a in IMS_TB_ModuleSet.Where(n=>n.ParentID == module.ParentID)
-                    join b in IMS_TB_ModuleSet.Where(n=>n.ParentID == module.ParentID)
+                var nextModuleIDQueryable =
+                    from a in IMS_TB_ModuleSet.Where(n => n.ParentID == module.ParentID)
+                    join b in IMS_TB_ModuleSet.Where(n => n.ParentID == module.ParentID)
                     on (a.ModuleID + 1) % parentGroupNumber + parentGroupNumber equals b.ModuleID into left_Join
                     from v in left_Join.DefaultIfEmpty()
                     where v.ID == null && a.ModuleID >= defaultModuleID
@@ -138,9 +141,15 @@ namespace JsMiracle.Dal.Concrete
         }
 
 
-        public IMS_TB_Module GetEntity(int id)
+        public IMS_TB_Module GetEntity(int? id, int moduleid = -1)
         {
-            return IMS_TB_ModuleSet.Find(id);
+            if (id.HasValue)
+                return IMS_TB_ModuleSet.Find(id);
+
+            if (moduleid != -1)
+                return IMS_TB_ModuleSet.Where(n => n.ModuleID == moduleid).FirstOrDefault();
+
+            throw new JsMiracleException("id或moduleid 必须有一个参数有值");
         }
 
 

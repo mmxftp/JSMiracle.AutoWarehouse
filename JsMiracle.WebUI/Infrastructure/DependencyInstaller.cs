@@ -4,6 +4,8 @@ using Castle.Windsor;
 using JsMiracle.Dal.Abstract;
 using JsMiracle.Dal.Concrete;
 using JsMiracle.Entities;
+using JsMiracle.Framework.Cache;
+using JsMiracle.WebUI.CommonSupport;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace JsMiracle.WebUI.Infrastructure
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IUser>()
+                Component.For<IUser, IMembershipService>()
                 .ImplementedBy<IMS_TB_UserInfo_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IModule>()
@@ -37,12 +39,21 @@ namespace JsMiracle.WebUI.Infrastructure
                 Component.For<IRoleUser>()
                 .ImplementedBy<IMS_TB_RoleUser_Dal>().LifeStyle.PerWebRequest,
 
+                Component.For<IFormsAuthentication>()
+                .ImplementedBy<FormsAuthenticationService>().LifeStyle.PerWebRequest,
+
+                Component.For<ICache>()
+                .ImplementedBy<WebCache>().LifeStyle.PerWebRequest,
+
+                Component.For<IActionPermission>()
+                .ImplementedBy<ActionPermission>().LifeStyle.PerWebRequest,
+
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()
 
                 );
-
         }
+
     }
 
 }

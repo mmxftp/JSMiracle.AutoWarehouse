@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.View;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -33,10 +34,10 @@ namespace JsMiracle.Dal.Concrete
             /// order by m.sortid
 
             var moduleQueryable = from m in IMS_TB_ModuleSet
-                                  join p in perList.Where(n=> n.FunctionID == -1 )
+                                  join p in perList.Where(n => n.FunctionID == -1)
                                   on m.ModuleID equals p.ModuleID into p_join
                                   from v in p_join.DefaultIfEmpty()
-                                  where m.ParentID != -1 
+                                  where m.ParentID != -1
                                   orderby m.SortID
                                   select new
                                   {
@@ -246,10 +247,12 @@ namespace JsMiracle.Dal.Concrete
                 // join中写EF的DbSet<T>
                 var removePermissionList = from a in permissionAllQueryable
                                            join p in IMS_TB_PermissionSet
-                                           on new {
-                                               a.RoleId, 
+                                           on new
+                                           {
+                                               a.RoleId,
                                                a.ModuleID,
-                                               a.FunctionID }
+                                               a.FunctionID
+                                           }
                                            equals new
                                            {
                                                p.RoleId,
@@ -264,6 +267,85 @@ namespace JsMiracle.Dal.Concrete
             }
 
             return effectRowCount;
+        }
+
+
+        public PermissionViewModule GetPermissionListByUserID(string userid)
+        {
+            //            select m.* from IMS_TB_ModuleSet m
+            //left join IMS_TB_PermissionSet p on p.ModuleID = m.ModuleID  and p.FunctionID = -1
+            //left join IMS_TB_RoleUserSet r on p.RoleId = r.RoleID
+            //where r.UserID ='0001'
+
+            var modList = from m in IMS_TB_ModuleSet
+                          join p in IMS_TB_PermissionSet.Where(n => n.FunctionID == -1)
+                          on m.ModuleID equals p.ModuleID into v_per
+                          from v in v_per.DefaultIfEmpty()
+                          join r in IMS_TB_RoleUserSet
+                          on v.RoleId equals r.RoleID into v_ret
+                          from r in v_ret.DefaultIfEmpty()
+                          where r.UserID == userid
+                          select m;
+
+
+            //select f.* from IMS_TB_ModuleFunctionSet f
+            //left join IMS_TB_PermissionSet p on p.ModuleID = f.ModuleID  and p.FunctionID = f.FunctionID
+            //left join IMS_TB_RoleUserSet r on p.RoleId = r.RoleID
+            //where r.UserID ='0001'
+
+            var funList = from f in IMS_TB_ModuleFunctionSet
+                          join p in IMS_TB_PermissionSet
+                          on new
+                            {
+                                mod = f.ModuleID,
+                                fun = (int?)f.FunctionID
+                            }
+                          equals new
+                            {
+                                mod = p.ModuleID,
+                                fun = p.FunctionID
+                            }
+                          into v_per
+                          from v in v_per.DefaultIfEmpty()
+                          join r in IMS_TB_RoleUserSet
+                          on v.RoleId equals r.RoleID into v_ret
+                          from r in v_ret.DefaultIfEmpty()
+                          where r.UserID == userid
+                          select f;
+
+            // 不分层的权限处理
+            var permissions = new PermissionViewModule(modList.ToList(), funList.ToList());
+            //permissions.Modules = modList.ToList();
+            //permissions.Functions = funList.ToList();
+
+            return permissions;
+            // 分层的权限处理
+            //var perList = new List<PermissionViewModule>();
+
+            //foreach (var m in modList)
+            //{
+            //    var p = new PermissionViewModule();
+            //    p.Module = m;
+
+            //    p.Functions = funList.Where(n => n.ModuleID == m.ModuleID).ToList();
+            //    perList.Add(p);
+            //}
+
+            //return perList;
+        }
+
+
+        public PermissionViewModule GetAllPermission()
+        {
+             //if (Cache.GetApplicationCache("actionpermission") == null)
+
+            //cache.SetApplicationCache(CacheAllPermission, data);
+            //(IList<ActionPermission>)Cache.GetApplicationCache("actionpermission");
+
+            var permissions = new PermissionViewModule(IMS_TB_ModuleSet.ToList(), IMS_TB_ModuleFunctionSet.ToList());
+            //permissions.Modules = IMS_TB_ModuleSet.ToList();
+            //permissions.Functions = IMS_TB_ModuleFunctionSet.ToList();
+            return permissions;
         }
     }
 }
