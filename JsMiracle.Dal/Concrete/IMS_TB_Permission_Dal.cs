@@ -2,6 +2,7 @@
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Entities.View;
+using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -12,20 +13,20 @@ using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_Permission_Dal : IIMS_ORGEntities, IPermission
+    public class IMS_TB_Permission_Dal : DataLayer<IMS_TB_Permission>, IPermission
     {
         public IList<TreeModel> GetPermissionInfo(string roleid)
         {
             // 根节点
             var rootQueryable =
-                IMS_TB_ModuleSet.Where(n => n.ParentID == -1).OrderBy(n => n.SortID);
+                this.DbContext.IMS_TB_ModuleSet.Where(n => n.ParentID == -1).OrderBy(n => n.SortID);
 
             List<TreeModel> data = new List<TreeModel>();
             TreeModel tm = new TreeModel();
             data.Add(tm);
             tm.id = -1;
 
-            var perList = IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
+            var perList = this.DbContext.IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
 
             /// select * from  IMS_TB_Module m
             /// left join IMS_TB_Permission p
@@ -33,7 +34,7 @@ namespace JsMiracle.Dal.Concrete
             /// /*  perList.Where(n => n.RoleId == roleid); */  => and p.roleid = roleid
             /// order by m.sortid
 
-            var moduleQueryable = from m in IMS_TB_ModuleSet
+            var moduleQueryable = from m in this.DbContext.IMS_TB_ModuleSet
                                   join p in perList.Where(n => n.FunctionID == -1)
                                   on m.ModuleID equals p.ModuleID into p_join
                                   from v in p_join.DefaultIfEmpty()
@@ -48,7 +49,7 @@ namespace JsMiracle.Dal.Concrete
                                       HasPermission = v.ID == null ? false : true
                                   };
 
-            var funQueryable = from f in IMS_TB_ModuleFunctionSet
+            var funQueryable = from f in this.DbContext.IMS_TB_ModuleFunctionSet
                                join p in perList
                                 on f.FunctionID equals p.FunctionID into p_join
                                from v in p_join.DefaultIfEmpty()
@@ -142,7 +143,7 @@ namespace JsMiracle.Dal.Concrete
                 FunctionID = -1
             });
 
-            var functionQuery = from f in IMS_TB_ModuleFunctionSet
+            var functionQuery = from f in this.DbContext.IMS_TB_ModuleFunctionSet
                                 where f.ModuleID == moduleid
                                 select f;
 
@@ -159,16 +160,16 @@ namespace JsMiracle.Dal.Concrete
 
         public int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
         {
-            var role = IMS_TB_RoleInfoSet.Where(n => n.RoleID == roleid);
+            var role = this.DbContext.IMS_TB_RoleInfoSet.Where(n => n.RoleID == roleid);
             int effectRowCount = 0;
 
             if (role == null || role.Count() == 0)
                 return effectRowCount;
 
-            var perList = IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
+            var perList = this.DbContext.IMS_TB_PermissionSet.Where(n => n.RoleId == roleid);
 
             // 当前角色的所有权限
-            var permissionExistsQueryable = from p in IMS_TB_PermissionSet
+            var permissionExistsQueryable = from p in this.DbContext.IMS_TB_PermissionSet
                                             where p.RoleId == roleid
                                             select p;
 
@@ -180,11 +181,11 @@ namespace JsMiracle.Dal.Concrete
             // 根节点
             if (parentid == -1 && moduleid == -1 && functionid == -1)
             {
-                var rootModuleQuery = IMS_TB_ModuleSet.Where(n => n.ParentID == -1);
+                var rootModuleQuery = this.DbContext.IMS_TB_ModuleSet.Where(n => n.ParentID == -1);
 
                 foreach (var r in rootModuleQuery)
                 {
-                    var moduleQuery = from n in IMS_TB_ModuleSet
+                    var moduleQuery = from n in this.DbContext.IMS_TB_ModuleSet
                                       where n.ParentID == r.ModuleID
                                       select n;
 
@@ -197,7 +198,7 @@ namespace JsMiracle.Dal.Concrete
             // 父节点
             if (parentid == -1 && moduleid != -1 && functionid == -1)
             {
-                var moduleQuery = from n in IMS_TB_ModuleSet
+                var moduleQuery = from n in this.DbContext.IMS_TB_ModuleSet
                                   where n.ParentID == moduleid
                                   select n;
 
@@ -231,13 +232,13 @@ namespace JsMiracle.Dal.Concrete
                     if (!permissionExistsQueryable.Any(p => p.ModuleID == n.ModuleID && p.FunctionID == n.FunctionID))
                     {
                         n.LastModDate = System.DateTime.Now;
-                        IMS_TB_PermissionSet.Add(n);
+                        this.DbContext.IMS_TB_PermissionSet.Add(n);
                         effectRowCount++;
                     }
                 }
 
                 // 提交数据库
-                SaveChanges();
+                this.DbContext.SaveChanges();
             }
             else
             {
@@ -246,7 +247,7 @@ namespace JsMiracle.Dal.Concrete
                 // 因为permissionAllQueryable 为List<T>类型 , EF 中必须写在第一个from 语句中
                 // join中写EF的DbSet<T>
                 var removePermissionList = from a in permissionAllQueryable
-                                           join p in IMS_TB_PermissionSet
+                                           join p in this.DbContext.IMS_TB_PermissionSet
                                            on new
                                            {
                                                a.RoleId,
@@ -261,9 +262,9 @@ namespace JsMiracle.Dal.Concrete
                                            }
                                            select p;
 
-                IMS_TB_PermissionSet.RemoveRange(removePermissionList);
+                this.DbContext.IMS_TB_PermissionSet.RemoveRange(removePermissionList);
                 // 提交数据库
-                SaveChanges();
+                this.DbContext.SaveChanges();
             }
 
             return effectRowCount;
@@ -277,11 +278,11 @@ namespace JsMiracle.Dal.Concrete
             //left join IMS_TB_RoleUserSet r on p.RoleId = r.RoleID
             //where r.UserID ='0001'
 
-            var modList = from m in IMS_TB_ModuleSet
-                          join p in IMS_TB_PermissionSet.Where(n => n.FunctionID == -1)
+            var modList = from m in this.DbContext.IMS_TB_ModuleSet
+                          join p in this.DbContext.IMS_TB_PermissionSet.Where(n => n.FunctionID == -1)
                           on m.ModuleID equals p.ModuleID into v_per
                           from v in v_per.DefaultIfEmpty()
-                          join r in IMS_TB_RoleUserSet
+                          join r in this.DbContext.IMS_TB_RoleUserSet
                           on v.RoleId equals r.RoleID into v_ret
                           from r in v_ret.DefaultIfEmpty()
                           where r.UserID == userid
@@ -293,8 +294,8 @@ namespace JsMiracle.Dal.Concrete
             //left join IMS_TB_RoleUserSet r on p.RoleId = r.RoleID
             //where r.UserID ='0001'
 
-            var funList = from f in IMS_TB_ModuleFunctionSet
-                          join p in IMS_TB_PermissionSet
+            var funList = from f in this.DbContext.IMS_TB_ModuleFunctionSet
+                          join p in this.DbContext.IMS_TB_PermissionSet
                           on new
                             {
                                 mod = f.ModuleID,
@@ -307,7 +308,7 @@ namespace JsMiracle.Dal.Concrete
                             }
                           into v_per
                           from v in v_per.DefaultIfEmpty()
-                          join r in IMS_TB_RoleUserSet
+                          join r in this.DbContext.IMS_TB_RoleUserSet
                           on v.RoleId equals r.RoleID into v_ret
                           from r in v_ret.DefaultIfEmpty()
                           where r.UserID == userid
@@ -337,15 +338,21 @@ namespace JsMiracle.Dal.Concrete
 
         public PermissionViewModule GetAllPermission()
         {
-             //if (Cache.GetApplicationCache("actionpermission") == null)
+            var permissions = new PermissionViewModule(
+                this.DbContext.IMS_TB_ModuleSet.ToList()
+                , this.DbContext.IMS_TB_ModuleFunctionSet.ToList());
 
-            //cache.SetApplicationCache(CacheAllPermission, data);
-            //(IList<ActionPermission>)Cache.GetApplicationCache("actionpermission");
-
-            var permissions = new PermissionViewModule(IMS_TB_ModuleSet.ToList(), IMS_TB_ModuleFunctionSet.ToList());
-            //permissions.Modules = IMS_TB_ModuleSet.ToList();
-            //permissions.Functions = IMS_TB_ModuleFunctionSet.ToList();
             return permissions;
+        }
+
+
+        public List<IMS_TB_Permission> GetPermissionListByRoleID(string roleid)
+        {
+            if (string.IsNullOrEmpty(roleid))
+                throw new JsMiracleException("roleid 不可为空");
+
+            var data =this.DbContext.IMS_TB_PermissionSet.Where(n => n.RoleId.Equals(roleid, StringComparison.CurrentCultureIgnoreCase));
+            return data.ToList();
         }
     }
 }

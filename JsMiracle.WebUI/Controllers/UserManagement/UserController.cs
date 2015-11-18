@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using JsMiracle.Entities.Enum;
 
 namespace JsMiracle.WebUI.Controllers.UserManagement
 {
@@ -52,7 +53,23 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             //if (!int.TryParse(Request.Params["page"], out pageIndex))
             //    pageIndex = 1;
 
-             var dataList = dalUser.GetUserList(pageIndex, pageSize, txt, out totalCount);
+            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
+
+            if (!string.IsNullOrEmpty(txt))
+            {
+                filter =
+                    f => (f.UserID == txt || f.UserName.Contains(txt)) && f.State == (int)UserStateEnum.Normal;
+            }
+            else
+            {
+                filter =
+                    f => f.State == (int)UserStateEnum.Normal;
+            }
+
+             var dataList = dalUser.GetDataByPage(
+                 o=>o.UserID,
+                 filter,
+                 pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
             var info = new PaginationModel<IMS_TB_UserInfo>();
@@ -78,7 +95,11 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             {
                 try
                 {
-                    dalUser.Save(user);
+                    // 新增用户,密码需要md5一下
+                    if (user.ID == 0)
+                        user.Password = IMS_TB_UserInfo.GetPwdMD5(user.Password);
+
+                    dalUser.SaveOrUpdate(user);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +125,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         {
             try
             {
-                dalUser.Remove(id);
+                dalUser.Delete(id);
                 return this.JsonFormat(new ExtResult { success = true });
             }
             catch (Exception ex)

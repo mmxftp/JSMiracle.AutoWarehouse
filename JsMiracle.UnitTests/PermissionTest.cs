@@ -13,6 +13,7 @@ namespace JsMiracle.UnitTests
         {
             IIMS_ORGEntities ent = new IIMS_ORGEntities();
             //IMS_TB_Permission_Dal dal = new IMS_TB_Permission_Dal(ent);
+            //ent.IMS_TB_ItemSet.Create 
 
             //dal.GetPermission(1);
         }

@@ -8,7 +8,7 @@ using System.Web.Security;
 // 扩展属性,命名空间必须一致
 namespace JsMiracle.Entities
 {
-    public partial class IMS_TB_UserInfo
+    public partial class IMS_TB_UserInfo :  IModelBase
     {
         public static string GetPwdMD5(string pwd)
         {            

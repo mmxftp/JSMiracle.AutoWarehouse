@@ -91,9 +91,9 @@
     $.extend($.fn.validatebox.defaults.rules, {
         minLength: {
             validator: function(value,param){
-                return value.length >= param[0];
+                return value.length == param[0];
             },
-            message: '此框内容不得小于{0}长度'
+            message: '此框内容长度必须等于{0}'
         }
     });
 
@@ -108,7 +108,7 @@
                         //console.log(ret);
                         // 关闭当前div 刷新父窗体
                         //closeWindow('reloadDataGrid(' + ret.parentid+ ')');
-                        closeWindow( ret.parentid);
+                        closeWindow(ret.id, ret.parentid);
                     });
                 }
             }

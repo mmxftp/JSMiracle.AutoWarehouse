@@ -89,7 +89,10 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            var dataList = dalRole.GetRoleList(pageIndex, pageSize);
+            var dataList = dalRole.GetDataByPage(
+              o => o.RoleName,
+              null,
+              pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
             info.total = totalCount;
@@ -116,7 +119,13 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             {
                 try
                 {
-                    dalRole.Save(module);
+
+                    if (string.IsNullOrEmpty(module.RoleID))
+                    {
+                        module.RoleID = Guid.NewGuid().ToString();
+                    }
+
+                    dalRole.SaveOrUpdate(module);
                 }
                 catch (Exception ex)
                 {
@@ -136,7 +145,16 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         {
             try
             {
-                dalRole.Remove(id);
+                //var ent = dalRole.GetEntity(id);
+
+                //if (ent != null )
+                //{
+                //    dalRoleUser.GetUserList(ent.RoleID);
+
+                //    var permissionlist = dalPermission.GetPermissionListByRoleID(ent.RoleID);
+                //}
+
+                dalRole.Delete(id);
 
                 return this.JsonFormat(new ExtResult { success = true });
             }

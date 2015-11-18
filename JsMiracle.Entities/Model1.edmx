@@ -5,11 +5,34 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="IMS_TB_ItemSet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ItemType" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ABCRate" Type="int" Nullable="false" />
+          <Property Name="LifeTime" Type="int" Nullable="false" />
+          <Property Name="MinPackUnit" Type="int" />
+          <Property Name="MaxInventory" Type="bigint" />
+          <Property Name="MinInventory" Type="bigint" Nullable="false" />
+          <Property Name="WeightLVL" Type="int" Nullable="false" />
+          <Property Name="RiskLVL" Type="int" Nullable="false" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="64" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LastModifier" Type="nvarchar" MaxLength="64" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <EntityType Name="IMS_TB_ModuleFunctionSet">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="FunctionName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ControlID" Type="nvarchar" MaxLength="300" Nullable="false" />
@@ -22,7 +45,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="300" />
           <Property Name="CreateDate" Type="datetime" />
@@ -37,7 +60,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="FunctionID" Type="int" />
@@ -47,7 +70,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="nvarchar" MaxLength="36" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" />
@@ -57,7 +80,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -65,7 +88,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="50" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
@@ -75,6 +98,7 @@
           <Property Name="State" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
+          <EntitySet Name="IMS_TB_ItemSet" EntityType="Self.IMS_TB_ItemSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_ModuleFunctionSet" EntityType="Self.IMS_TB_ModuleFunctionSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_ModuleSet" EntityType="Self.IMS_TB_ModuleSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_TB_PermissionSet" EntityType="Self.IMS_TB_PermissionSet" Schema="dbo" store:Type="Tables" />
@@ -92,13 +116,14 @@
           <EntitySet Name="IMS_TB_PermissionSet" EntityType="IIMS_ORGModel.IMS_TB_Permission" />
           <EntitySet Name="IMS_TB_RoleInfoSet" EntityType="IIMS_ORGModel.IMS_TB_RoleInfo" />
           <EntitySet Name="IMS_TB_RoleUserSet" EntityType="IIMS_ORGModel.IMS_TB_RoleUser" />
+          <EntitySet Name="IMS_TB_ItemSet" EntityType="IIMS_ORGModel.IMS_TB_Item" />
           <EntitySet Name="IMS_TB_UserInfoSet" EntityType="IIMS_ORGModel.IMS_TB_UserInfo" />
         </EntityContainer>
         <EntityType Name="IMS_TB_ModuleFunction">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="FunctionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ControlID" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
@@ -111,7 +136,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
@@ -126,7 +151,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleId" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="FunctionID" Type="Int32" />
@@ -136,7 +161,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
@@ -146,15 +171,38 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_TB_Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ItemType" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ABCRate" Type="Int32" Nullable="false" />
+          <Property Name="LifeTime" Type="Int32" Nullable="false" />
+          <Property Name="MinPackUnit" Type="Int32" />
+          <Property Name="MaxInventory" Type="Int64" />
+          <Property Name="MinInventory" Type="Int64" Nullable="false" />
+          <Property Name="WeightLVL" Type="Int32" Nullable="false" />
+          <Property Name="RiskLVL" Type="Int32" Nullable="false" />
+          <Property Name="BarCode" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Creator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifier" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_TB_UserInfo">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -226,6 +274,30 @@
               <MappingFragment StoreEntitySet="IMS_TB_RoleUserSet">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_TB_ItemSet">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_TB_Item">
+              <MappingFragment StoreEntitySet="IMS_TB_ItemSet">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="RiskLVL" ColumnName="RiskLVL" />
+                <ScalarProperty Name="WeightLVL" ColumnName="WeightLVL" />
+                <ScalarProperty Name="MinInventory" ColumnName="MinInventory" />
+                <ScalarProperty Name="MaxInventory" ColumnName="MaxInventory" />
+                <ScalarProperty Name="MinPackUnit" ColumnName="MinPackUnit" />
+                <ScalarProperty Name="LifeTime" ColumnName="LifeTime" />
+                <ScalarProperty Name="ABCRate" ColumnName="ABCRate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

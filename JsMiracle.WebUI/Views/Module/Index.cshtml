@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = null;
+
 }
 
 <div>
@@ -42,15 +42,23 @@
                 url: '@Url.Action("GetModuleList")',
                 valueField: 'ID',
                 textField: 'ModuleName',
+                editable:false ,
                 onSelect: function (rec) {
+                    console.log(rec);
+                    if (rec) {
                     $("#tabChildModule").datagrid('reload',
                         {
                             parentid: rec.ModuleID
                         });
+                    }
                 },
                 onLoadSuccess: function () { //加载完成后,设置选中第一项
-                    var val = $(this).combobox("getData");
-                    $(this).combobox("select", val[0].ID);
+                    var val = $(this).combobox('getValue')
+                    console.log(val);
+                    if (val == '') {
+                        var dataVal = $(this).combobox("getData");
+                        $(this).combobox("select", dataVal[0].ID);
+                    }
                 }
             });
 
@@ -92,7 +100,7 @@
                         var moduleFunctionUrl = '@Url.Action("IndexFunction")' + '?moduleid=' + row.ModuleID;
                         //var html = '<a href="' + moduleFunctionUrl + '" >子功能</a>'
                         var html = '<a href="###" onclick="module.changehref(\'' + moduleFunctionUrl + '\');" >子功能</a>'
-                        console.log(html);
+                        //console.log(html);
                         return html;
                     }
                 }
@@ -107,15 +115,6 @@
     var module = {
 
         changehref: function (url) {
-            console.log(url);
-            //var tab = $('#mainTabs').tabs('getSelected');
-            //$('#mainTabs').tabs('update', {
-            //    tab: tab,
-            //    options: {
-            //        href: url  // 新内容的URL
-            //    }
-            //});
-
             // 调用 'refresh' 方法更新选项卡面板的内容
             var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
             tab.panel('refresh', url);
@@ -125,6 +124,7 @@
             var id = $('#cboModule').combobox('getValue');
             var name = $('#cboModule').combobox('getText');
             module.removeModule(id, name);
+
         },
 
         removeModule: function (id, name) {
@@ -133,6 +133,10 @@
                     if (r) {
                         $.post('@Url.Action("RemoveModule")', { id: id }, function (result) {
                             if (result.success) {
+                                // 刷新模块大类
+                                $("#cboModule").combobox('reload');
+                                $("#cboModule").combobox("select", '');
+                                // 刷新模块子类
                                 $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
                             } else {
                                 $.messager.alert({    // 显示错误信息
@@ -182,16 +186,27 @@
         },
 
         reloadDataGrid: function (parentid) {
-            var pid = parentid;
-            if (isArray(parentid))
-                pid = parentid[0]
+            var pid = null;
+            var mid = null;
 
-            console.log(pid);
+            if (isArray(parentid)) {
+                mid = parseInt(parentid[0]);
+                pid = parentid[1];
+            }
+            console.log(parentid);
+            // 刷新模块大类
+            $("#cboModule").combobox('reload');
 
-            $("#tabChildModule").datagrid('reload',
-                {
-                    parentid: pid
-                });
+            if (mid != -1)
+                $("#cboModule").combobox("select", mid);
+
+            if (pid != -1) {
+                // 刷新模块子类
+                $("#tabChildModule").datagrid('reload',
+                    {
+                        parentid: pid
+                    });
+            }
         }
     }
 

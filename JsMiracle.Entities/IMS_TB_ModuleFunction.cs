@@ -14,7 +14,7 @@ namespace JsMiracle.Entities
     
     public partial class IMS_TB_ModuleFunction
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public int ModuleID { get; set; }
         public string FunctionName { get; set; }
         public string ControlID { get; set; }

@@ -17,7 +17,7 @@ function closeWindow() {
     //parent.$('#' + layerWindowName).window('close');
     $('#' + layerWindowName).window('close');
     var fun = $('#' + layerWindowName).window('options').queryParams;
-    console.log(fun);
+    //console.log(fun);
 
     if ( isFunction(fun) ) {
 
@@ -45,7 +45,7 @@ $(function () {
 
 // 加入需显示的内容，并打开此层
 function showWindow(title, href, width, height, fun, modal, minimizable, maximizable) {
-    console.log(fun);
+    //console.log(fun);
     $('#'+layerWindowName).window(
     {
         // 自定义函数

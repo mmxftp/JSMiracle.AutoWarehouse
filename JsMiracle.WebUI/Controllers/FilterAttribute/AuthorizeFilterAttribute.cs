@@ -23,14 +23,21 @@ namespace JsMiracle.WebUI.Controllers.Filter
             if (CurrentUser.IsAdmin)
                 return true;
 
-            CurrentUser user = CurrentUser.GetCurrentUser();
-            // 得所有配置的权限
-            var permissions = WindsorContaineFactory.GetContainer().Resolve<IActionPermission>().GetAllPermission();
-
-            bool validating = true;
-            if (permissions.ExistsPermissions(controllerName, actionName))
+            try
             {
-                validating = user.Permissions.ExistsPermissions(controllerName, actionName);
+                CurrentUser user = CurrentUser.GetCurrentUser();
+                // 得所有配置的权限
+                var permissions = WindsorContaineFactory.GetContainer().Resolve<IActionPermission>().GetAllPermission();
+
+                bool validating = true;
+                if (permissions.ExistsPermissions(controllerName, actionName))
+                {
+                    validating = user.Permissions.ExistsPermissions(controllerName, actionName);
+                }
+            }
+            catch
+            {
+                return false;
             }
 
             //return validating;
@@ -67,14 +74,22 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 formAuth.SignOut();
                 cache.RemoveSessionCache(HttpContext.Current.User.Identity.Name);
 
-                filterContext.Result = new RedirectResult("/Account/LogIn");
+                //filterContext.Result = new RedirectResult("/Account/LogIn");
+                //filterContext.Result = new HttpUnauthorizedResult();
+
+                string msg = string.Format(
+                    @"<script type=""text/javascript"">
+                            window.location = '{0}'
+                      </script>", "/Account/LogIn");
+
+                filterContext.Result = new ContentResult { Content = msg };
             }
             else
             {
 
                 string msg = string.Format(@"
                                 <script type=""text/javascript"">
-                                 alert('抱歉,你不具有当前操作的权限！controller:{0},action:{1}');
+                                 $.messager.alert('权限错误','抱歉,你不具有当前操作的权限！controller:{0},action:{1}');
                                 </script>", controllerName, actionName);
 
                 //filterContext.Result = new ContentResult { Content = msg };

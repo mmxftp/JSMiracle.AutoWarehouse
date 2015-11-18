@@ -41,7 +41,7 @@ namespace JsMiracle.WebUI.CommonSupport
             {
                 CurrentUser cu = new CurrentUser();
                 var user = WindsorContaineFactory.GetContainer().Resolve<IUser>();
-                cu.UserInfo = user.GetEntity(null, userid: HttpContext.Current.User.Identity.Name);
+                cu.UserInfo = user.GetEntity(HttpContext.Current.User.Identity.Name);
                 var per = WindsorContaineFactory.GetContainer().Resolve<IPermission>();
                 cu.Permissions = per.GetPermissionListByUserID(userid);
                 cache.SetSessionCache(userid, cu);

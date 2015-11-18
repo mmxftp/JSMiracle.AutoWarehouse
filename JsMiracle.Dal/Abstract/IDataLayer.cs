@@ -1,76 +1,115 @@
-﻿//using JsMiracle.Entities;
-//using System;
-//using System.Collections.Generic;
-//using System.Data.Entity;
-//using System.Data.Entity.Core.Objects;
-//using System.Linq;
-//using System.Linq.Expressions;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using JsMiracle.Entities;
+using JsMiracle.Framework;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 
-//namespace JsMiracle.Dal.Abstract
-//{
-//    public interface IDataLayer  
-//    {
-//        ///// <summary>
-//        ///// 得到数据处理层类
-//        ///// </summary>
-//        //ObjectContext ObjContext { get; }
+namespace JsMiracle.Dal.Abstract
+{
+    public interface IDataLayer<T> where T : IModelBase
+    {
+        T GetEntity(long id);
+        void SaveOrUpdate(T entity);
+        void Delete(long id);
+        void Insert(T entity);
 
-//        ///// <summary>
-//        ///// 得到数据处理类
-//        ///// </summary>
-//        //IIMS_ORGEntities Context { get; }
+        IList<T> GetDataByPage<TKey>(
+            Expression<Func<T, TKey>> orderBy
+            , Expression<Func<T, bool>> filter
+            , int intPageIndex
+            , int intPageSize
+            , out int rowCount);
 
-//        //DbSet<T> GetTable { get; }
+    }
 
-//        /// <summary>
-//        /// 更新
-//        /// </summary>
-//        /// <param name="entity"></param>
-//        /// <returns></returns>
-//        T Update<T>(T entity) where T : class, new();
+    public class DataLayer<T> : IDataLayer<T> where T :class, IModelBase
+    {
+        private IIMS_ORGEntities _dbContext;
 
-//        /// <summary>
-//        /// 新增
-//        /// </summary>
-//        /// <param name="entity"></param>
-//        /// <returns></returns>
-//        T Insert<T>(T entity) where T :class , new ();
+        protected virtual IIMS_ORGEntities DbContext
+        {
+            get
+            {
+                if (_dbContext == null)
+                    _dbContext = new IIMS_ORGEntities();
 
-//        /// <summary>
-//        /// 删除
-//        /// </summary>
-//        /// <param name="entity"></param>
-//        int Delete<T>(T entity) where T :class , new ();
+                return _dbContext;
+            }
+        }
 
-//        /// <summary>
-//        /// 按主键查询数据
-//        /// </summary>
-//        /// <param name="keyValues"></param>
-//        /// <returns></returns>
-//        //T Find(params object[] keyValues);
+        public virtual T GetEntity(long id)
+        {
+            return DbContext.Set<T>().Find(id);
+        }
 
-//        ///// <summary>
-//        ///// 根据条件得数据
-//        ///// </summary>
-//        ///// <param name="filter">查询条件 ,filter == null 返回的所有记录</param>
-//        ///// <returns></returns>
-//        //IList<T> FindWhere(Expression<Func<T, bool>> filter);
+        public virtual void SaveOrUpdate(T entity)
+        {
+            if (entity.ID == 0)
+            {
+                Insert(entity);
+            }
+            else
+            {
+                var oldEnt = GetEntity(entity.ID);
+                if (oldEnt == null)
+                    throw new JsMiracleException(
+                        string.Format("对象({0})不存在无法修改 id:{1}", typeof(T).Name, entity.ID));
+
+                ModuleMemberCopy.SameValueCopier(entity, oldEnt);
+
+                //DbContext.Entry(entity).State = EntityState.Modified;
+
+                if (DbContext.Entry(oldEnt).State == EntityState.Modified)
+                    DbContext.SaveChanges();
+            }
+        }
+
+        public virtual void Delete(long id)
+        {
+            var entity = GetEntity(id);
+            DbContext.Set<T>().Remove(entity);
+            DbContext.SaveChanges();
+        }
+
+        public virtual void Insert(T entity)
+        {
+            DbContext.Set<T>().Add(entity);
+            DbContext.SaveChanges();            
+        }
+
+        public virtual IList<T> GetDataByPage<TKey>(Expression<Func<T, TKey>> orderBy, Expression<Func<T, bool>> filter, int intPageIndex, int intPageSize, out int rowCount) 
+        {
+            IQueryable<T> query = null;
+
+            if (filter != null)
+            {
+                query = DbContext.Set<T>()
+                    .Where(filter)
+                    .OrderBy(orderBy)
+                    .Skip((intPageIndex - 1) * intPageSize)
+                    .Take(intPageSize);
+
+                rowCount = DbContext.Set<T>().Where(filter).Count();
+            }
+            else
+            {
+                query = DbContext.Set<T>()
+                    .OrderBy(orderBy)
+                    .Skip((intPageIndex - 1) * intPageSize)
+                    .Take(intPageSize);
+
+                rowCount = DbContext.Set<T>().Count();
+            }
+
+            var result = query.ToList();
+
+            return result;
+        }
 
 
-//        /// <summary>
-//        /// 分页方法
-//        /// </summary>
-//        /// <typeparam name="TKey"></typeparam>
-//        /// <param name="orderBy">排序条件</param>
-//        /// <param name="filter">查询条件</param>
-//        /// <param name="intPageIndex">第几页</param>
-//        /// <param name="intPageSize">每页行数</param>
-//        /// <param name="rowCount">总行数 (输出参数)</param>
-//        /// <returns></returns>
-//        IList<T> GetDataByPage<T,TKey>(
-//            Expression<Func<T, TKey>> orderBy, Expression<Func<T, bool>> filter, int intPageIndex,
-//            int intPageSize, out int rowCount) where T : class , new();
-//    }
-//}
+
+    }
+}

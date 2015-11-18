@@ -7,15 +7,15 @@ using System.Text;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_RoleUser_Dal : IIMS_ORGEntities, IRoleUser
+    public class IMS_TB_RoleUser_Dal : DataLayer<IMS_TB_RoleUser>, IRoleUser
     {
 
         public IList<IMS_TB_UserInfo> GetUserList(string roleid)
         {
 
    
-            var data = from r in IMS_TB_RoleUserSet
-                       join u in IMS_TB_UserInfoSet
+            var data = from r in this.DbContext.IMS_TB_RoleUserSet
+                       join u in this.DbContext.IMS_TB_UserInfoSet
                        on r.UserID equals u.UserID
                        where r.RoleID == roleid
                        select u;
@@ -41,7 +41,7 @@ namespace JsMiracle.Dal.Concrete
         public int SaveRoleUser(string roleid, string userid)
         {
             var ents =
-                IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
+                this.DbContext.IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
                                 && n.UserID == userid);
 
 
@@ -55,14 +55,14 @@ namespace JsMiracle.Dal.Concrete
                 UserID = userid
             };
 
-            DataLayerBase.Insert(this, ent);
+            Insert(ent);
             return 0;
         }
 
         public int RemoveRoleUser(string roleid, string userid)
         {
             var ents =
-                IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
+                this.DbContext.IMS_TB_RoleUserSet.Where(n => n.RoleID == roleid
                      && n.UserID == userid).ToList();
 
             if (ents == null || ents.Count == 0)
@@ -71,7 +71,7 @@ namespace JsMiracle.Dal.Concrete
             int effectRowCount = 0;
             foreach (var u in ents)
             {
-                DataLayerBase.Delete(this,u);
+                Delete(u.ID);
                 effectRowCount++;
             }
             return effectRowCount;

@@ -14,7 +14,7 @@ namespace JsMiracle.Entities
     
     public partial class IMS_TB_RoleUser
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string RoleID { get; set; }
         public string UserID { get; set; }
     }

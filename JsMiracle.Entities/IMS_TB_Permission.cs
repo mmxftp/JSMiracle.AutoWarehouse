@@ -14,7 +14,7 @@ namespace JsMiracle.Entities
     
     public partial class IMS_TB_Permission
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string RoleId { get; set; }
         public int ModuleID { get; set; }
         public Nullable<int> FunctionID { get; set; }

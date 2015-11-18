@@ -14,7 +14,7 @@ namespace JsMiracle.Entities
     
     public partial class IMS_TB_Module
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string ModuleName { get; set; }
         public string URL { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }

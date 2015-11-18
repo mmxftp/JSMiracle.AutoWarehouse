@@ -17,7 +17,7 @@ namespace JsMiracle.WebUI.HtmlHelpers
             if (menuList == null)
                 return new MvcHtmlString("");
 
-            int? lastIdx = -1;
+            long? lastIdx = -1;
             StringBuilder result = new StringBuilder();
             foreach (var menu in menuList)
             {

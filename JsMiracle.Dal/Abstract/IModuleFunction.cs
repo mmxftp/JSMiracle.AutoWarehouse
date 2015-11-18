@@ -6,15 +6,15 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract
 {
-    public interface IModuleFunction
+    public interface IModuleFunction : IDataLayer<IMS_TB_ModuleFunction>
     {
         IList<IMS_TB_ModuleFunction> GetModuleFunctionList(int moduleid);
 
-        IMS_TB_ModuleFunction GetEntity(int id);
+        //IMS_TB_ModuleFunction GetEntity(int id);
 
 
-        IMS_TB_ModuleFunction Save(IMS_TB_ModuleFunction module);
+        //IMS_TB_ModuleFunction Save(IMS_TB_ModuleFunction module);
 
-        int Remove(int id);
+        //int Remove(int id);
     }
 }

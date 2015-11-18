@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract
 {
-    public interface IRoleUser
+    public interface IRoleUser : IDataLayer<IMS_TB_RoleUser>
     {
         IList<IMS_TB_UserInfo> GetUserList(string roleid);
 

@@ -5,44 +5,51 @@ using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace JsMiracle.Dal.Concrete
 {
-    public class IMS_TB_UserInfo_Dal : IIMS_ORGEntities, IUser, IMembershipService
+    public class IMS_TB_UserInfo_Dal : DataLayer<IMS_TB_UserInfo>, IUser, IMembershipService
     {
-        private void Update(IMS_TB_UserInfo entity)
+        public override void SaveOrUpdate(IMS_TB_UserInfo entity)
         {
-
-            IMS_TB_UserInfo ent = null;
             if (entity.ID == 0)
             {
-                CreateUser(entity.UserID,entity.UserName, entity.Password, entity.Email);            
+                entity.State = (int)UserStateEnum.Normal;
+                entity.CreateDate = DateTime.Now;
+                // 密码逻辑由外部定义,此处只做保存
+                //entity.Password = IMS_TB_UserInfo.GetPwdMD5(entity.Password);
+
+                if (this.DbContext.IMS_TB_UserInfoSet.Any(
+                    n => n.UserID.Equals(entity.UserID, StringComparison.CurrentCultureIgnoreCase)))
+                    throw new JsMiracleException("员工编号已存在不得重复添加");
+
+                base.SaveOrUpdate(entity);
             }
             else
             {
-                ent = IMS_TB_UserInfoSet.Find(entity.ID);
-                if (ent != null)
-                {
-                    var oldPwd = IMS_TB_UserInfo.GetPwdMD5(ent.Password);
-                    if (!string.Equals(oldPwd, entity.Password, StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        ent.Password = IMS_TB_UserInfo.GetPwdMD5(entity.Password);
-                    }
+                var ent = this.GetEntity(entity.ID);
 
-                    ent.UserID = entity.UserID;
-                    ent.UserName = entity.UserName;
-                    ent.Email = entity.Email;
-                    ent.LastModDate = System.DateTime.Now;
-                    ent.State = entity.State;
-                    DataLayerBase.Update(this, ent);
+                if (ent == null)
+                    throw new JsMiracleException("需修改的员工信息不存在");
+
+                if (this.DbContext.IMS_TB_UserInfoSet.Any(
+                        n => n.UserID.Equals(entity.UserID, StringComparison.CurrentCultureIgnoreCase)
+                            && n.ID != entity.ID))
+                    throw new JsMiracleException("员工编号已存在不得重复添加");
+
+                if (entity.Password != ent.Password)
+                {
+                    if (IMS_TB_UserInfo.GetPwdMD5(entity.Password) != ent.Password)
+                        entity.Password = IMS_TB_UserInfo.GetPwdMD5(entity.Password);
                 }
-            }            
+
+                base.SaveOrUpdate(entity);
+            }
         }
 
         public IList<IMS_TB_UserInfo> GetAllUserList(bool userNameFormatter = false)
         {
-            var data = IMS_TB_UserInfoSet.Where(n => n.State == (int)UserStateEnum.Normal).ToList();
+            var data = this.DbContext.IMS_TB_UserInfoSet.Where(n => n.State == (int)UserStateEnum.Normal).ToList();
 
             if (userNameFormatter)
             {
@@ -63,59 +70,14 @@ namespace JsMiracle.Dal.Concrete
             return data;
         }
 
-        public IMS_TB_UserInfo GetEntity(int? id,string userid = null)
+        public IMS_TB_UserInfo GetEntity(string userid)
         {
-            if (id.HasValue)
-                return IMS_TB_UserInfoSet.Find(id);
-
             if (string.IsNullOrEmpty(userid))
-                throw new JsMiracleException("id 和 userid 中至少有一个参数有内容");
+                throw new JsMiracleException(" userid 不得为空");
 
-            var data = IMS_TB_UserInfoSet.Where(n => n.UserID.ToLower() == userid.ToLower());
+            var data = this.DbContext.IMS_TB_UserInfoSet.Where(n => n.UserID.Equals(userid, StringComparison.CurrentCultureIgnoreCase));
 
             return data.FirstOrDefault();
-        }
-
-        public IList<IMS_TB_UserInfo> GetUserList(int pageIndex, int pageSize, string txt, out int totalCount)
-        {
-            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
-
-            if (!string.IsNullOrEmpty(txt))
-            {
-                filter =
-                    f => (f.UserID == txt || f.UserName.Contains(txt)) && f.State == (int)UserStateEnum.Normal;
-            }
-            else
-            {
-                filter =
-                    f => f.State == (int)UserStateEnum.Normal;
-            }
-
-            var dataList = DataLayerBase.GetDataByPage(
-                this,
-                p => p.UserID,
-                filter, pageIndex, pageSize, out totalCount);
-
-            return dataList;
-        }
-
-        public int Save(IMS_TB_UserInfo user)
-        {
-            Update(user);
-            return 1;
-        }
-
-        public int Remove(int id)
-        {
-            var ent = IMS_TB_UserInfoSet.Find(id);
-
-            if (ent == null)
-                return 0;
-
-            ent.State = (int)UserStateEnum.Delete;
-
-            DataLayerBase.Update(this, ent);
-            return 1;
         }
 
         #region IMembershipService
@@ -133,7 +95,7 @@ namespace JsMiracle.Dal.Concrete
             if (string.IsNullOrEmpty(password))
                 throw new JsMiracleException("密码不得为空");
 
-            var ents = IMS_TB_UserInfoSet.Where(n => n.UserID == userID);
+            var ents = this.DbContext.IMS_TB_UserInfoSet.Where(n => n.UserID == userID);
 
             if (ents.Count() == 0)
                 return false;
@@ -149,35 +111,34 @@ namespace JsMiracle.Dal.Concrete
         {
             IMS_TB_UserInfo entity = new IMS_TB_UserInfo();
 
-            if (IMS_TB_UserInfoSet.Any(n => n.UserID.Equals(userID, StringComparison.CurrentCultureIgnoreCase)))
-                throw new JsMiracleException("员工编号已存在不得重复添加");
-
-            entity.Password = IMS_TB_UserInfo.GetPwdMD5(password);
+            entity.Password = IMS_TB_UserInfo.GetPwdMD5(entity.Password);
             entity.UserID = userID;
             entity.UserName = userName;
             entity.CreateDate = System.DateTime.Now;
             entity.State = (int)UserStateEnum.Normal;
-            DataLayerBase.Insert(this, entity);
+
+            this.SaveOrUpdate(entity);
+
+            //this.Insert(entity);
         }
 
         public bool ChangePassword(string userID, string oldPassword, string newPassword)
         {
-            var ent = IMS_TB_UserInfoSet.Where(n => n.UserID.ToLowerInvariant() == userID.ToLowerInvariant());
+            var ent = this.DbContext.IMS_TB_UserInfoSet.Where(
+                n => n.UserID.Equals(userID, StringComparison.CurrentCultureIgnoreCase));
 
-            if (ent.Count() == 0)
+            var user = ent.FirstOrDefault();
+
+            if (user == null)
                 throw new JsMiracleException("用户不存在");
-
-            var user = ent.First();
 
             if (IMS_TB_UserInfo.GetPwdMD5(oldPassword) != user.Password)
                 throw new JsMiracleException("旧密码不正确");
 
             user.Password = IMS_TB_UserInfo.GetPwdMD5(newPassword);
-            DataLayerBase.Update(this, user);
+            SaveOrUpdate(user);
             return true;
         }
         #endregion
     }
-
-
 }

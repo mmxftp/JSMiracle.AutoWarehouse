@@ -45,7 +45,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         #region IMS_TB_ModuleSet 表操作
 
-        public   ActionResult GetModuleList()
+        public ActionResult GetModuleList()
         {
             var data = dalModule.GetRootModule();
             return this.JsonFormat(data);
@@ -69,7 +69,10 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            var dataList = dalModule.GetChildModuleList(pageIndex, pageSize, parentid.Value, out totalCount);
+            var dataList = dalModule.GetDataByPage(
+                o => o.ModuleName
+                , f => f.ParentID == parentid.Value
+                , pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
 
@@ -96,14 +99,20 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
                     //if (!string.IsNullOrEmpty(module.Action_Name) )
                     module.URL = module.GetUrl();
 
-                    dalModule.Save(module);
+                    dalModule.SaveOrUpdate(module);
+
+                    var parentModule = dalModule.GetEntityByModuleID(module.ParentID);
+                    long pid = -1;
+                    if (parentModule != null)
+                        pid = parentModule.ID;
+
+                    return this.JsonFormat(new { success = true, msg = "操作成功", id = pid, parentid = module.ParentID });
                 }
                 catch (Exception ex)
                 {
                     return this.JsonFormat(new ExtResult { success = true, msg = "操作失败" + ex.Message });
                 }
 
-                return this.JsonFormat(new { success = true, msg = "操作成功", parentid = module.ParentID });
             }
             else
             {
@@ -127,11 +136,11 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         }
 
 
-        public ActionResult RemoveModule(int id)
+        public ActionResult RemoveModule(long id)
         {
             try
             {
-                dalModule.Remove(id);
+                dalModule.Delete(id);
                 return this.JsonFormat(new { success = true });
             }
             catch (Exception ex)
@@ -165,7 +174,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         public ViewResult CreateFunction(int moduleid)
         {
-            var mod = dalModule.GetEntity(null, moduleid);
+            var mod = dalModule.GetEntityByModuleID( moduleid);
             if (mod != null)
                 ViewBag.ModName = mod.ModuleName;
 
@@ -176,10 +185,10 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         {
             var fun = dalFunction.GetEntity(id);
 
-            var mod = dalModule.GetEntity(null, fun.ModuleID);
+            var mod = dalModule.GetEntityByModuleID( fun.ModuleID);
             if (mod != null)
                 ViewBag.ModName = mod.ModuleName;
-           
+
             return View(fun);
         }
 
@@ -189,7 +198,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             {
                 try
                 {
-                    dalFunction.Save(module);
+                    dalFunction.SaveOrUpdate(module);
                 }
                 catch (Exception ex)
                 {
@@ -209,7 +218,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         {
             try
             {
-                dalFunction.Remove(id);
+                dalFunction.Delete(id);
 
                 return Json(new ExtResult { success = true });
             }
