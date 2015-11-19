@@ -37,12 +37,12 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         public ActionResult GetRoleUserList(string roleid)
         {
-            var info = new PaginationModel<IMS_TB_UserInfo>();
+            var info = new PaginationModel<IMS_UP_User>();
 
             if (string.IsNullOrEmpty(roleid))
             {
                 info.total = 0;
-                info.rows = new List<IMS_TB_UserInfo>();   // 解决easyui length的问题
+                info.rows = new List<IMS_UP_User>();   // 解决easyui length的问题
                 return this.JsonFormat(info);
             }
 
@@ -71,7 +71,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return this.JsonFormat(new { success = true });
         }
 
-        #region IMS_TB_RoleInfoSet 表操作
+        #region IMS_UP_RoleSet 表操作
 
         public ActionResult GetRolesAll()
         {
@@ -82,7 +82,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         public ActionResult GetRoleList(int? rows, int? page)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
-            var info = new PaginationModel<IMS_TB_RoleInfo>();
+            var info = new PaginationModel<IMS_UP_Role>();
 
             int totalCount = 0;
 
@@ -104,7 +104,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         public ViewResult CreateRole()
         {
-            return View("EditRole", new IMS_TB_RoleInfo());
+            return View("EditRole", new IMS_UP_Role());
         }
 
         public ViewResult EditRole(int id)
@@ -113,7 +113,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return View(role);
         }
 
-        public ActionResult SaveRole(IMS_TB_RoleInfo module)
+        public ActionResult SaveRole(IMS_UP_Role module)
         {
             if (ModelState.IsValid)
             {
@@ -165,7 +165,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         }
         #endregion
 
-        #region IMS_TB_PermissionSet 表操作
+        #region IMS_UP_RoMoSet 表操作
 
         public ActionResult PermissionInfo(string roleid)
         {

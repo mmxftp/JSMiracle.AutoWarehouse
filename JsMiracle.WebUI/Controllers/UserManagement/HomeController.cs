@@ -33,7 +33,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return View();
         }
 
-        private IEnumerable<IMS_TB_Module> GetChildModule(PermissionViewModule module ,int parentid)
+        private IEnumerable<IMS_UP_Modu> GetChildModule(PermissionViewModule module ,int parentid)
         {
             return module.Modules.Where(n => n.ParentID == parentid);
         } 
@@ -41,7 +41,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         [AllowAnonymous]
         public PartialViewResult _MenuPartial()
         {
-            var menuList = new List<IMS_TB_Module>();
+            var menuList = new List<IMS_UP_Modu>();
 
             var rootModuleList = dalModule.GetRootModule();
 

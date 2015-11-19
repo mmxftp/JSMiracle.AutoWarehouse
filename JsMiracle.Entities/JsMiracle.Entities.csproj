@@ -56,25 +56,25 @@
     <Compile Include="EasyUI_Model\ExtResult.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
-    <Compile Include="IMS_TB_Item.cs">
+    <Compile Include="IMS_BS_Item.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_Module.cs">
+    <Compile Include="IMS_UP_Modu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_ModuleFunction.cs">
+    <Compile Include="IMS_UP_MoFn.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_Permission.cs">
+    <Compile Include="IMS_UP_Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_RoleInfo.cs">
+    <Compile Include="IMS_UP_RoMo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_RoleUser.cs">
+    <Compile Include="IMS_UP_RoUr.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_TB_UserInfo.cs">
+    <Compile Include="IMS_UP_User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -92,8 +92,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Partial\IMS_TB_Module.cs" />
-    <Compile Include="Partial\IMS_TB_UserInfo.cs" />
+    <Compile Include="Partial\IMS_UP_Modu.cs" />
+    <Compile Include="Partial\IMS_UP_User.cs" />
     <Compile Include="Partial\IModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\PermissionViewModule.cs" />

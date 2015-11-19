@@ -25,12 +25,12 @@ namespace JsMiracle.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IMS_TB_ModuleFunction> IMS_TB_ModuleFunctionSet { get; set; }
-        public virtual DbSet<IMS_TB_Module> IMS_TB_ModuleSet { get; set; }
-        public virtual DbSet<IMS_TB_Permission> IMS_TB_PermissionSet { get; set; }
-        public virtual DbSet<IMS_TB_RoleInfo> IMS_TB_RoleInfoSet { get; set; }
-        public virtual DbSet<IMS_TB_RoleUser> IMS_TB_RoleUserSet { get; set; }
-        public virtual DbSet<IMS_TB_Item> IMS_TB_ItemSet { get; set; }
-        public virtual DbSet<IMS_TB_UserInfo> IMS_TB_UserInfoSet { get; set; }
+        public virtual DbSet<IMS_BS_Item> IMS_BS_ItemT { get; set; }
+        public virtual DbSet<IMS_UP_Modu> IMS_UP_ModuT { get; set; }
+        public virtual DbSet<IMS_UP_MoFn> IMS_UP_MoFnT { get; set; }
+        public virtual DbSet<IMS_UP_Role> IMS_UP_RoleT { get; set; }
+        public virtual DbSet<IMS_UP_RoMo> IMS_UP_RoMoT { get; set; }
+        public virtual DbSet<IMS_UP_RoUr> IMS_UP_RoUrT { get; set; }
+        public virtual DbSet<IMS_UP_User> IMS_UP_UserT { get; set; }
     }
 }

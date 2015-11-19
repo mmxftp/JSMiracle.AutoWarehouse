@@ -83,7 +83,11 @@
                 title = '编辑功能';
             }
 
-            showWindow(title, editActionUrl, width, height);
+            showWindow(title, editActionUrl, width, height, moduleChild.reloadDataGrid);
+        },
+
+        reloadDataGrid:function(){
+            $("#tabFun").datagrid('reload');
         },
 
         removeModuleFunction: function (id, name) {

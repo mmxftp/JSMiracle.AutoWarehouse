@@ -53,24 +53,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\DataLayerBase.cs" />
-    <Compile Include="Abstract\IActionPermission.cs" />
+    <Compile Include="Abstract\UP\IActionPermission.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
-    <Compile Include="Abstract\IFormsAuthentication.cs" />
-    <Compile Include="Abstract\IItem.cs" />
-    <Compile Include="Abstract\IMembershipService.cs" />
-    <Compile Include="Abstract\IModule.cs" />
-    <Compile Include="Abstract\IModuleFunction.cs" />
-    <Compile Include="Abstract\IPermission.cs" />
-    <Compile Include="Abstract\IRole.cs" />
-    <Compile Include="Abstract\IRoleUser.cs" />
-    <Compile Include="Abstract\IUser.cs" />
+    <Compile Include="Abstract\UP\IFormsAuthentication.cs" />
+    <Compile Include="Abstract\BS\IItem.cs" />
+    <Compile Include="Abstract\UP\IMembershipService.cs" />
+    <Compile Include="Abstract\UP\IModule.cs" />
+    <Compile Include="Abstract\UP\IModuleFunction.cs" />
+    <Compile Include="Abstract\UP\IPermission.cs" />
+    <Compile Include="Abstract\UP\IRole.cs" />
+    <Compile Include="Abstract\UP\IRoleUser.cs" />
+    <Compile Include="Abstract\UP\IUser.cs" />
     <Compile Include="Concrete\FormsAuthenticationService.cs" />
-    <Compile Include="Concrete\IMS_TB_ModuleFunction_Dal.cs" />
-    <Compile Include="Concrete\IMS_TB_Module_Dal.cs" />
-    <Compile Include="Concrete\IMS_TB_Permission_Dal.cs" />
-    <Compile Include="Concrete\IMS_TB_RoleInfo_Dal.cs" />
-    <Compile Include="Concrete\IMS_TB_RoleUser_Dal.cs" />
-    <Compile Include="Concrete\IMS_TB_UserInfo_Dal.cs" />
+    <Compile Include="Concrete\IMS_BS_Item_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_MoFn_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_Modu_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_RoMo_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_Role_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_RoUr_Dal.cs" />
+    <Compile Include="Concrete\IMS_UP_User_Dal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

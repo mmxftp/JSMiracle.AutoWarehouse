@@ -11,12 +11,14 @@ namespace JsMiracle.Entities
         long ID { get; set; }
     }
 
-    public partial class IMS_TB_RoleUser : IModelBase { }
+    public partial class IMS_UP_RoUr : IModelBase { }
 
-    public partial class IMS_TB_RoleInfo : IModelBase { }
+    public partial class IMS_UP_Role : IModelBase { }
 
-    public partial class IMS_TB_ModuleFunction : IModelBase { }
+    public partial class IMS_UP_MoFn : IModelBase { }
 
-    public partial class IMS_TB_Permission : IModelBase { }
+    public partial class IMS_UP_RoMo : IModelBase { }
+
+    public partial class IMS_BS_Item : IModelBase { }
 
 }

@@ -43,7 +43,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return this.JsonFormat(new ExtResult { success = true });
         }
 
-        #region IMS_TB_ModuleSet 表操作
+        #region IMS_UP_ModuT 表操作
 
         public ActionResult GetModuleList()
         {
@@ -54,12 +54,12 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         public ActionResult GetChildModuleList(int? rows, int? page, int? parentid)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
-            var info = new PaginationModel<IMS_TB_Module>();
+            var info = new PaginationModel<IMS_UP_Modu>();
 
             if (parentid == null)
             {
                 info.total = 0;
-                info.rows = new List<IMS_TB_Module>();   // 解决easyui length的问题
+                info.rows = new List<IMS_UP_Modu>();   // 解决easyui length的问题
                 return Json(info);
             }
 
@@ -90,7 +90,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return View(user);
         }
 
-        public ActionResult SaveModule(IMS_TB_Module module)
+        public ActionResult SaveModule(IMS_UP_Modu module)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
                     parentid = ent.ModuleID;
             }
 
-            var newEnt = new IMS_TB_Module() { ParentID = parentid };
+            var newEnt = new IMS_UP_Modu() { ParentID = parentid };
 
             return View("EditModule", newEnt);
         }
@@ -151,7 +151,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         #endregion
 
-        #region IMS_TB_ModuleFunctionSet 表操作
+        #region IMS_UP_MoFnTT 表操作
 
 
         public ActionResult IndexFunction(int moduleid)
@@ -164,7 +164,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
         {
             var data = dalFunction.GetModuleFunctionList(moduleid);
 
-            var info = new PaginationModel<IMS_TB_ModuleFunction>();
+            var info = new PaginationModel<IMS_UP_MoFn>();
 
             info.total = (data != null) ? data.Count : 0;
             info.rows = data;
@@ -178,7 +178,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             if (mod != null)
                 ViewBag.ModName = mod.ModuleName;
 
-            return View("EditFunction", new IMS_TB_ModuleFunction() { ModuleID = moduleid });
+            return View("EditFunction", new IMS_UP_MoFn() { ModuleID = moduleid });
         }
 
         public ViewResult EditFunction(int id)
@@ -192,7 +192,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return View(fun);
         }
 
-        public ActionResult SaveFunction(IMS_TB_ModuleFunction module)
+        public ActionResult SaveFunction(IMS_UP_MoFn module)
         {
             if (ModelState.IsValid)
             {

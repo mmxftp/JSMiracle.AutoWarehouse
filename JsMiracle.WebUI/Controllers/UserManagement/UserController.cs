@@ -53,7 +53,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             //if (!int.TryParse(Request.Params["page"], out pageIndex))
             //    pageIndex = 1;
 
-            Expression<Func<IMS_TB_UserInfo, bool>> filter = null;
+            Expression<Func<IMS_UP_User, bool>> filter = null;
 
             if (!string.IsNullOrEmpty(txt))
             {
@@ -72,7 +72,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
                  pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_TB_UserInfo>();
+            var info = new PaginationModel<IMS_UP_User>();
             info.total = totalCount;
             info.rows = dataList;
 
@@ -89,7 +89,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
             return View(user);
         }
 
-        public ActionResult Save(IMS_TB_UserInfo user)
+        public ActionResult Save(IMS_UP_User user)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
                 {
                     // 新增用户,密码需要md5一下
                     if (user.ID == 0)
-                        user.Password = IMS_TB_UserInfo.GetPwdMD5(user.Password);
+                        user.Password = IMS_UP_User.GetPwdMD5(user.Password);
 
                     dalUser.SaveOrUpdate(user);
                 }
@@ -117,7 +117,7 @@ namespace JsMiracle.WebUI.Controllers.UserManagement
 
         public ViewResult Create()
         {
-            return View("Edit", new IMS_TB_UserInfo());
+            return View("Edit", new IMS_UP_User());
         }
 
 

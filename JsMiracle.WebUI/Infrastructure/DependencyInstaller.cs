@@ -22,22 +22,22 @@ namespace JsMiracle.WebUI.Infrastructure
         {
             container.Register(
                 Component.For<IUser, IMembershipService>()
-                .ImplementedBy<IMS_TB_UserInfo_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_User_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IModule>()
-                .ImplementedBy<IMS_TB_Module_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_Modu_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IModuleFunction>()
-                .ImplementedBy<IMS_TB_ModuleFunction_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_MoFn_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IRole>()
-                .ImplementedBy<IMS_TB_RoleInfo_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_Role_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IPermission>()
-                .ImplementedBy<IMS_TB_Permission_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_RoMo_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IRoleUser>()
-                .ImplementedBy<IMS_TB_RoleUser_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_RoUr_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IFormsAuthentication>()
                 .ImplementedBy<FormsAuthenticationService>().LifeStyle.PerWebRequest,

@@ -12,7 +12,7 @@ namespace JsMiracle.WebUI.HtmlHelpers
     public static class MenuHelpers
     {
         public static MvcHtmlString MenuLinks(this HtmlHelper html,
-          List<IMS_TB_Module> menuList)
+          List<IMS_UP_Modu> menuList)
         {
             if (menuList == null)
                 return new MvcHtmlString("");

@@ -22,7 +22,7 @@ namespace JsMiracle.WebUI.CommonSupport
         /// <summary>
         /// 用户信息
         /// </summary>
-        public IMS_TB_UserInfo UserInfo { get; private set; }
+        public IMS_UP_User UserInfo { get; private set; }
 
         /// <summary>
         /// 用户权限信息

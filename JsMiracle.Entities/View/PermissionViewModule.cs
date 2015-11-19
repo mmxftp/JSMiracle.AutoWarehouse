@@ -8,12 +8,12 @@ namespace JsMiracle.Entities.View
     public class PermissionViewModule
     {
         // 模块权限
-        public IList<IMS_TB_Module> Modules { get; private set; }
+        public IList<IMS_UP_Modu> Modules { get; private set; }
 
         // 子功能权限
-        public IList<IMS_TB_ModuleFunction> Functions { get;private set; }
+        public IList<IMS_UP_MoFn> Functions { get;private set; }
 
-        public PermissionViewModule(IList<IMS_TB_Module> modules, IList<IMS_TB_ModuleFunction> functions)
+        public PermissionViewModule(IList<IMS_UP_Modu> modules, IList<IMS_UP_MoFn> functions)
         {
             this.Modules = modules;
             this.Functions = functions;
