@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Abstract.UP;
 using System;
 using System.Collections.Generic;
 using System.Linq;

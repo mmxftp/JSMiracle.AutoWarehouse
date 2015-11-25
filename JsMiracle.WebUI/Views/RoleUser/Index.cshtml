@@ -43,7 +43,7 @@
                             , formatter: function (value, row, index) {
                                 var onclickEvent = 'userRole.showEdit(' + row.ID + ');';
                                 var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
-                                     + 'onclick="userRole.removeRole(\'' + row.ID + '\',\'' + row.RoleName + '\')" >删除</a>'
+                                     + 'onclick="userRole.removeRole(\'' + row.ID + '\',\'' + row.JSMC + '\')" >删除</a>'
                                      + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                      + '<a href="javascript:void(0)"  class="loan_edit_button" '
                                      + ' onclick="' + onclickEvent + '" >修改</a>';
@@ -51,8 +51,8 @@
                                 return html;
                             }
                        },
-                { field: 'RoleName', title: '角色名称', width: 100, align: 'center' },
-                { field: 'Description', title: '角色描述', width: 150, align: 'center' }
+                { field: 'JSMC', title: '角色名称', width: 100, align: 'center' },
+                { field: 'MS', title: '角色描述', width: 150, align: 'center' }
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
@@ -60,16 +60,16 @@
                 $(".permission_button").linkbutton({ iconCls: 'icon-lock' });
             },
             onClickRow: function (rowIndex, rowData) {
-                $('#treePermission').tree({ url: '@Url.Action("PermissionInfo")' + '?roleid=' + rowData.RoleID });
+                $('#treePermission').tree({ url: '@Url.Action("PermissionInfo")' + '?roleid=' + rowData.JSID });
 
                 $('#tabUser').datagrid('reload', {
-                    roleid: rowData.RoleID
+                    roleid: rowData.JSID
                 });
             }
         });
 
         $("#tabUser").datagrid({
-            url: '@Url.Action("GetRoleUserList", "RoleUser")',
+            url: '@Url.Action("GetRoleUserList")',
             //title: '用户信息',
             singleSelect: true,
             loadMsg: '数据载入中...',
@@ -83,13 +83,13 @@
                     field: '_operate', title: '操作', width: 150, align: 'center'
                             , formatter: function (value, row, index) {
                                 var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
-                                     + 'onclick="userRole.SaveRoleUser(false,\'' + row.UserID + '\')" >移除用户</a>'
+                                     + 'onclick="userRole.SaveRoleUser(false,\'' + row.YHID + '\')" >移除用户</a>'
                                 console.log(html);
                                 return html;
                             }
                 },
-                { field: 'UserID', title: '员工编号', width: 100, align: 'center' },
-                { field: 'UserName', title: '员工姓名', width: 100, align: 'center' }
+                { field: 'YHID', title: '员工编号', width: 100, align: 'center' },
+                { field: 'YHM', title: '员工姓名', width: 100, align: 'center' }
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
@@ -99,8 +99,8 @@
 
         $("#cboUser").combobox({
             url: '@Url.Action("GetAllUserList", "User", new { userNameFormatter = true })',
-            valueField: 'UserID',
-            textField: 'UserName',
+            valueField: 'YHID',
+            textField: 'YHM',
             filter: function (q, row) {
                 var opts = $(this).combobox('options');
                 return row[opts.textField].toLowerCase().indexOf(q.toLowerCase()) >= 0;
@@ -121,7 +121,7 @@
                 var row = $('#tabRole').datagrid('getSelected');
 
                 if (row) {
-                    var params = { 'check': check, 'parentid': parentid, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.RoleID };
+                    var params = { 'check': check, 'parentid': parentid, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.JSID };
                     console.log(JSON.stringify(params));
                     $.ajax({
                         url: '@Url.Action("SavePermission")',
@@ -203,7 +203,7 @@
                 return;
             }
 
-            var params = { 'isAdd': isAdd, 'userid': userid, 'roleid': rolRow.RoleID };
+            var params = { 'isAdd': isAdd, 'userid': userid, 'roleid': rolRow.JSID };
 
             $.ajax({
                 url: '@Url.Action("SaveRoleUser")',
@@ -220,7 +220,7 @@
                     }
                     else {
                         $('#tabUser').datagrid('reload', {
-                            roleid: rolRow.RoleID
+                            roleid: rolRow.JSID
                         });
                     }
                 },

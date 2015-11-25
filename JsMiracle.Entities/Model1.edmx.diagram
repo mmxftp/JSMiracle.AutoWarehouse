@@ -5,15 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d74cf76dcabb438ea6ac26022dda83d1" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_BS_Item" Width="1.5" PointX="0.625" PointY="3.75" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_Modu" Width="1.5" PointX="2.5" PointY="3.75" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_MoFnT" Width="1.5" PointX="0.75" PointY="0.5" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_Role" Width="1.5" PointX="2.625" PointY="0.5" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_RoMo" Width="1.5" PointX="4.25" PointY="3.75" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_RoUr" Width="1.5" PointX="4.375" PointY="0.5" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_User" Width="1.5" PointX="6.125" PointY="0.5" />
-        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_MoFn" Width="1.5" PointX="6.375" PointY="3.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_JSMK" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_JSYH" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_MK" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_MKGN" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_YH" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_JS" Width="1.5" PointX="0.875" PointY="0.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_CM_DM" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_CM_DMLX" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.IMS_CB_WL" Width="1.5" PointX="2.75" PointY="6.875" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

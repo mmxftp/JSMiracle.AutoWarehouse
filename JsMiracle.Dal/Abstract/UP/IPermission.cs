@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Dal.Abstract
+namespace JsMiracle.Dal.Abstract.UP
 {
-    public interface IPermission : IDataLayer<IMS_UP_RoMo>
+    public interface IPermission : IDataLayer<IMS_UP_JSMK>
     {
         IList<TreeModel> GetPermissionInfo(string roleid);
 
@@ -19,7 +19,7 @@ namespace JsMiracle.Dal.Abstract
 
         PermissionViewModule GetAllPermission();
 
-        List<IMS_UP_RoMo> GetPermissionListByRoleID(string roleid);
+        List<IMS_UP_JSMK> GetPermissionListByRoleID(string roleid);
 
     }
 }

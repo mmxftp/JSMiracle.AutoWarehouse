@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "EditCodeType";
+}
+
+@model JsMiracle.Entities.IMS_CM_DMLX
+
+@using (Ajax.BeginForm("SaveCodeType", "Code"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmCodeType" }))
+{
+
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.XGR);
+    @Html.HiddenFor(n => n.CJR);
+    @Html.HiddenFor(n => n.CJSJ);
+
+    <table class="TB">
+        <tr>
+            <td>类型代码编号</td>
+            <td>
+                @Html.TextBoxFor(n => n.LXDM, new { id = "txtCodeTypeID" })
+            </td>
+        </tr>
+        <tr>
+            <td>类型代码名称</td>
+            <td>
+                @Html.TextBoxFor(n => n.LXMC, new { id = "txtCodeTypeName" })
+            </td>
+        </tr>
+        <tr>
+            <td>类型代码描述</td>
+            <td>
+                @Html.TextAreaFor(n => n.LXMS, new { id = "txtDesc", rows = "2" })
+            </td>
+        </tr>
+        <tr>
+            <td>注释</td>
+            <td>
+                @Html.TextAreaFor(n => n.ZS, new { id = "txtZS", rows = "2" })
+            </td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmCodeType').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmCodeType').form('reset')">取消</a>
+
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmCodeType').form({
+            success: function (data) {
+                //console.log(data);
+                //var data = eval('(' + data + ')');
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('类型代码编辑', ret.msg, "info", function () {
+                        // 关闭当前div 刷新父窗体
+                        closeWindow(ret.parentid,-1);
+                    });
+                }
+                else {
+                    $.messager.alert('类型代码编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtCodeTypeID").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtCodeTypeName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+    });
+
+
+</script>

@@ -1,16 +1,11 @@
-﻿using JsMiracle.Entities.EasyUI_Model;
-using JsMiracle.Framework;
+﻿using JsMiracle.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JsMiracle.Framework;
 
 namespace JsMiracle.WebUI.Controllers.FilterAttribute
 {
     /// <summary>
-    /// 用于处理未解决的异常显示
+    /// 用于处理controller中的未解决的异常显示
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
     public class ExceptionFilterAttribute : ActionFilterAttribute

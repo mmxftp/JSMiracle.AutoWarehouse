@@ -54,27 +54,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EasyUI_Model\ExtResult.cs" />
+    <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
-    <Compile Include="IMS_BS_Item.cs">
+    <Compile Include="IMS_CB_WL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_Modu.cs">
+    <Compile Include="IMS_CM_DM.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_MoFn.cs">
+    <Compile Include="IMS_CM_DMLX.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_Role.cs">
+    <Compile Include="IMS_UP_JS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_RoMo.cs">
+    <Compile Include="IMS_UP_JSMK.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_RoUr.cs">
+    <Compile Include="IMS_UP_JSYH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMS_UP_User.cs">
+    <Compile Include="IMS_UP_MK.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_UP_MKGN.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_UP_YH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -92,10 +99,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Partial\IMS_UP_Modu.cs" />
-    <Compile Include="Partial\IMS_UP_User.cs" />
+    <Compile Include="Partial\IMS_CB_WL.cs" />
+    <Compile Include="Partial\IMS_UP_MK.cs" />
+    <Compile Include="Partial\IMS_UP_YH.cs" />
     <Compile Include="Partial\IModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +137,10 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Dal.Abstract
+namespace JsMiracle.Dal.Abstract.UP
 {
-    public interface IRole : IDataLayer<IMS_UP_Role>
+    public interface IRole : IDataLayer<IMS_UP_JS>
     {
         //IList<IMS_UP_Role> GetRoleList(int pageIndex, int pageSize);
 
@@ -16,7 +16,7 @@ namespace JsMiracle.Dal.Abstract
 
         //IMS_UP_Role GetEntity(int id);
 
-        IList<IMS_UP_Role> GetAllRole();
+        IList<IMS_UP_JS> GetAllRole();
 
     }
 }

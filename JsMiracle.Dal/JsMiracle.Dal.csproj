@@ -43,6 +43,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.4\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
@@ -52,11 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\CM\ICode.cs" />
+    <Compile Include="Abstract\CM\ICodeType.cs" />
     <Compile Include="Abstract\DataLayerBase.cs" />
     <Compile Include="Abstract\UP\IActionPermission.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
     <Compile Include="Abstract\UP\IFormsAuthentication.cs" />
-    <Compile Include="Abstract\BS\IItem.cs" />
+    <Compile Include="Abstract\CB\IItem.cs" />
     <Compile Include="Abstract\UP\IMembershipService.cs" />
     <Compile Include="Abstract\UP\IModule.cs" />
     <Compile Include="Abstract\UP\IModuleFunction.cs" />
@@ -64,14 +70,16 @@
     <Compile Include="Abstract\UP\IRole.cs" />
     <Compile Include="Abstract\UP\IRoleUser.cs" />
     <Compile Include="Abstract\UP\IUser.cs" />
+    <Compile Include="Concrete\CM\IMS_CM_CodeType_Dal.cs" />
+    <Compile Include="Concrete\CM\IMS_CM_Code_Dal.cs" />
     <Compile Include="Concrete\FormsAuthenticationService.cs" />
-    <Compile Include="Concrete\IMS_BS_Item_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_MoFn_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_Modu_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_RoMo_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_Role_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_RoUr_Dal.cs" />
-    <Compile Include="Concrete\IMS_UP_User_Dal.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_Item_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_MoFn_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_Modu_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_RoMo_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_Role_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_RoUr_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_User_Dal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +91,9 @@
       <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>
       <Name>JsMiracle.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

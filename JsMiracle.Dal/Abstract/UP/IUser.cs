@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Dal.Abstract
+namespace JsMiracle.Dal.Abstract.UP
 {
-    public interface IUser : IDataLayer<IMS_UP_User>
+    public interface IUser : IDataLayer<IMS_UP_YH>
     {
-        IList<IMS_UP_User> GetAllUserList(bool userNameFormatter = false);
+        IList<IMS_UP_YH> GetAllUserList(bool userNameFormatter = false);
 
         /// <summary>
         /// 得到数据实例
         /// </summary>
         /// <param name="userid">员工号</param>
         /// <returns></returns>
-        IMS_UP_User GetEntity(string userid);
+        IMS_UP_YH GetEntity(string userid);
 
         //IList<IMS_UP_User> GetUserList(int pageIndex, int pageSize, string txt, out int totalCount);
 

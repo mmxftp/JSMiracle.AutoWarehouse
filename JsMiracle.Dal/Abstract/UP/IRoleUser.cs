@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Dal.Abstract
+namespace JsMiracle.Dal.Abstract.UP
 {
-    public interface IRoleUser : IDataLayer<IMS_UP_RoUr>
+    public interface IRoleUser : IDataLayer<IMS_UP_JSYH>
     {
-        IList<IMS_UP_User> GetUserList(string roleid);
+        IList<IMS_UP_YH> GetUserList(string roleid);
 
         int SaveRoleUser( string roleid , string userid);
 

@@ -3,12 +3,12 @@
     //Layout = null;
 }
 
-@model  JsMiracle.Entities.IMS_UP_Role
+@model  JsMiracle.Entities.IMS_UP_JS
 
 <div>
     @using (Ajax.BeginForm("SaveRole", "RoleUser"
             , new AjaxOptions()
-            , new { enctype = "multipart/form-data", id = "ff" }))
+            , new { enctype = "multipart/form-data", id = "frmRole" }))
     {
         @Html.HiddenFor(n => n.ID);
 
@@ -18,16 +18,19 @@
                     角色名称
                 </td>
                 <td>
-                    @Html.TextBoxFor(n => n.RoleName, new { id = "txtRole" })
+                    @Html.TextBoxFor(n => n.JSMC, new { id = "txtRole" })
                 </td>
             </tr>
             <tr>
                 <td>描述</td>
-                <td>@Html.TextBoxFor(n => n.Description)</td>
+                <td>@Html.TextBoxFor(n => n.MS)</td>
             </tr>
             <tr style="text-align:center;display:table-row;">
                 <td colspan="2">
-                    <input type="submit" value="提交" class="easyui-linkbutton" />
+                    <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmRole').form('submit')">提交</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmRole').form('reset')">取消</a>
+
                 </td>
             </tr>
         </table>
@@ -38,7 +41,7 @@
 <script type="text/javascript">
 
     $(function () {
-        $('#ff').form({
+        $('#frmRole').form({
             success: function (data) {
                 var data = eval('(' + data + ')');
                 if (data.success) {

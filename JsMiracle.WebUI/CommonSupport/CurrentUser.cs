@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
 using JsMiracle.Entities.View;
 using JsMiracle.Framework;
@@ -17,12 +18,14 @@ namespace JsMiracle.WebUI.CommonSupport
         static CurrentUser()
         {
             IsAdmin = true;
+
+
         }
-        
+
         /// <summary>
         /// 用户信息
         /// </summary>
-        public IMS_UP_User UserInfo { get; private set; }
+        public IMS_UP_YH UserInfo { get; private set; }
 
         /// <summary>
         /// 用户权限信息
@@ -31,7 +34,7 @@ namespace JsMiracle.WebUI.CommonSupport
 
         public static CurrentUser GetCurrentUser()
         {
-            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            if (!HttpContext.Current.User.Identity.IsAuthenticated && !IsAdmin)
                 throw new JsMiracleException("用户未登录");//必须要用户Form验证后才能使用CurrentUser
 
             string userid = HttpContext.Current.User.Identity.Name;
@@ -39,15 +42,29 @@ namespace JsMiracle.WebUI.CommonSupport
 
             if (cache.GetSessionCache(userid) == null)
             {
-                CurrentUser cu = new CurrentUser();
-                var user = WindsorContaineFactory.GetContainer().Resolve<IUser>();
-                cu.UserInfo = user.GetEntity(HttpContext.Current.User.Identity.Name);
-                var per = WindsorContaineFactory.GetContainer().Resolve<IPermission>();
-                cu.Permissions = per.GetPermissionListByUserID(userid);
-                cache.SetSessionCache(userid, cu);
+                // 管理员的操作
+                if (IsAdmin)
+                {
+                    userid = "admin";
+
+                    CurrentUser cu = new CurrentUser();
+                    cu.UserInfo = new IMS_UP_YH() { YHID = "admin", YHM = "admin" };
+
+                    var per = WindsorContaineFactory.GetContainer().Resolve<IActionPermission>();
+                    cu.Permissions = per.GetAllPermission();
+                    cache.SetSessionCache(userid, cu);
+                }
+                else
+                {
+                    CurrentUser cu = new CurrentUser();
+                    var user = WindsorContaineFactory.GetContainer().Resolve<IUser>();
+                    cu.UserInfo = user.GetEntity(HttpContext.Current.User.Identity.Name);
+                    var per = WindsorContaineFactory.GetContainer().Resolve<IPermission>();
+                    cu.Permissions = per.GetPermissionListByUserID(userid);
+                    cache.SetSessionCache(userid, cu);
+                }
             }
-            //var u = (CurrentUser)cache.GetCache(userid);
-            //this.UserInfo = u.UserInfo;
+
             return (CurrentUser)cache.GetSessionCache(userid);
         }
 

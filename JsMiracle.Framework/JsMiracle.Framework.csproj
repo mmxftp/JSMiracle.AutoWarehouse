@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Cache\WebCache.cs" />
+    <Compile Include="ExpressionFilter.cs" />
     <Compile Include="JsMiracleException.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="ModuleMemberCopy.cs" />

@@ -59,6 +59,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.4\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -142,17 +146,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\CB\CBAreaRegistration.cs" />
+    <Compile Include="Areas\CB\Controllers\ItemController.cs" />
+    <Compile Include="Areas\CM\CMAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
     <Compile Include="CommonSupport\CurrentUser.cs" />
+    <Compile Include="Areas\CM\Controllers\CodeController.cs" />
     <Compile Include="Controllers\FilterAttribute\ExceptionFilterAttribute.cs" />
-    <Compile Include="Controllers\UserManagement\AccountController.cs" />
-    <Compile Include="Controllers\UserManagement\BaseController.cs" />
+    <Compile Include="Controllers\UP\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\FilterAttribute\AuthorizeFilterAttribute.cs" />
     <Compile Include="Controllers\FilterAttribute\AuthViewPageAttribute.cs" />
-    <Compile Include="Controllers\UserManagement\HomeController.cs" />
-    <Compile Include="Controllers\UserManagement\ModuleController.cs" />
-    <Compile Include="Controllers\UserManagement\RoleUserController.cs" />
-    <Compile Include="Controllers\UserManagement\UserController.cs" />
+    <Compile Include="Controllers\UP\HomeController.cs" />
+    <Compile Include="Controllers\UP\ModuleController.cs" />
+    <Compile Include="Controllers\UP\RoleUserController.cs" />
+    <Compile Include="Controllers\UP\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,7 +170,6 @@
     <Compile Include="Infrastructure\WindsorContaineFactory.cs" />
     <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\PaginationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -517,12 +524,18 @@
     </Content>
     <Content Include="Config\DataBase.config" />
     <Content Include="Scripts\CustomScripts\common.js" />
+    <Content Include="Areas\CM\Views\Web.config" />
+    <Content Include="Areas\CM\Views\Code\Index.cshtml" />
+    <Content Include="Areas\CM\Views\Code\EditCodeType.cshtml" />
+    <Content Include="Areas\CB\Views\Web.config" />
+    <Content Include="Areas\CM\Views\Code\EditCode.cshtml" />
+    <Content Include="Areas\CB\Views\Item\Index.cshtml" />
+    <Content Include="Areas\CB\Views\Item\EditIem.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.11.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
@@ -591,9 +604,14 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Home\_MenuPartial.cshtml" />
     <Content Include="Views\Home\_TitlePartial.cshtml" />
+    <Content Include="Views\User\Registion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CB\Models\" />
+    <Folder Include="Areas\CB\Views\Shared\" />
+    <Folder Include="Areas\CM\Models\" />
+    <Folder Include="Areas\CM\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

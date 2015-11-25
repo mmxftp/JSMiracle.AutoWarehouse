@@ -25,12 +25,14 @@ namespace JsMiracle.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IMS_BS_Item> IMS_BS_ItemT { get; set; }
-        public virtual DbSet<IMS_UP_Modu> IMS_UP_ModuT { get; set; }
-        public virtual DbSet<IMS_UP_MoFn> IMS_UP_MoFnT { get; set; }
-        public virtual DbSet<IMS_UP_Role> IMS_UP_RoleT { get; set; }
-        public virtual DbSet<IMS_UP_RoMo> IMS_UP_RoMoT { get; set; }
-        public virtual DbSet<IMS_UP_RoUr> IMS_UP_RoUrT { get; set; }
-        public virtual DbSet<IMS_UP_User> IMS_UP_UserT { get; set; }
+        public virtual DbSet<IMS_UP_JSMK> IMS_UP_JSMK_S { get; set; }
+        public virtual DbSet<IMS_UP_JSYH> IMS_UP_JSYH_S { get; set; }
+        public virtual DbSet<IMS_UP_MK> IMS_UP_MK_S { get; set; }
+        public virtual DbSet<IMS_UP_MKGN> IMS_UP_MKGN_S { get; set; }
+        public virtual DbSet<IMS_UP_YH> IMS_UP_YH_S { get; set; }
+        public virtual DbSet<IMS_UP_JS> IMS_UP_JS_S { get; set; }
+        public virtual DbSet<IMS_CM_DM> IMS_CM_DM_S { get; set; }
+        public virtual DbSet<IMS_CM_DMLX> IMS_CM_DMLX_S { get; set; }
+        public virtual DbSet<IMS_CB_WL> IMS_CB_WL_S { get; set; }
     }
 }

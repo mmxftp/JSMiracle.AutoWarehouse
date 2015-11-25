@@ -1,98 +1,158 @@
-﻿//using JsMiracle.Entities;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Linq.Expressions;
-//using System.Data.Entity;
-//using System.Data.Entity.Infrastructure;
-//using System.Data.Entity.Core.Objects;
+﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Entities;
+using JsMiracle.Framework;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Linq.Dynamic;
+
+public abstract class DataLayerBase<T> : IDataLayer<T> where T : class, IModelBase
+{
+    private IIMS_ORGEntities _dbContext;
+
+    protected virtual IIMS_ORGEntities DbContext
+    {
+        get
+        {
+            if (_dbContext == null)
+                _dbContext = new IIMS_ORGEntities();
+
+            return _dbContext;
+        }
+    }
+
+    public virtual T GetEntity(long id)
+    {
+        return DbContext.Set<T>().Find(id);
+    }
+
+    public virtual void SaveOrUpdate(T entity)
+    {
+        if (entity.ID == 0)
+        {
+            Insert(entity);
+        }
+        else
+        {
+            var oldEnt = GetEntity(entity.ID);
+            if (oldEnt == null)
+                throw new JsMiracleException(
+                    string.Format("对象({0})不存在无法修改 id:{1}", typeof(T).Name, entity.ID));
+
+            ModuleMemberCopy.SameValueCopier(entity, oldEnt);
+
+            //DbContext.Entry(entity).State = EntityState.Modified;
+
+            if (DbContext.Entry(oldEnt).State == EntityState.Modified)
+                DbContext.SaveChanges();
+        }
+    }
+
+    public virtual void Delete(long id)
+    {
+        var entity = GetEntity(id);
+        if (entity != null)
+        {
+            DbContext.Set<T>().Remove(entity);
+            DbContext.SaveChanges();
+        }
+    }
+
+    public virtual void Insert(T entity)
+    {
+        DbContext.Set<T>().Add(entity);
+        DbContext.SaveChanges();
+    }
 
 
-//namespace JsMiracle.Dal.Abstract
-//{
-//    public class DataLayerBase 
-//    {      
-//        public static T Update<T>(DbContext context, T entity) where T : class,new()
-//        {
-//            if (context.Entry(entity).State == EntityState.Modified)
-//                context.SaveChanges();
 
-//            return entity;
-//        }
+    public virtual IList<T> GetAllEntites(Expression<Func<T, bool>> filter)
+    {
+        // 返回按条件过滤的记录
+        if (filter != null)
+            return DbContext.Set<T>().Where(filter).ToList();
 
-//        public static T Insert<T>(DbContext context, T entity) where T : class,new()
-//        {
-//            context.Set<T>().Add(entity);
-//            context.SaveChanges();
-//            return entity;
-//        }
-
-//        public static int Delete<T>(DbContext context,T entity) where T : class,new()
-//        {
-//            context.Set<T>().Remove(entity);
-//            return context.SaveChanges();                
-//        }
-
-//        public static T Find<T>(DbContext context, params object[] keyValues)where T:class ,new ()
-//        {
-//            return context.Set<T>().Find(keyValues);
-//        }
-
-//        public static IList<T> FindWhere<T>(DbContext context, Expression<Func<T, bool>> filter) where T :class, new ()
-//        {
-//            // 条件为空返回所有记录
-//            if (filter == null)
-//                return context.Set<T>().ToList();
-
-//            // 条件不为空，按条件返回数据
-//            return context.Set<T>().Where(filter).ToList();           
-//        }
-
-//        /// <summary>
-//        /// 分页数据
-//        /// </summary>
-//        /// <typeparam name="TKey"></typeparam>
-//        /// <param name="orderBy">排序条件</param>
-//        /// <param name="filter">where条件</param>
-//        /// <param name="intPageIndex">第几页</param>
-//        /// <param name="intPageSize">每页行数</param>
-//        /// <param name="rowCount">总计行数</param>
-//        /// <returns></returns>
-//        public static IList<T> GetDataByPage<T, TKey>(
-//            DbContext context,
-//            Expression<Func<T, TKey>> orderBy
-//            , Expression<Func<T, bool>> filter
-//            , int intPageIndex
-//            , int intPageSize
-//            , out int rowCount) where T : class,new()
-//        {
-//            IQueryable<T> query = null;
-
-//            if (filter != null)
-//            {
-//                query = context.Set<T>()
-//                    .Where(filter)
-//                    .OrderBy(orderBy)
-//                    .Skip((intPageIndex - 1) * intPageSize)
-//                    .Take(intPageSize);
-
-//                rowCount = context.Set<T>().Where(filter).Count();
-//            }
-//            else
-//            {
-//                query = context.Set<T>()
-//                    .OrderBy(orderBy)
-//                    .Skip((intPageIndex - 1) * intPageSize)
-//                    .Take(intPageSize);
-
-//                rowCount = context.Set<T>().Count();
-//            }
-
-//            var result = query.ToList();
-
-//            return result;
+        // 条件为空返回全部
+        return DbContext.Set<T>().ToList();
+    }
 
 
-//        }
-//    }
-//}
+    public virtual bool Exists(Expression<Func<T, bool>> filter)
+    {
+        if (filter != null)
+        {
+            return DbContext.Set<T>().Any(filter);
+        }
+
+        return DbContext.Set<T>().Any();
+    }
+
+    public virtual IList<T> GetDataByPage<TKey>(Expression<Func<T, TKey>> orderBy
+        , Expression<Func<T, bool>> filter
+        , int intPageIndex
+        , int intPageSize
+        , out int rowCount)
+    {
+        IQueryable<T> query = null;
+
+        if (filter != null)
+        {
+            query = DbContext.Set<T>()
+                .Where(filter)
+                .OrderBy(orderBy)
+                .Skip((intPageIndex - 1) * intPageSize)
+                .Take(intPageSize);
+
+            rowCount = DbContext.Set<T>().Where(filter).Count();
+        }
+        else
+        {
+            query = DbContext.Set<T>()
+                .OrderBy(orderBy)
+                .Skip((intPageIndex - 1) * intPageSize)
+                .Take(intPageSize);
+
+            rowCount = DbContext.Set<T>().Count();
+        }
+
+        var result = query.ToList();
+
+        return result;
+    }
+
+    public virtual IList<T> GetDataByPage(int intPageIndex
+        , int intPageSize
+        , out int rowCount
+        , string orderBy
+        , string where
+        , params object[] whereParams)
+    {
+        IQueryable<T> query = null;
+
+        if (!string.IsNullOrEmpty(where))
+        {
+            query = DbContext.Set<T>()
+                .Where(where,whereParams)
+                .OrderBy(orderBy)
+                .Skip((intPageIndex - 1) * intPageSize)
+                .Take(intPageSize);
+
+            rowCount = DbContext.Set<T>().Where(where,whereParams).Count();
+        }
+        else
+        {
+            query = DbContext.Set<T>()
+                .OrderBy(orderBy)
+                .Skip((intPageIndex - 1) * intPageSize)
+                .Take(intPageSize);
+
+            rowCount = DbContext.Set<T>().Count();
+        }
+
+        var result = query.ToList();
+
+        return result;
+    }
+}

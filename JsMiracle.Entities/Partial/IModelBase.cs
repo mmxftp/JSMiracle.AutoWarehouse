@@ -11,14 +11,27 @@ namespace JsMiracle.Entities
         long ID { get; set; }
     }
 
-    public partial class IMS_UP_RoUr : IModelBase { }
+    #region UP
 
-    public partial class IMS_UP_Role : IModelBase { }
+    public partial class IMS_UP_JSYH : IModelBase { }
 
-    public partial class IMS_UP_MoFn : IModelBase { }
+    public partial class IMS_UP_JS : IModelBase { }
 
-    public partial class IMS_UP_RoMo : IModelBase { }
+    public partial class IMS_UP_MKGN : IModelBase { }
 
-    public partial class IMS_BS_Item : IModelBase { }
+    public partial class IMS_UP_JSMK : IModelBase { }
+    #endregion
 
+    #region CB
+
+
+
+    #endregion
+
+    #region CM
+    public partial class IMS_CM_DM : IModelBase { }
+
+    public partial class IMS_CM_DMLX : IModelBase { }
+
+    #endregion
 }

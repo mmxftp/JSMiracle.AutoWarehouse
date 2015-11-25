@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Dal.Abstract
+namespace JsMiracle.Dal.Abstract.UP
 {
     public interface IFormsAuthentication
     {

@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Framework.Cache;
 using JsMiracle.WebUI.CommonSupport;
@@ -30,6 +31,8 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 var permissions = WindsorContaineFactory.GetContainer().Resolve<IActionPermission>().GetAllPermission();
 
                 bool validating = true;
+
+                // 只有已配置的权限才是需要验证的权限,否则不验证
                 if (permissions.ExistsPermissions(controllerName, actionName))
                 {
                     validating = user.Permissions.ExistsPermissions(controllerName, actionName);

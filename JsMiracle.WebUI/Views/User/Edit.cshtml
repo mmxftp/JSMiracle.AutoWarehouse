@@ -4,41 +4,48 @@
 }
 
 
-@model  JsMiracle.Entities.IMS_UP_User
+@model  JsMiracle.Entities.IMS_UP_YH
 
 
 @using (Ajax.BeginForm("Save", "User"
         , new AjaxOptions()
-        , new { enctype = "multipart/form-data", id = "ff" }))
+        , new { enctype = "multipart/form-data", id = "frmUser" }))
 {
+    @Html.ValidationSummary();
     @Html.HiddenFor(n => n.ID);
-    @Html.HiddenFor(n => n.State);
-    <table class="TB" style="height:230px;">
+    @Html.HiddenFor(n => n.ZT);
+    <table class="TB" >
         <tr>
             <td>员工编号</td>
-            <td>@Html.TextBoxFor(n => n.UserID, new { id = "txtUserId" })</td>
+            <td>@Html.TextBoxFor(n => n.YHID, new { id = "txtUserId" })</td>
         </tr>
         <tr>
             <td>员工姓名</td>
-            <td>@Html.TextBoxFor(n => n.UserName, new { id = "txtUserName" })</td>
+            <td>@Html.TextBoxFor(n => n.YHM, new { id = "txtUserName" })</td>
         </tr>
         <tr>
             <td>Email</td>
-            <td>@Html.TextBoxFor(n => n.Email, new { id = "txtEmail" })</td>
+            <td>@Html.TextBoxFor(n => n.DY, new { id = "txtEmail" })</td>
         </tr>
         <tr>
             <td>登录密码</td>
-            <td>@Html.TextBoxFor(n => n.Password, new { id = "txtPwd", type = "password" })</td>
+            <td>@Html.TextBoxFor(n => n.MM, new { id = "txtPwd", type = "password" })</td>
         </tr>
         <tr style="text-align:center;display:table-row;">
-            <td colspan="2"><input type="submit" value="提交" class="easyui-linkbutton" /></td>
+            <td colspan="2">
+                @*<input type="submit" value="提交" class="easyui-linkbutton" />*@
+            
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmUser').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmUser').form('reset')">取消</a>
+            </td>
         </tr>
     </table>
 }
 
 <script type="text/javascript">
     $(function () {
-        $('#ff').form({
+        $('#frmUser').form({
             success: function (data) {
                 console.log(data);
                 var data = eval('(' + data + ')');

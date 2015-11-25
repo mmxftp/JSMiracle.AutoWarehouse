@@ -5,313 +5,400 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="IMS_BS_ItemT">
+        <EntityType Name="IMS_CB_WL_S">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemCode" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="ItemType" Type="int" Nullable="false" />
-          <Property Name="ItemName" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ABCRate" Type="int" Nullable="false" />
-          <Property Name="LifeTime" Type="int" Nullable="false" />
-          <Property Name="MinPackUnit" Type="int" />
-          <Property Name="MaxInventory" Type="bigint" />
-          <Property Name="MinInventory" Type="bigint" Nullable="false" />
-          <Property Name="WeightLVL" Type="int" Nullable="false" />
-          <Property Name="RiskLVL" Type="int" Nullable="false" />
-          <Property Name="BarCode" Type="nvarchar" MaxLength="64" />
-          <Property Name="Creator" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="LastModifier" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateTime" Type="datetime" Nullable="false" />
-          <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="256" />
+          <Property Name="WLBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="WLLX" Type="int" Nullable="false" />
+          <Property Name="WLMC" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="MS" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ABCHDZJ" Type="int" Nullable="false" />
+          <Property Name="BZQ" Type="int" Nullable="false" />
+          <Property Name="ZXBZDW" Type="int" />
+          <Property Name="ZDKCL" Type="bigint" />
+          <Property Name="ZXKCL" Type="bigint" Nullable="false" />
+          <Property Name="ZLDJ" Type="int" Nullable="false" />
+          <Property Name="WXDJ" Type="int" Nullable="false" />
+          <Property Name="TXM" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="XGR" Type="nvarchar" MaxLength="64" />
+          <Property Name="XGSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <EntityType Name="IMS_UP_ModuT">
+        <EntityType Name="IMS_CM_DM_S">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LXDM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="MC" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="SZ" Type="int" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="XGR" Type="nvarchar" MaxLength="64" />
+          <Property Name="XGRQ" Type="datetime" />
+          <Property Name="ZS" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="IMS_CM_DMLX_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LXDM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LXMC" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LXMS" Type="nvarchar" MaxLength="128" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="XGR" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZS" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_UP_JS_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JSID" Type="nvarchar" MaxLength="36" />
+          <Property Name="JSMC" Type="nvarchar" MaxLength="50" />
+          <Property Name="CJRQ" Type="datetime" />
+          <Property Name="MS" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="IMS_UP_JSMK_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JSID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="MKID" Type="int" Nullable="false" />
+          <Property Name="GNID" Type="int" />
+          <Property Name="XGRQ" Type="datetime" />
+        </EntityType>
+        <EntityType Name="IMS_UP_JSYH_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JSID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="YHID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IMS_UP_MK_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MKMC" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="300" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="ParentID" Type="int" Nullable="false" />
-          <Property Name="SortID" Type="int" Nullable="false" />
-          <Property Name="Controller_Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="Action_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="CJRQ" Type="datetime" />
+          <Property Name="MS" Type="nvarchar" MaxLength="200" />
+          <Property Name="MKID" Type="int" Nullable="false" />
+          <Property Name="FMKID" Type="int" Nullable="false" />
+          <Property Name="PXID" Type="int" Nullable="false" />
+          <Property Name="KZMC" Type="nvarchar" MaxLength="255" />
+          <Property Name="HDMC" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="IMS_UP_MoFnT">
+        <EntityType Name="IMS_UP_MKGN_S">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="FunctionName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ControlID" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="FunctionID" Type="int" Nullable="false" />
-          <Property Name="Controller_Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="Action_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="MKID" Type="int" Nullable="false" />
+          <Property Name="GNMC" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KJID" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="MS" Type="nvarchar" MaxLength="200" />
+          <Property Name="GNID" Type="int" Nullable="false" />
+          <Property Name="KZMC" Type="nvarchar" MaxLength="255" />
+          <Property Name="HDMC" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="IMS_UP_RoleT">
+        <EntityType Name="IMS_UP_YH_S">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleID" Type="nvarchar" MaxLength="36" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="IMS_UP_RoMoT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="36" Nullable="false" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="FunctionID" Type="int" />
-          <Property Name="LastModDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="IMS_UP_RoUrT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleID" Type="nvarchar" MaxLength="36" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IMS_UP_UserT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="150" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="LastModDate" Type="datetime" />
-          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="YHID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="YHM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DY" Type="nvarchar" MaxLength="150" />
+          <Property Name="CJRQ" Type="datetime" />
+          <Property Name="XGRQ" Type="datetime" />
+          <Property Name="ZT" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
-          <EntitySet Name="IMS_BS_ItemT" EntityType="Self.IMS_BS_ItemT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_ModuT" EntityType="Self.IMS_UP_ModuT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_MoFnT" EntityType="Self.IMS_UP_MoFnT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_RoleT" EntityType="Self.IMS_UP_RoleT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_RoMoT" EntityType="Self.IMS_UP_RoMoT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_RoUrT" EntityType="Self.IMS_UP_RoUrT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMS_UP_UserT" EntityType="Self.IMS_UP_UserT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CB_WL_S" EntityType="Self.IMS_CB_WL_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CM_DM_S" EntityType="Self.IMS_CM_DM_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CM_DMLX_S" EntityType="Self.IMS_CM_DMLX_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_JS_S" EntityType="Self.IMS_UP_JS_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_JSMK_S" EntityType="Self.IMS_UP_JSMK_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_JSYH_S" EntityType="Self.IMS_UP_JSYH_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_MK_S" EntityType="Self.IMS_UP_MK_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_MKGN_S" EntityType="Self.IMS_UP_MKGN_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_UP_YH_S" EntityType="Self.IMS_UP_YH_S" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IIMS_ORGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="IIMS_ORGEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="IMS_BS_ItemT" EntityType="IIMS_ORGModel.IMS_BS_Item" />
-          <EntitySet Name="IMS_UP_ModuT" EntityType="IIMS_ORGModel.IMS_UP_Modu" />
-          <EntitySet Name="IMS_UP_MoFnT" EntityType="IIMS_ORGModel.IMS_UP_MoFn" />
-          <EntitySet Name="IMS_UP_RoleT" EntityType="IIMS_ORGModel.IMS_UP_Role" />
-          <EntitySet Name="IMS_UP_RoMoT" EntityType="IIMS_ORGModel.IMS_UP_RoMo" />
-          <EntitySet Name="IMS_UP_RoUrT" EntityType="IIMS_ORGModel.IMS_UP_RoUr" />
-          <EntitySet Name="IMS_UP_UserT" EntityType="IIMS_ORGModel.IMS_UP_User" />
+          <EntitySet Name="IMS_UP_JSMK_S" EntityType="IIMS_ORGModel.IMS_UP_JSMK" />
+          <EntitySet Name="IMS_UP_JSYH_S" EntityType="IIMS_ORGModel.IMS_UP_JSYH" />
+          <EntitySet Name="IMS_UP_MK_S" EntityType="IIMS_ORGModel.IMS_UP_MK" />
+          <EntitySet Name="IMS_UP_MKGN_S" EntityType="IIMS_ORGModel.IMS_UP_MKGN" />
+          <EntitySet Name="IMS_UP_YH_S" EntityType="IIMS_ORGModel.IMS_UP_YH" />
+          <EntitySet Name="IMS_UP_JS_S" EntityType="IIMS_ORGModel.IMS_UP_JS" />
+          <EntitySet Name="IMS_CM_DM_S" EntityType="IIMS_ORGModel.IMS_CM_DM" />
+          <EntitySet Name="IMS_CM_DMLX_S" EntityType="IIMS_ORGModel.IMS_CM_DMLX" />
+          <EntitySet Name="IMS_CB_WL_S" EntityType="IIMS_ORGModel.IMS_CB_WL" />
         </EntityContainer>
-        <EntityType Name="IMS_BS_Item">
+        <EntityType Name="IMS_UP_JSMK">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ItemType" Type="Int32" Nullable="false" />
-          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ABCRate" Type="Int32" Nullable="false" />
-          <Property Name="LifeTime" Type="Int32" Nullable="false" />
-          <Property Name="MinPackUnit" Type="Int32" />
-          <Property Name="MaxInventory" Type="Int64" />
-          <Property Name="MinInventory" Type="Int64" Nullable="false" />
-          <Property Name="WeightLVL" Type="Int32" Nullable="false" />
-          <Property Name="RiskLVL" Type="Int32" Nullable="false" />
-          <Property Name="BarCode" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="Creator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="LastModifier" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="JSID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="MKID" Type="Int32" Nullable="false" />
+          <Property Name="GNID" Type="Int32" />
+          <Property Name="XGRQ" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="IMS_UP_Modu">
+        <EntityType Name="IMS_UP_JSYH">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JSID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="YHID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_UP_MK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MKMC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="ParentID" Type="Int32" Nullable="false" />
-          <Property Name="SortID" Type="Int32" Nullable="false" />
-          <Property Name="Controller_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Action_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CJRQ" Type="DateTime" Precision="3" />
+          <Property Name="MS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MKID" Type="Int32" Nullable="false" />
+          <Property Name="FMKID" Type="Int32" Nullable="false" />
+          <Property Name="PXID" Type="Int32" Nullable="false" />
+          <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="IMS_UP_MoFn">
+        <EntityType Name="IMS_UP_MKGN">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="FunctionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ControlID" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FunctionID" Type="Int32" Nullable="false" />
-          <Property Name="Controller_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Action_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MKID" Type="Int32" Nullable="false" />
+          <Property Name="GNMC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KJID" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GNID" Type="Int32" Nullable="false" />
+          <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="IMS_UP_Role">
+        <EntityType Name="IMS_UP_YH">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="YHID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="YHM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DY" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CJRQ" Type="DateTime" Precision="3" />
+          <Property Name="XGRQ" Type="DateTime" Precision="3" />
+          <Property Name="ZT" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="IMS_UP_RoMo">
+        <EntityType Name="IMS_UP_JS">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="FunctionID" Type="Int32" />
-          <Property Name="LastModDate" Type="DateTime" Precision="3" />
+          <Property Name="JSID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="JSMC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CJRQ" Type="DateTime" Precision="3" />
+          <Property Name="MS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="IMS_UP_RoUr">
+        <EntityType Name="IMS_CM_DM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="DM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MC" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SZ" Type="Int32" Nullable="false" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="XGR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="XGRQ" Type="DateTime" Precision="3" />
+          <Property Name="ZS" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LXDM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_CM_DMLX">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="LXDM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LXMC" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LXMS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="XGR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_CB_WL">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WLBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WLLX" Type="Int32" Nullable="false" />
+          <Property Name="WLMC" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MS" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ABCHDZJ" Type="Int32" Nullable="false" />
+          <Property Name="BZQ" Type="Int32" Nullable="false" />
+          <Property Name="ZXBZDW" Type="Int32" />
+          <Property Name="ZDKCL" Type="Int64" />
+          <Property Name="ZXKCL" Type="Int64" Nullable="false" />
+          <Property Name="ZLDJ" Type="Int32" Nullable="false" />
+          <Property Name="WXDJ" Type="Int32" Nullable="false" />
+          <Property Name="TXM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="XGR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="XGSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="IMS_UP_User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="LastModDate" Type="DateTime" Precision="3" />
-          <Property Name="State" Type="Int32" Nullable="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IIMS_ORGModelStoreContainer" CdmEntityContainer="IIMS_ORGEntities">
-          <EntitySetMapping Name="IMS_BS_ItemT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_BS_Item">
-              <MappingFragment StoreEntitySet="IMS_BS_ItemT">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-                <ScalarProperty Name="RiskLVL" ColumnName="RiskLVL" />
-                <ScalarProperty Name="WeightLVL" ColumnName="WeightLVL" />
-                <ScalarProperty Name="MinInventory" ColumnName="MinInventory" />
-                <ScalarProperty Name="MaxInventory" ColumnName="MaxInventory" />
-                <ScalarProperty Name="MinPackUnit" ColumnName="MinPackUnit" />
-                <ScalarProperty Name="LifeTime" ColumnName="LifeTime" />
-                <ScalarProperty Name="ABCRate" ColumnName="ABCRate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <EntitySetMapping Name="IMS_UP_JSMK_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_JSMK">
+              <MappingFragment StoreEntitySet="IMS_UP_JSMK_S">
+                <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
+                <ScalarProperty Name="GNID" ColumnName="GNID" />
+                <ScalarProperty Name="MKID" ColumnName="MKID" />
+                <ScalarProperty Name="JSID" ColumnName="JSID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_ModuT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_Modu">
-              <MappingFragment StoreEntitySet="IMS_UP_ModuT">
-                <ScalarProperty Name="Action_Name" ColumnName="Action_Name" />
-                <ScalarProperty Name="Controller_Name" ColumnName="Controller_Name" />
-                <ScalarProperty Name="SortID" ColumnName="SortID" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <EntitySetMapping Name="IMS_UP_JSYH_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_JSYH">
+              <MappingFragment StoreEntitySet="IMS_UP_JSYH_S">
+                <ScalarProperty Name="YHID" ColumnName="YHID" />
+                <ScalarProperty Name="JSID" ColumnName="JSID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_UP_MK_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MK">
+              <MappingFragment StoreEntitySet="IMS_UP_MK_S">
+                <ScalarProperty Name="HDMC" ColumnName="HDMC" />
+                <ScalarProperty Name="KZMC" ColumnName="KZMC" />
+                <ScalarProperty Name="PXID" ColumnName="PXID" />
+                <ScalarProperty Name="FMKID" ColumnName="FMKID" />
+                <ScalarProperty Name="MKID" ColumnName="MKID" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="MKMC" ColumnName="MKMC" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_MoFnT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MoFn">
-              <MappingFragment StoreEntitySet="IMS_UP_MoFnT">
-                <ScalarProperty Name="Action_Name" ColumnName="Action_Name" />
-                <ScalarProperty Name="Controller_Name" ColumnName="Controller_Name" />
-                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ControlID" ColumnName="ControlID" />
-                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+          <EntitySetMapping Name="IMS_UP_MKGN_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MKGN">
+              <MappingFragment StoreEntitySet="IMS_UP_MKGN_S">
+                <ScalarProperty Name="HDMC" ColumnName="HDMC" />
+                <ScalarProperty Name="KZMC" ColumnName="KZMC" />
+                <ScalarProperty Name="GNID" ColumnName="GNID" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="KJID" ColumnName="KJID" />
+                <ScalarProperty Name="GNMC" ColumnName="GNMC" />
+                <ScalarProperty Name="MKID" ColumnName="MKID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_RoleT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_Role">
-              <MappingFragment StoreEntitySet="IMS_UP_RoleT">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <EntitySetMapping Name="IMS_UP_YH_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_YH">
+              <MappingFragment StoreEntitySet="IMS_UP_YH_S">
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
+                <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
+                <ScalarProperty Name="DY" ColumnName="DY" />
+                <ScalarProperty Name="MM" ColumnName="MM" />
+                <ScalarProperty Name="YHM" ColumnName="YHM" />
+                <ScalarProperty Name="YHID" ColumnName="YHID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_RoMoT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_RoMo">
-              <MappingFragment StoreEntitySet="IMS_UP_RoMoT">
-                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
-                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <EntitySetMapping Name="IMS_UP_JS_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_JS">
+              <MappingFragment StoreEntitySet="IMS_UP_JS_S">
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
+                <ScalarProperty Name="JSMC" ColumnName="JSMC" />
+                <ScalarProperty Name="JSID" ColumnName="JSID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_RoUrT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_RoUr">
-              <MappingFragment StoreEntitySet="IMS_UP_RoUrT">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <EntitySetMapping Name="IMS_CM_DM_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_DM">
+              <MappingFragment StoreEntitySet="IMS_CM_DM_S">
+                <ScalarProperty Name="LXDM" ColumnName="LXDM" />
+                <ScalarProperty Name="ZS" ColumnName="ZS" />
+                <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
+                <ScalarProperty Name="XGR" ColumnName="XGR" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="SZ" ColumnName="SZ" />
+                <ScalarProperty Name="MC" ColumnName="MC" />
+                <ScalarProperty Name="DM" ColumnName="DM" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_UserT">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_User">
-              <MappingFragment StoreEntitySet="IMS_UP_UserT">
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="LastModDate" ColumnName="LastModDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <EntitySetMapping Name="IMS_CM_DMLX_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_DMLX">
+              <MappingFragment StoreEntitySet="IMS_CM_DMLX_S">
+                <ScalarProperty Name="ZS" ColumnName="ZS" />
+                <ScalarProperty Name="XGR" ColumnName="XGR" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="LXMS" ColumnName="LXMS" />
+                <ScalarProperty Name="LXMC" ColumnName="LXMC" />
+                <ScalarProperty Name="LXDM" ColumnName="LXDM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_CB_WL_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CB_WL">
+              <MappingFragment StoreEntitySet="IMS_CB_WL_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="XGSJ" ColumnName="XGSJ" />
+                <ScalarProperty Name="XGR" ColumnName="XGR" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="TXM" ColumnName="TXM" />
+                <ScalarProperty Name="WXDJ" ColumnName="WXDJ" />
+                <ScalarProperty Name="ZLDJ" ColumnName="ZLDJ" />
+                <ScalarProperty Name="ZXKCL" ColumnName="ZXKCL" />
+                <ScalarProperty Name="ZDKCL" ColumnName="ZDKCL" />
+                <ScalarProperty Name="ZXBZDW" ColumnName="ZXBZDW" />
+                <ScalarProperty Name="BZQ" ColumnName="BZQ" />
+                <ScalarProperty Name="ABCHDZJ" ColumnName="ABCHDZJ" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="WLMC" ColumnName="WLMC" />
+                <ScalarProperty Name="WLLX" ColumnName="WLLX" />
+                <ScalarProperty Name="WLBH" ColumnName="WLBH" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

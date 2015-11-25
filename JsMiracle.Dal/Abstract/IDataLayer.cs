@@ -11,11 +11,55 @@ namespace JsMiracle.Dal.Abstract
 {
     public interface IDataLayer<T> where T : IModelBase
     {
+        /// <summary>
+        /// 按主键得记录
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
         T GetEntity(long id);
+
+        /// <summary>
+        /// 得数据表中所有数据
+        /// </summary>
+        /// <param name="filter">过滤条件 == null 返回所有记录</param>
+        /// <returns></returns>
+        IList<T> GetAllEntites(Expression<Func<T, bool>> filter);
+
+        /// <summary>
+        /// 是否存在指定数据
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        bool Exists(Expression<Func<T, bool>> filter);
+
+        /// <summary>
+        /// 保存或新增记录
+        /// </summary>
+        /// <param name="entity"></param>
         void SaveOrUpdate(T entity);
+
+        /// <summary>
+        /// 删除记录
+        /// </summary>
+        /// <param name="id">主键</param>
         void Delete(long id);
+
+        /// <summary>
+        /// 新增记录
+        /// </summary>
+        /// <param name="entity">数据实体</param>
         void Insert(T entity);
 
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <typeparam name="TKey">数据表的实体类</typeparam>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="filter">过滤条件h</param>
+        /// <param name="intPageIndex">第几页</param>
+        /// <param name="intPageSize">每页行数</param>
+        /// <param name="rowCount">共多少行 (输出参数)</param>
+        /// <returns></returns>
         IList<T> GetDataByPage<TKey>(
             Expression<Func<T, TKey>> orderBy
             , Expression<Func<T, bool>> filter
@@ -23,93 +67,24 @@ namespace JsMiracle.Dal.Abstract
             , int intPageSize
             , out int rowCount);
 
-    }
 
-    public class DataLayer<T> : IDataLayer<T> where T :class, IModelBase
-    {
-        private IIMS_ORGEntities _dbContext;
-
-        protected virtual IIMS_ORGEntities DbContext
-        {
-            get
-            {
-                if (_dbContext == null)
-                    _dbContext = new IIMS_ORGEntities();
-
-                return _dbContext;
-            }
-        }
-
-        public virtual T GetEntity(long id)
-        {
-            return DbContext.Set<T>().Find(id);
-        }
-
-        public virtual void SaveOrUpdate(T entity)
-        {
-            if (entity.ID == 0)
-            {
-                Insert(entity);
-            }
-            else
-            {
-                var oldEnt = GetEntity(entity.ID);
-                if (oldEnt == null)
-                    throw new JsMiracleException(
-                        string.Format("对象({0})不存在无法修改 id:{1}", typeof(T).Name, entity.ID));
-
-                ModuleMemberCopy.SameValueCopier(entity, oldEnt);
-
-                //DbContext.Entry(entity).State = EntityState.Modified;
-
-                if (DbContext.Entry(oldEnt).State == EntityState.Modified)
-                    DbContext.SaveChanges();
-            }
-        }
-
-        public virtual void Delete(long id)
-        {
-            var entity = GetEntity(id);
-            DbContext.Set<T>().Remove(entity);
-            DbContext.SaveChanges();
-        }
-
-        public virtual void Insert(T entity)
-        {
-            DbContext.Set<T>().Add(entity);
-            DbContext.SaveChanges();            
-        }
-
-        public virtual IList<T> GetDataByPage<TKey>(Expression<Func<T, TKey>> orderBy, Expression<Func<T, bool>> filter, int intPageIndex, int intPageSize, out int rowCount) 
-        {
-            IQueryable<T> query = null;
-
-            if (filter != null)
-            {
-                query = DbContext.Set<T>()
-                    .Where(filter)
-                    .OrderBy(orderBy)
-                    .Skip((intPageIndex - 1) * intPageSize)
-                    .Take(intPageSize);
-
-                rowCount = DbContext.Set<T>().Where(filter).Count();
-            }
-            else
-            {
-                query = DbContext.Set<T>()
-                    .OrderBy(orderBy)
-                    .Skip((intPageIndex - 1) * intPageSize)
-                    .Take(intPageSize);
-
-                rowCount = DbContext.Set<T>().Count();
-            }
-
-            var result = query.ToList();
-
-            return result;
-        }
-
-
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="intPageIndex">第几页</param>
+        /// <param name="intPageSize">每页行数</param>
+        /// <param name="rowCount">共多少行(输出参数)</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="where">过滤条件</param>
+        /// <param name="whereParams">where 子句中的参数值数组 </param>
+        /// <returns></returns>
+        IList<T> GetDataByPage(
+             int intPageIndex
+            , int intPageSize
+            , out int rowCount
+            , string orderBy
+            , string where
+            , params object[] whereParams);
 
     }
 }

@@ -39,11 +39,11 @@
                     }
                 },
                 //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
-                { field: 'FunctionID', title: '功能编号', width: 100, align: 'center' },
-                { field: 'FunctionName', title: '功能名称', width: 100, align: 'center' },
-                { field: 'ControlID', title: '控件编号', width: 250, align: 'center' },
-                { field: 'Controller_Name', title: 'Controller', width: 100, align: 'center' },
-                { field: 'Action_Name', title: 'Action', width: 100, align: 'center' },
+                { field: 'GNID', title: '功能编号', width: 100, align: 'center' },
+                { field: 'GNMC', title: '功能名称', width: 100, align: 'center' },
+                { field: 'KJID', title: '控件编号', width: 250, align: 'center' },
+                { field: 'KZMC', title: 'Controller', width: 100, align: 'center' },
+                { field: 'HDMC', title: 'Action', width: 100, align: 'center' },
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
@@ -72,8 +72,8 @@
         },
 
         showEdit: function (id) {
-            var width = 500;
-            var height = 450;
+            var width = '500px';
+            var height = '450px';
 
             var title = '新增功能';
             var editActionUrl = '@Url.Action("CreateFunction", new { moduleid = ViewData["moduleid"] })';

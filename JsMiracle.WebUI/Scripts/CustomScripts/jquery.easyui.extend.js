@@ -50,3 +50,23 @@ $.extend($.fn.tabs.methods, {
         return $(jq[0]).tabs('getTabById', id) != null;
     }
 });
+
+
+
+// 增加验证方法
+$.extend($.fn.validatebox.defaults.rules, {
+    minLength: {
+        validator: function (value, param) {
+            return value.length == param[0];
+        },
+        message: '此框内容长度必须等于{0}'
+    },
+
+    valueNotEqual: {
+        validator: function (value, param) {
+            //console.log(value + ',' + param[0] + ',' + (value == param[0]));
+            return value != param[0];
+        },
+        message: '请从下拉列表中选择数据'
+    },
+});

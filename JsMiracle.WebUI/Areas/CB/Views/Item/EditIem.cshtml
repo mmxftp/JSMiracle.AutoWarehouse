@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "EditIem";
+}
+
+@model JsMiracle.Entities.IMS_CB_WL
+
+@using (Ajax.BeginForm("SaveItem", "Item"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmItem" }))
+{
+
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.CJR);
+    @Html.HiddenFor(n => n.CJSJ);
+
+    <table class="TB">
+        <tr>
+            <td style="width:80px;">
+                物料编号
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.WLBH, new { id = "txtWLBH" })
+            </td>
+
+            <td style="width:80px;">
+                物料类型
+            </td>
+            <td>
+                @Html.DropDownListFor(n => n.WLLX, ViewBag.ItemType as IEnumerable<SelectListItem>
+                , new { id = "ddlWLLX", style = "width:150px;" })
+
+                @*<select id="ddlWLLX" style="width:150px;"></select>*@
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px;">
+                物料名称
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.WLMC, new { id = "txtWLMC" })
+            </td>
+
+            <td style="width:80px;">ABC活动等级</td>
+            <td>@Html.TextBoxFor(n => n.ABCHDZJ, new { id = "txtABCHDZJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">保质期</td>
+            <td>@Html.TextBoxFor(n => n.BZQ, new { id = "txtBZQ" })</td>
+
+            <td style="width:80px;">最小包装单位</td>
+            <td>@Html.TextBoxFor(n => n.ZXBZDW, new { id = "txtZXBZDW" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">最大库存量</td>
+            <td>@Html.TextBoxFor(n => n.ZDKCL, new { id = "txtZDKCL" }) </td>
+
+            <td style="width:80px;">最小库存量</td>
+            <td>@Html.TextBoxFor(n => n.ZXKCL, new { id = "txtZXKCL" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">重量等级</td>
+            <td>@Html.TextBoxFor(n => n.ZLDJ, new { id = "txtZLDJ" }) </td>
+
+            <td style="width:80px;">危险等级</td>
+            <td>@Html.TextBoxFor(n => n.WXDJ, new { id = "txtWXDJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">条形码</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.TXM, new { id = "txtTXM" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">描述</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.MS, new { id = "txtMS", style = "width:400px;" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">备注</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { style = "width:400px;" }) </td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmItem').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmItem').form('reset')">取消</a>
+            </td>
+        </tr>
+    </table>
+
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmItem').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('物料编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('物料编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        $("#ddlWLLX").combobox(
+           {
+               valueField: 'SZ',
+               textField: 'MC',
+               editable: false,
+               required: true,
+               validType: 'valueNotEqual["--请选择--"]',
+               missingMessage: '请从下拉框中选择物料类型'
+           });
+
+        $("#txtWLBH").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtWLMC").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtMS").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+
+        $("#txtABCHDZJ").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtBZQ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空',
+            min: 0
+        });
+
+
+        $("#txtZXKCL").numberbox({
+            required: true,
+            missingMessage: '此框不得为空',
+            min: 0
+        });
+
+
+        $("#txtZLDJ").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+        $("#txtWXDJ").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+
+        $("#txtZXBZDW").numberbox();
+        $("#txtZDKCL").numberbox();
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmItem").enterAsTab({ 'allowSubmit': true });
+    });
+
+</script>

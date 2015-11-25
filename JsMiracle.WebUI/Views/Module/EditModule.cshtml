@@ -2,103 +2,97 @@
     ViewBag.Title = "EditModule";
 }
 
-@model JsMiracle.Entities.IMS_UP_Modu
+@model JsMiracle.Entities.IMS_UP_MK
 
 
 @using (Ajax.BeginForm("SaveModule", "Module"
             , new AjaxOptions()
-            , new { enctype = "multipart/form-data", id = "ff" }))
+            , new { enctype = "multipart/form-data", id = "frmModule" }))
 {
 
-    @Html.ValidationSummary();
     @Html.HiddenFor(n => n.ID);
 
-    @Html.HiddenFor(n => n.ParentID, new { @Value = Model.ParentID });
+    @Html.HiddenFor(n => n.FMKID, new { @Value = Model.FMKID });
 
     <table class="TB">
-        @if (Model.ParentID != -1)
+        @if (Model.FMKID != -1)
         {
             <tr>
                 <td>
                     父模块号
                 </td>
                 <td>
-                    @Html.TextBoxFor(n => n.ParentID, new { @Value = Model.ParentID, @disabled = "disabled" })
+                    @Html.TextBoxFor(n => n.FMKID, new { @Value = Model.FMKID, @disabled = "disabled" })
                 </td>
             </tr>
         }
         <tr>
             <td>模块编号</td>
             <td>
-                @Html.TextBoxFor(n => n.ModuleID, new { id = "txtModuleID" })
+                @Html.TextBoxFor(n => n.MKID, new { id = "txtModuleID" })
             </td>
         </tr>
         <tr>
             <td>模块名称</td>
             <td>
-                @Html.TextBoxFor(n => n.ModuleName, new { id = "txtModuleName" })
+                @Html.TextBoxFor(n => n.MKMC, new { id = "txtModuleName" })
             </td>
         </tr>
         <tr>
             <td>排序号</td>
             <td>
-                @Html.TextBoxFor(n => n.SortID, new { id = "txtSortID" })
+                @Html.TextBoxFor(n => n.PXID, new { id = "txtSortID" })
             </td>
         </tr>
-        @if (Model.ParentID != -1)
+        @if (Model.FMKID != -1)
         {
             <tr>
                 <td>
                     Controller
                 </td>
                 <td>
-                    @Html.TextBoxFor(n => n.Controller_Name, new { id = "txtController" })
+                    @Html.TextBoxFor(n => n.KZMC, new { id = "txtController" })
                 </td>
             </tr>
             <tr>
                 <td>Action</td>
-                <td>@Html.TextBoxFor(n => n.Action_Name, new { id = "txtAction" })</td>
+                <td>@Html.TextBoxFor(n => n.HDMC, new { id = "txtAction" })</td>
             </tr>
             <tr>
                 <td>URL</td>
                 <td>
-                    @Html.TextBoxFor(n => n.URL, new { id = "txtUrl", style = "width:250px;" })
+                    @Html.TextAreaFor(n => n.URL, new { id = "txtUrl", row="2" })
                 </td>
             </tr>
         }
         else
         {
-            @Html.HiddenFor(n => n.Controller_Name, new { @Value = Model.Controller_Name });
-            @Html.HiddenFor(n => n.Action_Name, new { @Value = Model.Action_Name });
+            @Html.HiddenFor(n => n.KZMC, new { @Value = Model.KZMC });
+            @Html.HiddenFor(n => n.HDMC, new { @Value = Model.HDMC });
             @Html.HiddenFor(n => n.URL, new { @Value = Model.URL });
         }
         <tr>
             <td>描述</td>
             <td>
-                @Html.TextAreaFor(n => n.Description, new { id = "txtDesc", rows = "2" })
+                @Html.TextAreaFor(n => n.MS, new { id = "txtDesc", rows = "2" })
             </td>
         </tr>
-        <tr>
-            <td colspan="2" style="padding-left:180px;">
-                <input type="submit" value="提交" class="easyui-linkbutton" />
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmModule').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmModule').form('reset')">取消</a>
+
             </td>
         </tr>
     </table>
 }
 
 <script type="text/javascript">
-    // 增加长度验证方法
-    $.extend($.fn.validatebox.defaults.rules, {
-        minLength: {
-            validator: function(value,param){
-                return value.length == param[0];
-            },
-            message: '此框内容长度必须等于{0}'
-        }
-    });
+
 
     $(function () {
-        $('#ff').form({
+        $('#frmModule').form({
             success: function (data) {
                 //console.log(data);
                 //var data = eval('(' + data + ')');
@@ -114,8 +108,8 @@
             }
         });
 
-        var rootModule =  (@Model.ParentID == -1);
-        var moduleAdd = (@Model.ModuleID == 0 );
+        var rootModule =  (@Model.FMKID == -1);
+        var moduleAdd = (@Model.MKID == 0 );
 
         if (!rootModule){
             $("#txtUrl").validatebox({

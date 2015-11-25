@@ -30,12 +30,6 @@ function closeWindow() {
         //// 在父窗体执行 脚本
         //parent.eval(script);
     }
-    //else {
-    //    // 无参数重载整个页面
-    //    //parent.location.reload();
-    //    location.reload();
-    //}
-
 }
 
 // 页面初始化时加入新的用于显示浮动页面的层。
@@ -65,12 +59,47 @@ function showWindow(title, href, width, height, fun, modal, minimizable, maximiz
                 : minimizable,
         maximizable: maximizable === undefined ? false
                 : maximizable,
+        collapsible:false,
         closed: true,
+        //resizable:false,
         loadingMessage: '正在加载数据，请稍等片刻......'
     });
     $('#' + layerWindowName).window('open');
 }
 
+// 回车代替Tab 
+// 用法 : $("#from").enterAsTab({ 'allowSubmit': true });
+$.fn.enterAsTab = function (options) {
+    var settings = $.extend({
+        'allowSubmit': false
+    }, options);
+    this.find('input, select').on("keypress", null, { localSettings: settings }, function (event) {
+        if (settings.allowSubmit) {
+            var type = $(this).attr("type");
+            if (type == "submit") {
+                return true;
+            }
+        }
+        if (event.keyCode == 13) {
+
+            var inputs = $(this).parents("form").eq(0).find(":input:visible:not(disabled):not([readonly])");
+            var idx = inputs.index(this);
+            if (idx == inputs.length - 1) {
+                idx = -1;
+            } else {
+                inputs[idx + 1].focus(); // handles submit buttons
+            }
+            try {
+                inputs[idx + 1].select();
+            }
+            catch (err) {
+                // handle objects not offering select
+            }
+            return false;
+        }
+    });
+    return this;
+};
 
 
 //判断是否为数组

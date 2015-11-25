@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities.View;
 using JsMiracle.Framework.Cache;
 using System;

@@ -4,33 +4,35 @@
 }
 
 <div>
-    <table>
-        <tr>
-            <td>模块大类</td>
-            <td>
-                <select id="cboModule" name="cboModule" class="easyui-combobox" style="width:200px;"></select>
-            </td>
-            <td>
-                <a href="###" class="easyui-linkbutton" iconcls="icon-edit"
-                   onclick="module.showEdit('modM')">编辑模块大类</a>
-            </td>
-            <td>
-                <a href="###" class="easyui-linkbutton" iconcls="icon-remove"
-                   onclick="module.removeModuleByCombo()">
-                    删除模块大类
-                </a>
-            </td>
-            <td>
-                <a href="###" class="easyui-linkbutton" iconcls="icon-add"
-                   onclick="module.showEdit('addM')">新增模块大类</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="module.showEdit('addC')">新增子模块类</a>
-            </td>
-        </tr>
-    </table>
+    <div id="moduleToolbar">
+        <table>
+            <tr>
+                <td>模块大类</td>
+                <td>
+                    <select id="cboModule" name="cboModule" class="easyui-combobox" style="width:200px;"></select>
+                </td>
+                <td>
+                    <a href="###" class="easyui-linkbutton" iconcls="icon-edit"
+                       onclick="module.showEdit('modM')">编辑模块大类</a>
+                </td>
+                <td>
+                    <a href="###" class="easyui-linkbutton" iconcls="icon-remove"
+                       onclick="module.removeModuleByCombo()">
+                        删除模块大类
+                    </a>
+                </td>
+                <td>
+                    <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                       onclick="module.showEdit('addM')">新增模块大类</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="module.showEdit('addC')">新增子模块类</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <table id="tabChildModule"></table>
 
@@ -41,15 +43,12 @@
             {
                 url: '@Url.Action("GetModuleList")',
                 valueField: 'ID',
-                textField: 'ModuleName',
-                editable:false ,
+                textField: 'MKMC',
+                editable: false,
                 onSelect: function (rec) {
                     console.log(rec);
                     if (rec) {
-                    $("#tabChildModule").datagrid('reload',
-                        {
-                            parentid: rec.ModuleID
-                        });
+                        $("#tabChildModule").datagrid({ url: '@Url.Action("GetChildModuleList")' + '?parentid=' + rec.MKID });
                     }
                 },
                 onLoadSuccess: function () { //加载完成后,设置选中第一项
@@ -57,13 +56,14 @@
                     console.log(val);
                     if (val == '') {
                         var dataVal = $(this).combobox("getData");
-                        $(this).combobox("select", dataVal[0].ID);
+                        if (dataVal && dataVal.length > 0)
+                            $(this).combobox("select", dataVal[0].ID);
                     }
                 }
             });
 
         $("#tabChildModule").datagrid({
-            url: '@Url.Action("GetChildModuleList")',
+            //url: '@Url.Action("GetChildModuleList")',
             title: '子模块信息',
             singleSelect: true,
             loadMsg: '数据载入中...',
@@ -72,13 +72,14 @@
             pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
             height: '650px',
             rownumbers: true,
+            toolbar:"#moduleToolbar",
             columns: [[
                 {
                     field: '_operate', title: '操作', width: 150, align: 'center'
                     , formatter: function (value, row, index) {
                         //var editActionUrl = '\'' + '@Url.Action("EditModule")' + '?id=' + row.ID + '\'';
                         var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
-                                  + 'onclick="module.removeModule(\'' + row.ID + '\',\'' + row.ModuleName + '\')" >删除</a>'
+                                  + 'onclick="module.removeModule(\'' + row.ID + '\',\'' + row.MKMC + '\')" >删除</a>'
                                   + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                   + '<a href="javascript:void(0)"  class="loan_edit_button" '
                                   + ' onclick="module.showEdit(\'modC\',' + row.ID + ');">修改</a>';
@@ -88,16 +89,16 @@
                     }
                 },
                 //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
-                { field: 'ModuleID', title: '子模块号', width: 100, align: 'center' },
-                { field: 'ModuleName', title: '子模块名称', width: 100, align: 'center' },
+                { field: 'MKID', title: '子模块号', width: 100, align: 'center' },
+                { field: 'MKMC', title: '子模块名称', width: 100, align: 'center' },
                 { field: 'URL', title: '访问地址', width: 250, align: 'center' },
-                { field: 'SortID', title: '排序号', width: 100, align: 'center' },
-                { field: 'Controller_Name', title: 'Controller', width: 100, align: 'center' },
-                { field: 'Action_Name', title: 'Action', width: 100, align: 'center' },
+                { field: 'PXID', title: '排序号', width: 100, align: 'center' },
+                { field: 'KZMC', title: 'Controller', width: 100, align: 'center' },
+                { field: 'HDMC', title: 'Action', width: 100, align: 'center' },
                 {
                     field: '_funOperate', title: '功能操作', width: 150, align: 'center',
                     formatter: function (value, row, index) {
-                        var moduleFunctionUrl = '@Url.Action("IndexFunction")' + '?moduleid=' + row.ModuleID;
+                        var moduleFunctionUrl = '@Url.Action("IndexFunction")' + '?moduleid=' + row.MKID;
                         //var html = '<a href="' + moduleFunctionUrl + '" >子功能</a>'
                         var html = '<a href="###" onclick="module.changehref(\'' + moduleFunctionUrl + '\');" >子功能</a>'
                         //console.log(html);
@@ -150,15 +151,15 @@
         },
 
         showEdit: function (op, id) {
-            var width = 500;
-            var height = 500;
+            var width = '350px';
+            var height = '560px';
             var title = '';
             var url = '';
 
             if (op == 'addM') {
                 url = '@Url.Action("CreateModule")';
                 title = '新增模块大类';
-                height = 380;
+                height = '360px';
             }
             else if (op == 'modM' || op == 'addC') {
                 id = $('#cboModule').combobox('getValue');
@@ -171,7 +172,7 @@
                 if (op == 'modM') {
                     url = '@Url.Action("EditModule")' + '?id=' + id;
                     title = '编辑模块大类';
-                    height = 360;
+                    height = '360px';
                 }
                 else if (op == 'addC') {
                     url = '@Url.Action("CreateModule")' + '?parentid=' + id;

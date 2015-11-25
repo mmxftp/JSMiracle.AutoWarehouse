@@ -11,7 +11,7 @@
     @Styles.Render("~/EasyUI/themes/base")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/easyui")
-    @*<script type="text/javascript" src="~/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>*@
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     <script type="text/javascript" src="~/Scripts/CustomScripts/jquery.easyui.extend.js"></script>
     @Scripts.Render("~/bundles/moment")
     <script type="text/javascript" src="~/Scripts/CustomScripts/common.js"></script>
@@ -36,7 +36,14 @@
 
             maintabs.tabs('select', name);
         }
-    </script>
+
+        // 调用 'refresh' 方法更新选项卡面板的内容
+        function refreshTab () {
+            var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
+            if (tab)
+                tab.panel('refresh');
+        }
+    </script> 
 </head>
 
 <body class="easyui-layout">
@@ -46,11 +53,13 @@
     <div data-options="region:'west',split:true" title="菜单" style="width:300px;height:100%;">
         @{Html.RenderAction("_MenuPartial", "Home");}
     </div>
-    <div data-options="region:'center',title:'主窗体'" style="overflow: hidden;">
+    <div id="mainLayout" data-options="region:'center',title:'主窗体',tools:[{iconCls:'icon-reload',
+                    handler:refreshTab  }]" style="overflow: hidden;">
         @*<iframe id="ibody" name="ibody" src="" frameborder="0" scrolling="yes" style=" height:100%;width:100%;overflow:visible"></iframe>*@
         <div id="mainTabs" class="easyui-tabs" style="width:100%;height:800px;">
         </div>
     </div>
+
 </body>
 
 </html>

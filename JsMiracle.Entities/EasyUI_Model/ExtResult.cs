@@ -14,5 +14,7 @@ namespace JsMiracle.Entities.EasyUI_Model
         /// 影响行数
         /// </summary>
         public int effectRowCount { get; set; }
+
+        public object parentid { get; set; }
     }
 }

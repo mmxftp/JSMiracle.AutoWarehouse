@@ -1,15 +1,15 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using JsMiracle.Dal.Abstract;
+using JsMiracle.Dal.Abstract.CB;
+using JsMiracle.Dal.Abstract.CM;
+using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Dal.Concrete;
-using JsMiracle.Entities;
+using JsMiracle.Dal.Concrete.CB;
+using JsMiracle.Dal.Concrete.CM;
+using JsMiracle.Dal.Concrete.UP;
 using JsMiracle.Framework.Cache;
 using JsMiracle.WebUI.CommonSupport;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Mvc;
 
@@ -47,6 +47,15 @@ namespace JsMiracle.WebUI.Infrastructure
 
                 Component.For<IActionPermission>()
                 .ImplementedBy<ActionPermission>().LifeStyle.PerWebRequest,
+
+                Component.For<IItem>()
+                     .ImplementedBy<IMS_CB_Item_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<ICode>()
+                     .ImplementedBy<IMS_CM_Code_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<ICodeType>()
+                     .ImplementedBy<IMS_CM_CodeType_Dal>().LifeStyle.PerWebRequest,
 
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()
