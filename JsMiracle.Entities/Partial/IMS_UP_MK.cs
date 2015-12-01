@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JsMiracle.Entities
 {
-    partial class IMS_UP_MK : IModelBase
+    partial class IMS_UP_MK 
     {
         public string GetUrl()
         {

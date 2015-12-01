@@ -40,56 +40,35 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
 
         public ActionResult SaveItem(IMS_CB_WL entity)
         {
-            var ret = new ExtResult();
-            try
+            Func<ExtResult> saveFun = () =>
             {
-                if (ModelState.IsValid)
+                if (entity.ID == 0)
                 {
-                    if (entity.ID == 0)
-                    {
-                        if (dalItem.Exists(f => f.WLBH.Equals(entity.WLBH, StringComparison.CurrentCultureIgnoreCase)))
-                            throw new JsMiracleException("物料编号不得重覆");
+                    if (dalItem.Exists(f => f.WLBH.Equals(entity.WLBH, StringComparison.CurrentCultureIgnoreCase)))
+                        throw new JsMiracleException("物料编号不得重覆");
 
-                        // 创建人
-                        entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
-                        entity.CJSJ = System.DateTime.Now;
-                    }
-                    else
-                    {
-                        if (dalItem.Exists(f => f.WLBH.Equals(entity.WLBH, StringComparison.CurrentCultureIgnoreCase)
-                            && f.ID != entity.ID))
-                            throw new JsMiracleException("物料编号不得重覆");
-                    }
-
-                    // 修改人
-                    entity.XGR = CurrentUser.GetCurrentUser().UserInfo.YHID;
-                    entity.XGSJ = System.DateTime.Now;
-
-                    dalItem.SaveOrUpdate(entity);
-                    ret.success = true;
-                    ret.msg = "物料保存成功";
+                    // 创建人
+                    entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                    entity.CJSJ = System.DateTime.Now;
                 }
                 else
                 {
-                    StringBuilder sb = new StringBuilder();
-                    var errs = ModelState.Values.SelectMany(v => v.Errors);
-                    foreach (var err in errs)
-                    {
-                        sb.AppendFormat("{0}</br>", err.ErrorMessage);
-                    }
-                    ret.success = false;
-                    ret.msg = sb.ToString();
+                    if (dalItem.Exists(f => f.WLBH.Equals(entity.WLBH, StringComparison.CurrentCultureIgnoreCase)
+                        && f.ID != entity.ID))
+                        throw new JsMiracleException("物料编号不得重覆");
                 }
-            }
-            catch (Exception ex)
-            {
-                ret.success = false;
-                if (ex is JsMiracleException)
-                    ret.msg = ex.Message;
-                else
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
-            }
-            return this.JsonFormat(ret);
+
+                // 修改人
+                entity.XGR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                entity.XGSJ = System.DateTime.Now;
+
+                dalItem.SaveOrUpdate(entity);
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
+
+            return base.Save(saveFun);
         }
 
         public ActionResult RemoveItem(long id)
@@ -112,13 +91,6 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
                 return this.JsonFormat(ret);
             }
         }
-
-
-        //public ActionResult GetItemTypeList()
-        //{
-        //    var data = dalCode.GetCodeList(itemTypeName);
-        //    return this.JsonFormat(data);
-        //}
 
         public ActionResult EditIem(long id)
         {
@@ -156,7 +128,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
-            Expression<Func<IMS_CB_WL, bool>> filter = null;
+            //Expression<Func<IMS_CB_WL, bool>> filter = null;
             //System.Linq.Dynamic.DynamicExpression.ParseLambda()
 
             //var dataList = dalItem.GetDataByPage(
@@ -167,18 +139,11 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             var dataList = dalItem.GetDataByPage(pageIndex, pageSize, out totalCount, "item.WLMC", "");
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_CB_WL>();
-            info.total = totalCount;
-            info.rows = dataList;
+            var info = new PaginationModel(dataList);
+            
 
             return this.JsonFormat(info);
         }
-
-
-        //public IEnumerable<SelectListItem> GetItemType()
-        //{
-
-        //}
 
     }
 }

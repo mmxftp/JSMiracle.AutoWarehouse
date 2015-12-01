@@ -6,8 +6,15 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract.UP
 {
+    /// <summary>
+    /// 处理权限的类
+    /// </summary>
     public interface IActionPermission
     {
+        /// <summary>
+        /// 得到所有需处理的权限集合
+        /// </summary>
+        /// <returns></returns>
         PermissionViewModule GetAllPermission();
         
         /// <summary>

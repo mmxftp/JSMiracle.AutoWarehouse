@@ -41,7 +41,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
             var ent = data.FirstOrDefault();
 
-            if ( ent != null )
+            if (ent != null)
             {
                 return this.JsonFormat(new { success = true, data = ent }, JsonRequestBehavior.AllowGet);
             }
@@ -77,9 +77,11 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_CM_DM>();
-            info.total = totalCount;
-            info.rows = dataList;
+            var info = new PaginationModel(dataList);
+            //var info = new PaginationModel();
+            //info.SetRows(dataList);
+            //info.total = totalCount;
+            //info.rows = dataList;
 
             return this.JsonFormat(info);
         }
@@ -118,7 +120,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             if (ent == null)
                 throw new JsMiracleException("代码大类不存在");
 
-            ViewBag.LXMC = string.Format("{0}({1})",ent.LXMC, ent.LXDM);
+            ViewBag.LXMC = string.Format("{0}({1})", ent.LXMC, ent.LXDM);
 
 
             return View(data);
@@ -131,7 +133,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 dalCode.Delete(id);
                 return this.JsonFormat(new ExtResult { success = true, msg = "删除成功" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return this.JsonFormat(new ExtResult { success = false, msg = "删除失败" + ex.Message });
             }
@@ -139,65 +141,38 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
         public ActionResult SaveCode(IMS_CM_DM entity)
         {
-            ExtResult ret = new ExtResult();
-            try
+            Func<ExtResult> saveFun = () => 
             {
-                if (ModelState.IsValid)
+                if (entity.ID == 0)
                 {
-                    if (entity.ID == 0)
-                    {
-                        if (dalCode.Exists(n => n.LXDM.Equals(entity.LXDM, StringComparison.CurrentCultureIgnoreCase)
-                            && (n.DM.Equals(entity.DM) || n.SZ == entity.SZ) ))
-                            throw new JsMiracleException(string.Format("类型'{0}'已存在代码'{1}',数值'{2}'"
-                                , entity.LXDM, entity.DM, entity.SZ));
-                    }
-                    else
-                    {
-                        if (dalCode.Exists(n => n.LXDM.Equals(entity.LXDM, StringComparison.CurrentCultureIgnoreCase)
-                            && (n.DM.Equals(entity.DM) ||　n.SZ == entity.SZ) 
-                            && n.ID != entity.ID))
-                            throw new JsMiracleException(string.Format("类型'{0}'已存在代码'{1}',数值'{2}'"
-                                , entity.LXDM, entity.DM, entity.SZ));
-                    }
-
-                    entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
-                    dalCode.SaveOrUpdate(entity);
-
-                    ret.success = true;
-                    ret.msg = "保存成功";
-
-                    var codeTypeEnt =  dalCodeType.GetEntity(entity.LXDM);
-                    if (codeTypeEnt != null)
-                        ret.parentid = codeTypeEnt.LXDM;
-                    //ret.parentid = entity.LXDM
+                    if (dalCode.Exists(n => n.LXDM.Equals(entity.LXDM, StringComparison.CurrentCultureIgnoreCase)
+                        && (n.DM.Equals(entity.DM) || n.SZ == entity.SZ)))
+                        throw new JsMiracleException(string.Format("类型'{0}'已存在代码'{1}',数值'{2}'"
+                            , entity.LXDM, entity.DM, entity.SZ));
                 }
                 else
                 {
-                    StringBuilder sb = new StringBuilder();
-                    var errs = ModelState.Values.SelectMany(v => v.Errors);
-                    foreach (var err in errs)
-                    {
-                        sb.AppendFormat("{0}</br>", err.ErrorMessage);
-                    }
-                    ret.success = false;
-                    ret.msg = sb.ToString();
+                    if (dalCode.Exists(n => n.LXDM.Equals(entity.LXDM, StringComparison.CurrentCultureIgnoreCase)
+                        && (n.DM.Equals(entity.DM) || n.SZ == entity.SZ)
+                        && n.ID != entity.ID))
+                        throw new JsMiracleException(string.Format("类型'{0}'已存在代码'{1}',数值'{2}'"
+                            , entity.LXDM, entity.DM, entity.SZ));
                 }
 
-                return this.JsonFormat(ret);
-            }
-            catch (Exception ex)
-            {
-                ret.success = false;
-                if (ex is JsMiracleException)
-                {
-                    ret.msg = ex.Message;
-                }
-                else
-                {
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
-                }
-                return this.JsonFormat(ret);
-            }
+                entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                dalCode.SaveOrUpdate(entity);
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                ret.msg = "保存成功";
+
+                var codeTypeEnt = dalCodeType.GetEntity(entity.LXDM);
+                if (codeTypeEnt != null)
+                    ret.parentid = codeTypeEnt.LXDM;
+
+                return ret;
+            };
+
+            return base.Save(saveFun);
         }
 
         #endregion
@@ -224,60 +199,37 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
         public ActionResult SaveCodeType(IMS_CM_DMLX ent)
         {
-            ExtResult ret = new ExtResult();
-            try
+            Func<ExtResult> saveFun = () =>
             {
 
-                if (ModelState.IsValid)
+                // 是否为新增
+                if (ent.ID == 0)
                 {
-                    // 是否为新增
-                    if (ent.ID == 0)
-                    {
-                        if (dalCodeType.Exists(f => f.LXDM.Equals(ent.LXDM, StringComparison.CurrentCultureIgnoreCase)))
-                            throw new JsMiracleException("代码编号不得重覆");
-                    }
-                    else
-                    {
-                        if (dalCodeType.Exists(f => f.LXDM.Equals(ent.LXDM, StringComparison.CurrentCultureIgnoreCase)
-                            && f.ID != ent.ID))
-                            throw new JsMiracleException("代码编号不得重覆");
-                    }
-
-                    ent.CJSJ = System.DateTime.Now;
-                    ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
-
-                    dalCodeType.SaveOrUpdate(ent);
-
-                    ret.success = true;
-                    ret.msg = "保存成功";
-                    ret.parentid = ent.ID;
+                    if (dalCodeType.Exists(f => f.LXDM.Equals(ent.LXDM, StringComparison.CurrentCultureIgnoreCase)))
+                        throw new JsMiracleException("代码编号不得重覆");
                 }
                 else
                 {
-                    StringBuilder sb = new StringBuilder();
-                    var errs = ModelState.Values.SelectMany(v => v.Errors);
-                    foreach (var err in errs)
-                    {
-                        sb.AppendFormat("{0}</br>", err.ErrorMessage);
-                    }
-                    ret.success = false;
-                    ret.msg = sb.ToString();
+                    if (dalCodeType.Exists(f => f.LXDM.Equals(ent.LXDM, StringComparison.CurrentCultureIgnoreCase)
+                        && f.ID != ent.ID))
+                        throw new JsMiracleException("代码编号不得重覆");
                 }
 
-                return this.JsonFormat(ret);
-            }
-            catch (Exception ex)
-            {
-                ret.success = false;
-                if (ex is JsMiracleException){
-                    ret.msg = ex.Message;
-                }
-                else
-                {
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
-                }
-                return this.JsonFormat(ret);
-            }
+                ent.CJSJ = System.DateTime.Now;
+                ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+
+                dalCodeType.SaveOrUpdate(ent);
+
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                ret.msg = "保存成功";
+                ret.parentid = ent.ID;
+
+                return ret;
+            };
+
+            return base.Save(saveFun);
+
         }
 
 

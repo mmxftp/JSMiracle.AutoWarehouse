@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "EditContainerType";
+}
+
+@model JsMiracle.Entities.IMS_CB_RQLX
+
+@using (Ajax.BeginForm("SaveContainerType", "Container"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmContainerType" }))
+{
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.CJR);
+
+    <table class="TB">
+        <tr>
+            <td style="width:80px;">
+                类型编号
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.LXBH, new { id = "txtLXBH" })
+            </td>
+
+            <td style="width:80px;">
+                类型名称
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.LXMC, new { id = "txtLXMC" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px;">
+                材质类型
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.CZLX, new { id = "txtCZLX" })
+            </td>
+            <td style="width:80px;">空间类型</td>
+            <td>@Html.TextBoxFor(n => n.KJLX, new { id = "txtKJLX" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">自身尺寸</td>
+            <td colspan="3">
+                <div style="width:400px;">
+                    长: @Html.TextBoxFor(n => n.ZSCD, new { id = "txtZSCD", @style = "width:100px;" })
+                    &nbsp;&nbsp;&nbsp; 宽: @Html.TextBoxFor(n => n.ZSKD, new { id = "txtZSKD", @style = "width:100px;" })
+                    &nbsp;&nbsp;&nbsp;高: @Html.TextBoxFor(n => n.ZSGD, new { id = "txtZSGD", @style = "width:100px;" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px;">有效尺寸</td>
+            <td colspan="3">
+                <div style="width:400px;">
+                    长: @Html.TextBoxFor(n => n.YXCD, new { id = "txtYXCD", @style = "width:100px;" })
+                    &nbsp;&nbsp;&nbsp;宽: @Html.TextBoxFor(n => n.YXKD, new { id = "txtYXKD", @style = "width:100px;" })
+                    &nbsp;&nbsp;&nbsp;高: @Html.TextBoxFor(n => n.YXGD, new { id = "txtYXGD", @style = "width:100px;" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px;">有效承重</td>
+            <td>@Html.TextBoxFor(n => n.YXCZ, new { id = "txtYXCZ" }) </td>
+
+            <td style="width:80px;">高度等级</td>
+            <td>@Html.TextBoxFor(n => n.GDDJ, new { id = "txtGDDJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">湿度等级</td>
+            <td>@Html.TextBoxFor(n => n.SDDJ, new { id = "txtSDDJ" }) </td>
+
+            <td style="width:80px;">温度等级</td>
+            <td>@Html.TextBoxFor(n => n.WDDJ, new { id = "txtWDDJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">危险等级</td>
+            <td>@Html.TextBoxFor(n => n.WXDJ, new { id = "txtWXDJ" })</td>
+            <td style="width:80px;">防爆等级</td>
+            <td>@Html.TextBoxFor(n => n.FBDJ, new { id = "txtFBDJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">化学等级</td>
+            <td>@Html.TextBoxFor(n => n.HXDJ, new { id = "txtHXDJ" })</td>
+
+            <td style="width:80px;">防尘等级</td>
+            <td>@Html.TextBoxFor(n => n.FCDJ, new { id = "txtFCDJ" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">描述</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.MS, new { id = "txtMS", style = "width:400px;" })</td>
+        </tr>
+        <tr>
+            <td style="width:80px;">条码掩码</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.TMYM, new { style = "width:400px;" }) </td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmContainer').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmContainer').form('reset')">取消</a>
+            </td>
+        </tr>
+    </table>
+
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmContainerType').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('容器类型编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('容器类型编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        $("#txtKJLX").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtLXBH").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtLXMC").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtCZLX").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+
+        $("#txtZSCD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtZSKD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空',
+
+        });
+
+
+        $("#txtZSGD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空',
+        });
+
+
+        $("#txtYXCD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+        $("#txtYXKD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtYXGD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtYXCZ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+
+        $("#txtGDDJ").numberbox();
+
+
+        $("#txtSDDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+        $("#txtWDDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtWXDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtFBDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtHXDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+        $("#txtFCDJ").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmContainerType").enterAsTab({ 'allowSubmit': true });
+
+        // 找到第一个可显示input,焦点进入
+        $("#frmContainerType").firstInputFocus();
+    });
+
+</script>

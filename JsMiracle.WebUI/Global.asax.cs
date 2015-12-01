@@ -32,7 +32,6 @@ namespace JsMiracle.WebUI
             //    new WindsorActivator(this.containerByApi));
             //controller 注入包
             var controllerFactory = new WindsorControllerFactory(WindsorContaineFactory.GetContainer().Kernel);
-
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 
         }

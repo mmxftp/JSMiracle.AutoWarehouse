@@ -55,13 +55,11 @@
     $(function () {
         $('#frmCodeType').form({
             success: function (data) {
-                //console.log(data);
-                //var data = eval('(' + data + ')');
                 var ret = JSON.parse(data);
                 if (ret.success) {
                     $.messager.alert('类型代码编辑', ret.msg, "info", function () {
                         // 关闭当前div 刷新父窗体
-                        closeWindow(ret.parentid,-1);
+                        JsMiracleCommon.closeWindow(ret.parentid, -1);
                     });
                 }
                 else {

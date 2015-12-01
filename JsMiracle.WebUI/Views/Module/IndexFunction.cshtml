@@ -28,12 +28,15 @@
                 {
                     field: '_operate', title: '操作', width: 150, align: 'center'
                     , formatter: function (value, row, index) {
-                        var onclickEvent = 'moduleChild.showEdit(' + row.ID + ');';
+                        var editFunStr = 'moduleChild.showEdit(' + row.ID + ');';
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.FunctionName + '\',\'@Url.Action("RemoveFunction")\',moduleChild.reloadDataGrid)';
+
                         var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
-                                 + 'onclick="moduleChild.removeModuleFunction(\'' + row.ID + '\',\'' + row.FunctionName + '\')" >删除</a>'
+                                 + 'onclick="' + removeFunStr + '" >删除</a>'
                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                 + ' onclick="' + onclickEvent + '" >修改</a>';
+                                 + ' onclick="' + editFunStr + '" >修改</a>';
                         //console.log(html);
                         return html;
                     }
@@ -83,29 +86,12 @@
                 title = '编辑功能';
             }
 
-            showWindow(title, editActionUrl, width, height, moduleChild.reloadDataGrid);
+            JsMiracleCommon.showWindow(title, editActionUrl, width, height, moduleChild.reloadDataGrid);
         },
 
         reloadDataGrid:function(){
             $("#tabFun").datagrid('reload');
         },
 
-        removeModuleFunction: function (id, name) {
-            $.messager.confirm('Confirm', '确定删除功能\'' + name + '\'?'
-                , function (r) {
-                    if (r) {
-                        $.post('@Url.Action("RemoveFunction")', { id: id }, function (result) {
-                            if (result.success) {
-                                $('#tabFun').datagrid('reload');    // 重新加载用户数据
-                            } else {
-                                $.messager.alert({    // 显示错误信息
-                                    title: 'Error',
-                                    msg: result.msg
-                                });
-                            }
-                        }, 'json');
-                    }
-                });
-        }
     };
 </script>

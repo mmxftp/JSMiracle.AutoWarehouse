@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "LogInPop";
+}
+
+@model JsMiracle.WebUI.Models.LoginModel
+
+@using (Ajax.BeginForm("LogIn", "Account", new AjaxOptions()
+    , new
+    {
+        returnUrl = ViewBag,
+        enctype = "multipart/form-data",
+        id = "frmLoginPop"
+    }))
+{
+    @Html.AntiForgeryToken()
+
+    <table id="tb" style="padding:15px;">
+        <tr>
+            <td colspan="2">
+                <img src="~/Content/images/Title.png" width="450" height="50" alt="" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:30px;" height="50px;">
+                <img src="~/Content/images/u.gif" width="65" height="59" alt="" />
+            </td>
+            <td>
+                <table style="padding:15px;">
+                    <tr>
+                        <td style="width:80px;">
+                            @Html.LabelFor(m => m.UserID)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.UserID, new { id = "txtUser" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px;">
+                            @Html.LabelFor(m => m.Password)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Password, new { id = "txtPwd", type = "password" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center;">
+                            <a class="easyui-linkbutton" iconcls="icon-lockopen" href="javascript:$('#frmLoginPop').form('submit')">登录</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#txtUser').validatebox({
+            required: true,
+            iconCls: 'icon-man',
+            iconAlign: 'left',
+            missingMessage: '员工号不得为空'
+        });
+
+        $('#txtPwd').validatebox({
+            required: true,
+            iconCls: 'icon-lock',
+            iconAlign: 'left',
+            missingMessage: '密码不得为空'
+        });
+
+        $('#frmLoginPop').form({
+
+            success: function (data) {
+
+                var ret = JSON.parse(data);
+                console.log(ret.msg);
+                if (!ret.success) {
+                    $.messager.alert('登录信息', ret.msg, "info");
+                }
+                else {
+                    // 关闭当前div 刷新父窗体
+                    JsMiracleCommon.closeWindow();
+
+                    //window.location.href = ret.msg;
+                }
+            },
+
+        });
+    });
+</script>

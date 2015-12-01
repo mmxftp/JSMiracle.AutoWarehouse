@@ -3,7 +3,7 @@
     //Layout = null;
 }
 <div style="height:750px;">
-    
+
     <div id="userToolbar">
         <b><label style="padding-left:10px">查询明细</label></b>&nbsp;&nbsp;&nbsp;
         <input type="text" id="txt" class="easyui-textbox" style="width:200px;" />
@@ -16,7 +16,6 @@
         <table id="userGrid" style="padding:10px"></table>
     </div>
 </div>
-@*<div id="dd" class="easyui-window" style="width:900px;height:600px;">Dialog Content.</div>*@
 
 <script type="text/javascript">
 
@@ -39,60 +38,39 @@
                           field: '_operate', title: '操作', width: 150, align: 'center'
                           , formatter: function (value, row, index) {
                               //var editActionUrl = '\'' + '@Url.Action("Edit")' + '?id=' + row.ID + '\'';
-                              var funStr = 'userOp.editUser(true, ' + row.ID + ');';
+                              var editFunStr = 'userOp.editUser(true, ' + row.ID + ');';
+                              var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\'' 
+                                  + row.YHM + '\',\'@Url.Action("Remove")\',userOp.refreshGrd)';
 
-                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" onclick="userOp.removeUser(\'' + row.ID + '\',\'' + row.YHM + '\')" >删除</a>'
+                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
+                                        + ' onclick="'+removeFunStr+'" >删除</a>'
                                         + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                         + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                        + ' onclick="' + funStr + '">修改</a>';
-                              //+ ' onclick="showWindow(\'用户信息编辑\',' + editActionUrl + ', 500, 300);" >修改</a>';
-
+                                        + ' onclick="' + editFunStr + '">修改</a>';
                               return html;
                           }
                       },
-                      //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
                       { field: 'YHID', title: '员工号', width: 100, align: 'center' },
                       { field: 'YHM', title: '员工姓名', width: 100, align: 'center' },
                       { field: 'DY', title: 'Email', width: 150, align: 'center' },
                       // dateTimeFormatter 在 ~/Scripts/CustomScripts/common.js 中定义好的方法，用于格式化数据字符串
                       {
                           field: 'CJRQ', title: '创建日期', width: 150, align: 'center'
-                            , formatter: dateTimeFormatter
+                            , formatter: JsMiracleCommon.dateTimeFormatter
                       }
                   ]],
                   onLoadSuccess: function (data) {
                       $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                       $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
                   },
-                  //loadFilter: function (ret) {
-                  //    if (!ret.rows || !ret.total) {
-                  //        $.messager.alert('错误提示', '获取用户列表信息失败!错误原因：<br/>' + ret.msg, 'error');
-                  //        return { total: 0, rows: [] };
-                  //    }
-                  //    return ret;
-                  //},
               });
     });
 
     // 每个页面的所有函数都定义成一个集合,访止方法名重覆
     var userOp = {
 
-        removeUser : function (id, name) {
-            $.messager.confirm('Confirm', '确定删除用户\'' + name + '\'?'
-                , function (r) {
-                    if (r) {
-                        $.post('@Url.Action("Remove")', { id: id }, function (result) {
-                            if (result.success) {
-                                $('#userGrid').datagrid('reload');    // 重新加载用户数据
-                            } else {
-                                $.messager.alert({    // 显示错误信息
-                                    title: 'Error',
-                                    msg: result.msg
-                                });
-                            }
-                        }, 'json');
-                    }
-                });
+        refreshGrd:function(){
+            $('#userGrid').datagrid('reload');
         },
 
         editUser : function (isEdit, id) {
@@ -106,14 +84,14 @@
                 url = '@Url.Action("Edit")' + '?id=' + id;
             }
 
-            showWindow(title, url, width, height, userOp.reloadDataGrid);
+            JsMiracleCommon.showWindow(title, url, width, height, userOp.reloadDataGrid);
         },
 
         // 子页面回调函数
         reloadDataGrid: function (txtV) {
             var txtVal = $("#txt").val();
 
-            if (isArray(txtV)) {
+            if (JsMiracleCommon.isArray(txtV)) {
                 if (txtV[0])
                     txtVal = txtV[0];
             }

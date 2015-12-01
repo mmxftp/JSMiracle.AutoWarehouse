@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "EditContainer";
+}
+
+
+@model JsMiracle.Entities.IMS_CB_RQ
+
+@using (Ajax.BeginForm("SaveContainer", "Container"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmContainer" }))
+{
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.ZCSJ);
+    
+    <div class="divTB">
+        <div>
+            <label>容器类型</label> @Html.DropDownListFor(n => n.RQLXID, ViewBag.ContainerType as IEnumerable<SelectListItem>
+             , new { id = "ddlRQLXID", style = "width:250px;" })
+        </div>
+        <div>
+            <label>
+                容器编号
+            </label>
+            @Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })
+            <label>扫描条码</label>
+            @Html.TextBoxFor(n => n.SMTM, new { id = "txtSMTM" })
+        </div>
+        <div>
+            <label>
+                当前位置
+            </label> @Html.TextBoxFor(n => n.DQWZ, new { id = "txtDQWZ" })
+            <label>当前长度</label> @Html.TextBoxFor(n => n.DQCD, new { id = "txtDQCD" })
+        </div>
+        <div>
+            <label>
+                当前重量
+            </label>@Html.TextBoxFor(n => n.DQZL, new { id = "txtDQZL" })
+            <label> 当前宽度</label>@Html.TextBoxFor(n => n.DQKD, new { id = "txtDQKD" })
+        </div>
+        <div>
+            <label>
+                锁定状态
+            </label>@Html.TextBoxFor(n => n.SDZT, new { id = "txtSDZT" })
+            <label> 占用状态</label> @Html.TextBoxFor(n => n.ZYZT, new { id = "txtZYZT" })
+        </div>
+        <div>
+            <label>
+                位置状态
+            </label>@Html.TextBoxFor(n => n.WZZT, new { id = "txtWZZT" })
+            <label> 使用状态</label>@Html.TextBoxFor(n => n.SYZT, new { id = "txtSYZT" })
+        </div>
+        <div>
+            <label>
+                使用册书
+            </label>@Html.TextBoxFor(n => n.SYCS, new { id = "txtSYCS" })
+            <label>注册位置</label>@Html.TextBoxFor(n => n.ZCWZ, new { id = "txtZCWZ" })
+        </div>
+        <div>
+            <label>备注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            @Html.TextAreaFor(n => n.BZ, new {  id="txtBZ", @style = "width:300px;"})
+        </div>
+        <div style="text-align:center">
+            <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmContainer').form('submit')">提交</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmContainer').form('reset')">取消</a>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmContainer').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('容器编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('容器编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#ddlRQLXID").combobox(
+           {
+               valueField: 'ID',
+               textField: 'LXMC',
+               editable: false,
+               required: true,
+               validType: 'valueNotEqual["--请选择--"]',
+               missingMessage: '请从下拉框中选择容器类型'
+           });
+
+        $("#txtRQBH").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtSMTM").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtDQWZ").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtDQCD").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+
+        $("#txtDQZL").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtDQKD").numberbox();
+
+
+        $("#txtSDZT").numberbox({
+            required: true,
+            missingMessage: '此框不得为空',
+        });
+
+
+        $("#txtZYZT").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+        $("#txtWZZT").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtSYZT").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtSYCS").numberbox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtZCWZ").validatebox({
+            required: true,
+            missingMessage: '此框不得为空',
+        });
+
+        $("#txtBZ").textbox({multiline:true,height:"40px"});
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmContainer").enterAsTab({ 'allowSubmit': true });
+
+        // 找到第一个可显示input,焦点进入
+        $("#frmContainer").firstInputFocus();
+        
+    });
+
+</script>

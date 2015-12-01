@@ -17,36 +17,40 @@ namespace JsMiracle.Framework
 
         public override void ExecuteResult(ControllerContext context)
         {
-            this.ContentType = TextContextType;
-            base.ExecuteResult(context);
+            //this.ContentType = TextContextType;
+            //JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+            //jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //return JsonConvert.SerializeObject(obj, jsSettings);         
+            //base.ExecuteResult(context);
 
-            //if (context == null)
-            //{
-            //    throw new ArgumentNullException("context");
-            //}
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
-            //var response = context.HttpContext.Response;
-            //response.ContentType = ContentType;
+            var response = context.HttpContext.Response;
+            response.ContentType = TextContextType;
 
-            //StringWriter sw = new StringWriter();
-            //var serializer = JsonSerializer.Create(
-            //    new JsonSerializerSettings
-            //    {
-            //        Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() },
-            //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            //        NullValueHandling = NullValueHandling.Ignore,
-            //        //ContractResolver = new NHibernateContractResolver(ExceptMemberName)                    
-            //    }
-            //    );
+            StringWriter sw = new StringWriter();
+            var serializer = JsonSerializer.Create(
+                new JsonSerializerSettings
+                {
+                    //Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() },
+                    Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.IsoDateTimeConverter() },
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,       // 外键递归死循环跳过
+                    NullValueHandling = NullValueHandling.Ignore,
+                    //ContractResolver = new NHibernateContractResolver(ExceptMemberName)                    
+                }
+                );
 
 
-            //using (JsonWriter jsonWriter = new JsonTextWriter(sw))
-            //{
-            //    jsonWriter.Formatting = Formatting.Indented;
-            //    serializer.Serialize(jsonWriter, Data);
-            //}
-            //response.Write(sw.ToString());
-     
+            using (JsonWriter jsonWriter = new JsonTextWriter(sw))
+            {
+                jsonWriter.Formatting = Formatting.Indented;
+                serializer.Serialize(jsonWriter, Data);
+            }
+            response.Write(sw.ToString());
+
         }
     }
 
@@ -58,7 +62,7 @@ namespace JsMiracle.Framework
 
         public static FormatJsonResult JsonFormat(this Controller c
             , object data
-            ,JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
+            , JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
         {
             FormatJsonResult result = new FormatJsonResult();
             result.Data = data;

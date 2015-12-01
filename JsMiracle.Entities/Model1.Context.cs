@@ -34,5 +34,11 @@ namespace JsMiracle.Entities
         public virtual DbSet<IMS_CM_DM> IMS_CM_DM_S { get; set; }
         public virtual DbSet<IMS_CM_DMLX> IMS_CM_DMLX_S { get; set; }
         public virtual DbSet<IMS_CB_WL> IMS_CB_WL_S { get; set; }
+        public virtual DbSet<IMS_CB_WZ> IMS_CB_WZ_S { get; set; }
+        public virtual DbSet<IMS_CB_WZGX> IMS_CB_WZGX_S { get; set; }
+        public virtual DbSet<IMS_CB_WZLX> IMS_CB_WZLX_S { get; set; }
+        public virtual DbSet<IMS_CB_KC> IMS_CB_KC_S { get; set; }
+        public virtual DbSet<IMS_CB_RQ> IMS_CB_RQ_S { get; set; }
+        public virtual DbSet<IMS_CB_RQLX> IMS_CB_RQLX_S { get; set; }
     }
 }

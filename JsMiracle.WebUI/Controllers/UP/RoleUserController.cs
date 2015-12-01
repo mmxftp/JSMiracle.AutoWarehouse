@@ -38,18 +38,25 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult GetRoleUserList(string roleid)
         {
-            var info = new PaginationModel<IMS_UP_YH>();
+            //var info = new PaginationModel<IMS_UP_YH>();
+            //var info = new PaginationModel();
+            //PaginationModel info;
 
             if (string.IsNullOrEmpty(roleid))
             {
-                info.total = 0;
-                info.rows = new List<IMS_UP_YH>();   // 解决easyui length的问题
-                return this.JsonFormat(info);
+                //info.total = 0;
+                //info.rows = new List<IMS_UP_YH>();   // 解决easyui length的问题
+                //info.SetRows( new List<IMS_UP_YH>());
+                var nullInfo = new PaginationModel(new List<IMS_UP_YH>());
+                return this.JsonFormat(nullInfo);
             }
 
             var data = dalRoleUser.GetUserList(roleid);
-            info.total = data.Count;
-            info.rows = data;
+            //info.total = data.Count;
+            //info.SetRows(data);
+            //info.rows = data;
+
+            var info = new PaginationModel(data);
 
             return this.JsonFormat(info);
         }
@@ -82,9 +89,6 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult GetRoleList(int? rows, int? page)
         {
-            //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
-            var info = new PaginationModel<IMS_UP_JS>();
-
             int totalCount = 0;
 
             int pageIndex = page ?? 1;
@@ -96,8 +100,9 @@ namespace JsMiracle.WebUI.Controllers.UP
               pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            info.total = totalCount;
-            info.rows = dataList;
+            //info.total = totalCount;
+            //info.rows = dataList;
+            var info = new PaginationModel(dataList);
 
             //var json = Json(info);
             return this.JsonFormat(info);
@@ -116,29 +121,20 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult SaveRole(IMS_UP_JS module)
         {
-            if (ModelState.IsValid)
+            Func<ExtResult> saveFun = () =>
             {
-                try
+                if (string.IsNullOrEmpty(module.JSID))
                 {
-
-                    if (string.IsNullOrEmpty(module.JSID))
-                    {
-                        module.JSID = Guid.NewGuid().ToString();
-                    }
-
-                    dalRole.SaveOrUpdate(module);
-                }
-                catch (Exception ex)
-                {
-                    return this.JsonFormat(new ExtResult { success = true, msg = "操作失败" + ex.Message });
+                    module.JSID = Guid.NewGuid().ToString();
                 }
 
-                return this.JsonFormat(new ExtResult { success = true, msg = "操作成功" });
-            }
-            else
-            {
-                return this.JsonFormat(module);
-            }
+                dalRole.SaveOrUpdate(module);
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
+
+            return base.Save(saveFun);            
         }
 
 
@@ -146,15 +142,6 @@ namespace JsMiracle.WebUI.Controllers.UP
         {
             try
             {
-                //var ent = dalRole.GetEntity(id);
-
-                //if (ent != null )
-                //{
-                //    dalRoleUser.GetUserList(ent.RoleID);
-
-                //    var permissionlist = dalPermission.GetPermissionListByRoleID(ent.RoleID);
-                //}
-
                 dalRole.Delete(id);
 
                 return this.JsonFormat(new ExtResult { success = true });

@@ -16,5 +16,7 @@ namespace JsMiracle.Entities.EasyUI_Model
         public int effectRowCount { get; set; }
 
         public object parentid { get; set; }
+
+        public object id { get; set; }
     }
 }

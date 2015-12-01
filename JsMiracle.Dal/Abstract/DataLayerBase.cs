@@ -122,7 +122,7 @@ public abstract class DataLayerBase<T> : IDataLayer<T> where T : class, IModelBa
         return result;
     }
 
-    public virtual IList<T> GetDataByPage(int intPageIndex
+    public virtual dynamic GetDataByPage(int intPageIndex
         , int intPageSize
         , out int rowCount
         , string orderBy

@@ -78,7 +78,7 @@ namespace JsMiracle.Dal.Abstract
         /// <param name="where">过滤条件</param>
         /// <param name="whereParams">where 子句中的参数值数组 </param>
         /// <returns></returns>
-        IList<T> GetDataByPage(
+        dynamic GetDataByPage(
              int intPageIndex
             , int intPageSize
             , out int rowCount

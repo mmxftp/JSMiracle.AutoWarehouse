@@ -56,6 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\CB\IContainer.cs" />
+    <Compile Include="Abstract\CB\IContainerType.cs" />
+    <Compile Include="Abstract\CB\ILocation.cs" />
     <Compile Include="Abstract\CM\ICode.cs" />
     <Compile Include="Abstract\CM\ICodeType.cs" />
     <Compile Include="Abstract\DataLayerBase.cs" />
@@ -70,6 +73,9 @@
     <Compile Include="Abstract\UP\IRole.cs" />
     <Compile Include="Abstract\UP\IRoleUser.cs" />
     <Compile Include="Abstract\UP\IUser.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_ContainerType_Dal.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_Container_Dal.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_Location_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_CodeType_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_Code_Dal.cs" />
     <Compile Include="Concrete\FormsAuthenticationService.cs" />

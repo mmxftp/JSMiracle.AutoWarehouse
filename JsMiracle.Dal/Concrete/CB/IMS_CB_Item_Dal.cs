@@ -17,7 +17,7 @@ namespace JsMiracle.Dal.Concrete.CB
         }
 
 
-        public override IList<IMS_CB_WL> GetDataByPage(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)
+        public override dynamic GetDataByPage(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)
         {
             rowCount = 0;
 
@@ -48,7 +48,6 @@ namespace JsMiracle.Dal.Concrete.CB
                 item.WLTypeName = data.MC;
                 itemList.Add(item);
             }
-
 
             return itemList;
         }

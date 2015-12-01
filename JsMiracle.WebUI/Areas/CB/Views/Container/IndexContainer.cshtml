@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "IndexContainer";
+}
+
+<div>
+    <div id="containerToolbar">
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="cbContainer.showContainerEdit('add')">新增容器类型</a>
+        </div>
+    </div>
+
+    <table id="grdConntainer"></table>
+</div>
+
+
+<script type="text/javascript">
+
+    var cbContainer;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cbContainer = {
+
+            refreshDataGrid: function () {
+                $('#grdConntainer').datagrid('reload');
+            },
+
+            showContainerEdit: function (op, id) {
+                var width = '550px';
+                var height = '460px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("CreateContainer")';
+                    title = '新增容器信息';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("EditContainer")' + '?id=' + id;
+                    title = '编辑容器信息';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.refreshDataGrid);
+
+            },
+        };
+
+
+        $("#grdConntainer").datagrid({
+            url: '@Url.Action("GetContainerList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#containerToolbar',
+            frozenColumns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.RQBH + '\',\'@Url.Action("RemoveContainerType")\',cbContainer.refreshDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cbContainer.showContainerEdit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                }
+            ]],
+            columns: [[
+                { field: 'RQBH', title: '容器编号', width: 150, align: 'center' },
+                { field: 'RQLX_Name', title: '容器类型', width: 150, align: 'center' },
+                { field: 'SMTM', title: '扫描条码', width: 150, align: 'center' },
+                { field: 'DQWZ', title: '当前位置', width: 100, align: 'center' },
+                { field: 'DQCD', title: '当前长度', width: 150, align: 'center' },
+                { field: 'DQZL', title: '当前重量', width: 150, align: 'center' },
+                { field: 'DQKD', title: '当前宽度', width: 150, align: 'center' },
+                { field: 'SDZT', title: '锁定状态', width: 150, align: 'center' },
+                { field: 'ZYZT', title: '占用状态', width: 150, align: 'center' },
+                { field: 'WZZT', title: '位置状态', width: 150, align: 'center' },
+                { field: 'SYZT', title: '使用状态', width: 150, align: 'center' },
+                { field: 'SYCS', title: '使用册书', width: 150, align: 'center' },
+                { field: 'ZCSJ', title: '注册时间', width: 150, align: 'center', formatter: JsMiracleCommon.dateTimeFormatter },
+                { field: 'ZCWZ', title: '注册位置', width: 150, align: 'center' },
+                { field: 'BZ', title: '备注', width: 250, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            }
+        });
+    });
+
+
+</script>

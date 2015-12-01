@@ -88,3 +88,21 @@ textarea {
     width:100px;
     padding-left:5px;
 }
+
+.divTB {
+        border: #9CB2C6 1px solid;
+        margin: 10px;
+        border-spacing: 0px;
+        padding: 10px;
+        color: #000;
+        background-color: #f3f3f3;
+    }
+
+        .divTB div {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+            .divTB div label {
+                padding: 5px;
+            }

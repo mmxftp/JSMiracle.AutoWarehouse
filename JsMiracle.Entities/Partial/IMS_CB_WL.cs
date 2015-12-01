@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JsMiracle.Entities
 {
-    partial class IMS_CB_WL : IModelBase
+    partial class IMS_CB_WL 
     {
         /// <summary>
         /// 物料类型名称

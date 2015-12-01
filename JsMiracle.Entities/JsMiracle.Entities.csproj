@@ -57,7 +57,25 @@
     <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
+    <Compile Include="IMS_CB_KC.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_CB_RQ.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_CB_RQLX.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="IMS_CB_WL.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_CB_WZ.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_CB_WZGX.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMS_CB_WZLX.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IMS_CM_DM.cs">
@@ -99,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Partial\IMS_CB_RQ.cs" />
     <Compile Include="Partial\IMS_CB_WL.cs" />
     <Compile Include="Partial\IMS_UP_MK.cs" />
     <Compile Include="Partial\IMS_UP_YH.cs" />

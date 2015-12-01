@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Dal.Abstract.UP;
+using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Controllers.UP
 {
@@ -32,16 +33,16 @@ namespace JsMiracle.WebUI.Controllers.UP
         {
             var usrList = dalUser.GetAllUserList(userNameFormatter);
             return this.JsonFormat(usrList);
-            
+
         }
 
-       [AuthViewPage]
+        [AuthViewPage]
         public ActionResult List()
         {
             return View();
         }
 
-       public ActionResult GetUserList(int? rows, int? page, string txt)
+        public ActionResult GetUserList(int? rows, int? page, string txt)
         {
             int totalCount = 0;
 
@@ -67,15 +68,15 @@ namespace JsMiracle.WebUI.Controllers.UP
                     f => f.ZT == (int)UserStateEnum.Normal;
             }
 
-             var dataList = dalUser.GetDataByPage(
-                 o=>o.YHID,
-                 filter,
-                 pageIndex, pageSize, out totalCount);
+            var dataList = dalUser.GetDataByPage(
+                o => o.YHID,
+                filter,
+                pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-            var info = new PaginationModel<IMS_UP_YH>();
-            info.total = totalCount;
-            info.rows = dataList;
+            var info = new PaginationModel(dataList);
+            //info.total = totalCount;
+            //info.rows = dataList;
 
             //var json = Json(info);
             //return json;
@@ -84,7 +85,7 @@ namespace JsMiracle.WebUI.Controllers.UP
         }
 
 
-       public ViewResult Edit(long id)
+        public ViewResult Edit(long id)
         {
             var user = dalUser.GetEntity(id);
             return View(user);
@@ -92,30 +93,20 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult Save(IMS_UP_YH user)
         {
-            if (ModelState.IsValid)
+            Func<ExtResult> saveFun = () =>
             {
-                try
-                {
-                    // 新增用户,密码需要md5一下
-                    if (user.ID == 0)
-                        user.MM = IMS_UP_YH.GetPwdMD5(user.MM);
+                // 新增用户,密码需要md5一下
+                if (user.ID == 0)
+                    user.MM = IMS_UP_YH.GetPwdMD5(user.MM);
 
-                    dalUser.SaveOrUpdate(user);
-                }
-                catch (JsMiracleException ex)
-                {
-                    return this.JsonFormat(new ExtResult { success = true, msg = ex.Message });
-                }
+                dalUser.SaveOrUpdate(user);
 
-                return this.JsonFormat(new ExtResult { success = true, msg = "操作成功" });
-            }
-            else
-            {
-                //var errs = ModelState.Values.SelectMany(v => v.Errors); 
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
 
-                return this.JsonFormat(user);
-            }
-
+            return base.Save(saveFun);
         }
 
         public ViewResult Create()
@@ -141,6 +132,21 @@ namespace JsMiracle.WebUI.Controllers.UP
         {
             return View(new IMS_UP_YH());
         }
+
+        public ActionResult ChangePassword()
+        {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+
+            }
+
+            //var user =  CurrentUser.GetCurrentUser();
+
+            return View(new IMS_UP_YH());
+        }
+
+
 
     }
 }

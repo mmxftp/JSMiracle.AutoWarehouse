@@ -83,7 +83,7 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 string msg = string.Format(
                     @"<script type=""text/javascript"">
                             window.location = '{0}'
-                      </script>", "/Account/LogIn");
+                      </script>",  "/Account/LogIn");
 
                 filterContext.Result = new ContentResult { Content = msg };
             }

@@ -148,6 +148,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\CB\CBAreaRegistration.cs" />
     <Compile Include="Areas\CB\Controllers\ItemController.cs" />
+    <Compile Include="Areas\CB\Controllers\LocationController.cs" />
+    <Compile Include="Areas\CB\Controllers\ContainerController.cs" />
     <Compile Include="Areas\CM\CMAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
     <Compile Include="CommonSupport\CurrentUser.cs" />
@@ -451,6 +453,7 @@
     <Content Include="Content\themes\icons\large_shapes.png" />
     <Content Include="Content\themes\icons\large_smartart.png" />
     <Content Include="Content\themes\icons\lock.png" />
+    <Content Include="Content\themes\icons\lock_open.png" />
     <Content Include="Content\themes\icons\man.png" />
     <Content Include="Content\themes\icons\mini_add.png" />
     <Content Include="Content\themes\icons\mini_edit.png" />
@@ -531,6 +534,11 @@
     <Content Include="Areas\CM\Views\Code\EditCode.cshtml" />
     <Content Include="Areas\CB\Views\Item\Index.cshtml" />
     <Content Include="Areas\CB\Views\Item\EditIem.cshtml" />
+    <Content Include="Areas\CB\Views\Location\Index.cshtml" />
+    <Content Include="Areas\CB\Views\Container\EditContainerType.cshtml" />
+    <Content Include="Areas\CB\Views\Container\IndexContainerType.cshtml" />
+    <Content Include="Areas\CB\Views\Container\IndexContainer.cshtml" />
+    <Content Include="Areas\CB\Views\Container\EditContainer.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
@@ -605,6 +613,8 @@
     <Content Include="Views\Home\_MenuPartial.cshtml" />
     <Content Include="Views\Home\_TitlePartial.cshtml" />
     <Content Include="Views\User\Registion.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Account\LogInPop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

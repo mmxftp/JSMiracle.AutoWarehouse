@@ -55,13 +55,14 @@ namespace JsMiracle.WebUI.Controllers.UP
         public ActionResult GetChildModuleList(int? rows, int? page, int? parentid)
         {
             //var data = moduleInfo.FindWhere(n => n.ParentID == parentid);
-            var info = new PaginationModel<IMS_UP_MK>();
+            //var info = new PaginationModel<IMS_UP_MK>();
+            //var info = new PaginationModel();
 
             if (parentid == null)
             {
-                info.total = 0;
-                info.rows = new List<IMS_UP_MK>();   // 解决easyui length的问题
-                return Json(info);
+                // 解决easyui length的问题
+                var nullInfo = new PaginationModel(new List<IMS_UP_MK>());
+                return Json(nullInfo);
             }
 
 
@@ -76,9 +77,7 @@ namespace JsMiracle.WebUI.Controllers.UP
                 , pageIndex, pageSize, out totalCount);
 
             //数据组装到viewModel
-
-            info.total = totalCount;
-            info.rows = dataList;
+            var info = new PaginationModel(dataList);
 
             //var json = Json(info);
             return this.JsonFormat(info);
@@ -93,33 +92,27 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult SaveModule(IMS_UP_MK module)
         {
-            if (ModelState.IsValid)
+            Func<ExtResult> saveFun = () =>
             {
-                try
-                {
-                    //if (!string.IsNullOrEmpty(module.Action_Name) )
-                    module.URL = module.GetUrl();
+                module.URL = module.GetUrl();
 
-                    dalModule.SaveOrUpdate(module);
+                dalModule.SaveOrUpdate(module);
 
-                    var parentModule = dalModule.GetEntityByModuleID(module.FMKID);
-                    long pid = -1;
-                    if (parentModule != null)
-                        pid = parentModule.ID;
+                var parentModule = dalModule.GetEntityByModuleID(module.FMKID);
+                long pid = -1;
+                if (parentModule != null)
+                    pid = parentModule.ID;
 
-                    dalAction.ResetCache();
-                    return this.JsonFormat(new { success = true, msg = "操作成功", id = pid, parentid = module.FMKID });
-                }
-                catch (Exception ex)
-                {
-                    return this.JsonFormat(new ExtResult { success = true, msg = "操作失败" + ex.Message });
-                }
+                dalAction.ResetCache();
 
-            }
-            else
-            {
-                return this.JsonFormat(module);
-            }
+                var ret = new ExtResult();
+                ret.success = true;
+                ret.id = pid;
+                ret.parentid = module.FMKID;
+                return ret;
+            };
+
+            return base.Save(saveFun);     
         }
 
         public ViewResult CreateModule(int parentid = -1)
@@ -168,12 +161,16 @@ namespace JsMiracle.WebUI.Controllers.UP
         {
             var data = dalFunction.GetModuleFunctionList(moduleid);
 
-            var info = new PaginationModel<IMS_UP_MKGN>();
+            var info = new PaginationModel(data);
+            //var info = new PaginationModel();
 
-            info.total = (data != null) ? data.Count : 0;
-            info.rows = data;
 
-            return Json(data);
+            //info.total = (data != null) ? data.Count : 0;
+            //info.rows = data;
+
+            //info.SetRows(data);
+
+            return this.JsonFormat(info);
         }
 
         public ViewResult CreateFunction(int moduleid)
@@ -198,25 +195,17 @@ namespace JsMiracle.WebUI.Controllers.UP
 
         public ActionResult SaveFunction(IMS_UP_MKGN module)
         {
-            if (ModelState.IsValid)
+            Func<ExtResult> saveFun = () => 
             {
-                try
-                {
-                    dalFunction.SaveOrUpdate(module);
+                dalFunction.SaveOrUpdate(module);
 
-                    dalAction.ResetCache();
-                }
-                catch (Exception ex)
-                {
-                    return this.JsonFormat(new { success = true, msg = "操作失败" + ex.Message });
-                }
+                dalAction.ResetCache();
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
 
-                return this.JsonFormat(new { success = true, msg = "操作成功" });
-            }
-            else
-            {
-                return this.JsonFormat(module);
-            }
+            return base.Save(saveFun);         
         }
 
 

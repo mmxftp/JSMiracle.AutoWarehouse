@@ -26,23 +26,31 @@
         @Html.AntiForgeryToken()
         <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
     }
-    <a href="javascript:title.openRegist()">注册</a>
+    <a href="javascript:cmTitle.openRegist()">注册</a>
+    <a href="javascript:cmTitle.openLogin()">登录</a>
 </div>
 <script type="text/javascript">
 
-    var title = {
+    var cmTitle = {
         openRegist: function () {
-            console.log('in openRegist');
             var height = '350px';
             var width = '350px';
             var title = '用户注册';
             var url = '@Url.Action("Registion","User")';
-            showWindow(title, url, width, height)
+            JsMiracleCommon.showWindow(title, url, width, height)
         },
 
         reloadWindow: function () {
             window.location = '@Url.Action("Index","Home")';
-        }
+        },
+
+        openLogin: function () {
+            var height = '250px';
+            var width = '500px';
+            var title = '用户登录';
+            var url = '@Url.Action("LogInPop","Account")';
+            JsMiracleCommon.showWindow(title, url, width, height, cmTitle.reloadWindow);
+        },
     };
 
 </script>

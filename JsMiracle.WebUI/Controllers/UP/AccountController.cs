@@ -33,6 +33,12 @@ namespace JsMiracle.WebUI.Controllers.UP
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult LogInPop()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
