@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "EditLocation";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_CB_WZ
+
+@using (Ajax.BeginForm("SaveLocation", "Location"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmLocation" }))
+{
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.CJR);
+    @Html.HiddenFor(n => n.CJSJ);
+    @Html.HiddenFor(n => n.WXBH);
+    @Html.HiddenFor(n => n.P);
+    @Html.HiddenFor(n => n.L);
+    @Html.HiddenFor(n => n.C);
+    @Html.HiddenFor(n => n.SD);
+    @Html.HiddenFor(n => n.FWZT);
+    @Html.HiddenFor(n => n.ZYZT);
+    @Html.HiddenFor(n => n.SDZT);
+    @Html.HiddenFor(n => n.YDZT);
+
+    <div class="divTB">
+        <div>
+            <label>位置编号</label>
+            @Html.TextBoxFor(n => n.WXBH, new { @id = "txtWXBH" })
+            <label>位置名称</label>
+            @Html.TextBoxFor(n => n.WZMC, new { @id = "txtWZMC" })
+        </div>
+        <div>
+            <label>显示标签</label>
+            @Html.TextBoxFor(n => n.XSBQ, new { @id = "txtXSBQ" })
+            <label>位置类型</label>
+            @Html.TextBoxFor(n => n.WZLX, new { @id = "txtWZLX" })
+        </div>
+
+        <div>
+            <label>仓库ID</label>@Html.TextBoxFor(n => n.CKID, new { @id = "txtCKID" })
+            <label>区域</label>@Html.TextBoxFor(n => n.QY, new { @id = "txtQY" })
+        </div>
+        <div>
+            <label>巷道</label>@Html.TextBoxFor(n => n.XD, new { @id = "txtXD" })
+            <label>位置</label>@Html.TextBoxFor(n => n.WZ, new { @id = "txtWZ" })
+        </div>
+        <div>
+            <label>坐标</label>
+            排&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.P, new { @id = "txtP" })
+            列&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.L, new { @id = "txtL"})
+            层&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.C, new { @id = "txtC" })
+            深度&nbsp;&nbsp; @Html.TextBoxFor(n => n.SD, new { @id = "txtSD"})
+        </div>
+        <div>
+            <label>ABC</label>@Html.TextBoxFor(n => n.ABC, new { @id = "txtABC" })
+            <label>物理状态</label>@Html.TextBoxFor(n => n.WLZT, new { @id = "txtWLZT" })
+        </div>
+        <div>
+            <label>访问状态</label>@Html.TextBoxFor(n => n.FWZT, new { @id = "txtFWZT" })
+            <label>占用状态</label>@Html.TextBoxFor(n => n.ZYZT, new { @id = "txtZYZT" })
+        </div>
+        <div>
+            <label>锁定状态</label>@Html.TextBoxFor(n => n.SDZT, new { @id = "txtSDZT" })
+            <label>预定状态</label>@Html.TextBoxFor(n => n.YDZT, new { @id = "txtYDZT" })
+        </div>
+        <div>
+            <label>界面类型</label>@Html.TextBoxFor(n => n.JMLX, new { @id = "txtJMLX" })
+            <label>功能类型</label>@Html.TextBoxFor(n => n.GNLX, new { @id = "txtGNLX" })
+        </div>
+        <div style="text-align:center">
+            <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmLocation').form('submit')">提交</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmLocation').form('reset')">取消</a>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmLocation').form({
+            success: function (data) {
+                console.log(data);
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('位置类型编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('位置类型编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        //位置编号
+        $("#txtWXBH").textbox({ disabled: "disabled" });
+
+
+        $("#txtWZMC").validatebox({
+            required: true,
+            missingMessage: '位置名称不得为空'
+        });
+
+        $("#txtXSBQ").validatebox({
+            required: true,
+            missingMessage: '显示标签不得为空'
+        });
+
+        $("#txtWZLX").textbox({
+            required: true,
+            missingMessage: '位置类型不得为空'
+        });
+
+        $("#txtP").numberbox({ disabled: "disabled", width: "50px" });
+        $("#txtL").numberbox({ disabled: "disabled", width: "50px" });
+        $("#txtC").numberbox({ disabled: "disabled", width: "50px" });
+        $("#txtSD").numberbox({ disabled: "disabled", width: "50px" });
+
+
+        $("#txtCKID").textbox({
+            required: true,
+            missingMessage: '仓库ID不得为空'
+        });
+
+        $("#txtQY").textbox({
+            required: true,
+            missingMessage: '区域不得为空'
+        });
+
+        $("#txtXD").textbox({
+            required: true,
+            missingMessage: '巷道不得为空'
+        });
+
+        $("#txtWZ").textbox({
+            required: true,
+            missingMessage: '位置不得为空'
+        });
+
+        $("#txtABC").numberbox({
+            required: true,
+            missingMessage: 'ABC不得为空'
+        });
+
+        $("#txtWLZT").textbox({
+            required: true,
+            missingMessage: '物理状态不得为空'
+        });
+
+        $("#txtFWZT").numberbox({
+            required: true,
+            missingMessage: '访问状态不得为空',
+            disabled: "disabled"
+        });
+
+        $("#txtZYZT").numberbox({
+            required: true,
+            missingMessage: '占用状态不得为空',
+            disabled: "disabled"
+        });
+
+        $("#txtSDZT").numberbox({
+            required: true,
+            missingMessage: '锁定状态不得为空',
+            disabled: "disabled"
+        });
+        $("#txtYDZT").numberbox({
+            required: true,
+            missingMessage: '预定状态不得为空',
+            disabled: "disabled"
+        });
+
+        $("#txtJMLX").textbox({
+            required: true,
+            missingMessage: '界面类型不得为空'
+        });
+
+
+        $("#txtGNLX").textbox({
+            required: true,
+            missingMessage: '功能类型不得为空'
+        });
+
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmLocation").enterAsTab({ 'allowSubmit': true });
+
+        // 找到第一个可显示input,焦点进入
+        $("#frmLocation").firstInputFocus();
+    });
+
+</script>

@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "IndexLocation";
+}
+
+
+
+<div>
+    <div id="locationToolbar">
+        <div style="padding-left:5px;">
+            @if (JsMiracle.WebUI.CommonSupport.CurrentUser.IsAdmin)
+            {
+                <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                   onclick="cbLocationRelationship.showEdit('add')">初始化位置</a>
+            }
+        </div>
+    </div>
+
+    <table id="grdLocation"></table>
+</div>
+
+
+@*<script type="text/javascript">
+
+    var cblocation;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cblocation = {
+            initlocation:function(){
+                $.ajax({
+                    url: '@url.action("")',
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (rec) {
+                        if (!rec.success) {
+                            $.messager.alert({
+                                title: rec.title,
+                                msg: rec.msg
+                            });
+                        }
+                    } , 
+                    error :function(xmlhttprequest, textstatus, errorthrown) {
+                        console.log(xmlhttprequest);
+                        $.messager.alert({
+                            title: xmlhttprequest.statuscode,
+                            msg: xmlhttprequest.error
+                        });
+                    } // error end 
+                });
+            },
+
+            refreshdatagrid: function () {
+                $('#grdlocation').datagrid('reload');
+            },
+
+            showedit: function (op, id) {
+                var width = '650px';
+                var height = '480px';
+                var title = '';
+                var url = '';
+
+                if (op == 'mod') {
+                    url = '@url.action("editlocation")' + '?wxbh=' + id;
+                    title = '编辑位置信息';
+                }
+                jsmiraclecommon.showwindow(title, url, width, height, this.refreshdatagrid);
+
+            },
+        };
+
+
+        $("#grdlocation").datagrid({
+            url: '@url.action("getlocationlist")',
+            singleselect: true,
+            loadmsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pagelist: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#locationtoolbar',
+            frozencolumns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var html = '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cblocation.showedit(\'mod\',\'' + row.wxbh + '\');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'wxbh', title: '位置编号', width: 100, align: 'center' },
+                { field: 'wzmc', title: '位置名称', width: 100, align: 'center' }
+            ]],
+            columns: [[
+
+                { field: 'xsbq', title: '显示标签', width: 100, align: 'center' },
+                { field: 'wzlx', title: '位置类型', width: 100, align: 'center' },
+                { field: 'ckid', title: '仓库id', width: 150, align: 'center' },
+                { field: 'qy', title: '区域', width: 100, align: 'center' },
+                { field: 'xd', title: '巷道', width: 100, align: 'center' },
+                { field: 'p', title: '排', width: 100, align: 'center' },
+                { field: 'l', title: '列', width: 100, align: 'center' },
+                { field: 'c', title: '层', width: 100, align: 'center' },
+                { field: 'sd', title: '深度', width: 100, align: 'center' },
+                { field: 'wz', title: '位置', width: 100, align: 'center' },
+                { field: 'abc', title: 'abc', width: 100, align: 'center' },
+                { field: 'wlzt', title: '物理状态', width: 100, align: 'center' },
+                { field: 'fwzt', title: '访问状态', width: 100, align: 'center' },
+                { field: 'zyzt', title: '占用状态', width: 100, align: 'center' },
+                { field: 'sdzt', title: '锁定状态', width: 100, align: 'center' },
+                { field: 'ydzt', title: '预定状态', width: 100, align: 'center' },
+                { field: 'jmlx', title: '界面类型', width: 100, align: 'center' },
+                { field: 'gnlx', title: '功能类型', width: 100, align: 'center' },
+            ]],
+            onloadsuccess: function (data) {
+                $(".loan_edit_button").linkbutton({ iconcls: 'icon-edit' });
+            }
+        });
+    });
+</script>*@

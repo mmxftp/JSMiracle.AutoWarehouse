@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "EditRelationship";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_CB_WZGX
+
+@using (Ajax.BeginForm("SaveRelationship", "Location"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmLocationRelationship" }))
+{
+    @Html.HiddenFor(n => n.ID);
+
+    <div class="divTB">
+        <div>
+            <label>子位置</label>
+            @Html.TextBoxFor(n => n.ZWZ, new { @id = "txtZWZ" })
+            <label>父位置</label>
+            @Html.TextBoxFor(n => n.FWZ, new { @id = "txtFWZ" })
+        </div>
+        <div>
+            <label>类型</label>
+            @Html.TextBoxFor(n => n.LX, new { @id = "txtLX" })
+            <label>可用状态</label>
+            @Html.TextBoxFor(n => n.KYZT, new { @id = "txtKYZT" })
+        </div>
+        <div>
+            <label>位置</label>
+            &nbsp;&nbsp;X:&nbsp;&nbsp; @Html.TextBoxFor(n => n.X, new { id = "txtX", @style = "width:100px;" })
+            &nbsp;&nbsp;Y:&nbsp;&nbsp; @Html.TextBoxFor(n => n.Y, new { id = "txtY", @style = "width:100px;" })
+            &nbsp;&nbsp;Z:&nbsp;&nbsp; @Html.TextBoxFor(n => n.Z, new { id = "txtZ", @style = "width:100px;" })
+        </div>
+        <div style="text-align:center">
+            <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmLocationRelationship').form('submit')">提交</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmLocationRelationship').form('reset')">取消</a>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmLocationRelationship').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('位置关系编辑', ret.msg, "info", function () {
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(ret.id, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('位置关系编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        $("#txtZWZ").textbox({
+            required: true,
+            missingMessage: '子位置不得为空'
+        });
+
+        $("#txtFWZ").textbox({
+            required: true,
+            missingMessage: '父位置不得为空'
+        });
+
+        $("#txtLX").textbox({
+            required: true,
+            missingMessage: '类型不得为空'
+        });
+
+        $("#txtKYZT").textbox({
+            required: true,
+            missingMessage: '可用状态不得为空'
+        });
+
+        $("#txtX").numberbox({
+            required: true,
+            missingMessage: 'X不得为空'
+        });
+
+        $("#txtY").numberbox({
+            required: true,
+            missingMessage: 'Y不得为空'
+        });
+
+        $("#txtZ").numberbox({
+            required: true,
+            missingMessage: 'Z不得为空'
+        });
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmLocationRelationship").enterAsTab({ 'allowSubmit': true });
+
+        // 找到第一个可显示input,焦点进入
+        $("#frmLocationRelationship").firstInputFocus();
+    });
+
+</script>

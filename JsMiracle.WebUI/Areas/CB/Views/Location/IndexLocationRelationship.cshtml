@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "IndexLocationRelationship";
+}
+
+<div>
+    <div id="locationRelationshipToolbar">
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="cbLocationRelationship.showEdit('add')">新增位置关系</a>
+        </div>
+    </div>
+
+    <table id="grdLocationRelationship"></table>
+</div>
+
+
+<script type="text/javascript">
+
+    var cbLocationRelationship;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cbLocationRelationship = {
+
+            refreshDataGrid: function () {
+                $('#grdLocationRelationship').datagrid('reload');
+            },
+
+            showEdit: function (op, id) {
+                var width = '600px';
+                var height = '250px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("CreateRelationship")';
+                    title = '新增位置关系信息';
+                }
+                else if (op == 'mod') {
+                    url = '@Url.Action("EditRelationship")' + '?id=' + id;
+                    title = '编辑位置关系信息';
+                }
+                JsMiracleCommon.showWindow(title, url, width, height, this.refreshDataGrid);
+            },
+        };
+
+
+        $("#grdLocationRelationship").datagrid({
+            url: '@Url.Action("GetLocationRelationshipList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#locationRelationshipToolbar',
+
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var html = '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cbLocationRelationship.showEdit(\'mod\',\'' + row.ID + '\');">修改</a>';
+                        return html;
+                    }
+                },
+                { field: 'ZWZ', title: '子位置', width: 100, align: 'center' },
+                { field: 'FWZ', title: '父位置', width: 100, align: 'center' },
+                { field: 'LX', title: '类型', width: 150, align: 'center' },
+                { field: 'X', title: 'X', width: 100, align: 'center' },
+                { field: 'Y', title: 'Y', width: 100, align: 'center' },
+                { field: 'Z', title: 'Z', width: 100, align: 'center' },
+                { field: 'KYZT', title: '可用状态', width: 100, align: 'center' },
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            }
+        });
+    });
+
+
+</script>

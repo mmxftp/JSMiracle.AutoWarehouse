@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "EditLocationType";
+}
+@using JsMiracle.WebUI.CommonSupport
+@model JsMiracle.Entities.TabelEntities.IMS_CB_WZLX
+
+@using (Ajax.BeginForm("SaveLocationType", "Location"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmLocationType" }))
+{
+    @Html.HiddenFor(n => n.ID);
+    
+    if (@Model.ID == 0) {
+        @Html.HiddenFor(n => n.CJR, new { @Value = CurrentUser.GetCurrentUser().UserInfo.YHID });
+    }
+    else
+    {
+        @Html.HiddenFor(n => n.CJR);
+        @Html.HiddenFor(n => n.LXDM);
+    }
+
+    <div class="divTB">
+        <div>
+            <label>类型代码</label>
+            @Html.TextBoxFor(n => n.LXDM, new { @id = "txtLXDM" })
+            <label>类型名称</label>
+            @Html.TextBoxFor(n => n.LXMC, new { @id = "txtLXMC" })
+        </div>
+        <div>
+            <label>空间类型</label>
+            @Html.TextBoxFor(n => n.KJLX, new { @id = "txtKJLX" })
+            <label>最大承重</label>
+            @Html.TextBoxFor(n => n.ZDCZ, new { @id = "txtZDCZ" })
+        </div>
+        <div>
+            <label>有效尺寸</label>
+            &nbsp;&nbsp;长:&nbsp;&nbsp; @Html.TextBoxFor(n => n.YXCD, new { id = "txtYXCD", @style = "width:100px;" })
+            &nbsp;&nbsp;宽:&nbsp;&nbsp; @Html.TextBoxFor(n => n.YXKD, new { id = "txtYXKD", @style = "width:100px;" })
+            &nbsp;&nbsp;高:&nbsp;&nbsp; @Html.TextBoxFor(n => n.YXGD, new { id = "txtYXGD", @style = "width:100px;" })
+        </div>
+        <div>
+            <label>高度等级</label>@Html.TextBoxFor(n => n.GDDJ, new { @id = "txtGDDJ" })
+            <label>湿度等级</label>@Html.TextBoxFor(n => n.SDDJ, new { @id = "txtSDDJ" })
+        </div>
+        <div>
+            <label>危险等级</label>@Html.TextBoxFor(n => n.WXDJ, new { @id = "txtWXDJ" })
+            <label>防爆等级</label>@Html.TextBoxFor(n => n.FBDJ, new { @id = "txtFBDJ" })
+        </div>
+        <div>
+            <label>化学等级</label>@Html.TextBoxFor(n => n.HXDJ, new { @id = "txtHXDJ" })
+            <label>防尘等级</label>@Html.TextBoxFor(n => n.FCDJ, new { @id = "txtFCDJ" })
+        </div>
+        <div>
+            <label>温度等级</label>@Html.TextBoxFor(n => n.WDDJ, new { @id = "txtWDDJ" })
+        </div>
+        <div>
+            <label>描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            @Html.TextAreaFor(n => n.MS, new { @id = "txtMS" })
+        </div>
+        <div style="text-align:center">
+            <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmLocationType').form('submit')">提交</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmLocationType').form('reset')">取消</a>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmLocationType').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('位置类型编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('位置类型编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        $("#txtKJLX").validatebox({
+            required: true,
+            missingMessage: '空间类型不得为空'
+        });
+
+        $("#txtLXDM").textbox({
+            required: true,
+            missingMessage: '类型代码不得为空',
+            disabled: (@Model.ID != 0 )
+        });
+
+        $("#txtLXMC").validatebox({
+            required: true,
+            missingMessage: '类型名称不得为空'
+        });
+
+        $("#txtYXCD").numberbox({
+            required: true,
+            missingMessage: '有效长度不得为空'
+        });
+
+        $("#txtYXKD").numberbox({
+            required: true,
+            missingMessage: '有效宽度不得为空'
+        });
+
+        $("#txtYXGD").numberbox({
+            required: true,
+            missingMessage: '有效高度不得为空'
+        });
+
+        $("#txtZDCZ").numberbox({
+            required: true,
+            missingMessage: '最大承重不得为空'
+        });
+
+
+        $("#txtGDDJ").numberbox();
+
+
+        $("#txtSDDJ").numberbox({
+            required: true,
+            missingMessage: '湿度等级不得为空'
+        });
+        $("#txtWDDJ").numberbox({
+            required: true,
+            missingMessage: '温度等级不得为空'
+        });
+
+        $("#txtWXDJ").numberbox({
+            required: true,
+            missingMessage: '危险等级不得为空'
+        });
+
+        $("#txtFBDJ").numberbox({
+            required: true,
+            missingMessage: '防爆等级不得为空'
+        });
+
+        $("#txtHXDJ").numberbox({
+            required: true,
+            missingMessage: '化学等级不得为空'
+        });
+        $("#txtFCDJ").numberbox({
+            required: true,
+            missingMessage: '防尘等级不得为空'
+        });
+
+        $("#txtMS").textbox({ multiline: false, width: '400px' });
+
+        // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
+        $("#frmLocationType").enterAsTab({ 'allowSubmit': true });
+
+        // 找到第一个可显示input,焦点进入
+        $("#frmLocationType").firstInputFocus();
+    });
+
+</script>
