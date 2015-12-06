@@ -12,6 +12,7 @@ using JsMiracle.WebUI.Controllers.Filter;
 using JsMiracle.Framework.Cache;
 using JsMiracle.Framework;
 using JsMiracle.Dal.Abstract.UP;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Controllers.UP
 {

@@ -525,7 +525,9 @@
     <Content Include="Config\AppSetting.Config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Config\DataBase.config" />
+    <Content Include="Config\DataBase.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\CustomScripts\common.js" />
     <Content Include="Areas\CM\Views\Web.config" />
     <Content Include="Areas\CM\Views\Code\Index.cshtml" />
@@ -534,11 +536,16 @@
     <Content Include="Areas\CM\Views\Code\EditCode.cshtml" />
     <Content Include="Areas\CB\Views\Item\Index.cshtml" />
     <Content Include="Areas\CB\Views\Item\EditIem.cshtml" />
-    <Content Include="Areas\CB\Views\Location\Index.cshtml" />
     <Content Include="Areas\CB\Views\Container\EditContainerType.cshtml" />
     <Content Include="Areas\CB\Views\Container\IndexContainerType.cshtml" />
     <Content Include="Areas\CB\Views\Container\IndexContainer.cshtml" />
     <Content Include="Areas\CB\Views\Container\EditContainer.cshtml" />
+    <Content Include="Areas\CB\Views\Location\EditLocationType.cshtml" />
+    <Content Include="Areas\CB\Views\Location\IndexLocationType.cshtml" />
+    <Content Include="Areas\CB\Views\Location\IndexLocation.cshtml" />
+    <Content Include="Areas\CB\Views\Location\EditLocation.cshtml" />
+    <Content Include="Areas\CB\Views\Location\IndexLocationRelationship.cshtml" />
+    <Content Include="Areas\CB\Views\Location\EditRelationship.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
@@ -658,7 +665,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2346</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1621/</IISUrl>
+          <IISUrl>http://localhost:2346/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

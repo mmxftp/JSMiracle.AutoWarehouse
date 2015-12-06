@@ -21,6 +21,7 @@ namespace JsMiracle.Entities
             this.IMS_CB_WZGX_S1 = new HashSet<IMS_CB_WZGX>();
         }
     
+        public long ID { get; set; }
         public string WXBH { get; set; }
         public string WZMC { get; set; }
         public string XSBQ { get; set; }
@@ -43,7 +44,7 @@ namespace JsMiracle.Entities
         public string GNLX { get; set; }
         public string CJR { get; set; }
         public System.DateTime CJSJ { get; set; }
-        public long ID { get; set; }
+        public string JZ { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IMS_CB_WZGX> IMS_CB_WZGX_S { get; set; }

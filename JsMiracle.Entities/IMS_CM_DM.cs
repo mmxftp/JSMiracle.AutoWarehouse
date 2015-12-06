@@ -15,6 +15,7 @@ namespace JsMiracle.Entities
     public partial class IMS_CM_DM
     {
         public long ID { get; set; }
+        public string LXDM { get; set; }
         public string DM { get; set; }
         public string MC { get; set; }
         public int SZ { get; set; }
@@ -22,6 +23,5 @@ namespace JsMiracle.Entities
         public string XGR { get; set; }
         public Nullable<System.DateTime> XGRQ { get; set; }
         public string ZS { get; set; }
-        public string LXDM { get; set; }
     }
 }

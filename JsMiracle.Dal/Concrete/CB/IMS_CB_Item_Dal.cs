@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using JsMiracle.Framework;
 using System.Linq.Dynamic;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.Dal.Concrete.CB
 {
     public class IMS_CB_Item_Dal : DataLayerBase<IMS_CB_WL>, IItem
     {
-        public IMS_CB_WL GetEntity(string wlbh)
+        public IMS_CB_WL GetEntityByWXBH(string wlbh)
         {
             return this.DbContext.IMS_CB_WL_S.Where(n => n.WLBH.Equals(wlbh)).FirstOrDefault();
         }
@@ -51,6 +52,7 @@ namespace JsMiracle.Dal.Concrete.CB
 
             return itemList;
         }
+
 
 
     }

@@ -2,6 +2,7 @@
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using JsMiracle.Framework;
 using System;

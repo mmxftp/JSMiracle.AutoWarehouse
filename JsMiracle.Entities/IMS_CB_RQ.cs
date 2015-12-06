@@ -14,8 +14,14 @@ namespace JsMiracle.Entities
     
     public partial class IMS_CB_RQ
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public IMS_CB_RQ()
+        {
+            this.IMS_CB_KC_S = new HashSet<IMS_CB_KC>();
+        }
+    
         public long ID { get; set; }
-        public Nullable<long> RQLXID { get; set; }
+        public string LXBH { get; set; }
         public string RQBH { get; set; }
         public string SMTM { get; set; }
         public string DQWZ { get; set; }
@@ -31,6 +37,8 @@ namespace JsMiracle.Entities
         public string ZCWZ { get; set; }
         public string BZ { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IMS_CB_KC> IMS_CB_KC_S { get; set; }
         public virtual IMS_CB_RQLX IMS_CB_RQLX_S { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using System;
 using System.Collections.Generic;

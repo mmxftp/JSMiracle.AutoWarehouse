@@ -1,17 +1,24 @@
 ﻿@{
     ViewBag.Title = "EditCode";
 }
-
-@model JsMiracle.Entities.IMS_CM_DM
+@using JsMiracle.WebUI.CommonSupport
+@model JsMiracle.Entities.TabelEntities.IMS_CM_DM
 
 @using (Ajax.BeginForm("SaveCode", "Code"
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmCode" }))
 {
-
+    if (@Model.ID == 0)
+    {
+        @Html.HiddenFor(n => n.CJR, new { @Value = CurrentUser.GetCurrentUser().UserInfo.YHID });
+    }
+    else
+    {
+        @Html.HiddenFor(n => n.CJR);
+    }
     @Html.HiddenFor(n => n.ID);
     @Html.HiddenFor(n => n.XGR);
-    @Html.HiddenFor(n => n.CJR);
+
     @Html.HiddenFor(n => n.XGRQ);
 
     @Html.HiddenFor(n => n.LXDM, new { @value = Model.LXDM });

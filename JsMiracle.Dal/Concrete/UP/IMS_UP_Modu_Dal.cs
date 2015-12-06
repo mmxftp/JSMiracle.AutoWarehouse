@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace JsMiracle.Dal.Concrete.UP
             base.SaveOrUpdate(entity);
         }
 
-        public override void Delete(long id)
+        public override void Delete(object id)
         {
             var ent = GetEntity(id);
 
@@ -101,6 +102,7 @@ namespace JsMiracle.Dal.Concrete.UP
 
             return data.FirstOrDefault();
         }
+
 
 
     }

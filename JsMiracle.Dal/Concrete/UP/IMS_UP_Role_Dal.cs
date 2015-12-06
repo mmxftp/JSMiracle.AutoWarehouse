@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace JsMiracle.Dal.Concrete.UP
             return this.DbContext.IMS_UP_JS_S.ToList();
         }
 
-        public override void Delete(long id)
+        public override void Delete(object id)
         {
             var role = GetEntity(id);
             if (role != null)

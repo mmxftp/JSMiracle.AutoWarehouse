@@ -2,6 +2,7 @@
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
 using JsMiracle.Entities.Enum;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
@@ -71,7 +72,7 @@ namespace JsMiracle.Dal.Concrete.UP
             return data;
         }
 
-        public IMS_UP_YH GetEntity(string userid)
+        public IMS_UP_YH GetEntityByYHBH(string userid)
         {
             if (string.IsNullOrEmpty(userid))
                 throw new JsMiracleException(" userid 不得为空");

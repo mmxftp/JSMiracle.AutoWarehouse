@@ -3,18 +3,24 @@
 }
 
 
-@model JsMiracle.Entities.IMS_CB_RQ
+@model JsMiracle.Entities.TabelEntities.IMS_CB_RQ
 
 @using (Ajax.BeginForm("SaveContainer", "Container"
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmContainer" }))
 {
+    if (@Model.ID != 0)
+    {
+        @Html.HiddenFor(n => n.RQBH);
+    }
+
     @Html.HiddenFor(n => n.ID);
     @Html.HiddenFor(n => n.ZCSJ);
-    
+
+
     <div class="divTB">
         <div>
-            <label>容器类型</label> @Html.DropDownListFor(n => n.RQLXID, ViewBag.ContainerType as IEnumerable<SelectListItem>
+            <label>容器类型</label> @Html.DropDownListFor(n => n.LXBH, ViewBag.ContainerType as IEnumerable<SelectListItem>
              , new { id = "ddlRQLXID", style = "width:250px;" })
         </div>
         <div>
@@ -57,7 +63,7 @@
         </div>
         <div>
             <label>备注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            @Html.TextAreaFor(n => n.BZ, new {  id="txtBZ", @style = "width:300px;"})
+            @Html.TextAreaFor(n => n.BZ, new { id = "txtBZ", @style = "width:300px;" })
         </div>
         <div style="text-align:center">
             <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmContainer').form('submit')">提交</a>
@@ -97,10 +103,13 @@
                missingMessage: '请从下拉框中选择容器类型'
            });
 
-        $("#txtRQBH").validatebox({
+        $("#txtRQBH").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '此框不得为空',
+            // 修改不得改主键
+            disabled: (@Model.ID != 0 )
         });
+
 
         $("#txtSMTM").validatebox({
             required: true,
@@ -156,14 +165,14 @@
             missingMessage: '此框不得为空',
         });
 
-        $("#txtBZ").textbox({multiline:true,height:"40px"});
+        $("#txtBZ").textbox({ multiline: true, height: "40px" });
 
         // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
         $("#frmContainer").enterAsTab({ 'allowSubmit': true });
 
         // 找到第一个可显示input,焦点进入
         $("#frmContainer").firstInputFocus();
-        
+
     });
 
 </script>

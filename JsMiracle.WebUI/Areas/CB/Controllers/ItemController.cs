@@ -2,6 +2,7 @@
 using JsMiracle.Dal.Abstract.CM;
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Framework;
 using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.WebUI.Controllers;
@@ -73,23 +74,15 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
 
         public ActionResult RemoveItem(long id)
         {
-            try
+            Func<ExtResult> removeFun = () =>
             {
                 dalItem.Delete(id);
-                return this.JsonFormat(new ExtResult { success = true, msg = "删除成功" });
-
-            }
-            catch (Exception ex)
-            {
                 var ret = new ExtResult();
-                ret.success = false;
-                if (ex is JsMiracleException)
-                    ret.msg = ex.Message;
-                else
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
+                ret.success = true;
+                return ret;
+            };
 
-                return this.JsonFormat(ret);
-            }
+            return base.Remove(removeFun);
         }
 
         public ActionResult EditIem(long id)

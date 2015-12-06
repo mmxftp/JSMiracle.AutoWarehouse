@@ -21,8 +21,8 @@ namespace JsMiracle.WebUI.Controllers
         /// </summary>
         /// <param name="saveAction">保存的操作方法</param>
         /// <returns>返回操作结果 Json</returns>
-        public virtual ActionResult  Save(Func<ExtResult> saveAction)
-        {           
+        protected virtual ActionResult Save(Func<ExtResult> saveAction)
+        {
             //var ret = new ExtResult();
             ExtResult ret;
             try
@@ -51,13 +51,44 @@ namespace JsMiracle.WebUI.Controllers
                 ret = new ExtResult();
                 ret.success = false;
                 if (ex is JsMiracleException)
+                {
+                    ret.msg = ex.Message;
+                }
+                else
+                {
+                    Exception innerExp = ex;
+
+                    while(innerExp.InnerException!= null)
+                    {
+                        innerExp = innerExp.InnerException;
+                    }
+
+                    ret.msg = string.Format("{0}-{1}", ex.Message, innerExp.Message);
+                }
+
+            }
+            return this.JsonFormat(ret);
+        }
+
+        protected virtual ActionResult Remove(Func<ExtResult> removeAction)
+        {
+            ExtResult ret;
+            try
+            {
+                ret = removeAction();
+                if (string.IsNullOrEmpty(ret.msg))
+                    ret.msg = "删除成功";
+            }
+            catch (Exception ex)
+            {
+                ret = new ExtResult();
+                ret.success = false;
+                if (ex is JsMiracleException)
                     ret.msg = ex.Message;
                 else
                     ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
             }
             return this.JsonFormat(ret);
         }
-
-
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JsMiracle.Entities
+namespace JsMiracle.Entities.TabelEntities
 {
     partial class IMS_CB_RQ 
     {

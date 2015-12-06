@@ -18,9 +18,9 @@ namespace JsMiracle.Framework
         public override void ExecuteResult(ControllerContext context)
         {
             //this.ContentType = TextContextType;
-            //JsonSerializerSettings jsSettings = new JsonSerializerSettings();
-            //jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            //return JsonConvert.SerializeObject(obj, jsSettings);         
+            ////JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+            ////jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            ////return JsonConvert.SerializeObject(obj, jsSettings);
             //base.ExecuteResult(context);
 
             if (context == null)
@@ -37,18 +37,26 @@ namespace JsMiracle.Framework
                 {
                     //Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() },
                     Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.IsoDateTimeConverter() },
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,       // 外键递归死循环跳过
+                    //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,       // 外键递归死循环跳过, 数据量一多会非常慢
+                    ReferenceLoopHandling = ReferenceLoopHandling.Error,
                     NullValueHandling = NullValueHandling.Ignore,
                     //ContractResolver = new NHibernateContractResolver(ExceptMemberName)                    
                 }
                 );
 
-
-            using (JsonWriter jsonWriter = new JsonTextWriter(sw))
+            try
             {
-                jsonWriter.Formatting = Formatting.Indented;
-                serializer.Serialize(jsonWriter, Data);
+                using (JsonWriter jsonWriter = new JsonTextWriter(sw))
+                {
+                    jsonWriter.Formatting = Formatting.Indented;
+                    serializer.Serialize(jsonWriter, Data);
+                }
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             response.Write(sw.ToString());
 
         }

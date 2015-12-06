@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WebUI.Models;
 using System;
 using System.Collections.Generic;

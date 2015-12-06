@@ -14,14 +14,14 @@ namespace JsMiracle.Entities
     
     public partial class IMS_CB_WZGX
     {
+        public long ID { get; set; }
         public string ZWZ { get; set; }
         public string FWZ { get; set; }
         public string LX { get; set; }
         public int X { get; set; }
-        public int Y { get; set; }
+        public Nullable<int> Y { get; set; }
         public int Z { get; set; }
         public int KYZT { get; set; }
-        public long ID { get; set; }
     
         public virtual IMS_CB_WZ IMS_CB_WZ_S { get; set; }
         public virtual IMS_CB_WZ IMS_CB_WZ_S1 { get; set; }

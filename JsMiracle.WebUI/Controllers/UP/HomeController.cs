@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using JsMiracle.Framework;
 using JsMiracle.WebUI.CommonSupport;
@@ -34,10 +35,10 @@ namespace JsMiracle.WebUI.Controllers.UP
             return View();
         }
 
-        private IEnumerable<IMS_UP_MK> GetChildModule(PermissionViewModule module ,int parentid)
+        private IEnumerable<IMS_UP_MK> GetChildModule(PermissionViewModule module, int parentid)
         {
             return module.Modules.Where(n => n.FMKID == parentid);
-        } 
+        }
 
         [AllowAnonymous]
         public PartialViewResult _MenuPartial()
@@ -55,19 +56,19 @@ namespace JsMiracle.WebUI.Controllers.UP
 
             if (CurrentUser.IsAdmin)
             {
-                permissionModule = actionPerission.GetAllPermission();                
+                permissionModule = actionPerission.GetAllPermission();
             }
-            else 
+            else
             {
-                 var user = CurrentUser.GetCurrentUser();
+                var user = CurrentUser.GetCurrentUser();
 
-                permissionModule= user.Permissions;
+                permissionModule = user.Permissions;
             }
-            
+
 
             foreach (var m in rootMenus)
             {
-                var perList = permissionModule.Modules.Where(n => n.FMKID == m.MKID);
+                var perList = permissionModule.Modules.Where(n => n.FMKID == m.MKID).OrderBy(n => n.PXID);
 
                 //var userPermissionList = user.Permissions.Modules.Where(n => n.ParentID == m.ModuleID);
 

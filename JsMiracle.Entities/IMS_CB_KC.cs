@@ -15,8 +15,8 @@ namespace JsMiracle.Entities
     public partial class IMS_CB_KC
     {
         public long ID { get; set; }
-        public string WKBH { get; set; }
         public string RQBH { get; set; }
+        public string WKBH { get; set; }
         public decimal KQSL { get; set; }
         public decimal KYSL { get; set; }
         public string PCBH { get; set; }
@@ -30,5 +30,7 @@ namespace JsMiracle.Entities
         public System.DateTime RKSJ { get; set; }
         public Nullable<System.DateTime> ZHXGSJ { get; set; }
         public string BZ { get; set; }
+    
+        public virtual IMS_CB_RQ IMS_CB_RQ_S { get; set; }
     }
 }

@@ -9,14 +9,14 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract
 {
-    public interface IDataLayer<T> where T : IModelBase
+    public interface IDataLayer<T> //where T : IModelBase
     {
         /// <summary>
         /// 按主键得记录
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        T GetEntity(long id);
+        T GetEntity(object id);
 
         /// <summary>
         /// 得数据表中所有数据
@@ -42,7 +42,7 @@ namespace JsMiracle.Dal.Abstract
         /// 删除记录
         /// </summary>
         /// <param name="id">主键</param>
-        void Delete(long id);
+        void Delete(object id);
 
         /// <summary>
         /// 新增记录

@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace JsMiracle.Dal.Abstract.CB
         /// </summary>
         /// <param name="wlbh">完整的物料编号</param>
         /// <returns></returns>
-        IMS_CB_WL GetEntity(string wlbh);
+        IMS_CB_WL GetEntityByWXBH(string wlbh);
     }
 }

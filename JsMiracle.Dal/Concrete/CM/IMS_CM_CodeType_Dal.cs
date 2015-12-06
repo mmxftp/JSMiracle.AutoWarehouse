@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Dal.Abstract.CM;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace JsMiracle.Dal.Concrete.CM
             var ent= this.DbContext.IMS_CM_DMLX_S.Where(n => n.LXDM.Equals(lxdm, StringComparison.CurrentCultureIgnoreCase));
             return ent.FirstOrDefault();
         }
+
     }
 }

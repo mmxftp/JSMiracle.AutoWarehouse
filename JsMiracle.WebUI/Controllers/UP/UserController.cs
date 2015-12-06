@@ -14,6 +14,7 @@ using System.Web.Security;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.WebUI.CommonSupport;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Controllers.UP
 {

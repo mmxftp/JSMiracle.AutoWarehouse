@@ -20,6 +20,7 @@ namespace JsMiracle.Entities
             this.IMS_CB_WZ_S = new HashSet<IMS_CB_WZ>();
         }
     
+        public long ID { get; set; }
         public string LXDM { get; set; }
         public string LXMC { get; set; }
         public string MS { get; set; }
@@ -36,7 +37,6 @@ namespace JsMiracle.Entities
         public int FCDJ { get; set; }
         public int WDDJ { get; set; }
         public string CJR { get; set; }
-        public long ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IMS_CB_WZ> IMS_CB_WZ_S { get; set; }

@@ -59,6 +59,8 @@
     <Compile Include="Abstract\CB\IContainer.cs" />
     <Compile Include="Abstract\CB\IContainerType.cs" />
     <Compile Include="Abstract\CB\ILocation.cs" />
+    <Compile Include="Abstract\CB\ILocationRelationship.cs" />
+    <Compile Include="Abstract\CB\ILocationType.cs" />
     <Compile Include="Abstract\CM\ICode.cs" />
     <Compile Include="Abstract\CM\ICodeType.cs" />
     <Compile Include="Abstract\DataLayerBase.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="Abstract\UP\IUser.cs" />
     <Compile Include="Concrete\CB\IMS_CB_ContainerType_Dal.cs" />
     <Compile Include="Concrete\CB\IMS_CB_Container_Dal.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_LocationRelationship_Dal.cs" />
+    <Compile Include="Concrete\CB\IMS_CB_LocationType_Dal.cs" />
     <Compile Include="Concrete\CB\IMS_CB_Location_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_CodeType_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_Code_Dal.cs" />

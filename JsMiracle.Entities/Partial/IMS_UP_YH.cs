@@ -6,7 +6,7 @@ using System.Text;
 using System.Web.Security;
 
 // 扩展属性,命名空间必须一致
-namespace JsMiracle.Entities
+namespace JsMiracle.Entities.TabelEntities
 {
     public partial class IMS_UP_YH 
     {

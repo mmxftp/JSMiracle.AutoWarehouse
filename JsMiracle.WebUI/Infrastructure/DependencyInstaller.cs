@@ -57,15 +57,20 @@ namespace JsMiracle.WebUI.Infrastructure
                 Component.For<ICodeType>()
                      .ImplementedBy<IMS_CM_CodeType_Dal>().LifeStyle.PerWebRequest,
 
-                Component.For<ILocation>()
-                     .ImplementedBy<IMS_CB_Location_Dal>().LifeStyle.PerWebRequest,
-
                 Component.For<IContainerType>()
                      .ImplementedBy<IMS_CB_ContainerType_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IContainer>()
-                     .ImplementedBy<IMS_CB_Container_Dal>().LifeStyle.PerWebRequest,    
+                     .ImplementedBy<IMS_CB_Container_Dal>().LifeStyle.PerWebRequest,
 
+                Component.For<ILocation>()
+                     .ImplementedBy<IMS_CB_Location_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<ILocationType>()
+                     .ImplementedBy<IMS_CB_LocationType_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<ILocationRelationship>()
+                     .ImplementedBy<IMS_CB_LocationRelationship_Dal>().LifeStyle.PerWebRequest,    
 
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()

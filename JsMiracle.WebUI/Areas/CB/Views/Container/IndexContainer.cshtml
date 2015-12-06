@@ -28,7 +28,7 @@
             },
 
             showContainerEdit: function (op, id) {
-                var width = '550px';
+                var width = '600px';
                 var height = '460px';
                 var title = '';
                 var url = '';
@@ -39,7 +39,7 @@
                 }
                 else if (op == 'mod') {
 
-                    url = '@Url.Action("EditContainer")' + '?id=' + id;
+                    url = '@Url.Action("EditContainer")' + '?rqbh=' + id;
                     title = '编辑容器信息';
                 }
 
@@ -63,14 +63,14 @@
                 {
                     field: '_operate', title: '操作', width: 150, align: 'center'
                     , formatter: function (value, row, index) {
-                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.RQBH + '\',\''
                             + row.RQBH + '\',\'@Url.Action("RemoveContainerType")\',cbContainer.refreshDataGrid)';
 
                         var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
                                   + 'onclick="' + removeFunStr + '" >删除</a>'
                                   + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                   + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                  + ' onclick="cbContainer.showContainerEdit(\'mod\',' + row.ID + ');">修改</a>';
+                                  + ' onclick="cbContainer.showContainerEdit(\'mod\',\'' + row.RQBH + '\');">修改</a>';
 
                         return html;
                     }

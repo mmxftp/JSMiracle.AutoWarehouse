@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,5 @@ namespace JsMiracle.Dal.Abstract.CB
     /// </summary>
     public interface IContainerType : IDataLayer<IMS_CB_RQLX>
     {
-
     }
 }

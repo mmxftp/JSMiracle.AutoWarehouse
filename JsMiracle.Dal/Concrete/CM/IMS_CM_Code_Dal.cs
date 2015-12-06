@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Dal.Abstract.CM;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace JsMiracle.Dal.Concrete.CM
 
             return this.GetAllEntites(filter);
         }
+
+
     }
 }

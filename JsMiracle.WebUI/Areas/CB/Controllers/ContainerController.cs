@@ -11,6 +11,7 @@ using JsMiracle.WebUI.Controllers.Filter;
 using System.Text;
 using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.WebUI.Controllers;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Areas.CB.Controllers
 {
@@ -29,7 +30,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         }
 
 
-        #region IMS_CB_RQLX 
+        #region IMS_CB_RQLX
         [AuthViewPage]
         public ActionResult IndexContainerType()
         {
@@ -52,34 +53,30 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RemoveContainerType(long id)
+        public ActionResult RemoveContainerType(string id)
         {
-            try
+            // id =>LXBH
+            Func<ExtResult> removeFun = () =>
             {
                 dalContainerType.Delete(id);
-                return this.JsonFormat(new ExtResult { success = true, msg = "删除成功" });
-
-            }
-            catch (Exception ex)
-            {
                 var ret = new ExtResult();
-                ret.success = false;
-                if (ex is JsMiracleException)
-                    ret.msg = ex.Message;
-                else
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
+                ret.success = true;
+                return ret;
+            };
 
-                return this.JsonFormat(ret);
-            }
+            return base.Remove(removeFun);
         }
 
 
-        public ActionResult EditContainerType(long id)
+        public ActionResult EditContainerType(string lxbh)
         {
-            var ent = dalContainerType.GetEntity(id);
+            var ent = dalContainerType.GetEntity(lxbh);
             if (ent == null)
-                throw new JsMiracleException(string.Format("不存在容器类型'{0}',无法修改 ", id));
+                throw new JsMiracleException(string.Format("不存在容器类型'{0}',无法修改 ", lxbh));
 
+            var v = View(ent);
+            foreach (var k in v.ViewData.ModelState.Keys)
+                Console.WriteLine(k);
             return View(ent);
         }
 
@@ -109,8 +106,8 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
                         throw new JsMiracleException("容器类型编号不得重覆");
                 }
 
-                // 创建人
-                entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                //// 创建人
+                //entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
 
                 dalContainerType.SaveOrUpdate(entity);
                 var ret = new ExtResult();
@@ -121,7 +118,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             return base.Save(saveFun);
         }
 
-        #endregion 
+        #endregion
 
         #region IMS_CB_RQ
         [AuthViewPage]
@@ -145,37 +142,28 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RemoveContainer(long id)
+        public ActionResult RemoveContainer(string id)
         {
-            try
+            Func<ExtResult> removeFun = () =>
             {
                 dalContainer.Delete(id);
-                return this.JsonFormat(new ExtResult { success = true, msg = "删除成功" });
-
-            }
-            catch (Exception ex)
-            {
                 var ret = new ExtResult();
-                ret.success = false;
-                if (ex is JsMiracleException)
-                    ret.msg = ex.Message;
-                else
-                    ret.msg = string.Format("{0}-{1}", ex.Message, ex.InnerException);
+                ret.success = true;
+                return ret;
+            };
 
-                return this.JsonFormat(ret);
-            }
+            return base.Remove(removeFun);
         }
 
         [AuthViewPage]
-        public ActionResult EditContainer(long id)
+        public ActionResult EditContainer(string rqbh)
         {
-            var ent = dalContainer.GetEntity(id);
+            var ent = dalContainer.GetEntity(rqbh);
             if (ent == null)
-                throw new JsMiracleException(string.Format("不存在容器类型'{0}',无法修改 ", id));
+                throw new JsMiracleException(string.Format("不存在容器类型'{0}',无法修改 ", rqbh));
 
             ViewBag.ContainerType = new SelectList(
-                GetContainerTypeList(), "ID", "LXMC", ent.RQLXID);
-
+                GetContainerTypeList(), "LXBH", "LXMC", ent.LXBH);
 
             return View(ent);
         }
@@ -185,7 +173,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         public ActionResult CreateContainer()
         {
             ViewBag.ContainerType = new SelectList(
-                GetContainerTypeList(), "ID", "LXMC", -1);
+                GetContainerTypeList(), "LXBH", "LXMC", "-1");
 
             return View("EditContainer", new IMS_CB_RQ());
         }
@@ -193,7 +181,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         private IList<IMS_CB_RQLX> GetContainerTypeList()
         {
             var data = dalContainerType.GetAllEntites(null);
-            data.Insert(0, new IMS_CB_RQLX() { ID = -1, LXMC = "--请选择--" });
+            data.Insert(0, new IMS_CB_RQLX() { ID = -1, LXBH = "-1", LXMC = "--请选择--" });
 
             return data;
         }

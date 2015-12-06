@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Dal.Abstract;
 using JsMiracle.Dal.Abstract.UP;
 using JsMiracle.Entities;
+using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

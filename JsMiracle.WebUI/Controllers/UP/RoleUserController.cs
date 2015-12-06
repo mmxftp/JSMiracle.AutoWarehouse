@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using JsMiracle.Dal.Abstract.UP;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Controllers.UP
 {

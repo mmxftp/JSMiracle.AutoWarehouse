@@ -4,16 +4,22 @@
 }
 
 
-@model  JsMiracle.Entities.IMS_UP_YH
+@model  JsMiracle.Entities.TabelEntities.IMS_UP_YH
 
 
 @using (Ajax.BeginForm("Save", "User"
         , new AjaxOptions()
         , new { enctype = "multipart/form-data", id = "frmUser" }))
 {
+    if (@Model.ID != 0)
+    {
+        @Html.HiddenFor(n => n.YHID);
+    }
+    
     @Html.ValidationSummary();
     @Html.HiddenFor(n => n.ID);
     @Html.HiddenFor(n => n.ZT);
+    
     <table class="TB" >
         <tr>
             <td>员工编号</td>
@@ -58,9 +64,10 @@
             }
         });
 
-        $("#txtUserId").validatebox({
+        $("#txtUserId").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '此框不得为空',
+            disabled: (@Model.ID != 0 )
         });
 
         $("#txtUserName").validatebox({

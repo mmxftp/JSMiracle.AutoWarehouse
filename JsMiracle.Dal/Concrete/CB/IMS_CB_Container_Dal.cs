@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Dynamic;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.Dal.Concrete.CB
 {
@@ -52,5 +53,25 @@ namespace JsMiracle.Dal.Concrete.CB
 
             return rqList;
         }
+
+        #region protected Method
+
+        protected override string GetKeyValue(IMS_CB_RQ entity)
+        {
+            return entity.RQBH;
+        }
+
+        protected override IMS_CB_RQ GetOldEntity(IMS_CB_RQ entity)
+        {
+            return GetEntity(entity.RQBH);
+        }
+
+        protected override bool IsAddEntity(IMS_CB_RQ entity)
+        {
+            return entity.ID == 0;
+        }
+        #endregion
+
+
     }
 }

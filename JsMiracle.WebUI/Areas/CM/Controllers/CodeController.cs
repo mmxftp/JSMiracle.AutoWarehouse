@@ -11,6 +11,7 @@ using JsMiracle.Entities.EasyUI_Model;
 using System.Text;
 using JsMiracle.WebUI.Controllers;
 using JsMiracle.WebUI.CommonSupport;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Areas.CM.Controllers
 {
@@ -159,7 +160,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                             , entity.LXDM, entity.DM, entity.SZ));
                 }
 
-                entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                //entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
                 dalCode.SaveOrUpdate(entity);
                 ExtResult ret = new ExtResult();
                 ret.success = true;
@@ -216,7 +217,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 }
 
                 ent.CJSJ = System.DateTime.Now;
-                ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                //ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
 
                 dalCodeType.SaveOrUpdate(ent);
 

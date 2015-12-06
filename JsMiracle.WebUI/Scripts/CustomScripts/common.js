@@ -108,7 +108,7 @@ var JsMiracleCommon = {
         $.messager.confirm('Confirm', '确定删除\'' + name + '\'?'
             , function (r) {
                 if (r) {
-                    $.post(postUrl, { id: id }, function (result) {
+                    $.post(postUrl, { "id": id }, function (result) {
                         if (result.success) {
                             if (successFunction && JsMiracleCommon.isFunction(successFunction))
                                 successFunction(result);

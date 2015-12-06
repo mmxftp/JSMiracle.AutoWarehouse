@@ -2,7 +2,7 @@
     ViewBag.Title = "EditModule";
 }
 
-@model JsMiracle.Entities.IMS_UP_MK
+@model JsMiracle.Entities.TabelEntities.IMS_UP_MK
 
 
 @using (Ajax.BeginForm("SaveModule", "Module"
@@ -61,7 +61,7 @@
             <tr>
                 <td>URL</td>
                 <td>
-                    @Html.TextAreaFor(n => n.URL, new { id = "txtUrl", row="2" })
+                    @Html.TextAreaFor(n => n.URL, new { id = "txtUrl", row = "2", @disabled = "disabled" })
                 </td>
             </tr>
         }
@@ -112,10 +112,10 @@
         var moduleAdd = (@Model.MKID == 0 );
 
         if (!rootModule){
-            $("#txtUrl").validatebox({
-                required: true,
-                missingMessage:'此框不得为空'
-            });
+            //$("#txtUrl").validatebox({
+            //    required: true,
+            //    missingMessage:'此框不得为空'
+            //});
 
             $("#txtController").validatebox({
                 required: true,
