@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "EditModule";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_UP_MK
+
+
+@using (Ajax.BeginForm("SaveModule", "Module"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmModule" }))
+{
+
+    @Html.HiddenFor(n => n.ID);
+
+    @Html.HiddenFor(n => n.FMKID, new { @Value = Model.FMKID });
+
+    <table class="TB">
+        @if (Model.FMKID != -1)
+        {
+            <tr>
+                <td>
+                    父模块号
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.FMKID, new { @Value = Model.FMKID, @disabled = "disabled" })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>模块编号</td>
+            <td>
+                @Html.TextBoxFor(n => n.MKID, new { id = "txtModuleID" })
+            </td>
+        </tr>
+        <tr>
+            <td>模块名称</td>
+            <td>
+                @Html.TextBoxFor(n => n.MKMC, new { id = "txtModuleName" })
+            </td>
+        </tr>
+        <tr>
+            <td>排序号</td>
+            <td>
+                @Html.TextBoxFor(n => n.PXID, new { id = "txtSortID" })
+            </td>
+        </tr>
+        @if (Model.FMKID != -1)
+        {
+            <tr>
+                <td>
+                    Controller
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.KZMC, new { id = "txtController" })
+                </td>
+            </tr>
+            <tr>
+                <td>Action</td>
+                <td>@Html.TextBoxFor(n => n.HDMC, new { id = "txtAction" })</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>
+                    @Html.TextAreaFor(n => n.URL, new { id = "txtUrl", row = "2", @disabled = "disabled" })
+                </td>
+            </tr>
+        }
+        else
+        {
+            @Html.HiddenFor(n => n.KZMC, new { @Value = Model.KZMC });
+            @Html.HiddenFor(n => n.HDMC, new { @Value = Model.HDMC });
+            @Html.HiddenFor(n => n.URL, new { @Value = Model.URL });
+        }
+        <tr>
+            <td>描述</td>
+            <td>
+                @Html.TextAreaFor(n => n.MS, new { id = "txtDesc", rows = "2" })
+            </td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmModule').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmModule').form('reset')">取消</a>
+
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $('#frmModule').form({
+            success: function (data) {
+                //console.log(data);
+                //var data = eval('(' + data + ')');
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('模块编辑', ret.msg, "info", function () {
+                        //console.log(ret);
+                        // 关闭当前div 刷新父窗体
+                        //closeWindow('reloadDataGrid(' + ret.parentid+ ')');
+                        JsMiracleCommon.closeWindow(ret.id, ret.parentid);
+                    });
+                }
+            }
+        });
+
+        var rootModule =  (@Model.FMKID == -1);
+        var moduleAdd = (@Model.MKID == 0 );
+
+        if (!rootModule){
+            //$("#txtUrl").validatebox({
+            //    required: true,
+            //    missingMessage:'此框不得为空'
+            //});
+
+            $("#txtController").validatebox({
+                required: true,
+                missingMessage:'此框不得为空'
+            });
+
+            $("#txtAction").validatebox({
+                required: true,
+                missingMessage:'此框不得为空'
+            });
+        }
+
+
+        if (moduleAdd && rootModule){
+            $("#txtModuleID").validatebox({
+                required :true,
+                validType:'minLength[3]'
+            });
+        }
+        else {
+            $("#txtModuleID").attr("readonly","readonly");
+        }
+
+
+        $("#txtModuleName").validatebox({
+            required :true,
+            missingMessage:'此框不得为空'
+        });
+
+        $("#txtSortID").validatebox({
+            required :true,
+            missingMessage:'此框不得为空'
+        });
+
+    });
+
+
+</script>

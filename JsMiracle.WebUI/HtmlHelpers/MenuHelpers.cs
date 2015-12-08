@@ -10,8 +10,9 @@ using System.Web.Mvc;
 
 namespace JsMiracle.WebUI.HtmlHelpers
 {
-    public static class MenuHelpers
+    public static class HtmlHelpers
     {
+        // 生成界面左边菜单
         public static MvcHtmlString MenuLinks(this HtmlHelper html,
           List<IMS_UP_MK> menuList)
         {
@@ -43,5 +44,6 @@ namespace JsMiracle.WebUI.HtmlHelpers
             result.Append("</ul></div>");
             return MvcHtmlString.Create(result.ToString());
         }
+
     }
 }

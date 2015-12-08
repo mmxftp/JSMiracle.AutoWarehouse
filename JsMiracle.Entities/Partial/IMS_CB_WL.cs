@@ -12,6 +12,7 @@ namespace JsMiracle.Entities.TabelEntities
         /// </summary>
         public const string ItemTypeName = "wllx";
 
+ 
         /// <summary>
         /// 物料类型名称,用于界面显示
         /// </summary>

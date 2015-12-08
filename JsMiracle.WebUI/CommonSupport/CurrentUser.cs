@@ -18,9 +18,7 @@ namespace JsMiracle.WebUI.CommonSupport
         public static bool IsAdmin = false;
         static CurrentUser()
         {
-            IsAdmin = true;
-
-
+            //IsAdmin = true;
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace JsMiracle.WebUI.CommonSupport
                 {
                     CurrentUser cu = new CurrentUser();
                     var user = WindsorContaineFactory.GetContainer().Resolve<IUser>();
-                    cu.UserInfo = user.GetEntity(HttpContext.Current.User.Identity.Name);
+                    cu.UserInfo = user.GetEntityByYHBH(HttpContext.Current.User.Identity.Name);
                     var per = WindsorContaineFactory.GetContainer().Resolve<IPermission>();
                     cu.Permissions = per.GetPermissionListByUserID(userid);
                     cache.SetSessionCache(userid, cu);

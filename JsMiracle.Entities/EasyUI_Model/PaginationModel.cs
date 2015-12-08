@@ -17,7 +17,15 @@ namespace JsMiracle.Entities.EasyUI_Model
             total = 0;
             if (data != null)
             {
-                total = data.Count;
+                var col = data as System.Collections.IList;
+
+                if ( col != null)
+                    total = col.Count;
+                else
+                {
+                    var dt = data as System.Data.DataTable;
+                    total = dt.Rows.Count;
+                }
             }
 
             rows = data;

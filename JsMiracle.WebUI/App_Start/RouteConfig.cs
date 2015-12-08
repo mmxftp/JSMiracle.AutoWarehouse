@@ -14,10 +14,10 @@ namespace JsMiracle.WebUI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            var defaultAction = new { controller = "Account", action = "LogIn", id = UrlParameter.Optional };
+            //var defaultAction = new { controller = "Account", action = "LogIn", id = UrlParameter.Optional };
 
-            if (CurrentUser.IsAdmin)
-                defaultAction = new { controller = "Home", action = "Index", id = UrlParameter.Optional };
+            //if (CurrentUser.IsAdmin)
+            var defaultAction = new { controller = "Home", action = "Index", id = UrlParameter.Optional };
 
 
             routes.MapRoute(

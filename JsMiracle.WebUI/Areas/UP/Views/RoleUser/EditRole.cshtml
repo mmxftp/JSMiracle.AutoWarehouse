@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "EditRole";
+    //Layout = null;
+}
+
+@model  JsMiracle.Entities.TabelEntities.IMS_UP_JS
+
+<div>
+    @using (Ajax.BeginForm("SaveRole", "RoleUser"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmRole" }))
+    {
+        @Html.HiddenFor(n => n.ID);
+
+        <table class="TB">
+            <tr>
+                <td>
+                    角色名称
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.JSMC, new { id = "txtRole" })
+                </td>
+            </tr>
+            <tr>
+                <td>描述</td>
+                <td>@Html.TextBoxFor(n => n.MS)</td>
+            </tr>
+            <tr style="text-align:center;display:table-row;">
+                <td colspan="2">
+                    <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmRole').form('submit')">提交</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmRole').form('reset')">取消</a>
+
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmRole').form({
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                if (data.success) {
+                    $.messager.alert('角色编辑', data.msg, "info", function () {
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+            }
+        });
+
+        $("#txtRole").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+    });
+
+
+</script>

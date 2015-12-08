@@ -283,13 +283,15 @@ namespace JsMiracle.Dal.Concrete.UP
             var modList = from m in this.DbContext.IMS_UP_MK_S
                           join p in this.DbContext.IMS_UP_JSMK_S.Where(n => n.GNID == -1)
                           on m.MKID equals p.MKID into v_per
-                          from v in v_per.DefaultIfEmpty()
+                          from v in v_per
                           join r in this.DbContext.IMS_UP_JSYH_S
                           on v.JSID equals r.JSID into v_ret
-                          from r in v_ret.DefaultIfEmpty()
+                          from r in v_ret
                           where r.YHID == userid
                           select m;
 
+            // 同一个用户可能有多个角色, 角色的权限可能重复,所以distinct一下,去重
+            modList =  modList.Distinct();
 
             //select f.* from IMS_UP_MoFnT f
             //left join IMS_UP_RoMoT. p on p.ModuleID = f.ModuleID  and p.FunctionID = f.FunctionID
@@ -309,32 +311,20 @@ namespace JsMiracle.Dal.Concrete.UP
                                 fun = p.GNID
                             }
                           into v_per
-                          from v in v_per.DefaultIfEmpty()
+                          from v in v_per
                           join r in this.DbContext.IMS_UP_JSYH_S
                           on v.JSID equals r.JSID into v_ret
-                          from r in v_ret.DefaultIfEmpty()
+                          from r in v_ret
                           where r.YHID == userid
                           select f;
 
+            // 同一个用户可能有多个角色, 角色的权限可能重复,所以distinct一下,去重
+            funList = funList.Distinct();
+
             // 不分层的权限处理
             var permissions = new PermissionViewModule(modList.ToList(), funList.ToList());
-            //permissions.Modules = modList.ToList();
-            //permissions.Functions = funList.ToList();
 
             return permissions;
-            // 分层的权限处理
-            //var perList = new List<PermissionViewModule>();
-
-            //foreach (var m in modList)
-            //{
-            //    var p = new PermissionViewModule();
-            //    p.Module = m;
-
-            //    p.Functions = funList.Where(n => n.ModuleID == m.ModuleID).ToList();
-            //    perList.Add(p);
-            //}
-
-            //return perList;
         }
 
 

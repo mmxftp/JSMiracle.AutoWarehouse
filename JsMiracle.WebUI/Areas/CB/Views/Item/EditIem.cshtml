@@ -1,16 +1,24 @@
 ﻿@{
     ViewBag.Title = "EditIem";
 }
-
-@model JsMiracle.Entities.IMS_CB_WL
+@using JsMiracle.WebUI.CommonSupport
+@model JsMiracle.Entities.TabelEntities.IMS_CB_WL
 
 @using (Ajax.BeginForm("SaveItem", "Item"
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmItem" }))
 {
-
+    if (@Model.ID == 0)
+    {
+        @Html.HiddenFor(n => n.CJR, new { @Value = CurrentUser.GetCurrentUser().UserInfo.YHID });
+    }
+    else
+    {
+        @Html.HiddenFor(n => n.CJR);
+        @Html.HiddenFor(n => n.WLBH);
+    }
+    
     @Html.HiddenFor(n => n.ID);
-    @Html.HiddenFor(n => n.CJR);
     @Html.HiddenFor(n => n.CJSJ);
 
     <table class="TB">
@@ -116,48 +124,49 @@
                missingMessage: '请从下拉框中选择物料类型'
            });
 
-        $("#txtWLBH").validatebox({
+        $("#txtWLBH").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '物料编号不得为空',
+            disabled:(@Model.ID != 0)
         });
 
-        $("#txtWLMC").validatebox({
+        $("#txtWLMC").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '物料名称不得为空'
         });
 
-        $("#txtMS").validatebox({
+        $("#txtMS").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '描述不得为空'
         });
 
 
-        $("#txtABCHDZJ").validatebox({
+        $("#txtABCHDZJ").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: 'ABC活动等级不得为空'
         });
 
         $("#txtBZQ").numberbox({
             required: true,
-            missingMessage: '此框不得为空',
+            missingMessage: '保质期不得为空',
             min: 0
         });
 
 
         $("#txtZXKCL").numberbox({
             required: true,
-            missingMessage: '此框不得为空',
+            missingMessage: '最小包装单位不得为空',
             min: 0
         });
 
 
         $("#txtZLDJ").validatebox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '重量等级不得为空'
         });
         $("#txtWXDJ").validatebox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '危险等级不得为空'
         });
 
 

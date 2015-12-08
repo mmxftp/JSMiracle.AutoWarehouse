@@ -151,18 +151,19 @@
     <Compile Include="Areas\CB\Controllers\LocationController.cs" />
     <Compile Include="Areas\CB\Controllers\ContainerController.cs" />
     <Compile Include="Areas\CM\CMAreaRegistration.cs" />
+    <Compile Include="Areas\UP\Controllers\UserController.cs" />
+    <Compile Include="Areas\UP\UPAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
     <Compile Include="CommonSupport\CurrentUser.cs" />
     <Compile Include="Areas\CM\Controllers\CodeController.cs" />
     <Compile Include="Controllers\FilterAttribute\ExceptionFilterAttribute.cs" />
-    <Compile Include="Controllers\UP\AccountController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\FilterAttribute\AuthorizeFilterAttribute.cs" />
     <Compile Include="Controllers\FilterAttribute\AuthViewPageAttribute.cs" />
-    <Compile Include="Controllers\UP\HomeController.cs" />
-    <Compile Include="Controllers\UP\ModuleController.cs" />
-    <Compile Include="Controllers\UP\RoleUserController.cs" />
-    <Compile Include="Controllers\UP\UserController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Areas\UP\Controllers\ModuleController.cs" />
+    <Compile Include="Areas\UP\Controllers\RoleUserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -461,6 +462,7 @@
     <Content Include="Content\themes\icons\more.png" />
     <Content Include="Content\themes\icons\no.png" />
     <Content Include="Content\themes\icons\ok.png" />
+    <Content Include="Content\themes\icons\package.png" />
     <Content Include="Content\themes\icons\pencil.png" />
     <Content Include="Content\themes\icons\print.png" />
     <Content Include="Content\themes\icons\redo.png" />
@@ -546,6 +548,8 @@
     <Content Include="Areas\CB\Views\Location\EditLocation.cshtml" />
     <Content Include="Areas\CB\Views\Location\IndexLocationRelationship.cshtml" />
     <Content Include="Areas\CB\Views\Location\EditRelationship.cshtml" />
+    <Content Include="Areas\UP\Views\Web.config" />
+    <Content Include="Areas\UP\Views\User\Index.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
@@ -608,19 +612,19 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\User\List.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\Module\Index.cshtml" />
-    <Content Include="Views\RoleUser\Index.cshtml" />
-    <Content Include="Views\RoleUser\EditRole.cshtml" />
-    <Content Include="Views\Module\EditFunction.cshtml" />
-    <Content Include="Views\Module\EditModule.cshtml" />
-    <Content Include="Views\Module\IndexFunction.cshtml" />
+    <Content Include="Areas\UP\Views\User\List.cshtml" />
+    <Content Include="Areas\UP\Views\User\Edit.cshtml" />
+    <Content Include="Areas\UP\Views\Module\Index.cshtml" />
+    <Content Include="Areas\UP\Views\RoleUser\Index.cshtml" />
+    <Content Include="Areas\UP\Views\RoleUser\EditRole.cshtml" />
+    <Content Include="Areas\UP\Views\Module\EditFunction.cshtml" />
+    <Content Include="Areas\UP\Views\Module\EditModule.cshtml" />
+    <Content Include="Areas\UP\Views\Module\IndexFunction.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Home\_MenuPartial.cshtml" />
     <Content Include="Views\Home\_TitlePartial.cshtml" />
-    <Content Include="Views\User\Registion.cshtml" />
-    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Areas\UP\Views\User\Registion.cshtml" />
+    <Content Include="Areas\UP\Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Account\LogInPop.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -629,6 +633,8 @@
     <Folder Include="Areas\CB\Views\Shared\" />
     <Folder Include="Areas\CM\Models\" />
     <Folder Include="Areas\CM\Views\Shared\" />
+    <Folder Include="Areas\UP\Models\" />
+    <Folder Include="Areas\UP\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

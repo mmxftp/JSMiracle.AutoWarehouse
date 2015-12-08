@@ -45,7 +45,7 @@ namespace JsMiracle.Dal.Concrete.CB
             List<IMS_CB_WL> itemList = new List<IMS_CB_WL>();
             foreach (var data in query)
             {
-                var item = data.item;
+                IMS_CB_WL item = data.item;
                 item.WLTypeName = data.MC;
                 itemList.Add(item);
             }

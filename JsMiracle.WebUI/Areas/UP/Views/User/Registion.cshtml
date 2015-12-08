@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Registion";
+}
+
+@model  JsMiracle.Entities.TabelEntities.IMS_UP_YH
+
+
+@using (Ajax.BeginForm("Registion", "User"
+        , new AjaxOptions()
+        , new { enctype = "multipart/form-data", id = "frmUserRegistion" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(n => n.ID);
+    @Html.HiddenFor(n => n.ZT);
+    <table class="TB">
+        <tr>
+            <td>员工编号</td>
+            <td>@Html.TextBoxFor(n => n.YHID, new { id = "txtUserId" })</td>
+        </tr>
+        <tr>
+            <td>员工姓名</td>
+            <td>@Html.TextBoxFor(n => n.YHM, new { id = "txtUserName" })</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@Html.TextBoxFor(n => n.DY, new { id = "txtEmail" })</td>
+        </tr>
+        <tr>
+            <td>登录密码</td>
+            <td>@Html.TextBoxFor(n => n.MM, new { id = "txtPwd1", type = "password" })</td>
+        </tr>
+        <tr>
+            <td>重覆登录密码</td>
+            <td>@Html.TextBoxFor(n => n.MM, new { id = "txtPwd2", type = "password" })</td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="2">
+                @*<input type="submit" value="提交" class="easyui-linkbutton" />*@
+
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmUserRegistion').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmUserRegistion').form('reset')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#frmUserRegistion').form({
+            success: function (data) {
+                console.log(data);
+                var data = eval('(' + data + ')');
+                if (data.success) {
+                    $.messager.alert('用户信息', data.msg, "info", function () {
+                        //closeWindow('0001');
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('操作失败', data.msg, 'error');
+                }
+            }
+        });
+
+        $("#txtUserId").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtUserName").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtPwd1").validatebox({
+            required: true,
+            missingMessage: '此框不得为空'
+        });
+
+        $("#txtPwd2").validatebox({
+            required: true,
+            validType: 'equalTo["#txtPwd1"]',
+            invalidMessage: "两次输入密码不匹配",
+            missingMessage: '此框不得为空'
+        });
+    });
+</script>

@@ -15,6 +15,13 @@ namespace JsMiracle.Dal.Abstract.CB
     {
         int InitLocation(int x, int y, int z);
 
-        DataTable GetLocationState(int p, int maxL);
+        DataTable GetLocationState(int p);
+
+        int MaxP { get; }
+
+        int MaxL { get; }
+
+        int MaxC { get; }
+
     }
 }

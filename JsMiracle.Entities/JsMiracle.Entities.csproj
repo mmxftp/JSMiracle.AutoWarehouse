@@ -57,12 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EasyUI_Model\DataGridColumn.cs" />
     <Compile Include="EasyUI_Model\ExtResult.cs" />
     <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="Partial\IMS_CB_RQ.cs" />
     <Compile Include="Partial\IMS_CB_WL.cs" />
+    <Compile Include="Partial\IMS_CB_WZ.cs" />
     <Compile Include="Partial\IMS_UP_MK.cs" />
     <Compile Include="Partial\IMS_UP_YH.cs" />
     <Compile Include="Partial\IModelBase.cs" />
@@ -72,22 +74,66 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="TabelEntities\IMS_CB_KC_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_RQLX_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_RQ_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_WL_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_WZGX_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_WZLX_S.cs" />
-    <Compile Include="TabelEntities\IMS_CB_WZ_S.cs" />
-    <Compile Include="TabelEntities\IMS_CM_DMLX_S.cs" />
-    <Compile Include="TabelEntities\IMS_CM_DM_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_JSMK_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_JSYH_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_JS_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_MKGN_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_MK_S.cs" />
-    <Compile Include="TabelEntities\IMS_UP_YH_S.cs" />
-    <Compile Include="TabelEntities\Model1.cs" />
+    <Compile Include="TabelEntities\IMS_CB_KC.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_RQ.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_RQLX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_WL.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_WZ.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_WZGX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CB_WZLX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CM_DM.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CM_DMLX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_Data.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMS_Data.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_Data.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_Data.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMS_Data.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_JS.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_JSMK.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_JSYH.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_MK.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_MKGN.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_UP_YH.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +146,23 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="TabelEntities\IMS_Data.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IMS_Data.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TabelEntities\IMS_Data.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IMS_Data.edmx</DependentUpon>
+      <LastGenOutput>IMS_Data.Context.cs</LastGenOutput>
+    </None>
+    <None Include="TabelEntities\IMS_Data.edmx.diagram">
+      <DependentUpon>IMS_Data.edmx</DependentUpon>
+    </None>
+    <None Include="TabelEntities\IMS_Data.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IMS_Data.edmx</DependentUpon>
+      <LastGenOutput>IMS_Data.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

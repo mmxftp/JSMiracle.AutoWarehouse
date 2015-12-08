@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Index";
+    //Layout = null;
+}
+
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west',split:true,title:'角色信息'" style="width:400px;overflow: hidden;">
+        <table id="tabRole"></table>
+        <div id="toolbarRole">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="userRole.showEdit()">新增角色</a>
+        </div>
+    </div>
+    <div data-options="region:'center',split:true,title:'用户信息'" style="overflow: hidden;">
+        <table id="tabUser"></table>
+        <div id="toolbarUser">
+            <input id="cboUser" value="" />
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="userRole.SaveRoleUser(true)">加入用户</a>
+        </div>
+    </div>
+    <div data-options="region:'east',split:true,title:'权限信息'" style="width:400px;">
+        <div id="treePermission" class="easyui-tree" style="padding:10px;width:300px;">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#tabRole").datagrid({
+            url: '@Url.Action("GetRoleList")',
+            //title: '角色信息',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            toolbar: '#toolbarRole',
+            columns: [[
+                       {
+                           field: '_operate', title: '操作', width: 150, align: 'center'
+                            , formatter: function (value, row, index) {
+                                var onclickEvent = 'userRole.showEdit(' + row.ID + ');';
+                                var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                                  + row.JSMC + '\',\'@Url.Action("RemoveRole")\',userRole.refreshRole)';
+
+                                var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                     + 'onclick="'+ removeFunStr +'" >删除</a>'
+                                     + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                     + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                     + ' onclick="' + onclickEvent + '" >修改</a>';
+                                console.log(html);
+                                return html;
+                            }
+                       },
+                { field: 'JSMC', title: '角色名称', width: 100, align: 'center' },
+                { field: 'MS', title: '角色描述', width: 150, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+                $(".permission_button").linkbutton({ iconCls: 'icon-lock' });
+            },
+            onClickRow: function (rowIndex, rowData) {
+                $('#treePermission').tree({ url: '@Url.Action("PermissionInfo")' + '?roleid=' + rowData.JSID });
+
+                $('#tabUser').datagrid('reload', {
+                    roleid: rowData.JSID
+                });
+            }
+        });
+
+        $("#tabUser").datagrid({
+            url: '@Url.Action("GetRoleUserList")',
+            //title: '用户信息',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            toolbar: '#toolbarUser',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                            , formatter: function (value, row, index) {
+                                var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                     + 'onclick="userRole.SaveRoleUser(false,\'' + row.YHID + '\')" >移除用户</a>'
+                                console.log(html);
+                                return html;
+                            }
+                },
+                { field: 'YHID', title: '员工编号', width: 100, align: 'center' },
+                { field: 'YHM', title: '员工姓名', width: 100, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                //$(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            }
+        });
+
+        $("#cboUser").combobox({
+            url: '@Url.Action("GetAllUserList", "User", new { userNameFormatter = true })',
+            valueField: 'YHID',
+            textField: 'YHM',
+            filter: function (q, row) {
+                var opts = $(this).combobox('options');
+                return row[opts.textField].toLowerCase().indexOf(q.toLowerCase()) >= 0;
+            }
+        });
+
+
+        $('#treePermission').tree({
+            url: '@Url.Action("PermissionInfo")',
+            checkbox: true,
+            onCheck: function (node, checked) {
+                console.log(node);
+                var parentid = node.attributes.parentid;
+                var moduleid = node.attributes.moduleid;
+                var functionid = node.attributes.functionid;
+                check = checked;
+
+                var row = $('#tabRole').datagrid('getSelected');
+
+                if (row) {
+                    var params = { 'check': check, 'parentid': parentid, 'moduleid': moduleid, 'functionid': functionid, 'roleid': row.JSID };
+                    console.log(JSON.stringify(params));
+                    $.ajax({
+                        url: '@Url.Action("SavePermission")',
+                        type: 'POST',
+                        data: params,
+                        dataType: 'json',
+                        success: function (rec) {
+                            console.log(rec);
+                            if (!rec.success) {
+                                $.messager.alert({
+                                    title: rec.title,
+                                    msg: rec.msg,
+                                });
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest);
+                            $.messager.alert({
+                                title: XMLHttpRequest.statusCode,
+                                msg: XMLHttpRequest.error
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    var userRole = {
+
+        showEdit: function (id) {
+            var width = 400;
+            var height = 250;
+
+            var title = '新增角色';
+            var editActionUrl = '@Url.Action("CreateRole")';
+
+            if (id != null) {
+                editActionUrl = '@Url.Action("EditRole")' + '?id=' + id;
+                title = '编辑角色';
+            }
+            JsMiracleCommon.showWindow(title, editActionUrl, width, height, userRole.refreshRole);
+        },
+
+        refreshRole: function () {
+            $("#tabRole").datagrid('reload');
+        },
+
+        SaveRoleUser: function (isAdd, userid) {
+
+            if (userid == null || userid == undefined)
+                userid = $('#cboUser').combobox('getValue');
+
+            var rolRow = $('#tabRole').datagrid('getSelected');
+
+            if (rolRow == null) {
+                $.messager.alert('系统信息', '请先选择要操作的角色', 'info');
+                return;
+            }
+
+            var params = { 'isAdd': isAdd, 'userid': userid, 'roleid': rolRow.JSID };
+
+            $.ajax({
+                url: '@Url.Action("SaveRoleUser")',
+                type: 'POST',
+                data: params,
+                dataType: 'json',
+                success: function (rec) {
+                    if (!rec.success) {
+                        $.messager.alert({
+                            title: rec.title,
+                            msg: rec.msg,
+                            icon: 'info'
+                        });
+                    }
+                    else {
+                        $('#tabUser').datagrid('reload', {
+                            roleid: rolRow.JSID
+                        });
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $.messager.alert({
+                        title: XMLHttpRequest.statusCode,
+                        msg: XMLHttpRequest.error
+                    });
+                }
+            });
+        }
+    };
+
+
+</script>
