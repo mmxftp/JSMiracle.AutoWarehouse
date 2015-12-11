@@ -161,6 +161,8 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 }
 
                 //entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                entity.XGR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                entity.XGRQ = System.DateTime.Now;
                 dalCode.SaveOrUpdate(entity);
                 ExtResult ret = new ExtResult();
                 ret.success = true;

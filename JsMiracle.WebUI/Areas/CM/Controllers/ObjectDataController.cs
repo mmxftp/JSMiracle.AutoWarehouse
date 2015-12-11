@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using JsMiracle.Framework;
 using JsMiracle.Entities.Enum;
+using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.CM.Controllers
 {
@@ -45,48 +46,51 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
         /// 得数据库中实际存在的数据
         /// </summary>
         /// <param name="tablename">表名称</param>
-        /// <param name="reload">是否重新从数据库的系统表载入</param>
         /// <returns></returns>
-        public ActionResult GetTableInfo(string tablename, bool reload=false)
+        public ActionResult GetTableInfo(string tablename)
         {
+            var code = dalCode.GetAllEntites(n => n.MC.Equals(tablename)
+               && n.LXDM == CodeTypeEnum.TableName.ToString()).FirstOrDefault();
+
+            var dm = "";
+            if (code != null)
+                dm = code.DM;
+
+            var dataList =
+                dalObjectData.GetAllEntites(
+                n => n.DXDM.Equals(dm, StringComparison.CurrentCultureIgnoreCase));
+
+            return this.JsonFormat(dataList);
+        }
+
+        /// <summary>
+        /// 重新从数据库的系统表载入数据更新对象表
+        /// </summary>
+        /// <param name="tablename">表名</param>
+        /// <returns></returns>
+        public ActionResult ReSaveObjectDat(string tablename)
+        {
+            ExtResult ret = new ExtResult();
+
             try
             {
-
-                // 重新载入,删除原有旧数据
-                if (reload)
-                {
-                    var ent = dalCode.GetAllEntites(n => n.MC.Equals(tablename)
-                        && n.LXDM == CodeTypeEnum.TableName.ToString()).FirstOrDefault();
-
-                    if (ent == null)
-                        throw new JsMiracleException("对应表名不存在无法处理");
-
-                    dalObjectData.DeleteObjectData(ent.DM);
-
-
-                    //var tableId = ent.DM;
-
-                    //if (dalUserObj.Exists(n => n.DXDM == tableId))
-                    //    throw new JsMiracleException("对应信息已被用户表(IMS_CM_YHDX_S)使用中不得删除");
-
-
-                    //ent.DM 
-                    //dalUserObj.Exists(n=>n.DXDM == )
-
-                }
-
-                var columnsList = dalObjectData.GetColumns(tablename);
-
-                //dalObjectData.GetAllEntites(n=>n.DXDM == )
-
-
-
-                return this.JsonFormat(columnsList);
+                dalObjectData.ReSaveObjectData(tablename
+                            , CurrentUser.GetCurrentUser().UserInfo.YHID);
+                ret.success = true;
+                ret.msg = "处理成功";
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ret.success = false;
+                if (ex is JsMiracleException)
+                    ret.msg = ex.Message;
+                else
+                {
+                    ret.msg = string.Format("{0}:{1}", ex.Message, ex.StackTrace);
+                }
             }
+
+            return this.JsonFormat(ret);
         }
 
         [AuthViewPage]

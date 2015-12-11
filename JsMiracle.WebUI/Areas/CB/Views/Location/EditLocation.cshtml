@@ -23,57 +23,90 @@
     @Html.HiddenFor(n => n.SDZT);
     @Html.HiddenFor(n => n.YDZT);
 
-    <div class="divTB">
-        <div>
-            <label>位置编号</label>
-            @Html.TextBoxFor(n => n.WXBH, new { @id = "txtWXBH" })
-            <label>位置名称</label>
-            @Html.TextBoxFor(n => n.WZMC, new { @id = "txtWZMC" })
-        </div>
-        <div>
-            <label>显示标签</label>
-            @Html.TextBoxFor(n => n.XSBQ, new { @id = "txtXSBQ" })
-            <label>位置类型</label>
-            @Html.TextBoxFor(n => n.WZLX, new { @id = "txtWZLX" })
-        </div>
+    <table class="TB">
+        <tr>
+            <td>位置编号</td>
+            <td>
+                @Html.TextBoxFor(n => n.WXBH, new { @id = "txtWXBH" })
+            </td>
+            <td>位置名称</td>
+            <td>
+                @Html.TextBoxFor(n => n.WZMC, new { @id = "txtWZMC" })
+            </td>
+        </tr>
+        <tr>
+            <td>显示标签</td>
+            <td>
 
-        <div>
-            <label>仓库ID</label>@Html.TextBoxFor(n => n.CKID, new { @id = "txtCKID" })
-            <label>区域</label>@Html.TextBoxFor(n => n.QY, new { @id = "txtQY" })
-        </div>
-        <div>
-            <label>巷道</label>@Html.TextBoxFor(n => n.XD, new { @id = "txtXD" })
-            <label>位置</label>@Html.TextBoxFor(n => n.WZ, new { @id = "txtWZ" })
-        </div>
-        <div>
-            <label>坐标</label>
-            排&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.P, new { @id = "txtP" })
-            列&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.L, new { @id = "txtL"})
-            层&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.C, new { @id = "txtC" })
-            深度&nbsp;&nbsp; @Html.TextBoxFor(n => n.SD, new { @id = "txtSD"})
-        </div>
-        <div>
-            <label>ABC</label>@Html.TextBoxFor(n => n.ABC, new { @id = "txtABC" })
-            <label>物理状态</label>@Html.TextBoxFor(n => n.WLZT, new { @id = "txtWLZT" })
-        </div>
-        <div>
-            <label>访问状态</label>@Html.TextBoxFor(n => n.FWZT, new { @id = "txtFWZT" })
-            <label>占用状态</label>@Html.TextBoxFor(n => n.ZYZT, new { @id = "txtZYZT" })
-        </div>
-        <div>
-            <label>锁定状态</label>@Html.TextBoxFor(n => n.SDZT, new { @id = "txtSDZT" })
-            <label>预定状态</label>@Html.TextBoxFor(n => n.YDZT, new { @id = "txtYDZT" })
-        </div>
-        <div>
-            <label>界面类型</label>@Html.TextBoxFor(n => n.JMLX, new { @id = "txtJMLX" })
-            <label>功能类型</label>@Html.TextBoxFor(n => n.GNLX, new { @id = "txtGNLX" })
-        </div>
-        <div style="text-align:center">
-            <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmLocation').form('submit')">提交</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmLocation').form('reset')">取消</a>
-        </div>
-    </div>
+                @Html.TextBoxFor(n => n.XSBQ, new { @id = "txtXSBQ" })
+            </td>
+            <td>位置类型</td>
+            <td>
+                @Html.TextBoxFor(n => n.WZLX, new { @id = "txtWZLX" })
+            </td>
+        </tr>
+
+        <tr>
+            <td>仓库ID</td>
+            <td>
+                @Html.TextBoxFor(n => n.CKID, new { @id = "txtCKID" })
+            </td>
+            <td>区域</td>
+            <td>
+                @Html.TextBoxFor(n => n.QY, new { @id = "txtQY" })
+            </td>
+        </tr>
+        <tr>
+            <td>巷道</td>
+            <td>
+                @Html.TextBoxFor(n => n.XD, new { @id = "txtXD" })
+            </td>
+            <td>位置</td>
+            <td>
+                @Html.TextBoxFor(n => n.WZ, new { @id = "txtWZ" })
+            </td>
+        </tr>
+        <tr>
+            <td>坐标</td>
+            <td colspan="3" style="width:400px;">
+                排&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.P, new { @id = "txtP" })
+                列&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.L, new { @id = "txtL" })
+                层&nbsp;&nbsp;&nbsp; @Html.TextBoxFor(n => n.C, new { @id = "txtC" })
+                深度&nbsp;&nbsp; @Html.TextBoxFor(n => n.SD, new { @id = "txtSD" })
+            </td>
+        </tr>
+        <tr>
+            <td>ABC</td>
+            <td>@Html.TextBoxFor(n => n.ABC, new { @id = "txtABC" })</td>
+            <td>物理状态</td>
+            <td>@Html.TextBoxFor(n => n.WLZT, new { @id = "txtWLZT" })</td>
+        </tr>
+        <tr>
+            <td>访问状态</td>
+            <td>@Html.TextBoxFor(n => n.FWZT, new { @id = "txtFWZT" })</td>
+            <td>占用状态</td>
+            <td>@Html.TextBoxFor(n => n.ZYZT, new { @id = "txtZYZT" })</td>
+        </tr>
+        <tr>
+            <td>锁定状态</td>
+            <td>@Html.TextBoxFor(n => n.SDZT, new { @id = "txtSDZT" })</td>
+            <td>预定状态</td>
+            <td>@Html.TextBoxFor(n => n.YDZT, new { @id = "txtYDZT" })</td>
+        </tr>
+        <tr>
+            <td>界面类型</td>
+            <td>@Html.TextBoxFor(n => n.JMLX, new { @id = "txtJMLX" })</td>
+            <td>功能类型</td>
+            <td>@Html.TextBoxFor(n => n.GNLX, new { @id = "txtGNLX" })</td>
+        </tr>
+        <tr id="submitRow">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmLocation').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmLocation').form('reset')">取消</a>
+            </td>
+        </tr>
+    </table>
 
 }
 
@@ -87,7 +120,7 @@
                 if (ret.success) {
                     $.messager.alert('位置类型编辑', ret.msg, "info", function () {
 
-                        // 关闭当前div 刷新父窗体
+                        // 关闭当前tr 刷新父窗体
                         JsMiracleCommon.closeWindow(-1, ret.parentid);
                     });
                 }
@@ -100,6 +133,9 @@
         //位置编号
         $("#txtWXBH").textbox({ disabled: "disabled" });
 
+        $("#txtXSBQ").textbox();
+
+        $("#txtWZMC").textbox();
 
         $("#txtWZMC").validatebox({
             required: true,

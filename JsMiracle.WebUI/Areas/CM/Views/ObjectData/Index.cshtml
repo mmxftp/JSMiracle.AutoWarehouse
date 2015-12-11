@@ -42,7 +42,12 @@
             url: '@Url.Action("GetTables")',
             editable: false,
             onSelect: function (rec) {
-
+                if (rec) {
+                    $("#grdObjectData").datagrid({
+                        url: '@Url.Action("")',
+                        queryParams: {'tablename':rec.DM}
+                    });
+                }
             }
         });
 
@@ -74,14 +79,13 @@
                     }
                 },
                 //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
-                { field: 'DM', title: '代码', width: 100, align: 'center' },
-                { field: 'MC', title: '名称', width: 100, align: 'center' },
-                { field: 'SZ', title: '数值', width: 250, align: 'center' },
+                { field: 'DXZD', title: '字段', width: 100, align: 'center' },
+                { field: 'ZDMC', title: '名称', width: 100, align: 'center' },
                 {
-                    field: 'XGQR', title: '修改日期', width: 100, align: 'center',
+                    field: 'XGRW', title: '修改日期', width: 150, align: 'center',
                     formatter: JsMiracleCommon.dateTimeFormatter
                 },
-                { field: 'ZS', title: '注释', width: 200, align: 'center' }
+                { field: 'XGR', title: '修改人', width: 100, align: 'center' }
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });

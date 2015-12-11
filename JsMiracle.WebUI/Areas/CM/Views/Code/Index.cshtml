@@ -41,7 +41,7 @@
                 JsMiracleCommon.removeItem(id, name, '@Url.Action("RemoveCodeType")', this.refreshCodeType)
             },
 
-            refreshCodeType:function(){
+            refreshCodeType: function () {
                 // 刷新模块大类
                 $("#cboCodeType").combobox('reload');
                 $("#cboCodeType").combobox("select", '');
@@ -67,7 +67,7 @@
             //},
 
 
-            refreshDatagrid:function(){
+            refreshDatagrid: function () {
                 $('#grdCode').datagrid('reload');
             },
 
@@ -209,11 +209,12 @@
                 //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
                 { field: 'DM', title: '代码', width: 100, align: 'center' },
                 { field: 'MC', title: '名称', width: 100, align: 'center' },
-                { field: 'SZ', title: '数值', width: 250, align: 'center' },
+                { field: 'SZ', title: '数值', width: 150, align: 'center' },
                 {
-                    field: 'XGQR', title: '修改日期', width: 100, align: 'center',
+                    field: 'XGRQ', title: '修改日期', width: 150, align: 'center',
                     formatter: JsMiracleCommon.dateTimeFormatter
                 },
+                { field: 'XGR', title: '修改人', width: 100, align: 'center' },
                 { field: 'ZS', title: '注释', width: 200, align: 'center' }
             ]],
             onLoadSuccess: function (data) {

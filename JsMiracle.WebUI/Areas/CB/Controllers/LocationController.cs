@@ -56,7 +56,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             {
                 field = "floor",
                 title = "层号",
-                width = "30px",
+                width = "40px",
                 align = "center"
             };
 
@@ -71,7 +71,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
                 {
                     field = (i + 1).ToString(),
                     title = (i + 1).ToString(),
-                    width = "30px",
+                    width = "40px",
                     align = "center",
                     styler= "cblocation.grdStyle",
                     formatter = "cblocation.grdFormatter",

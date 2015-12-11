@@ -4,7 +4,12 @@
 
 @using JsMiracle.Dal.Concrete.CB;
 
-<div>
+<style type="text/css">
+    #locationDiv .datagrid-row {
+        height: 40px;
+    }
+</style>
+<div id="locationDiv">
     <div id="locationToolbar">
         <div style="padding-left:5px;">
             排<input id="selP" />
@@ -85,8 +90,8 @@
 
                     var url = '@Url.Action("EditLocation")' + '?wxbh=' + value.WXBH;
                     var title = "显示储位";
-                    var width = "600px";
-                    var height = "500px";
+                    var width = "580px";
+                    var height = "480px";
 
                     JsMiracleCommon.showWindow(title, url, width, height, cblocation.reloadDataGrid);
                 }
