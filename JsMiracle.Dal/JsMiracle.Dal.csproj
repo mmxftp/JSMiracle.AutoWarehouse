@@ -63,6 +63,8 @@
     <Compile Include="Abstract\CB\ILocationType.cs" />
     <Compile Include="Abstract\CM\ICode.cs" />
     <Compile Include="Abstract\CM\ICodeType.cs" />
+    <Compile Include="Abstract\CM\IDataDictionary.cs" />
+    <Compile Include="Abstract\CM\IUserObject.cs" />
     <Compile Include="Abstract\DataLayerBase.cs" />
     <Compile Include="Abstract\UP\IActionPermission.cs" />
     <Compile Include="Abstract\IDataLayer.cs" />
@@ -82,11 +84,13 @@
     <Compile Include="Concrete\CB\IMS_CB_Location_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_CodeType_Dal.cs" />
     <Compile Include="Concrete\CM\IMS_CM_Code_Dal.cs" />
+    <Compile Include="Concrete\CM\IMS_CM_DXXX_Dal.cs" />
+    <Compile Include="Concrete\CM\IMS_CM_YHDX_Dal.cs" />
     <Compile Include="Concrete\FormsAuthenticationService.cs" />
     <Compile Include="Concrete\CB\IMS_CB_Item_Dal.cs" />
     <Compile Include="Concrete\UP\IMS_UP_MoFn_Dal.cs" />
     <Compile Include="Concrete\UP\IMS_UP_Modu_Dal.cs" />
-    <Compile Include="Concrete\UP\IMS_UP_RoMo_Dal.cs" />
+    <Compile Include="Concrete\UP\IMS_UP_Permission_Dal.cs" />
     <Compile Include="Concrete\UP\IMS_UP_Role_Dal.cs" />
     <Compile Include="Concrete\UP\IMS_UP_RoUr_Dal.cs" />
     <Compile Include="Concrete\UP\IMS_UP_User_Dal.cs" />

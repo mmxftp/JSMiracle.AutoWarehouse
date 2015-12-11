@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsMiracle.Entities.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace JsMiracle.Entities.TabelEntities
         /// <summary>
         /// 物料类型名称
         /// </summary>
-        public const string ItemTypeName = "wllx";
+        public readonly static string ItemTypeName = CodeTypeEnum.ItemType.ToString();
 
  
         /// <summary>

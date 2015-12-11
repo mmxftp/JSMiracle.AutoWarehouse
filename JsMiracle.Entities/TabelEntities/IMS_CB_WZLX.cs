@@ -9,7 +9,6 @@
 
 namespace JsMiracle.Entities.TabelEntities
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -39,7 +38,6 @@ namespace JsMiracle.Entities.TabelEntities
         public int WDDJ { get; set; }
         public string CJR { get; set; }
     
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IMS_CB_WZ> IMS_CB_WZ_S { get; set; }
     }

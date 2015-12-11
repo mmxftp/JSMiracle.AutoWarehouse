@@ -18,7 +18,7 @@ namespace JsMiracle.WebUI.CommonSupport
         public static bool IsAdmin = false;
         static CurrentUser()
         {
-            //IsAdmin = true;
+            IsAdmin = true;
         }
 
         /// <summary>

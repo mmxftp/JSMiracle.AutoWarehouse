@@ -25,7 +25,7 @@ var JsMiracleCommon = {
         //parent.$('#' + layerWindowName).window('close');
         $('#' + this.layerWindowName).window('close');
         var fun = $('#' + this.layerWindowName).window('options').queryParams;
-        console.log(fun);
+        //console.log(fun);
 
         if (this.isFunction(fun)) {
             // 得到除第2个参数后的所有参数 (索引从0开始计数,1为第2个)
@@ -67,6 +67,23 @@ var JsMiracleCommon = {
         $('#' + this.layerWindowName).window('open');
     },
 
+    // 加入需显示的内容，并打开此层
+    showWindowContent: function (title, content, width, height, iconCls) {
+        $('#' + this.layerWindowName).window(
+        {
+            title: title,
+            width: width,
+            height: height,
+            iconCls: iconCls === undefined ? 'icon-no' :iconCls,
+            content: content,
+            modal: true ,
+            collapsible: false,
+            closed: true,
+            resizable:true,
+            loadingMessage: '正在加载数据，请稍等片刻......'
+        });
+        $('#' + this.layerWindowName).window('open');
+    },
 
     //判断是否为数组
     isArray: function (source) {

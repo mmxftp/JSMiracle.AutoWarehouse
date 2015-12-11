@@ -1,102 +1,52 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Reflection;
-//using System.Text;
-
-//namespace JsMiracle.Entities
-//{
-//    public interface IModelBase
-//    {
-//        long ID { get; set; }
-//    }
-
-//    #region UP
-//    /// <summary>
-//    /// 角色用户关系
-//    /// </summary>
-//    partial class IMS_UP_JSYH : IModelBase { }
-
-//    /// <summary>
-//    /// 角色信息
-//    /// </summary>
-//    partial class IMS_UP_JS : IModelBase { }
-
-//    /// <summary>
-//    /// 模块功能关系
-//    /// </summary>
-//    partial class IMS_UP_MKGN : IModelBase { }
-
-//    /// <summary>
-//    /// 角色模块关系
-//    /// </summary>
-//    partial class IMS_UP_JSMK : IModelBase { }
-
-//    /// <summary>
-//    /// 模块配置
-//    /// </summary>
-//    partial class IMS_UP_MK : IModelBase { }
-
-//    /// <summary>
-//    /// 用户信息
-//    /// </summary>
-//    partial class IMS_UP_YH : IModelBase { }
-
-//    #endregion
-
-//    #region CB
-
-//    /// <summary>
-//    /// 位置
-//    /// </summary>
-//    partial class IMS_CB_WZ : IModelBase { }
-
-//    /// <summary>
-//    /// 物料信息
-//    /// </summary>
-//    partial class IMS_CB_WL : IModelBase { }
-
-//    /// <summary>
-//    /// 容器类型
-//    /// </summary>
-//    partial class IMS_CB_RQLX : IModelBase { }
-
-//    /// <summary>
-//    /// 位置类型
-//    /// </summary>
-//    partial class IMS_CB_WZLX : IModelBase { }
-
-//    /// <summary>
-//    /// 容器
-//    /// </summary>
-//    partial class IMS_CB_RQ : IModelBase { }
-
-
-//    #endregion
-
-//    #region CM
-//    /// <summary>
-//    /// 代码
-//    /// </summary>
-//    partial class IMS_CM_DM : IModelBase { }
-
-//    /// <summary>
-//    /// 代码类型
-//    /// </summary>
-//    partial class IMS_CM_DMLX : IModelBase { }
-
-//    #endregion
-//}
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-namespace JsMiracle.Entities
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.SqlClient;
+
+namespace JsMiracle.Entities.TabelEntities
 {
-    //partial class IMS_CB_WZLXs
-    //{
-    //    [NonSerialized]
-    //    public override ICollection<IMS_CB_WZ> IMS_CB_WZ_S { get; set; }
-    //}
+    public static class DbContextExtend{
+
+        /// <summary>
+        /// 扩展方法 根据 sql反回datatable 
+        /// </summary>
+        /// <param name="db">数据库</param>
+        /// <param name="sql">sql脚本</param>
+        /// <param name="parameters">sql参数</param>
+        /// <returns></returns>
+        public static DataTable SqlQueryForDataTatable(
+            this Database db,
+            string sql,
+            SqlParameter[] parameters)
+        {
+            var conn = db.Connection as SqlConnection;
+
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn ;
+            cmd.CommandText = sql;
+
+            if (parameters.Length > 0)
+            {
+                foreach (var item in parameters)
+                {
+                    cmd.Parameters.Add(item);
+                }
+            }
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+            return table;
+        }
+    }
+
+
+
+
 }

@@ -89,7 +89,29 @@ namespace JsMiracle.Dal.Concrete.UP
             {
                 var childModule = this.DbContext.IMS_UP_MK_S.Where(f => f.FMKID == ent.MKID);
                 if (childModule != null && childModule.Count() > 0)
-                    throw new Exception("请先删除子模块数据");
+                    throw new JsMiracleException("请先删除子模块数据");
+            }
+            else
+            {
+                var gnList = this.DbContext.IMS_UP_MKGN_S.Where(m => m.MKID == ent.MKID);
+                if (gnList.Count() > 0)
+                    throw new JsMiracleException("请先删除子功能数据");
+            }
+
+            var jsmkList = this.DbContext.IMS_UP_JSMK_S.Where(n => n.MKID == ent.MKID);
+
+            using (var tran = this.DbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    this.DbContext.IMS_UP_JSMK_S.RemoveRange(jsmkList);
+                    this.DbContext.SaveChanges();
+                    tran.Commit();
+                }
+                catch
+                {
+                    tran.Rollback();
+                }
             }
 
             base.Delete(id);

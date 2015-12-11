@@ -7,17 +7,16 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract.UP
 {
+    /// <summary>
+    /// 模块接口
+    /// </summary>
     public interface IModule : IDataLayer<IMS_UP_MK>
     {
-
+        /// <summary>
+        /// 得所有根节点信息
+        /// </summary>
+        /// <returns></returns>
         IList<IMS_UP_MK> GetRootModule();
-
-        //IList<IMS_UP_Modu> GetChildModuleList(int pageIndex,
-        //    int pageSize, int parentid, out int totalCount);
-
-        //IMS_UP_Modu Save(IMS_UP_Modu module);
-
-        //int Remove(int id);
 
         /// <summary>
         /// 得到模块实例
@@ -26,6 +25,11 @@ namespace JsMiracle.Dal.Abstract.UP
         /// <returns></returns>
         IMS_UP_MK GetEntityByModuleID(int moduleid);
 
+        /// <summary>
+        /// 根据父节点得子节点信息
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <returns></returns>
         IList<IMS_UP_MK> GetChildModuleList(int parentid);
     }
 }

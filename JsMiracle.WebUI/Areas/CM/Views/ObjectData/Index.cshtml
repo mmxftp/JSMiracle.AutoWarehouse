@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <div id="objectDataToolbar">
+        <input id="cboTableName" />
+    </div>
+
+    <table id="grdObjectData"></table>
+</div>
+
+<script type="text/javascript">
+    
+    var cmObjectData;
+
+    $(function () {
+        cmObjectData = {
+
+            showEdit: function (id) {
+                var width = '350px';
+                var height = '300px';
+                var title = '';
+                var url = '';
+
+                var codeTypeID = $('#cboCodeType').combobox('getValue');
+
+                url = '@Url.Action("EditObjectData")' + '?id=' + id;
+                title = '编辑代码';
+                
+                JsMiracleCommon.showWindow(title, url, width, height, cmCode.reloadDataGrid);
+            },
+
+            refreshDatagrid: function () {
+                $("#grdObjectData").datagrid('reload');
+            }
+        };
+
+        $("cboTableName").combobox({
+            valueField: "DM",
+            textField: "MC",
+            url: '@Url.Action("GetTables")',
+            editable: false,
+            onSelect: function (rec) {
+
+            }
+        });
+
+        $("#grdObjectData").datagrid({
+            //url: '@Url.Action("GetCodeList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            //pagination: true, // 是否显示分页控件
+            //pagesize: 10,      // 每页行数
+            //pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#objectDataToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.MC + '\',\'@Url.Action("RemoveCode")\',cmObjectData.refreshDatagrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cmObjectData.showEdit(\'mod\',' + row.ID + ');">修改</a>';
+                        //+ ' onclick="showWindow(\'模块信息编辑\',' + editActionUrl + ', 500,420);" >修改</a>';
+                        //alert(JSON.stringify(row));
+                        return html;
+                    }
+                },
+                //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
+                { field: 'DM', title: '代码', width: 100, align: 'center' },
+                { field: 'MC', title: '名称', width: 100, align: 'center' },
+                { field: 'SZ', title: '数值', width: 250, align: 'center' },
+                {
+                    field: 'XGQR', title: '修改日期', width: 100, align: 'center',
+                    formatter: JsMiracleCommon.dateTimeFormatter
+                },
+                { field: 'ZS', title: '注释', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

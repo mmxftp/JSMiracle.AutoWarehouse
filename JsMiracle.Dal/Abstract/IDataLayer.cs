@@ -28,7 +28,7 @@ namespace JsMiracle.Dal.Abstract
         /// <summary>
         /// 是否存在指定数据
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">条件</param>
         /// <returns></returns>
         bool Exists(Expression<Func<T, bool>> filter);
 

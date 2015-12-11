@@ -34,7 +34,7 @@ namespace JsMiracle.WebUI.Infrastructure
                 .ImplementedBy<IMS_UP_Role_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IPermission>()
-                .ImplementedBy<IMS_UP_RoMo_Dal>().LifeStyle.PerWebRequest,
+                .ImplementedBy<IMS_UP_Permission_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<IRoleUser>()
                 .ImplementedBy<IMS_UP_RoUr_Dal>().LifeStyle.PerWebRequest,
@@ -70,7 +70,13 @@ namespace JsMiracle.WebUI.Infrastructure
                      .ImplementedBy<IMS_CB_LocationType_Dal>().LifeStyle.PerWebRequest,
 
                 Component.For<ILocationRelationship>()
-                     .ImplementedBy<IMS_CB_LocationRelationship_Dal>().LifeStyle.PerWebRequest,    
+                     .ImplementedBy<IMS_CB_LocationRelationship_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<IObjectDataDictionary>()
+                    .ImplementedBy<IMS_CM_DXXX_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<IUserObject>()
+                    .ImplementedBy<IMS_CM_YHDX_Dal>().LifeStyle.PerWebRequest,
 
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()

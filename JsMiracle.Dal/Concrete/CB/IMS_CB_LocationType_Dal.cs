@@ -32,6 +32,14 @@ namespace JsMiracle.Dal.Concrete.CB
             return entity.ID == 0;
         }
         #endregion
-           
+
+
+        //protected override IList<IMS_CB_WZLX> GetPageQuery(IQueryable<IMS_CB_WZLX> query)
+        //{
+
+
+
+        //    return base.GetPageQuery(query);
+        //}
     }
 }

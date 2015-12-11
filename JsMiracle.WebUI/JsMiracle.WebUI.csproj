@@ -151,6 +151,7 @@
     <Compile Include="Areas\CB\Controllers\LocationController.cs" />
     <Compile Include="Areas\CB\Controllers\ContainerController.cs" />
     <Compile Include="Areas\CM\CMAreaRegistration.cs" />
+    <Compile Include="Areas\CM\Controllers\ObjectDataController.cs" />
     <Compile Include="Areas\UP\Controllers\UserController.cs" />
     <Compile Include="Areas\UP\UPAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
@@ -550,9 +551,12 @@
     <Content Include="Areas\CB\Views\Location\EditRelationship.cshtml" />
     <Content Include="Areas\UP\Views\Web.config" />
     <Content Include="Areas\UP\Views\User\Index.cshtml" />
+    <Content Include="Areas\CM\Views\ObjectData\Index.cshtml" />
+    <Content Include="Areas\CM\Views\ObjectData\EditObjectData.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
+    <Content Include="Scripts\Home\Index.cshtml.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.map" />
@@ -612,7 +616,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Areas\UP\Views\User\List.cshtml" />
     <Content Include="Areas\UP\Views\User\Edit.cshtml" />
     <Content Include="Areas\UP\Views\Module\Index.cshtml" />
     <Content Include="Areas\UP\Views\RoleUser\Index.cshtml" />

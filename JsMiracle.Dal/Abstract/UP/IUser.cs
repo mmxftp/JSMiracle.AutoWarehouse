@@ -7,8 +7,16 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract.UP
 {
+    /// <summary>
+    /// 用户信息接口
+    /// </summary>
     public interface IUser : IDataLayer<IMS_UP_YH>
     {
+        /// <summary>
+        /// 得所有用户信息
+        /// </summary>
+        /// <param name="userNameFormatter">是否对用户名有特定格式要用</param>
+        /// <returns></returns>
         IList<IMS_UP_YH> GetAllUserList(bool userNameFormatter = false);
 
         /// <summary>
@@ -17,11 +25,5 @@ namespace JsMiracle.Dal.Abstract.UP
         /// <param name="userid">员工号</param>
         /// <returns></returns>
         IMS_UP_YH GetEntityByYHBH(string userid);
-
-        //IList<IMS_UP_User> GetUserList(int pageIndex, int pageSize, string txt, out int totalCount);
-
-        //int Save(IMS_UP_User user);
-
-        //int Remove(int id);
     }
 }

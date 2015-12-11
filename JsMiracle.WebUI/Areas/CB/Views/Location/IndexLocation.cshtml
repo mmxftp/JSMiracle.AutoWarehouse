@@ -65,6 +65,7 @@
 
             // 单元格样式
             grdStyle: function (value, row, index) {
+                console.log(value);
                 if (value.ExistsItem) {
                     var iconUrl = '@Url.Content("~/Content/themes/icons/package.png")';
                     var style = "background:url('" + iconUrl + "') no-repeat center center;";

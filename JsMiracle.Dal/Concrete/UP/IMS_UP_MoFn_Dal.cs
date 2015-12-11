@@ -50,6 +50,29 @@ namespace JsMiracle.Dal.Concrete.UP
             base.SaveOrUpdate(entity);
         }
 
+        public override void Delete(object id)
+        {
+            var ent = GetEntity(id);
+
+            var permissionList =  base.DbContext.IMS_UP_JSMK_S.Where(n => n.GNID == ent.GNID);
+
+            using (var tran = this.DbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    this.DbContext.IMS_UP_JSMK_S.RemoveRange(permissionList);
+                    this.DbContext.SaveChanges();
+                    tran.Commit();
+                }
+                catch
+                {
+                    tran.Rollback();
+                }
+            }
+
+            base.Delete(id);
+        }
+
 
     }
 }

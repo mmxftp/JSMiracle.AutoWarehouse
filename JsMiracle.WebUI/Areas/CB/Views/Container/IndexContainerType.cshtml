@@ -137,6 +137,10 @@
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
             }
         });
     });

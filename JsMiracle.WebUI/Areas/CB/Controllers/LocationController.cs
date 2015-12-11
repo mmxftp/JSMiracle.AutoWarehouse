@@ -196,8 +196,6 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
 
             var dataList = dalLocationType.GetDataByPage(pageIndex, pageSize, out totalCount, "LXDM", "");
 
-
-
             //数据组装到viewModel
             var info = new PaginationModel(dataList);
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);

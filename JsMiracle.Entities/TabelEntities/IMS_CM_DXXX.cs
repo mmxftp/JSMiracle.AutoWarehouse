@@ -12,18 +12,14 @@ namespace JsMiracle.Entities.TabelEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class IMS_CB_WZGX
+    public partial class IMS_CM_DXXX
     {
         public long ID { get; set; }
-        public string ZWZ { get; set; }
-        public string FWZ { get; set; }
-        public string LX { get; set; }
-        public int X { get; set; }
-        public Nullable<int> Y { get; set; }
-        public int Z { get; set; }
-        public int KYZT { get; set; }
-    
-        public virtual IMS_CB_WZ IMS_CB_WZ_S { get; set; }
-        public virtual IMS_CB_WZ IMS_CB_WZ_S1 { get; set; }
+        public string DXDM { get; set; }
+        public string DXZD { get; set; }
+        public string ZDMC { get; set; }
+        public string ZDLX { get; set; }
+        public string XGR { get; set; }
+        public Nullable<System.DateTime> XGRQ { get; set; }
     }
 }

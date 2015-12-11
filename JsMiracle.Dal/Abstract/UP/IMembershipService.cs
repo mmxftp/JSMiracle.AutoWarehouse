@@ -7,7 +7,7 @@ using System.Web.Security;
 namespace JsMiracle.Dal.Abstract.UP
 {
     /// <summary>
-    /// 用户管理的类
+    /// 用户管理的接口
     /// </summary>
     public interface IMembershipService
     {

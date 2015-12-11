@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IIMS_ORGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="IMS_CB_KC_S">
           <Key>
             <PropertyRef Name="ID" />
@@ -189,6 +189,29 @@
           <Property Name="XGR" Type="nvarchar" MaxLength="64" />
           <Property Name="ZS" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="IMS_CM_DXXX_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DXDM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DXZD" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZDMC" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZDLX" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="XGR" Type="nvarchar" MaxLength="64" />
+          <Property Name="XGRQ" Type="datetime" />
+        </EntityType>
+        <EntityType Name="IMS_CM_YHDX_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YHID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CXMC" Type="nvarchar" MaxLength="64" />
+          <Property Name="DXDM" Type="nvarchar" MaxLength="64" />
+          <Property Name="DXTJ" Type="nvarchar(max)" />
+          <Property Name="XGRQ" Type="datetime" />
+        </EntityType>
         <EntityType Name="IMS_UP_JS_S">
           <Key>
             <PropertyRef Name="ID" />
@@ -328,6 +351,8 @@
           <EntitySet Name="IMS_CB_WZLX_S" EntityType="Self.IMS_CB_WZLX_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CM_DM_S" EntityType="Self.IMS_CM_DM_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CM_DMLX_S" EntityType="Self.IMS_CM_DMLX_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CM_DXXX_S" EntityType="Self.IMS_CM_DXXX_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CM_YHDX_S" EntityType="Self.IMS_CM_YHDX_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_JS_S" EntityType="Self.IMS_UP_JS_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_JSMK_S" EntityType="Self.IMS_UP_JSMK_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_JSYH_S" EntityType="Self.IMS_UP_JSYH_S" Schema="dbo" store:Type="Tables" />
@@ -355,8 +380,7 @@
             <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IIMS_ORGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -719,7 +743,32 @@
             <End Role="IMS_CB_WZLX_S" EntitySet="IMS_CB_WZLX_S" />
             <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
           </AssociationSet>
+          <EntitySet Name="IMS_CM_DXXX_S" EntityType="IIMS_ORGModel.IMS_CM_DXXX" />
+          <EntitySet Name="IMS_CM_YHDX_S" EntityType="IIMS_ORGModel.IMS_CM_YHDX" />
         </EntityContainer>
+        <EntityType Name="IMS_CM_DXXX">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DXDM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DXZD" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZDMC" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZDLX" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="XGR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="XGRQ" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="IMS_CM_YHDX">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YHID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CXMC" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DXDM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DXTJ" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="XGRQ" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -994,7 +1043,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="IMS_CM_DXXX_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_DXXX">
+              <MappingFragment StoreEntitySet="IMS_CM_DXXX_S">
+                <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
+                <ScalarProperty Name="XGR" ColumnName="XGR" />
+                <ScalarProperty Name="ZDLX" ColumnName="ZDLX" />
+                <ScalarProperty Name="ZDMC" ColumnName="ZDMC" />
+                <ScalarProperty Name="DXZD" ColumnName="DXZD" />
+                <ScalarProperty Name="DXDM" ColumnName="DXDM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_CM_YHDX_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_YHDX">
+              <MappingFragment StoreEntitySet="IMS_CM_YHDX_S">
+                <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
+                <ScalarProperty Name="DXTJ" ColumnName="DXTJ" />
+                <ScalarProperty Name="DXDM" ColumnName="DXDM" />
+                <ScalarProperty Name="CXMC" ColumnName="CXMC" />
+                <ScalarProperty Name="YHID" ColumnName="YHID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

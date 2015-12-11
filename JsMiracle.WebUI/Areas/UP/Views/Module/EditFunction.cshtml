@@ -64,10 +64,13 @@
             success: function (data) {
                 var ret = JSON.parse(data);
                 if (ret.success) {
-                    $.messager.alert('模块编辑', ret.msg, "info", function () {
+                    $.messager.alert('子功能编辑', ret.msg, "info", function () {
                         // 关闭当前div 刷新父窗体
                         JsMiracleCommon.closeWindow();
                     });
+                }
+                else {
+                    $.messager.alert('子功能编辑', ret.msg, "error");
                 }
             }
         });

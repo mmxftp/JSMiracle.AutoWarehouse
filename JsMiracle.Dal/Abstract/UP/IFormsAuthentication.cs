@@ -5,6 +5,9 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract.UP
 {
+    /// <summary>
+    /// 用户登录接口
+    /// </summary>
     public interface IFormsAuthentication
     {
         /// <summary>

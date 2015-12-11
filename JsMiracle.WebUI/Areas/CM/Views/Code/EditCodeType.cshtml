@@ -70,7 +70,7 @@
                 if (ret.success) {
                     $.messager.alert('类型代码编辑', ret.msg, "info", function () {
                         // 关闭当前div 刷新父窗体
-                        JsMiracleCommon.closeWindow(ret.parentid, -1);
+                        JsMiracleCommon.closeWindow(ret.parentid, ret.parentid);
                     });
                 }
                 else {

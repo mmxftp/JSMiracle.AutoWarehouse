@@ -9,9 +9,13 @@
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmModule" }))
 {
-
+    if ( Model.MKID != 0 || Model.FMKID !=-1)
+    {
+        @Html.HiddenFor(n => n.MKID);
+    }
+    
+    
     @Html.HiddenFor(n => n.ID);
-
     @Html.HiddenFor(n => n.FMKID, new { @Value = Model.FMKID });
 
     <table class="TB">
@@ -105,6 +109,9 @@
                         JsMiracleCommon.closeWindow(ret.id, ret.parentid);
                     });
                 }
+                else{
+                    $.messager.alert('模块编辑',ret.msg, "error");
+                }
             }
         });
 
@@ -117,12 +124,12 @@
             //    missingMessage:'此框不得为空'
             //});
 
-            $("#txtController").validatebox({
+            $("#txtController").textbox({
                 required: true,
                 missingMessage:'此框不得为空'
             });
 
-            $("#txtAction").validatebox({
+            $("#txtAction").textbox({
                 required: true,
                 missingMessage:'此框不得为空'
             });
@@ -130,26 +137,25 @@
 
 
         if (moduleAdd && rootModule){
-            $("#txtModuleID").validatebox({
+            $("#txtModuleID").textbox({
                 required :true,
                 validType:'minLength[3]'
             });
         }
-        else {
-            $("#txtModuleID").attr("readonly","readonly");
-        }
 
-
-        $("#txtModuleName").validatebox({
+        $("#txtModuleName").textbox({
             required :true,
             missingMessage:'此框不得为空'
         });
 
-        $("#txtSortID").validatebox({
+        $("#txtSortID").textbox({
             required :true,
             missingMessage:'此框不得为空'
         });
 
+        $("#txtModuleID").textbox({
+            disabled:(@Model.MKID != 0 || @Model.FMKID !=-1)
+        })
     });
 
 

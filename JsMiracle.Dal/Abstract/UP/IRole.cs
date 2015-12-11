@@ -7,16 +7,15 @@ using System.Text;
 
 namespace JsMiracle.Dal.Abstract.UP
 {
+    /// <summary>
+    /// 角色信息接口
+    /// </summary>
     public interface IRole : IDataLayer<IMS_UP_JS>
     {
-        //IList<IMS_UP_Role> GetRoleList(int pageIndex, int pageSize);
-
-        //int Save(IMS_UP_Role module);
-
-        //int Remove(int id);
-
-        //IMS_UP_Role GetEntity(int id);
-
+        /// <summary>
+        /// 得所有角色
+        /// </summary>
+        /// <returns></returns>
         IList<IMS_UP_JS> GetAllRole();
 
     }

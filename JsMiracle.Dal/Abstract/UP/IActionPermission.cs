@@ -7,7 +7,7 @@ using System.Text;
 namespace JsMiracle.Dal.Abstract.UP
 {
     /// <summary>
-    /// 处理权限的类
+    /// 处理权限的接口
     /// </summary>
     public interface IActionPermission
     {

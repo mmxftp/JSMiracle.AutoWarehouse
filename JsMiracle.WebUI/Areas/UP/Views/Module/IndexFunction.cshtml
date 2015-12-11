@@ -30,7 +30,7 @@
                     , formatter: function (value, row, index) {
                         var editFunStr = 'moduleChild.showEdit(' + row.ID + ');';
                         var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
-                            + row.FunctionName + '\',\'@Url.Action("RemoveFunction")\',moduleChild.reloadDataGrid)';
+                            + row.GNMC + '\',\'@Url.Action("RemoveFunction")\',moduleChild.reloadDataGrid)';
 
                         var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
                                  + 'onclick="' + removeFunStr + '" >删除</a>'
@@ -51,6 +51,10 @@
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
             }
         });
     });

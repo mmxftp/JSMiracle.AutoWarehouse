@@ -2,6 +2,7 @@
 using JsMiracle.Dal.Abstract.CM;
 using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Framework;
 using JsMiracle.WebUI.CommonSupport;
@@ -100,7 +101,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
 
         private IList<IMS_CM_DM> GetItemTypeList()
         {
-            var data = dalCode.GetCodeList(IMS_CB_WL.ItemTypeName);
+            var data = dalCode.GetCodeList(CodeTypeEnum.ItemType);
             data.Insert(0, new IMS_CM_DM() {  SZ = -1, MC = "--请选择--" });
             return data;
         }

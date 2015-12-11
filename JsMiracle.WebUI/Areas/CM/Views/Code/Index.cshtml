@@ -49,6 +49,24 @@
                 $('#grdCode').datagrid('reload');    // 重新加载用户数据
             },
 
+
+            //refreshModuleByCombo: function () {
+            //    // 刷新模块大类
+            //    $("#cboModule").combobox('reload');
+            //    $("#cboModule").combobox("select", '');
+            //    //// 刷新模块子类
+            //    $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
+            //},
+
+            //refreshModule: function () {
+            //    var id = $('#cboModule').combobox('getValue');
+
+            //    $("#cboModule").combobox("select", id);
+            //    // 刷新模块子类
+            //    $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
+            //},
+
+
             refreshDatagrid:function(){
                 $('#grdCode').datagrid('reload');
             },
@@ -141,7 +159,8 @@
                 onSelect: function (rec) {
                     if (rec) {
                         $("#grdCode").datagrid({
-                            url: '@Url.Action("GetCodeList")' + '?codeType=' + rec.LXDM
+                            url: '@Url.Action("GetCodeList")',
+                            queryParams: { 'codeType': rec.LXDM }
                         });
                     }
                 },
@@ -153,6 +172,10 @@
                         if (dataVal && dataVal.length > 0)
                             $(this).combobox("select", dataVal[0].ID);
                     }
+                },
+                onLoadError: function (XMLHttpRequest) {
+                    JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                        , "500px", "500px");
                 }
             });
 
@@ -196,6 +219,10 @@
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
             }
         });
     });

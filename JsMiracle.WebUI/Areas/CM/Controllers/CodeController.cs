@@ -240,7 +240,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             {
                 var ent = dalCodeType.GetEntity(id);
                 if (dalCode.Exists(n => n.LXDM.Equals(ent.LXDM, StringComparison.CurrentCultureIgnoreCase)))
-                    throw new JsMiracleException(string.Format("请选删除代码类型('{0}')下的代码配置", ent.LXMC));
+                    throw new JsMiracleException(string.Format("请先删除代码类型('{0}')下的代码配置", ent.LXMC));
 
                 dalCodeType.Delete(id);
 

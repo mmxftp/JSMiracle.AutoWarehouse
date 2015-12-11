@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace JsMiracle.Dal.Abstract.CM
         /// <summary>
         /// 得到代码类型对应的所有代码信息的集合
         /// </summary>
-        /// <param name="codeType">代码类型jf</param>
+        /// <param name="codeType">代码类型</param>
         /// <returns></returns>
-        IList<IMS_CM_DM> GetCodeList(string codeType);
+        IList<IMS_CM_DM> GetCodeList(CodeTypeEnum codeType);
     }
 }

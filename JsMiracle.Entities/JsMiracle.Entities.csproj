@@ -61,10 +61,13 @@
     <Compile Include="EasyUI_Model\ExtResult.cs" />
     <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
+    <Compile Include="Enum\CodeTypeEnum.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="Partial\IMS_CB_RQ.cs" />
+    <Compile Include="Partial\IMS_CB_RQLX.cs" />
     <Compile Include="Partial\IMS_CB_WL.cs" />
     <Compile Include="Partial\IMS_CB_WZ.cs" />
+    <Compile Include="Partial\IMS_CB_WZLX.cs" />
     <Compile Include="Partial\IMS_UP_MK.cs" />
     <Compile Include="Partial\IMS_UP_YH.cs" />
     <Compile Include="Partial\IModelBase.cs" />
@@ -101,6 +104,12 @@
     <Compile Include="TabelEntities\IMS_CM_DMLX.cs">
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="TabelEntities\IMS_CM_DXXX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\IMS_CM_YHDX.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="TabelEntities\IMS_Data.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,6 +144,7 @@
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
+    <Compile Include="View\TableColumnsModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

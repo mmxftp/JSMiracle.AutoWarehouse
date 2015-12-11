@@ -142,5 +142,16 @@ namespace JsMiracle.Dal.Concrete.UP
             return true;
         }
         #endregion
+
+        public override void Delete(object id)
+        {
+            var ent = GetEntity(id);
+
+            if (ent != null)
+            {
+                ent.ZT = (int)UserStateEnum.Delete;
+                base.SaveOrUpdate(ent);
+            }
+        }
     }
 }
