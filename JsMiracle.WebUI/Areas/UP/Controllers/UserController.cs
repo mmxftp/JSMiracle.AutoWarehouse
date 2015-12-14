@@ -47,6 +47,8 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
 
         public ActionResult GetUserList(int? rows, int? page, string txt)
         {
+            throw new Exception("test");
+
             int totalCount = 0;
 
             int pageIndex = page ?? 1;

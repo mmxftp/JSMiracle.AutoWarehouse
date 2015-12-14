@@ -4,7 +4,8 @@
 
 <div>
     <div id="objectDataToolbar">
-        <input id="cboTableName" />
+        <select id="cboTableName" />
+        <a href="###" id="btnReloadColumns" ></a>
     </div>
 
     <table id="grdObjectData"></table>
@@ -36,18 +37,56 @@
             }
         };
 
-        $("cboTableName").combobox({
+        $("#cboTableName").combobox({
             valueField: "DM",
             textField: "MC",
             url: '@Url.Action("GetTables")',
+            width: "100px",
             editable: false,
             onSelect: function (rec) {
                 if (rec) {
                     $("#grdObjectData").datagrid({
-                        url: '@Url.Action("")',
+                        url: '@Url.Action("GetTableInfo")',
                         queryParams: {'tablename':rec.DM}
                     });
                 }
+            }
+        });
+
+        $("#btnReloadColumns").linkbutton({
+            text:'重新载入数据',
+            onClick: function () {
+                var tablename = $("#cboTableName").combobox('getValue');
+                if (tablename==null|| tablename =='') {
+                    $.messager.alert('错误', '请选择要处理的表名', 'error');
+                    return;
+                }
+
+
+                $.ajax({
+                    url: '@Url.Action("ReSaveObjectDat")',
+                    type: 'post',
+                    data: { "tablename": tablename },
+                    success: function (data) {
+                        var ret = JSON.parse(data);
+
+                        if (ret.success) {                            
+                            $.messager.alert('重载数据成功', ret.msg, "info", function () {
+                                $("#grdObjectData").datagrid({
+                                    url: '@Url.Action("GetTableInfo")',
+                                    queryParams: { 'tablename': tablename }
+                                });
+                            });
+                        }
+                        else {
+                            $.messager.alert('重载数据失败', ret.msg, "error");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                            , "500px", "500px");
+                    }
+                })
             }
         });
 
@@ -82,7 +121,7 @@
                 { field: 'DXZD', title: '字段', width: 100, align: 'center' },
                 { field: 'ZDMC', title: '名称', width: 100, align: 'center' },
                 {
-                    field: 'XGRW', title: '修改日期', width: 150, align: 'center',
+                    field: 'XGRQ', title: '修改日期', width: 150, align: 'center',
                     formatter: JsMiracleCommon.dateTimeFormatter
                 },
                 { field: 'XGR', title: '修改人', width: 100, align: 'center' }

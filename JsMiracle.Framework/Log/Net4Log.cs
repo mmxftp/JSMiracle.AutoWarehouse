@@ -14,11 +14,10 @@ namespace JsMiracle.Framework.Log
             WriteLog(name, logEntity.Level, logEntity.GetLogContext());
         }
 
-
-
         public void WriteLog(string name, LogLevel level, string logContent)
         {
             log = log4net.LogManager.GetLogger(name);
+            //log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
             switch (level)
             {

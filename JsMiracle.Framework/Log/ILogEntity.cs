@@ -30,6 +30,12 @@ namespace JsMiracle.Framework.Log
 
         public string GetLogContext()
         {
+            if (!string.IsNullOrEmpty(LogDetail))
+            {
+                // 逗号改为分号,使得cvs数据对应格式不会错误
+                LogDetail = LogDetail.Replace(',', ';').Replace('\r',' ').Replace('\n',' ');
+            }
+
             return string.Format("{0},{1},{2},{3}",Level, ClassName, MethodName, LogDetail);
         }
     }

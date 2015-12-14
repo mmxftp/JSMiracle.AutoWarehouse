@@ -5,6 +5,7 @@
 @using JsMiracle.Dal.Concrete.CB;
 
 <style type="text/css">
+    /*当前 easyui table 中行高 */
     #locationDiv .datagrid-row {
         height: 40px;
     }
@@ -102,7 +103,13 @@
             valueField:'id',
             textField:'text',
             width:"50px",
-            data :cblocation.initCombobox()
+            data :cblocation.initCombobox(),
+            onSelect: function (rec) {
+                if (rec) {
+                    $("#grdLocation").datagrid('reload',{p:rec.id});
+               
+                }
+            }
         });
 
         $("#btnSearch").linkbutton({

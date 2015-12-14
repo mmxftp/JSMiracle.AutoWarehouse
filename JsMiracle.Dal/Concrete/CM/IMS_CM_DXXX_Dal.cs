@@ -34,7 +34,8 @@ namespace JsMiracle.Dal.Concrete.CM
                             DXZD = col.ColumnName,
                             ZDMC = col.ColumnNote,
                             XGR = opUser,
-                            XGRQ = System.DateTime.Now
+                            XGRQ = System.DateTime.Now,
+                            ZDLX = col.ColumnType,                           
                         };
                         base.DbContext.IMS_CM_DXXX_S.Add(ent);
                     }
@@ -59,26 +60,32 @@ namespace JsMiracle.Dal.Concrete.CM
             var ent = base.DbContext.IMS_CM_DM_S.Where(n => n.MC.Equals(tablename)
                        && n.LXDM == CodeTypeEnum.TableName.ToString()).FirstOrDefault();
 
-            dxdm = ent.DM;
+            dxdm = "";
 
-            if (base.DbContext.IMS_CM_YHDX_S.Any(n => n.DXDM == ent.DM))
-                throw new JsMiracleException("对应信息已被用户表(IMS_CM_YHDX_S)使用中不得删除");
+            if (ent != null)
+            {
+                dxdm = ent.DM;
 
-            var data =
-                this.GetAllEntites(n => n.DXDM.Equals(ent.DM, StringComparison.CurrentCultureIgnoreCase));
+                if (base.DbContext.IMS_CM_YHDX_S.Any(n => n.DXDM == ent.DM))
+                    throw new JsMiracleException("对应信息已被用户表(IMS_CM_YHDX_S)使用中不得删除");
 
-            base.DbContext.IMS_CM_DXXX_S.RemoveRange(data);
-            base.DbContext.SaveChanges();
+                var data =
+                    this.GetAllEntites(n => n.DXDM.Equals(ent.DM, StringComparison.CurrentCultureIgnoreCase));
+
+                base.DbContext.IMS_CM_DXXX_S.RemoveRange(data);
+                base.DbContext.SaveChanges();
+            }
         }
 
 
 
         private IList<TableColumnsModule> GetColumns(string tablename)
         {
-            var sql = @"select c.name as columnName,p.value as columnNote from sys.tables t s 
+            var sql = @"select c.name as columnName,p.value as columnNote, tp.name as columnType from sys.tables t 
                         join sys.columns c on t.object_id = c.object_id 
                         left join sys.extended_properties p on p.major_id = c.object_id 
                                 AND p.minor_id = c.column_id 
+						left join systypes tp on c.system_type_id = tp.xtype
                         where t.name = @tablename ";
 
             var par = new SqlParameter()

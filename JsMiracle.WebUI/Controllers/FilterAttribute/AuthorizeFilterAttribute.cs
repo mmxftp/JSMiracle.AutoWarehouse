@@ -58,7 +58,7 @@ namespace JsMiracle.WebUI.Controllers.Filter
             this.controllerName = filterContext.RouteData.Values["controller"].ToString();
             this.actionName = filterContext.RouteData.Values["action"].ToString();
             object[] attrs = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AuthViewPageAttribute), true);
-            isAuthViewPage = attrs.Length == 1;  //当前Action请求是否为具体的功能页(是否要进行权限判断)
+            isAuthViewPage = attrs.Length > 0;  //当前Action请求是否为具体的功能页(是否要进行权限判断)
 
             base.OnAuthorization(filterContext);
         }

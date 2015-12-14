@@ -13,7 +13,7 @@ namespace JsMiracle.WebAPI.Controllers
 
         public CommunicationController(ILog repoLog)
         {
-            log = repoLog;
+            log = repoLog;           
         }
 
         //

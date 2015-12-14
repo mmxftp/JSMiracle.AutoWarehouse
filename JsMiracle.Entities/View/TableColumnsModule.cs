@@ -19,5 +19,10 @@ namespace JsMiracle.Entities.View
         /// 字段注释
         /// </summary>
         public string ColumnNote { get; set; }
+
+        /// <summary>
+        /// 字段类型
+        /// </summary>
+        public string ColumnType { get; set; }
     }
 }

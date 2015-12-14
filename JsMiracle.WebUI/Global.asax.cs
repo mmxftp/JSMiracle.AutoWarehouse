@@ -2,6 +2,7 @@
 using JsMiracle.WebUI.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -19,6 +20,7 @@ namespace JsMiracle.WebUI
     {
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure(new FileInfo(Server.MapPath("~/Config/log4net.config")));
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

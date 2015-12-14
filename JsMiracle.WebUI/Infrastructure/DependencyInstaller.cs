@@ -9,6 +9,7 @@ using JsMiracle.Dal.Concrete.CB;
 using JsMiracle.Dal.Concrete.CM;
 using JsMiracle.Dal.Concrete.UP;
 using JsMiracle.Framework.Cache;
+using JsMiracle.Framework.Log;
 using JsMiracle.WebUI.CommonSupport;
 using System.Web.Http.Controllers;
 using System.Web.Mvc;
@@ -77,6 +78,10 @@ namespace JsMiracle.WebUI.Infrastructure
 
                 Component.For<IUserObject>()
                     .ImplementedBy<IMS_CM_YHDX_Dal>().LifeStyle.PerWebRequest,
+
+                Component.For<JsMiracle.Framework.Log.ILog>()
+                .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,
+
 
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()

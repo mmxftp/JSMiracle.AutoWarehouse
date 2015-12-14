@@ -126,5 +126,7 @@ textarea {
 
 #site-title {
     float: left;
+    width:100%;
+    background:url(images/backgroundTitle.jpg);
 }
 /* _TitlePartial.cshtml */
