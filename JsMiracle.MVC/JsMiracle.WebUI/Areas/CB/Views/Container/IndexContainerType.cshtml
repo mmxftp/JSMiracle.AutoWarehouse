@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "IndexContainerType";
+}
+
+<div>
+    <div id="containerTypeToolbar">
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="cbContainerType.showContainerTypeEdit('add')">新增容器类型</a>
+        </div>
+    </div>
+
+    <table id="grdConntainerType"></table>
+</div>
+
+
+<script type="text/javascript">
+
+    var cbContainerType;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cbContainerType = {
+
+            refreshDataGrid: function () {
+                $('#grdConntainerType').datagrid('reload');
+            },
+
+            showContainerTypeEdit: function (op, id) {
+                var width = '600px';
+                var height = '550px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("CreateContainerType")';
+                    title = '新增容器信息';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("EditContainerType")' + '?lxbh=' + id;
+                    title = '编辑容器信息';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.refreshDataGrid);
+
+            },
+        };
+
+
+        $("#grdConntainerType").datagrid({
+            url: '@Url.Action("GetContainerTypeList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#containerTypeToolbar',
+            frozenColumns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.LXBH + '\',\''
+                            + row.LXMC + '\',\'@Url.Action("RemoveContainerType")\',cbContainerType.refreshDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cbContainerType.showContainerTypeEdit(\'mod\',\'' + row.LXBH + '\');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'LXBH', title: '类型编号', width: 100, align: 'center' },
+                { field: 'LXMC', title: '类型名称', width: 100, align: 'center' }
+            ]],
+            columns: [[
+
+                { field: 'MS', title: '描述', width: 250, align: 'center' },
+                { field: 'CZLX', title: '材质类型', width: 100, align: 'center' },
+                {
+                    field: '_oneSelfSize', title: '自身尺寸(长*宽*高)', width: 150, align: 'center',
+                    formatter: function (value, row, index) {
+                        var sizeValue = "";
+                        if (row.ZSCD != null )
+                            sizeValue += row.ZSCD;
+
+                        sizeValue += " * ";
+
+                        if (row.ZSKD != null)
+                            sizeValue += row.ZSKD;
+
+                        sizeValue += " * ";
+
+                        if (row.ZSGD != null)
+                            sizeValue += row.ZSGD;
+
+                        return sizeValue;
+                    }
+                },
+                { field: 'KJLX', title: '空间类型', width: 150, align: 'center' },
+                {
+                    field: '_AvailableSize', title: '有效尺寸(长*宽*高)', width: 150, align: 'center',
+                    formatter: function (value, row, index) {
+                        var sizeValue = "";
+                        if (row.YXCD != null)
+                            sizeValue += row.YXCD;
+
+                        sizeValue += " * ";
+
+                        if (row.YXKD != null)
+                            sizeValue += row.YXKD;
+
+                        sizeValue += " * ";
+
+                        if (row.YXGD != null)
+                            sizeValue += row.YXGD;
+
+                        return sizeValue;
+                    }
+                },
+                { field: 'YXCZ', title: '有效重量', width: 100, align: 'center' },
+                { field: 'GDDJ', title: '高度等级', width: 100, align: 'center' },
+                { field: 'SDDJ', title: '湿度等级', width: 100, align: 'center' },
+                { field: 'WDDJ', title: '温度等级', width: 100, align: 'center' },
+                { field: 'WXDJ', title: '危险等级', width: 100, align: 'center' },
+                { field: 'FBDJ', title: '防爆等级', width: 100, align: 'center' },
+                { field: 'HXDJ', title: '化学等级', width: 100, align: 'center' },
+                { field: 'FCDJ', title: '防尘等级', width: 100, align: 'center' },
+                { field: 'TMYM', title: '条码掩码', width: 200, align: 'center' },
+                { field: 'CJR', title: '创建人', width: 100, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

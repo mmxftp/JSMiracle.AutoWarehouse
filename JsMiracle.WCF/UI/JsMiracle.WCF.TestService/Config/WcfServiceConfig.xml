@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <Services>
+    <WcfService ID="001">
+      <ServiceID>IUser</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20001/WCFService/IUser</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_User_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50001/WCFService/IUser</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <!--<WcfService ID="002">
+      <ServiceID>IMembershipService</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20002/WCFService/IMembershipService</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_User_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50002/WCFService/IMembershipService</BehaviorHttpGetUrl>
+    </WcfService>-->
+
+    <WcfService ID="003">
+      <ServiceID>IModule</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20003/WCFService/IModule</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Modu_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50003/WCFService/IModule</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="004">
+      <ServiceID>IModuleFunction</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20004/WCFService/IModuleFunction</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_MoFn_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50004/WCFService/IModuleFunction</BehaviorHttpGetUrl>
+
+    </WcfService>
+
+    <WcfService ID="005">
+      <ServiceID>IPermission</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20005/WCFService/IPermission</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Permission_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50005/WCFService/IPermission</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="006">
+      <ServiceID>IRole</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20006/WCFService/IRole</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Role_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50006/WCFService/IRole</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="007">
+      <ServiceID>IRoleUser</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20007/WCFService/IRoleUser</Address>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_UserRole_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50007/WCFService/IRoleUser</BehaviorHttpGetUrl>
+    </WcfService>
+
+  </Services>
+
+</configuration>

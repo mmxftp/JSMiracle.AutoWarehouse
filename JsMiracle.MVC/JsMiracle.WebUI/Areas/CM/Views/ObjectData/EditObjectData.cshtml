@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "EditObjectData";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_CM_DXXX
+
+@using (Ajax.BeginForm("SaveObjectData", "ObjectData"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmObjectData" }))
+{
+    @Html.HiddenFor(n => n.XGR)
+    @Html.HiddenFor(n => n.XGRQ)
+
+    <table class="TB">
+        <tr>
+            <td>对象名称</td>
+            <td>@Html.TextBoxFor(n => n.DXDM, new { @id = "txtDXDM", @Value = ViewBag.DXMC })</td>
+        </tr>
+        <tr>
+            <td>数据字段</td>
+            <td>@Html.TextBoxFor(n => n.DXZD, new { @id = "txtDXZD" }) </td>
+        </tr>
+        <tr>
+            <td>显示名称</td>
+            <td>@Html.TextBoxFor(n => n.ZDMC, new { @id = "txtZDMC" })</td>
+        </tr>
+        <tr id="submitRow">
+            <td colspan="2">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmObjectData').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmObjectData').form('reset')">取消</a>
+            </td>
+        </tr>
+    </table>
+}

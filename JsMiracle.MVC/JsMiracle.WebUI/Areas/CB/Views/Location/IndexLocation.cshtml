@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "IndexLocation";
+}
+
+@using JsMiracle.Dal.Concrete.CB;
+
+<style type="text/css">
+    /*当前 easyui table 中行高 */
+    #locationDiv .datagrid-row {
+        height: 40px;
+    }
+</style>
+<div id="locationDiv">
+    <div id="locationToolbar">
+        <div style="padding-left:5px;">
+            排<input id="selP" />
+            <a id="btnSearch" href="###" onclick="cblocation.searchLocationP()">查询</a>
+        </div>
+    </div>
+
+    <table id="grdLocation"></table>
+</div>
+
+
+
+<script type="text/javascript">
+
+    var cblocation;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cblocation = {
+
+            // 初始化储位信息
+            initCombobox: function () {
+                var p = @IMS_CB_Location_Dal.maxP;
+
+                var data = new Array();
+                for (var i = 0 ; i < p; i ++){
+                    var v = i +1;
+                    if ( i == 0){
+                        data.push({
+                            "id":v,
+                            "text":v,
+                            "selected":true
+                        });
+                    }
+                    else{
+                        data.push({
+                            "id":v,
+                            "text":v
+                        });
+                    }
+                }
+
+                return data;
+            },
+
+            // 查询排对应的储位信息
+            searchLocationP:function(){
+                var choiceP = $("#selP").combobox('getValue');
+                $("#grdLocation").datagrid('reload',{p:choiceP});
+               
+            },
+
+            // 刷新列表
+            refreshdatagrid: function () {
+                $('#grdLocation').datagrid('reload');
+            },
+
+            // 单元格样式
+            grdStyle: function (value, row, index) {
+                console.log(value);
+                if (value.ExistsItem) {
+                    var iconUrl = '@Url.Content("~/Content/themes/icons/package.png")';
+                    var style = "background:url('" + iconUrl + "') no-repeat center center;";
+                    return style;
+                }
+            },
+
+            // 单元格显示的值 ,这里只显示图标 表示是否有货
+            grdFormatter: function (value, row, index) {
+                return "";
+            },
+
+            // 双击单元格显示的内容
+            grdOnDblClickCell: function(index,field,value){ 
+                console.log(value);
+                if (value.ExistsItem){
+
+                    var url = '@Url.Action("EditLocation")' + '?wxbh=' + value.WXBH;
+                    var title = "显示储位";
+                    var width = "580px";
+                    var height = "480px";
+
+                    JsMiracleCommon.showWindow(title, url, width, height, cblocation.reloadDataGrid);
+                }
+            }
+        };
+
+        $("#selP").combobox({
+            valueField:'id',
+            textField:'text',
+            width:"50px",
+            data :cblocation.initCombobox(),
+            onSelect: function (rec) {
+                if (rec) {
+                    $("#grdLocation").datagrid('reload',{p:rec.id});
+               
+                }
+            }
+        });
+
+        $("#btnSearch").linkbutton({
+            iconCls: 'icon-search',
+        });
+    });
+
+</script>
+
+@*用到前面的代码必须放在最后*@
+<script type="text/javascript" src='@Url.Action("GetLocationJS")'></script>
