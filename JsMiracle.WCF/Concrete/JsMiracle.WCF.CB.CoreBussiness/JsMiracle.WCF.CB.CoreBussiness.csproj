@@ -73,6 +73,10 @@
       <Project>{69e262e1-c0c9-45d3-83c4-2663d9483710}</Project>
       <Name>JsMiracle.WCF.CB.ICoreBussiness</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsMiracle.WCF.WcfBaseService\JsMiracle.WCF.WcfBaseService.csproj">
       <Project>{b6242f08-7ee1-4d6e-88a9-75c425c8fd00}</Project>
       <Name>JsMiracle.WCF.WcfBaseService</Name>

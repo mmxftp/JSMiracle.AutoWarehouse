@@ -6,7 +6,7 @@ using System.ServiceModel;
 
 namespace JsMiracle.Entities
 {
-    [ServiceContract]
+    //[ServiceContract]
     public interface IDataLayer<T> where T:class
     {
         /// <summary>
@@ -14,7 +14,7 @@ namespace JsMiracle.Entities
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        [OperationContract]
+        //[OperationContract]
         T GetEntity(object id);
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace JsMiracle.Entities
         /// </summary>
         /// <param name="filter">过滤条件 == null 返回所有记录</param>
         /// <returns></returns>
-        [OperationContract]
+        //[OperationContract]
         List<T> GetAllEntites(string filter);
 
         /// <summary>
@@ -30,28 +30,28 @@ namespace JsMiracle.Entities
         /// </summary>
         /// <param name="filter">条件</param>
         /// <returns></returns>
-        [OperationContract]
+        //[OperationContract]
         bool Exists(string filter);
 
         /// <summary>
         /// 保存或新增记录
         /// </summary>
         /// <param name="entity"></param>
-        [OperationContract]
+        //[OperationContract]
         void SaveOrUpdate(T entity);
 
         /// <summary>
         /// 删除记录
         /// </summary>
         /// <param name="id">主键</param>
-        [OperationContract]
+        //[OperationContract]
         void Delete(object id);
 
         /// <summary>
         /// 新增记录
         /// </summary>
         /// <param name="entity">数据实体</param>
-        [OperationContract]
+        //[OperationContract]
         void Insert(T entity);
 
         ///// <summary>
@@ -82,7 +82,7 @@ namespace JsMiracle.Entities
         /// <param name="where">过滤条件</param>
         /// <param name="whereParams">where 子句中的参数值数组</param>
         /// <returns></returns>
-        [OperationContract]
+        //[OperationContract]
         List<T> GetDataByPageDynamic(
              int intPageIndex
             , int intPageSize

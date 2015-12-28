@@ -3,6 +3,7 @@ using JsMiracle.Entities;
 using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
+using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
 using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.UP.IAuthMng;
@@ -348,7 +349,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_Permission_WCF : WcfService<IMS_UP_JSMK>, IWcfService
+    public class IMS_UP_Permission_WCF : WcfService<IMS_UP_JSMK>, IWcfPermission
     {
         IMS_UP_Permission_Dal dal = new IMS_UP_Permission_Dal();
 
@@ -362,52 +363,45 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
 
 
-        protected override Interface.WcfResponse RequestFun(Interface.WcfRequest req)
+        protected override WcfResponse RequestFun(WcfRequest req)
         {
             WcfResponse res = new WcfResponse();
 
 
-            string roleid;
             List<TreeModel> dataList;
             object[] objs;
             int effectRowCount;
-            string userid;
             PermissionViewModule permissions;
             List<IMS_UP_JSMK> rolePermissions;
 
             switch (req.Head.RequestMethodName)
             {
                 case "GetPermissionInfo":
-                    roleid = (string)req.Body.GetParameters<object>();
-                    dataList = dal.GetPermissionInfo(roleid);
-                    res.Body.SetBody(dataList);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetPermissionInfo((string)objs[0]);
                     break;
 
                 case "SavePermission":
-                    objs = req.Body.GetParameters<object[]>();
-                    effectRowCount = dal.SavePermission((bool)objs[0]
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.SavePermission((bool)objs[0]
                         , (int)objs[1]
                         , (int)objs[2]
                         , (int)objs[3]
                         , (string)objs[4]);
-                    res.Body.SetBody(effectRowCount);
                     break;
 
                 case "GetPermissionListByUserID":
-                    userid = (string)req.Body.GetParameters<object>();
-                    permissions = dal.GetPermissionListByUserID(userid);
-                    res.Body.SetBody(permissions);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetPermissionListByUserID((string)objs[0]);
                     break;
 
                 case "GetAllPermission":
-                    permissions = dal.GetAllPermission();
-                    res.Body.SetBody(permissions);
+                    res.Body.Data = dal.GetAllPermission();
                     break;
 
                 case "GetPermissionListByRoleID":
-                    roleid = (string)req.Body.GetParameters<object>();
-                    rolePermissions = dal.GetPermissionListByRoleID(roleid);
-                    res.Body.SetBody(rolePermissions);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetPermissionListByRoleID((string)objs[0]);
                     break;
 
                 // 没有方法交给父类处理

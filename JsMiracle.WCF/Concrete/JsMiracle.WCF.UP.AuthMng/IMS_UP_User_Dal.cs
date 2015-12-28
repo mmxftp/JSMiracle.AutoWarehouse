@@ -1,6 +1,7 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
 using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.UP.IAuthMng;
@@ -162,7 +163,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
     }
    
-    public class IMS_UP_User_WCF : WcfService<IMS_UP_YH>,IWcfService
+    public class IMS_UP_User_WCF : WcfService<IMS_UP_YH>,IWcfUser
     {
         IMS_UP_User_Dal dal = new IMS_UP_User_Dal();
 
@@ -181,63 +182,56 @@ namespace JsMiracle.WCF.UP.AuthMng
             WcfResponse res = new WcfResponse();
 
             IMS_UP_YH ent;
-            List<IMS_UP_YH> dataList;
-            object id;
-            string userid;
-            int len;
-            bool hasPermission;
-            object[] objParams;
+            object[] objs;
 
             switch (req.Head.RequestMethodName)
             {
                 case "SaveOrUpdate":
-                    ent = req.Body.GetParameters<IMS_UP_YH>();
+                    ent = (IMS_UP_YH)req.Body.Parameters;
                     dal.SaveOrUpdate(ent);
                     break;
 
                 case "GetAllUserList":
-                    bool isFormatter = (bool)req.Body.GetParameters<object>();
-                    dataList = dal.GetAllUserList(isFormatter);
-                    res.Body.SetBody(dataList);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data  = dal.GetAllUserList((bool)objs[0]);
                     break;
 
                 case "GetEntityByYHBH":
-                    userid = (string)req.Body.GetParameters<object>();
-                    ent = dal.GetEntityByYHBH(userid);
-                    res.Body.SetBody(ent);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetEntityByYHBH((string)objs[0]);
+                    
                     break;
 
                 case "Delete":
-                    id = req.Body.GetParameters<object>();
-                    dal.Delete(id);
+                    objs = (object[])req.Body.Parameters;
+                    dal.Delete(objs[0]);
                     break;
 
                 case "MinPasswordLength":
-                    len = dal.MinPasswordLength();
-                    res.Body.SetBody(len);
+                    res.Body.Data = dal.MinPasswordLength();
+     
                     break;
 
                 case "ValidateUser":
-                    objParams = req.Body.GetParameters<object[]>();
-                    hasPermission = dal.ValidateUser((string)objParams[0], (string)objParams[1]);
-                    res.Body.SetBody(hasPermission);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.ValidateUser((string)objs[0], (string)objs[1]);
                     break;
 
                 case "CreateUser":
-                    objParams = req.Body.GetParameters<object[]>();
+                    objs = (object[])req.Body.Parameters;
                     dal.CreateUser(
-                        (string)objParams[0],
-                        (string)objParams[1],
-                        (string)objParams[2],
-                        (string)objParams[3]);
+                        (string)objs[0],
+                        (string)objs[1],
+                        (string)objs[2],
+                        (string)objs[3]);
                     break;
 
                 case "ChangePassword":
-                    objParams = req.Body.GetParameters<object[]>();
+                    objs = (object[])req.Body.Parameters;
                     dal.ChangePassword(
-                        (string)objParams[0],
-                        (string)objParams[1],
-                        (string)objParams[2]);
+                        (string)objs[0],
+                        (string)objs[1],
+                        (string)objs[2]);
                     break;
 
                 // 没有方法交给父类处理

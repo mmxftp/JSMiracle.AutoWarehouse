@@ -2,6 +2,7 @@
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 模块功能信息
     /// </summary>
-    [ServiceContract]
     public interface IModuleFunction : IDataLayer<IMS_UP_MKGN>
     {
         /// <summary>
@@ -27,25 +27,31 @@ namespace JsMiracle.WCF.UP.IAuthMng
     }
 
 
-    public class WcfClientModuleFunction : WcfDalClient<IMS_UP_MKGN>, IModuleFunction
+    //public class WcfClientModuleFunction : WcfDalClient<IMS_UP_MKGN>, IModuleFunction
+    //{
+    //    const string ContactName = "IModuleFunction";
+
+    //    public WcfClientModuleFunction()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+    //    public List<IMS_UP_MKGN> GetModuleFunctionList(int moduleid)
+    //    {
+    //        return
+    //              WcfClient<IModuleFunction>.UseService<List<IMS_UP_MKGN>>(
+    //              base.binding, base.remoteAddress,
+    //              n => n.GetModuleFunctionList(moduleid));
+    //    }
+    //}
+
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfModuleFunction : IWcfService
     {
-        const string ContactName = "IModuleFunction";
 
-        public WcfClientModuleFunction()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-        public List<IMS_UP_MKGN> GetModuleFunctionList(int moduleid)
-        {
-            return
-                  WcfClient<IModuleFunction>.UseService<List<IMS_UP_MKGN>>(
-                  base.binding, base.remoteAddress,
-                  n => n.GetModuleFunctionList(moduleid));
-        }
     }
 
-
-    public class WcfConfigModuleFunction : WcfClientConfig<IMS_UP_MKGN>, IModuleFunction
+    public class WcfConfigModuleFunction : WcfClientConfig<IMS_UP_MKGN, IWcfModuleFunction>, IModuleFunction, IWcfModuleFunction
     {
         const string ContactName = "IModuleFunction";
 
@@ -57,7 +63,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public List<IMS_UP_MKGN> GetModuleFunctionList(int moduleid)
         {
-            return RequestFunc<object, List<IMS_UP_MKGN>>("GetModuleFunctionList", moduleid);
+            return RequestFunc<object[], List<IMS_UP_MKGN>>("GetModuleFunctionList", new object[] { moduleid });
         }
     }
 

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,6 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\JsMiracle.MVC\JsMiracle.Entities\JsMiracle.Entities.csproj">
+      <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
+      <Name>JsMiracle.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Configuration\JsMiracle.WCF.Config\JsMiracle.WCF.Config.csproj">
       <Project>{95cce93b-312f-45a5-b9f9-63466240dac3}</Project>
       <Name>JsMiracle.WCF.Config</Name>

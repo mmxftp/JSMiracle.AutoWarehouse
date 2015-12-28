@@ -2,9 +2,11 @@
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 
 namespace JsMiracle.WCF.CM.ICommonMng
@@ -22,22 +24,45 @@ namespace JsMiracle.WCF.CM.ICommonMng
         IMS_CM_DMLX GetEntity(string lxdm);
     }
 
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(CommonKnownTypesProvider))]
+    public interface IWcfCodeType : IWcfService
+    {
 
-    public class WcfClientCodeType : WcfDalClient<IMS_CM_DMLX>, ICodeType
+    }
+
+
+
+    //public class WcfClientCodeType : WcfDalClient<IMS_CM_DMLX>, ICodeType
+    //{
+    //    const string ContactName = "ICodeType";
+
+    //    public WcfClientCodeType()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+
+    //    public IMS_CM_DMLX GetEntity(string lxdm)
+    //    {
+    //        return
+    //             WcfClient<ICodeType>.UseService<IMS_CM_DMLX>(
+    //             base.binding, base.remoteAddress,
+    //             n => n.GetEntity(lxdm));
+    //    }
+    //}
+
+
+    public class WcfConfigCodeType : WcfClientConfig<IMS_CM_DMLX, IWcfCodeType>, ICodeType
     {
         const string ContactName = "ICodeType";
 
-        public WcfClientCodeType()
+        public WcfConfigCodeType()
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
-
         public IMS_CM_DMLX GetEntity(string lxdm)
         {
-            return
-                 WcfClient<ICodeType>.UseService<IMS_CM_DMLX>(
-                 base.binding, base.remoteAddress,
-                 n => n.GetEntity(lxdm));
+            return RequestFunc<object[], IMS_CM_DMLX>("ReSaveObjectData", new object[] { lxdm });
         }
     }
 }

@@ -7,6 +7,7 @@ using JsMiracle.Entities;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using JsMiracle.WCF.Interface;
+using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
@@ -79,7 +80,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_MoFn_WCF : WcfService<IMS_UP_MKGN>, IWcfService
+    public class IMS_UP_MoFn_WCF : WcfService<IMS_UP_MKGN>, IWcfModuleFunction
     {
         IMS_UP_MoFn_Dal dal = new IMS_UP_MoFn_Dal();
 
@@ -93,19 +94,17 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
 
 
-        protected override Interface.WcfResponse RequestFun(Interface.WcfRequest req)
+        protected override WcfResponse RequestFun(WcfRequest req)
         {
             WcfResponse res = new WcfResponse();
 
-            int moduleid;
-            List<IMS_UP_MKGN> dataList;
+            object[] objs;
 
             switch (req.Head.RequestMethodName)
             {
                 case "GetModuleFunctionList":
-                    moduleid = (int)req.Body.GetParameters<object>();
-                    dataList = dal.GetModuleFunctionList(moduleid);
-                    res.Body.SetBody(dataList);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetModuleFunctionList((int)objs[0]);
                     break;
                 default:
                     return null;

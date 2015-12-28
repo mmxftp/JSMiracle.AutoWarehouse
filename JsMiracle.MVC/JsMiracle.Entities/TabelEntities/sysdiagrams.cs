@@ -12,15 +12,12 @@ namespace JsMiracle.Entities.TabelEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class IMS_CB_WZGX
+    public partial class sysdiagrams
     {
-        public long ID { get; set; }
-        public string ZWZ { get; set; }
-        public string FWZ { get; set; }
-        public string LX { get; set; }
-        public int X { get; set; }
-        public Nullable<int> Y { get; set; }
-        public int Z { get; set; }
-        public int KYZT { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

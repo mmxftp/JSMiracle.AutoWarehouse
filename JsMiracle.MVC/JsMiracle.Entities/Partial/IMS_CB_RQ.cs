@@ -8,8 +8,8 @@ namespace JsMiracle.Entities.TabelEntities
 {
     public interface IMS_CB_RQ_EX
     {
-        [JsonIgnore]
-        ICollection<IMS_CB_KC> IMS_CB_KC_S { get; set; }
+        //[JsonIgnore]
+        //ICollection<IMS_CB_KC> IMS_CB_KC_S { get; set; }
     }
 
     partial class IMS_CB_RQ : IMS_CB_RQ_EX

@@ -101,7 +101,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyInstallerFail.cs" />
     <Compile Include="DependencyInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindsorActivator.cs" />
@@ -127,6 +126,10 @@
     <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.CM.ICommonMng\JsMiracle.WCF.CM.ICommonMng.csproj">
       <Project>{5bd397d5-8f70-43c4-849e-725a7caebc0c}</Project>
       <Name>JsMiracle.WCF.CM.ICommonMng</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.UP.IAuthMng\JsMiracle.WCF.UP.IAuthMng.csproj">
       <Project>{2c471699-de0d-4c66-b3ac-7f53366f55d3}</Project>

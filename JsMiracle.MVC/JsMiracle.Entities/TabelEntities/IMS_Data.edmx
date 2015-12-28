@@ -281,66 +281,16 @@
           <Property Name="XGRQ" Type="datetime" />
           <Property Name="ZT" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R">
-          <End Role="IMS_CB_RQ_S" Type="Self.IMS_CB_RQ_S" Multiplicity="1" />
-          <End Role="IMS_CB_KC_S" Type="Self.IMS_CB_KC_S" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_RQ_S">
-              <PropertyRef Name="RQBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_KC_S">
-              <PropertyRef Name="RQBH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_ContainerTypeIMS_TB_Container">
-          <End Role="IMS_CB_RQLX_S" Type="Self.IMS_CB_RQLX_S" Multiplicity="0..1" />
-          <End Role="IMS_CB_RQ_S" Type="Self.IMS_CB_RQ_S" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_RQLX_S">
-              <PropertyRef Name="LXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_RQ_S">
-              <PropertyRef Name="LXBH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_LocationISM_TB_LocationREF">
-          <End Role="IMS_CB_WZ_S" Type="Self.IMS_CB_WZ_S" Multiplicity="1" />
-          <End Role="IMS_CB_WZGX_S" Type="Self.IMS_CB_WZGX_S" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZGX_S">
-              <PropertyRef Name="ZWZ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_LocationISM_TB_LocationREF1">
-          <End Role="IMS_CB_WZ_S" Type="Self.IMS_CB_WZ_S" Multiplicity="1" />
-          <End Role="IMS_CB_WZGX_S" Type="Self.IMS_CB_WZGX_S" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZGX_S">
-              <PropertyRef Name="FWZ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ISM_LocationTypeIMS_TB_Location">
-          <End Role="IMS_CB_WZLX_S" Type="Self.IMS_CB_WZLX_S" Multiplicity="1" />
-          <End Role="IMS_CB_WZ_S" Type="Self.IMS_CB_WZ_S" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZLX_S">
-              <PropertyRef Name="LXDM" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WZLX" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
           <EntitySet Name="IMS_CB_KC_S" EntityType="Self.IMS_CB_KC_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CB_RQ_S" EntityType="Self.IMS_CB_RQ_S" Schema="dbo" store:Type="Tables" />
@@ -359,26 +309,7 @@
           <EntitySet Name="IMS_UP_MK_S" EntityType="Self.IMS_UP_MK_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_MKGN_S" EntityType="Self.IMS_UP_MKGN_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_YH_S" EntityType="Self.IMS_UP_YH_S" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R" Association="Self.FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R">
-            <End Role="IMS_CB_RQ_S" EntitySet="IMS_CB_RQ_S" />
-            <End Role="IMS_CB_KC_S" EntitySet="IMS_CB_KC_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_ContainerTypeIMS_TB_Container" Association="Self.FK_IMS_TB_ContainerTypeIMS_TB_Container">
-            <End Role="IMS_CB_RQLX_S" EntitySet="IMS_CB_RQLX_S" />
-            <End Role="IMS_CB_RQ_S" EntitySet="IMS_CB_RQ_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_LocationISM_TB_LocationREF" Association="Self.FK_IMS_TB_LocationISM_TB_LocationREF">
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-            <End Role="IMS_CB_WZGX_S" EntitySet="IMS_CB_WZGX_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_LocationISM_TB_LocationREF1" Association="Self.FK_IMS_TB_LocationISM_TB_LocationREF1">
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-            <End Role="IMS_CB_WZGX_S" EntitySet="IMS_CB_WZGX_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ISM_LocationTypeIMS_TB_Location" Association="Self.FK_ISM_LocationTypeIMS_TB_Location">
-            <End Role="IMS_CB_WZLX_S" EntitySet="IMS_CB_WZLX_S" />
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -404,7 +335,6 @@
           <Property Name="RKSJ" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ZHXGSJ" Type="DateTime" Precision="3" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMS_CB_RQ_S" Relationship="Self.FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R" FromRole="IMS_CB_KC_S" ToRole="IMS_CB_RQ_S" />
         </EntityType>
         <EntityType Name="IMS_CB_RQ">
           <Key>
@@ -426,8 +356,6 @@
           <Property Name="ZCSJ" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ZCWZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMS_CB_KC_S" Relationship="Self.FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R" FromRole="IMS_CB_RQ_S" ToRole="IMS_CB_KC_S" />
-          <NavigationProperty Name="IMS_CB_RQLX_S" Relationship="Self.FK_IMS_TB_ContainerTypeIMS_TB_Container" FromRole="IMS_CB_RQ_S" ToRole="IMS_CB_RQLX_S" />
         </EntityType>
         <EntityType Name="IMS_CB_RQLX">
           <Key>
@@ -456,7 +384,6 @@
           <Property Name="FCDJ" Type="Int32" Nullable="false" />
           <Property Name="TMYM" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMS_CB_RQ_S" Relationship="Self.FK_IMS_TB_ContainerTypeIMS_TB_Container" FromRole="IMS_CB_RQLX_S" ToRole="IMS_CB_RQ_S" />
         </EntityType>
         <EntityType Name="IMS_CB_WL">
           <Key>
@@ -509,9 +436,6 @@
           <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="JZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="IMS_CB_WZGX_S" Relationship="Self.FK_IMS_TB_LocationISM_TB_LocationREF" FromRole="IMS_CB_WZ_S" ToRole="IMS_CB_WZGX_S" />
-          <NavigationProperty Name="IMS_CB_WZGX_S1" Relationship="Self.FK_IMS_TB_LocationISM_TB_LocationREF1" FromRole="IMS_CB_WZ_S" ToRole="IMS_CB_WZGX_S" />
-          <NavigationProperty Name="IMS_CB_WZLX_S" Relationship="Self.FK_ISM_LocationTypeIMS_TB_Location" FromRole="IMS_CB_WZ_S" ToRole="IMS_CB_WZLX_S" />
         </EntityType>
         <EntityType Name="IMS_CB_WZGX">
           <Key>
@@ -525,8 +449,6 @@
           <Property Name="Y" Type="Int32" />
           <Property Name="Z" Type="Int32" Nullable="false" />
           <Property Name="KYZT" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="IMS_CB_WZ_S" Relationship="Self.FK_IMS_TB_LocationISM_TB_LocationREF" FromRole="IMS_CB_WZGX_S" ToRole="IMS_CB_WZ_S" />
-          <NavigationProperty Name="IMS_CB_WZ_S1" Relationship="Self.FK_IMS_TB_LocationISM_TB_LocationREF1" FromRole="IMS_CB_WZGX_S" ToRole="IMS_CB_WZ_S" />
         </EntityType>
         <EntityType Name="IMS_CB_WZLX">
           <Key>
@@ -549,7 +471,6 @@
           <Property Name="FCDJ" Type="Int32" Nullable="false" />
           <Property Name="WDDJ" Type="Int32" Nullable="false" />
           <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="IMS_CB_WZ_S" Relationship="Self.FK_ISM_LocationTypeIMS_TB_Location" FromRole="IMS_CB_WZLX_S" ToRole="IMS_CB_WZ_S" />
         </EntityType>
         <EntityType Name="IMS_CM_DM">
           <Key>
@@ -647,66 +568,6 @@
           <Property Name="XGRQ" Type="DateTime" Precision="3" />
           <Property Name="ZT" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R">
-          <End Role="IMS_CB_RQ_S" Type="IIMS_ORGModel.IMS_CB_RQ" Multiplicity="1" />
-          <End Role="IMS_CB_KC_S" Type="IIMS_ORGModel.IMS_CB_KC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_RQ_S">
-              <PropertyRef Name="RQBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_KC_S">
-              <PropertyRef Name="RQBH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_ContainerTypeIMS_TB_Container">
-          <End Role="IMS_CB_RQLX_S" Type="IIMS_ORGModel.IMS_CB_RQLX" Multiplicity="0..1" />
-          <End Role="IMS_CB_RQ_S" Type="IIMS_ORGModel.IMS_CB_RQ" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_RQLX_S">
-              <PropertyRef Name="LXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_RQ_S">
-              <PropertyRef Name="LXBH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_LocationISM_TB_LocationREF">
-          <End Role="IMS_CB_WZ_S" Type="IIMS_ORGModel.IMS_CB_WZ" Multiplicity="1" />
-          <End Role="IMS_CB_WZGX_S" Type="IIMS_ORGModel.IMS_CB_WZGX" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZGX_S">
-              <PropertyRef Name="ZWZ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMS_TB_LocationISM_TB_LocationREF1">
-          <End Role="IMS_CB_WZ_S" Type="IIMS_ORGModel.IMS_CB_WZ" Multiplicity="1" />
-          <End Role="IMS_CB_WZGX_S" Type="IIMS_ORGModel.IMS_CB_WZGX" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WXBH" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZGX_S">
-              <PropertyRef Name="FWZ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ISM_LocationTypeIMS_TB_Location">
-          <End Role="IMS_CB_WZLX_S" Type="IIMS_ORGModel.IMS_CB_WZLX" Multiplicity="1" />
-          <End Role="IMS_CB_WZ_S" Type="IIMS_ORGModel.IMS_CB_WZ" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IMS_CB_WZLX_S">
-              <PropertyRef Name="LXDM" />
-            </Principal>
-            <Dependent Role="IMS_CB_WZ_S">
-              <PropertyRef Name="WZLX" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ORGModels" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="IMS_CB_KC_S" EntityType="IIMS_ORGModel.IMS_CB_KC" />
           <EntitySet Name="IMS_CB_RQ_S" EntityType="IIMS_ORGModel.IMS_CB_RQ" />
@@ -723,28 +584,9 @@
           <EntitySet Name="IMS_UP_MK_S" EntityType="IIMS_ORGModel.IMS_UP_MK" />
           <EntitySet Name="IMS_UP_MKGN_S" EntityType="IIMS_ORGModel.IMS_UP_MKGN" />
           <EntitySet Name="IMS_UP_YH_S" EntityType="IIMS_ORGModel.IMS_UP_YH" />
-          <AssociationSet Name="FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R" Association="Self.FK_IMS_CB_K_FK_IMS_CB_IMS_CB_R">
-            <End Role="IMS_CB_RQ_S" EntitySet="IMS_CB_RQ_S" />
-            <End Role="IMS_CB_KC_S" EntitySet="IMS_CB_KC_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_ContainerTypeIMS_TB_Container" Association="Self.FK_IMS_TB_ContainerTypeIMS_TB_Container">
-            <End Role="IMS_CB_RQLX_S" EntitySet="IMS_CB_RQLX_S" />
-            <End Role="IMS_CB_RQ_S" EntitySet="IMS_CB_RQ_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_LocationISM_TB_LocationREF" Association="Self.FK_IMS_TB_LocationISM_TB_LocationREF">
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-            <End Role="IMS_CB_WZGX_S" EntitySet="IMS_CB_WZGX_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMS_TB_LocationISM_TB_LocationREF1" Association="Self.FK_IMS_TB_LocationISM_TB_LocationREF1">
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-            <End Role="IMS_CB_WZGX_S" EntitySet="IMS_CB_WZGX_S" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ISM_LocationTypeIMS_TB_Location" Association="Self.FK_ISM_LocationTypeIMS_TB_Location">
-            <End Role="IMS_CB_WZLX_S" EntitySet="IMS_CB_WZLX_S" />
-            <End Role="IMS_CB_WZ_S" EntitySet="IMS_CB_WZ_S" />
-          </AssociationSet>
           <EntitySet Name="IMS_CM_DXXX_S" EntityType="IIMS_ORGModel.IMS_CM_DXXX" />
           <EntitySet Name="IMS_CM_YHDX_S" EntityType="IIMS_ORGModel.IMS_CM_YHDX" />
+          <EntitySet Name="sysdiagrams" EntityType="IIMS_ORGModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="IMS_CM_DXXX">
           <Key>
@@ -768,6 +610,16 @@
           <Property Name="DXDM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DXTJ" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="XGRQ" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1068,6 +920,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1083,7 +946,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

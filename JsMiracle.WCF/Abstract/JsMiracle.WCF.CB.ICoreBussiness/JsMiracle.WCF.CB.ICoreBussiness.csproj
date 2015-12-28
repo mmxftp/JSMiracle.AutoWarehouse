@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreKnownTypesProvider.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="IContainerType.cs" />
     <Compile Include="IItem.cs" />
@@ -60,6 +61,10 @@
     <ProjectReference Include="..\JsMiracle.WCF.BaseWcfClient\JsMiracle.WCF.BaseWcfClient.csproj">
       <Project>{e51c8afb-28ee-4aad-b754-5aa592cad95b}</Project>
       <Name>JsMiracle.WCF.BaseWcfClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

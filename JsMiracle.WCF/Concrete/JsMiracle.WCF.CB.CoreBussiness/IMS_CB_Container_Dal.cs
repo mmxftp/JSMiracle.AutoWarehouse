@@ -7,6 +7,8 @@ using System.Linq.Dynamic;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.CB.ICoreBussiness;
 using JsMiracle.WCF.WcfBaseService;
+using JsMiracle.WCF.Interface;
+using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
@@ -20,7 +22,9 @@ namespace JsMiracle.WCF.CB.CoreBussiness
             int skipRows = (intPageIndex - 1) * intPageSize;
 
             var query = from rq in DbContext.IMS_CB_RQ_S
-                        select new { rq, rq.IMS_CB_RQLX_S };
+                        join rqlx in DbContext.IMS_CB_RQLX_S
+                        on rq.LXBH equals rqlx.LXBH
+                        select new { rq, rqlx.LXMC ,rqlx.LXBH };
 
             if (!string.IsNullOrEmpty(where))
             {
@@ -46,8 +50,9 @@ namespace JsMiracle.WCF.CB.CoreBussiness
                 //var rq = new IMS_CB_RQ();
                 var rq = row.rq;
 
-                if ( row.IMS_CB_RQLX_S != null)                    
-                    rq.RQLX_Name = string.Format("{0}({1})",row.IMS_CB_RQLX_S.LXBH,row.IMS_CB_RQLX_S.LXMC);
+                rq.RQLX_Name = string.Format("{0}({1})", row.LXBH, row.LXMC);
+                //if ( row.IMS_CB_RQLX_S != null)                    
+                //    rq.RQLX_Name = string.Format("{0}({1})",row.IMS_CB_RQLX_S.LXBH,row.IMS_CB_RQLX_S.LXMC);
 
                 rqList.Add(rq);
             }
@@ -74,5 +79,30 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         #endregion
 
 
+    }
+
+
+
+    public class IMS_CB_Container_WCF : WcfService<IMS_CB_RQ>, IWcfContainer
+    {
+        IMS_CB_Container_Dal dal = new IMS_CB_Container_Dal();
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+            WcfResponse res = new WcfResponse();
+            switch (req.Head.RequestMethodName)
+            {
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CB_RQ> DataLayer
+        {
+            get { return dal; }
+        }
     }
 }

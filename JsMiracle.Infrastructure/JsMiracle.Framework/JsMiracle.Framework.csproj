@@ -84,6 +84,7 @@
     <Compile Include="ExpressionFilter.cs" />
     <Compile Include="FormAuth\FormsAuthenticationService.cs" />
     <Compile Include="FormAuth\IFormsAuthentication.cs" />
+    <Compile Include="FunctionHelp.cs" />
     <Compile Include="JsMiracleException.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="Log\ILog.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="ModuleMemberCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialized\ISerialized.cs" />
+    <Compile Include="Serialized\JsonSerialization.cs" />
     <Compile Include="Serialized\XmlSerialization.cs" />
   </ItemGroup>
   <ItemGroup>

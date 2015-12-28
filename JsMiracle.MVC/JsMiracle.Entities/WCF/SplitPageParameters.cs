@@ -20,11 +20,4 @@ namespace JsMiracle.Entities.WCF
     }
 
 
-    public class SplitPageData<T>
-    {
-        public int TotalRow { get; set; }
-
-        public List<T> DataList { get; set; }
-    }
-
 }

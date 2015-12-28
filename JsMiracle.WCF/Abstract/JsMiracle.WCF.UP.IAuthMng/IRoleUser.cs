@@ -7,6 +7,7 @@ using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.Text;
 
@@ -15,7 +16,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 角色用户关系接口
     /// </summary>
-    [ServiceContract]
     public interface IRoleUser : IDataLayer<IMS_UP_JSYH>
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
         /// </summary>
         /// <param name="roleid"></param>
         /// <returns></returns>
-        [OperationContract]
+        //[OperationContract]
         List<IMS_UP_YH> GetUserList(string roleid);
 
         /// <summary>
@@ -46,40 +46,15 @@ namespace JsMiracle.WCF.UP.IAuthMng
     }
 
 
-    public class WcfClientRoleUser : WcfDalClient<IMS_UP_JSYH>, IRoleUser
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfRoleUser : IWcfService
     {
-        const string ContactName = "IRoleUser";
 
-        public WcfClientRoleUser()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-        public List<IMS_UP_YH> GetUserList(string roleid)
-        {
-            return
-                WcfClient<IRoleUser>.UseService<List<IMS_UP_YH>>(
-                base.binding, base.remoteAddress,
-                n => n.GetUserList(roleid));
-        }
-
-        public int SaveRoleUser(string roleid, string userid)
-        {
-            return
-                   WcfClient<IRoleUser>.UseService<int>(
-                   base.binding, base.remoteAddress,
-                   n => n.SaveRoleUser(roleid, userid));
-        }
-
-        public int RemoveRoleUser(string roleid, string userid)
-        {
-            return
-                    WcfClient<IRoleUser>.UseService<int>(
-                    base.binding, base.remoteAddress,
-                    n => n.RemoveRoleUser(roleid, userid));
-        }
     }
 
-    public class WcfConfigRoleUser : WcfClientConfig<IMS_UP_JSYH>, IRoleUser
+
+    public class WcfConfigRoleUser : WcfClientConfig<IMS_UP_JSYH, IWcfRoleUser>, IRoleUser, IWcfRoleUser
     {
         const string ContactName = "IRoleUser";
 
@@ -89,7 +64,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public List<IMS_UP_YH> GetUserList(string roleid)
         {
-            return RequestFunc<object, List<IMS_UP_YH>>("GetUserList", roleid);
+            return RequestFunc<object[], List<IMS_UP_YH>>("GetUserList", new object[] { roleid });
         }
 
         public int SaveRoleUser(string roleid, string userid)

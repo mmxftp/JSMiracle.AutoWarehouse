@@ -3,8 +3,10 @@ using JsMiracle.Entities;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
+using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
 using JsMiracle.WCF.CM.ICommonMng;
+using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;
@@ -38,7 +40,7 @@ namespace JsMiracle.WCF.CM.CommonMng
                             ZDMC = col.ColumnNote,
                             XGR = opUser,
                             XGRQ = System.DateTime.Now,
-                            ZDLX = col.ColumnType,                           
+                            ZDLX = col.ColumnType,
                         };
                         base.DbContext.IMS_CM_DXXX_S.Add(ent);
                     }
@@ -72,7 +74,7 @@ namespace JsMiracle.WCF.CM.CommonMng
                 if (base.DbContext.IMS_CM_YHDX_S.Any(n => n.DXDM == ent.DM))
                     throw new JsMiracleException("对应信息已被用户表(IMS_CM_YHDX_S)使用中不得删除");
 
-                string filter = string.Format(" DXDM = \"{0}\" ",ent.DM);
+                string filter = string.Format(" DXDM = \"{0}\" ", ent.DM);
 
                 //var data =
                 //    this.GetAllEntites(n => n.DXDM.Equals(ent.DM, StringComparison.CurrentCultureIgnoreCase));
@@ -104,6 +106,37 @@ namespace JsMiracle.WCF.CM.CommonMng
             return query.ToList();
         }
 
-  
+
+    }
+
+
+    public class IMS_CM_DXXX_WCF : WcfService<IMS_CM_DXXX>, IWcfObjectDataDictionary
+    {
+        IMS_CM_DXXX_Dal dal = new IMS_CM_DXXX_Dal();
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+            WcfResponse res = new WcfResponse();
+
+            object[] objs;
+            switch (req.Head.RequestMethodName)
+            {
+                case "ReSaveObjectData":
+                    objs = (object[])req.Body.Parameters;
+                    dal.ReSaveObjectData((string)objs[0], (string)objs[1]);
+                    break;
+
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CM_DXXX> DataLayer
+        {
+            get { return dal; }
+        }
     }
 }

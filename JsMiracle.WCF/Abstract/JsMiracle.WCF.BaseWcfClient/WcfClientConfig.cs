@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
 using JsMiracle.WCF.Interface;
@@ -11,7 +12,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.BaseWcfClient
 {
-    public abstract class WcfClientConfig<T> : WcfClient<IWcfService>, IDataLayer<T> where T : class
+    public abstract class WcfClientConfig<T, Channel> : WcfClient<Channel>, IDataLayer<T> 
+        where T : class
+        where Channel : class,IWcfService
     {
         protected WcfClientConfig(EndpointAddress edpAddr)
             : base(wcfBinding, edpAddr) { }
@@ -20,10 +23,10 @@ namespace JsMiracle.WCF.BaseWcfClient
             : base(binding, remoteAddress) { }
 
 
-        //public WcfResponse Request(WcfRequest req)
-        //{
-        //    return base.Channel.Request(req);
-        //}
+        public WcfResponse Request(WcfRequest req)
+        {
+            return base.Channel.Request(req);
+        }
 
         /// <summary>
         /// 执行wcf方法并返回数据
@@ -32,20 +35,21 @@ namespace JsMiracle.WCF.BaseWcfClient
         /// <typeparam name="Return">返回类型</typeparam>
         /// <param name="methodName">方法名</param>
         /// <param name="parameters">参数</param>
+        /// <param name="serType"></param>
         /// <returns></returns>
         protected virtual Return RequestFunc<P, Return>(string methodName, P parameters)
         {
             try
             {
-
                 WcfRequest req = new WcfRequest();
                 req.Head.RequestMethodName = methodName;
-                //if (parameters != null)
-                req.Body.SetParameters(parameters);
+                req.Head.ClassName = this.GetType().Name;
+                if (parameters != null)
+                    req.Body.Parameters = parameters;
 
                 var res = base.Channel.Request(req);
                 if (res.Head.IsSuccess)
-                    return res.Body.GetBody<Return>();
+                    return (Return)res.Body.Data;
 
                 // 返回不是真 抛出异常
                 throw new JsMiracleException(res.Head.Message);
@@ -57,6 +61,8 @@ namespace JsMiracle.WCF.BaseWcfClient
             }
         }
 
+
+
         /// <summary>
         /// 执行wcf方法没有返回数据
         /// </summary>
@@ -67,8 +73,8 @@ namespace JsMiracle.WCF.BaseWcfClient
         protected virtual void RequestAction<P>(string methodName, P parameters)
         {
             WcfRequest req = new WcfRequest();
-            req.Head.RequestMethodName = methodName;            
-            req.Body.SetParameters(parameters);
+            req.Head.RequestMethodName = methodName;
+            req.Body.Parameters = parameters;
 
             var res = base.Channel.Request(req);
             if (res.Head.IsSuccess)
@@ -81,17 +87,17 @@ namespace JsMiracle.WCF.BaseWcfClient
 
         public T GetEntity(object id)
         {
-            return this.RequestFunc<Object, T>("GetEntity", id);
+            return this.RequestFunc<object[], T>("GetEntity", new object[] { id });
         }
 
         public List<T> GetAllEntites(string filter)
         {
-            return this.RequestFunc<string, List<T>>("GetAllEntites", filter);
+            return this.RequestFunc<object[], List<T>>("GetAllEntites", new object[] { filter });
         }
 
         public bool Exists(string filter)
         {
-            return this.RequestFunc<string, bool>("Exists", filter);
+            return this.RequestFunc<object[], bool>("Exists", new object[] { filter });
         }
 
         public void SaveOrUpdate(T entity)
@@ -101,7 +107,7 @@ namespace JsMiracle.WCF.BaseWcfClient
 
         public void Delete(object id)
         {
-            this.RequestAction<object>("Delete", id);
+            this.RequestAction<object[]>("Delete", new object[] { id });
         }
 
         public void Insert(T entity)
@@ -111,19 +117,18 @@ namespace JsMiracle.WCF.BaseWcfClient
 
         public List<T> GetDataByPageDynamic(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)
         {
-            SplitPageParameters par = new SplitPageParameters()
-            {
-                PageIndex = intPageIndex,
-                PageSize = intPageSize,
-                OrderBy = orderBy,
-                Where = where,
-                WhereParams = whereParams
+            object[] obj = new object[] { 
+                intPageIndex,
+                intPageSize,
+                orderBy,
+                where,
+                whereParams
             };
 
-            var data = this.RequestFunc<SplitPageParameters, SplitPageData<T>>("GetDataByPageDynamic", par);
+            var data = this.RequestFunc<object[], object[]>("GetDataByPageDynamic", obj);
 
-            rowCount = data.TotalRow;
-            return data.DataList;
+            rowCount = (int)data[0];
+            return (List<T>)data[1];
 
         }
     }

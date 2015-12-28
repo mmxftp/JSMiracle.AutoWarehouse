@@ -3,6 +3,7 @@ using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System.ServiceModel;
 
 namespace JsMiracle.WCF.UP.IAuthMng
@@ -10,7 +11,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 用户管理的接口
     /// </summary>
-    [ServiceContract]
     public interface IMembershipService
     {
         /// <summary>
@@ -50,38 +50,44 @@ namespace JsMiracle.WCF.UP.IAuthMng
     }
 
 
-    public class WcfClientMembershipService : WcfClient<IMembershipService>, IMembershipService
+    //public class WcfClientMembershipService : WcfClient<IMembershipService>, IMembershipService
+    //{
+    //    const string ContactName = "IMembershipService";
+
+    //    public WcfClientMembershipService()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+
+    //    public int MinPasswordLength()
+    //    {
+    //        return base.Channel.MinPasswordLength();
+    //    }
+
+    //    public bool ValidateUser(string userID, string password)
+    //    {
+    //        return base.Channel.ValidateUser(userID, password);
+    //    }
+
+    //    public void CreateUser(string userID, string userName, string password, string email)
+    //    {
+    //        base.Channel.CreateUser(userID, userName, password, email);
+    //    }
+
+    //    public bool ChangePassword(string userID, string oldPassword, string newPassword)
+    //    {
+    //        return base.Channel.ChangePassword(userID, oldPassword, newPassword);
+    //    }
+    //}
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfMembershipService : IWcfService
     {
-        const string ContactName = "IMembershipService";
 
-        public WcfClientMembershipService()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-
-        public int MinPasswordLength()
-        {
-            return base.Channel.MinPasswordLength();
-        }
-
-        public bool ValidateUser(string userID, string password)
-        {
-            return base.Channel.ValidateUser(userID, password);
-        }
-
-        public void CreateUser(string userID, string userName, string password, string email)
-        {
-            base.Channel.CreateUser(userID, userName, password, email);
-        }
-
-        public bool ChangePassword(string userID, string oldPassword, string newPassword)
-        {
-            return base.Channel.ChangePassword(userID, oldPassword, newPassword);
-        }
     }
 
-
-    public class WcfConfigMembershipService : WcfClientConfig<IMS_UP_YH>, IMembershipService
+    public class WcfConfigMembershipService
+        : WcfClientConfig<IMS_UP_YH, IWcfMembershipService>, IMembershipService, IWcfMembershipService
     {
         const string ContactName = "IMembershipService";
 
@@ -89,12 +95,9 @@ namespace JsMiracle.WCF.UP.IAuthMng
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
-
-
-
         public int MinPasswordLength()
         {
-            return RequestFunc<object, int>("MinPasswordLength", null);
+            return RequestFunc<object[], int>("MinPasswordLength", new object[] { null });
         }
 
         public bool ValidateUser(string userID, string password)

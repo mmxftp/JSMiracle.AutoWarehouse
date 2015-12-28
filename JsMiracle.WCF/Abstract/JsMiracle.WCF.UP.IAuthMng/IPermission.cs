@@ -4,6 +4,7 @@ using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 权限验证
     /// </summary>
-    [ServiceContract]
     public interface IPermission : IDataLayer<IMS_UP_JSMK>
     {
         /// <summary>
@@ -63,67 +63,73 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
     }
 
-    public class WcfClientPermission : WcfDalClient<IMS_UP_JSMK>, IPermission
+    //public class WcfClientPermission : WcfDalClient<IMS_UP_JSMK>, IPermission
+    //{
+    //    const string ContactName = "IPermission";
+
+    //    public WcfClientPermission()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+    //    //public IList<IMS_UP_JS> GetAllRole()
+    //    //{
+    //    //    return
+    //    //            WcfClient<IRole>.UseService<IList<IMS_UP_JS>>(
+    //    //            base.binding, base.remoteAddress,
+    //    //            n => n.GetAllRole());
+    //    //}
+
+    //    public List<TreeModel> GetPermissionInfo(string roleid)
+    //    {
+    //        return
+    //                WcfClient<IPermission>.UseService<List<TreeModel>>(
+    //                base.binding, base.remoteAddress
+    //                , n => n.GetPermissionInfo(roleid));
+    //    }
+
+    //    public int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
+    //    {
+    //        return
+    //              WcfClient<IPermission>.UseService<int>(
+    //              base.binding, base.remoteAddress
+    //              , n => n.SavePermission(check, parentid, moduleid, functionid, roleid));
+    //    }
+
+    //    public PermissionViewModule GetPermissionListByUserID(string userid)
+    //    {
+    //        return
+    //              WcfClient<IPermission>.UseService<PermissionViewModule>(
+    //              base.binding, base.remoteAddress
+    //              , n => n.GetPermissionListByUserID(userid));
+    //    }
+
+    //    public PermissionViewModule GetAllPermission()
+    //    {
+    //        return
+    //             WcfClient<IPermission>.UseService<PermissionViewModule>(
+    //             base.binding, base.remoteAddress
+    //             , n => n.GetAllPermission());
+    //    }
+
+    //    public List<IMS_UP_JSMK> GetPermissionListByRoleID(string roleid)
+    //    {
+    //        return
+    //         WcfClient<IPermission>.UseService<List<IMS_UP_JSMK>>(
+    //         base.binding, base.remoteAddress
+    //         , n => n.GetPermissionListByRoleID(roleid));
+    //    }
+
+
+    //}
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfPermission : IWcfService
     {
-        const string ContactName = "IPermission";
-
-        public WcfClientPermission()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-        //public IList<IMS_UP_JS> GetAllRole()
-        //{
-        //    return
-        //            WcfClient<IRole>.UseService<IList<IMS_UP_JS>>(
-        //            base.binding, base.remoteAddress,
-        //            n => n.GetAllRole());
-        //}
-
-        public List<TreeModel> GetPermissionInfo(string roleid)
-        {
-            return
-                    WcfClient<IPermission>.UseService<List<TreeModel>>(
-                    base.binding, base.remoteAddress
-                    , n => n.GetPermissionInfo(roleid));
-        }
-
-        public int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
-        {
-            return
-                  WcfClient<IPermission>.UseService<int>(
-                  base.binding, base.remoteAddress
-                  , n => n.SavePermission(check, parentid, moduleid, functionid, roleid));
-        }
-
-        public PermissionViewModule GetPermissionListByUserID(string userid)
-        {
-            return
-                  WcfClient<IPermission>.UseService<PermissionViewModule>(
-                  base.binding, base.remoteAddress
-                  , n => n.GetPermissionListByUserID(userid));
-        }
-
-        public PermissionViewModule GetAllPermission()
-        {
-            return
-                 WcfClient<IPermission>.UseService<PermissionViewModule>(
-                 base.binding, base.remoteAddress
-                 , n => n.GetAllPermission());
-        }
-
-        public List<IMS_UP_JSMK> GetPermissionListByRoleID(string roleid)
-        {
-            return
-             WcfClient<IPermission>.UseService<List<IMS_UP_JSMK>>(
-             base.binding, base.remoteAddress
-             , n => n.GetPermissionListByRoleID(roleid));
-        }
-
 
     }
 
 
-    public class WcfConfigPermission : WcfClientConfig<IMS_UP_JSMK>, IPermission
+    public class WcfConfigPermission : WcfClientConfig<IMS_UP_JSMK, IWcfPermission>, IPermission, IWcfPermission
     {
         const string ContactName = "IPermission";
 
@@ -133,7 +139,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public List<TreeModel> GetPermissionInfo(string roleid)
         {
-            return RequestFunc<object, List<TreeModel>>("GetPermissionInfo", roleid);
+            return RequestFunc<object[], List<TreeModel>>("GetPermissionInfo", new object[] { roleid });
         }
 
         public int SavePermission(bool check, int parentid, int moduleid, int functionid, string roleid)
@@ -146,20 +152,20 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public PermissionViewModule GetPermissionListByUserID(string userid)
         {
-            return RequestFunc<object, PermissionViewModule>(
-                "GetPermissionListByUserID", userid);
+            return RequestFunc<object[], PermissionViewModule>(
+                "GetPermissionListByUserID", new object[] { userid });
         }
 
         public PermissionViewModule GetAllPermission()
         {
-            return RequestFunc<object, PermissionViewModule>(
-            "GetAllPermission", null);
+            return RequestFunc<object[], PermissionViewModule>(
+            "GetAllPermission", new object[] { null });
         }
 
         public List<IMS_UP_JSMK> GetPermissionListByRoleID(string roleid)
         {
-            return RequestFunc<object, List<IMS_UP_JSMK>>(
-                "GetPermissionListByRoleID", roleid);
+            return RequestFunc<object[], List<IMS_UP_JSMK>>(
+                "GetPermissionListByRoleID", new object[] { roleid });
         }
     }
 }

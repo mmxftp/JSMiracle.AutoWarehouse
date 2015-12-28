@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
 using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.UP.IAuthMng;
@@ -59,7 +60,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_Role_WCF : WcfService<IMS_UP_JS>, IWcfService
+    public class IMS_UP_Role_WCF : WcfService<IMS_UP_JS>, IWcfRole
     {
         IMS_UP_Role_Dal dal = new IMS_UP_Role_Dal();
 
@@ -77,19 +78,10 @@ namespace JsMiracle.WCF.UP.AuthMng
         {
             WcfResponse res = new WcfResponse();
 
-            object id;
-            List<IMS_UP_JS> dataList;
-
             switch (req.Head.RequestMethodName)
             {
                 case "GetAllRole":
-                    dataList = dal.GetAllRole();
-                    res.Body.SetBody(dataList);
-                    break;
-
-                case "Delete":
-                    id = req.Body.GetParameters<object>();
-                    dal.Delete(id);
+                    res.Body.Data = dal.GetAllRole();
                     break;
 
                 // 没有方法交给父类处理

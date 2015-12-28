@@ -7,7 +7,8 @@ using System.Text;
 
 namespace JsMiracle.WCF.BaseWcfClient
 {
-    public abstract class WcfClient<TChannel> : ClientBase<TChannel>, IDisposable where TChannel : class
+    public abstract class WcfClient<TChannel> : ClientBase<TChannel>, IDisposable 
+        where TChannel:class
     {
         protected static NetTcpBinding wcfBinding
             = new NetTcpBinding() ;
@@ -15,6 +16,12 @@ namespace JsMiracle.WCF.BaseWcfClient
         static WcfClient() {
 
             wcfBinding.Security.Mode = SecurityMode.None;
+            wcfBinding.ReceiveTimeout = TimeSpan.FromHours(1);
+            wcfBinding.SendTimeout  = TimeSpan.FromHours(1);
+
+            wcfBinding.MaxReceivedMessageSize = Int32.MaxValue;
+            wcfBinding.MaxBufferSize = Int32.MaxValue;
+
             //    var bind = new NetTcpBinding();
             ////var bind = MetadataExchangeBindings.CreateMexTcpBinding();
             //bind.Security.Mode = SecurityMode.None;

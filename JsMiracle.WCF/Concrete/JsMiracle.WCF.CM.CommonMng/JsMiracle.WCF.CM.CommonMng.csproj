@@ -71,6 +71,10 @@
       <Project>{5bd397d5-8f70-43c4-849e-725a7caebc0c}</Project>
       <Name>JsMiracle.WCF.CM.ICommonMng</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsMiracle.WCF.WcfBaseService\JsMiracle.WCF.WcfBaseService.csproj">
       <Project>{b6242f08-7ee1-4d6e-88a9-75c425c8fd00}</Project>
       <Name>JsMiracle.WCF.WcfBaseService</Name>

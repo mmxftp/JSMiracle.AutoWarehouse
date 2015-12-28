@@ -2,7 +2,6 @@
     ViewBag.Title = "IndexLocation";
 }
 
-@using JsMiracle.Dal.Concrete.CB;
 
 <style type="text/css">
     /*当前 easyui table 中行高 */
@@ -34,22 +33,22 @@
 
             // 初始化储位信息
             initCombobox: function () {
-                var p = @IMS_CB_Location_Dal.maxP;
+                var p = @ViewBag.MaxP;
 
                 var data = new Array();
-                for (var i = 0 ; i < p; i ++){
-                    var v = i +1;
-                    if ( i == 0){
+                for (var i = 0 ; i < p; i++) {
+                    var v = i + 1;
+                    if (i == 0) {
                         data.push({
-                            "id":v,
-                            "text":v,
-                            "selected":true
+                            "id": v,
+                            "text": v,
+                            "selected": true
                         });
                     }
-                    else{
+                    else {
                         data.push({
-                            "id":v,
-                            "text":v
+                            "id": v,
+                            "text": v
                         });
                     }
                 }
@@ -58,10 +57,10 @@
             },
 
             // 查询排对应的储位信息
-            searchLocationP:function(){
+            searchLocationP: function () {
                 var choiceP = $("#selP").combobox('getValue');
-                $("#grdLocation").datagrid('reload',{p:choiceP});
-               
+                $("#grdLocation").datagrid('reload', { p: choiceP });
+
             },
 
             // 刷新列表
@@ -85,9 +84,9 @@
             },
 
             // 双击单元格显示的内容
-            grdOnDblClickCell: function(index,field,value){ 
+            grdOnDblClickCell: function (index, field, value) {
                 console.log(value);
-                if (value.ExistsItem){
+                if (value.ExistsItem) {
 
                     var url = '@Url.Action("EditLocation")' + '?wxbh=' + value.WXBH;
                     var title = "显示储位";
@@ -100,14 +99,14 @@
         };
 
         $("#selP").combobox({
-            valueField:'id',
-            textField:'text',
-            width:"50px",
-            data :cblocation.initCombobox(),
+            valueField: 'id',
+            textField: 'text',
+            width: "50px",
+            data: cblocation.initCombobox(),
             onSelect: function (rec) {
                 if (rec) {
-                    $("#grdLocation").datagrid('reload',{p:rec.id});
-               
+                    $("#grdLocation").datagrid('reload', { p: rec.id });
+
                 }
             }
         });

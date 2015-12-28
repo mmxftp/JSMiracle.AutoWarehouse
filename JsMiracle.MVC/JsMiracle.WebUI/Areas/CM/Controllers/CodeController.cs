@@ -193,7 +193,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
         #region IMS_CM_DMLX_S 操作
         public ActionResult GetAllCodeType()
         {
-            var data = dalCodeType.GetAllEntites(null);
+            var data = dalCodeType.GetAllEntites("");
             return this.JsonFormat(data);
         }
 

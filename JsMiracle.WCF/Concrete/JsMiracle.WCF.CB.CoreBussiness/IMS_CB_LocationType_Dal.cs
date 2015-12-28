@@ -1,6 +1,8 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Entities.WCF;
 using JsMiracle.WCF.CB.ICoreBussiness;
+using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;
@@ -33,13 +35,32 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         }
         #endregion
 
-
-        //protected override IList<IMS_CB_WZLX> GetPageQuery(IQueryable<IMS_CB_WZLX> query)
-        //{
-
-
-
-        //    return base.GetPageQuery(query);
-        //}
     }
+
+
+    public class IMS_CB_LocationType_WCF : WcfService<IMS_CB_WZLX>, IWcfLocationType
+    {
+        IMS_CB_LocationType_Dal dal = new IMS_CB_LocationType_Dal();
+
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+            WcfResponse res = new WcfResponse();
+
+            switch (req.Head.RequestMethodName)
+            {
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CB_WZLX> DataLayer
+        {
+            get { return dal; }
+        }
+    }
+
 }

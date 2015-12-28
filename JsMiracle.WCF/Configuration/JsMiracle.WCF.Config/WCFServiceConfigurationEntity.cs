@@ -62,46 +62,55 @@ namespace JsMiracle.WCF.Config
 
         public void Open()
         {
-
-            var interfaceTypes = Assembly.LoadFrom(ClientLibraryFile);
-            var contract = interfaceTypes.GetType(Contract);
-
-            var service = Assembly.LoadFrom(ServiceLibraryFile);
-            var implTypes = service.GetType(ServiceName);
-
-            Uri address = new Uri(Address);
-            var bind = new NetTcpBinding();
-            //var bind = MetadataExchangeBindings.CreateMexTcpBinding();
-            bind.Security.Mode = SecurityMode.None;
-            bind.ReceiveTimeout = TimeSpan.FromHours(1);
-            bind.OpenTimeout = TimeSpan.FromHours(1);
-            bind.SendTimeout = TimeSpan.FromHours(1);
-
-            host = new ServiceHost(implTypes);
-            //host.BaseAddresses.
-            host.AddServiceEndpoint(contract, bind, address);
-
-
-            #region 加入报错调试信息
-            // 加入报错调试信息
-            var metaDataPublishBehavior = new ServiceMetadataBehavior
+            try
             {
-                HttpGetEnabled = true,
-                HttpGetUrl = new Uri(BehaviorHttpGetUrl)
-            };
-            var debugBehavior = new ServiceDebugBehavior
+                var interfaceTypes = Assembly.LoadFrom(ClientLibraryFile);
+                var contract = interfaceTypes.GetType(Contract);
+
+                var service = Assembly.LoadFrom(ServiceLibraryFile);
+                var implTypes = service.GetType(ServiceName);
+
+                Uri address = new Uri(Address);
+                var bind = new NetTcpBinding();
+                //var bind = MetadataExchangeBindings.CreateMexTcpBinding();
+                bind.Security.Mode = SecurityMode.None;
+                bind.ReceiveTimeout = TimeSpan.FromHours(1);
+                bind.OpenTimeout = TimeSpan.FromHours(1);
+                bind.SendTimeout = TimeSpan.FromHours(1);
+                bind.MaxReceivedMessageSize = Int32.MaxValue;
+                bind.MaxBufferSize = Int32.MaxValue;
+
+                host = new ServiceHost(implTypes);
+                //host.BaseAddresses.
+                host.AddServiceEndpoint(contract, bind, address);
+
+
+                #region 加入报错调试信息
+                // 加入报错调试信息
+                var metaDataPublishBehavior = new ServiceMetadataBehavior
+                {
+                    HttpGetEnabled = true,
+                    HttpGetUrl = new Uri(BehaviorHttpGetUrl)
+                };
+                var debugBehavior = new ServiceDebugBehavior
+                {
+                    IncludeExceptionDetailInFaults = true
+                };
+                host.Description.Behaviors.Add(metaDataPublishBehavior);
+
+                //You got to remove the default 'ServiceDeubgBehavior' before you can add one.
+                host.Description.Behaviors.RemoveAll<ServiceDebugBehavior>();
+
+                host.Description.Behaviors.Add(debugBehavior);
+                #endregion
+
+                host.Open();
+            }
+            catch(Exception ex)
             {
-                IncludeExceptionDetailInFaults = true
-            };
-            host.Description.Behaviors.Add(metaDataPublishBehavior);
-
-            //You got to remove the default 'ServiceDeubgBehavior' before you can add one.
-            host.Description.Behaviors.RemoveAll<ServiceDebugBehavior>();
-
-            host.Description.Behaviors.Add(debugBehavior);
-            #endregion
-
-            host.Open();
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         public void Close()

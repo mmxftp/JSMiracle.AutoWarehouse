@@ -30,7 +30,5 @@ namespace JsMiracle.Entities.TabelEntities
         public System.DateTime RKSJ { get; set; }
         public Nullable<System.DateTime> ZHXGSJ { get; set; }
         public string BZ { get; set; }
-    
-        public virtual IMS_CB_RQ IMS_CB_RQ_S { get; set; }
     }
 }

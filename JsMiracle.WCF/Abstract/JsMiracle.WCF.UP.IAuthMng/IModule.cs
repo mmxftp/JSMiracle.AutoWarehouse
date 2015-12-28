@@ -2,6 +2,7 @@
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 模块接口
     /// </summary>
-    [ServiceContract]
     public interface IModule : IDataLayer<IMS_UP_MK>
     {
         /// <summary>
@@ -42,41 +42,47 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
 
 
-    public class WcfClientModule : WcfDalClient<IMS_UP_MK>, IModule
+    //public class WcfClientModule : WcfDalClient<IMS_UP_MK>, IModule
+    //{
+    //    const string ContactName = "IModule";
+
+    //    public WcfClientModule()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+
+    //    public List<IMS_UP_MK> GetRootModule()
+    //    {
+    //        return
+    //              WcfClient<IModule>.UseService<List<IMS_UP_MK>>(
+    //              base.binding, base.remoteAddress,
+    //              n => n.GetRootModule());
+    //    }
+
+    //    public IMS_UP_MK GetEntityByModuleID(int moduleid)
+    //    {
+    //        return
+    //            WcfClient<IModule>.UseService<IMS_UP_MK>(
+    //            base.binding, base.remoteAddress,
+    //            n => n.GetEntityByModuleID(moduleid));
+    //    }
+
+    //    public List<IMS_UP_MK> GetChildModuleList(int parentid)
+    //    {
+    //        return
+    //            WcfClient<IModule>.UseService<List<IMS_UP_MK>>(
+    //            base.binding, base.remoteAddress,
+    //            n => n.GetChildModuleList(parentid));
+    //    }
+    //}
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfModule : IWcfService
     {
-        const string ContactName = "IModule";
 
-        public WcfClientModule()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-
-        public List<IMS_UP_MK> GetRootModule()
-        {
-            return
-                  WcfClient<IModule>.UseService<List<IMS_UP_MK>>(
-                  base.binding, base.remoteAddress,
-                  n => n.GetRootModule());
-        }
-
-        public IMS_UP_MK GetEntityByModuleID(int moduleid)
-        {
-            return 
-                WcfClient<IModule>.UseService<IMS_UP_MK>(
-                base.binding, base.remoteAddress,
-                n => n.GetEntityByModuleID(moduleid));
-        }
-
-        public List<IMS_UP_MK> GetChildModuleList(int parentid)
-        {
-            return
-                WcfClient<IModule>.UseService<List<IMS_UP_MK>>(
-                base.binding, base.remoteAddress,
-                n => n.GetChildModuleList(parentid));
-        }
     }
 
-    public class WcfConfigModule : WcfClientConfig<IMS_UP_MK>, IModule
+    public class WcfConfigModule : WcfClientConfig<IMS_UP_MK, IWcfModule>, IModule, IWcfModule
     {
         const string ContactName = "IModule";
 
@@ -86,17 +92,17 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public List<IMS_UP_MK> GetRootModule()
         {
-            return RequestFunc<object, List<IMS_UP_MK>>("GetRootModule", null);
+            return RequestFunc<object[], List<IMS_UP_MK>>("GetRootModule", new object[]{null});
         }
 
         public IMS_UP_MK GetEntityByModuleID(int moduleid)
         {
-            return RequestFunc<object, IMS_UP_MK>("GetRootModule", moduleid);
+            return RequestFunc<object[], IMS_UP_MK>("GetRootModule", new object[] { moduleid });
         }
 
         public List<IMS_UP_MK> GetChildModuleList(int parentid)
         {
-            return RequestFunc<object, List<IMS_UP_MK>>("GetChildModuleList", parentid);
+            return RequestFunc<object[], List<IMS_UP_MK>>("GetChildModuleList", new object[] { parentid });
         }
     }
 }

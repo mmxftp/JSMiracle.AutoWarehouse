@@ -2,6 +2,7 @@
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace JsMiracle.WCF.UP.IAuthMng
     /// <summary>
     /// 角色信息接口
     /// </summary>.
-    [ServiceContract]
     public interface IRole : IDataLayer<IMS_UP_JS>
     {
         /// <summary>
@@ -24,28 +24,34 @@ namespace JsMiracle.WCF.UP.IAuthMng
         List<IMS_UP_JS> GetAllRole();
     }
 
-    public class WcfClientRole : WcfDalClient<IMS_UP_JS>, IRole
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(AuthKnownTypesProvider))]
+    public interface IWcfRole : IWcfService
     {
-        const string ContactName = "IRole";
-
-        public WcfClientRole()
-            : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-        { }
-
-
-        public List<IMS_UP_JS> GetAllRole()
-        {
-            return
-                    WcfClient<IRole>.UseService<List<IMS_UP_JS>>(
-                    base.binding, base.remoteAddress,
-                    n => n.GetAllRole());
-        }
 
     }
 
 
+    //public class WcfClientRole : WcfDalClient<IMS_UP_JS>, IRole
+    //{
+    //    const string ContactName = "IRole";
 
-    public class WcfConfigRole : WcfClientConfig<IMS_UP_JS>, IRole
+    //    public WcfClientRole()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+
+    //    public List<IMS_UP_JS> GetAllRole()
+    //    {
+    //        return
+    //                WcfClient<IRole>.UseService<List<IMS_UP_JS>>(
+    //                base.binding, base.remoteAddress,
+    //                n => n.GetAllRole());
+    //    }
+
+    //}
+
+    public class WcfConfigRole : WcfClientConfig<IMS_UP_JS, IWcfRole>, IRole, IWcfRole
     {
         const string ContactName = "IRole";
 
@@ -55,7 +61,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public List<IMS_UP_JS> GetAllRole()
         {
-            return RequestFunc<object, List<IMS_UP_JS>>("GetAllRole", null);
+            return RequestFunc<object[], List<IMS_UP_JS>>("GetAllRole", new object[] { null });
         }
     }
 }

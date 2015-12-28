@@ -3,9 +3,11 @@ using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 
 namespace JsMiracle.WCF.CM.ICommonMng
@@ -38,19 +40,41 @@ namespace JsMiracle.WCF.CM.ICommonMng
 
     }
 
-    public class WcfClientObjectDataDictionary : WcfDalClient<IMS_CM_DXXX>, IObjectDataDictionary
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(CommonKnownTypesProvider))]
+    public interface IWcfObjectDataDictionary : IWcfService
+    {
+
+    }
+
+    //public class WcfClientObjectDataDictionary : WcfDalClient<IMS_CM_DXXX>, IObjectDataDictionary
+    //{
+    //    const string ContactName = "IObjectDataDictionary";
+
+    //    public WcfClientObjectDataDictionary()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+    //    public void ReSaveObjectData(string tablename, string opUser)
+    //    {
+    //        WcfClient<IObjectDataDictionary>.UseService(
+    //            base.binding, base.remoteAddress,
+    //            n => n.ReSaveObjectData(tablename, opUser));
+    //    }
+    //}
+
+
+    public class WcfConfigObjectDataDictionary : WcfClientConfig<IMS_CM_DXXX, IWcfObjectDataDictionary>, IObjectDataDictionary
     {
         const string ContactName = "IObjectDataDictionary";
 
-        public WcfClientObjectDataDictionary()
+        public WcfConfigObjectDataDictionary()
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
         public void ReSaveObjectData(string tablename, string opUser)
         {
-            WcfClient<IObjectDataDictionary>.UseService(
-                base.binding, base.remoteAddress,
-                n => n.ReSaveObjectData(tablename, opUser));
+            RequestAction<object[]>("ReSaveObjectData", new object[] { tablename, opUser });
         }
     }
 

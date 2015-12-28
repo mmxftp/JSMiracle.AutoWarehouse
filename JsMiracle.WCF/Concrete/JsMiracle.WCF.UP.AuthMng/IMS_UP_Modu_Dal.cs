@@ -9,6 +9,8 @@ using JsMiracle.Entities;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using JsMiracle.WCF.Interface;
+using System.Runtime.Serialization;
+using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
@@ -135,7 +137,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
     }
 
-    public class IMS_UP_Modu_WCF : WcfService<IMS_UP_MK>, IWcfService
+    public class IMS_UP_Modu_WCF : WcfService<IMS_UP_MK>, IWcfModule
     {
         IMS_UP_Modu_Dal dal = new IMS_UP_Modu_Dal();
 
@@ -149,31 +151,26 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
 
 
-        protected override WcfResponse RequestFun(Interface.WcfRequest req)
+        protected override WcfResponse RequestFun(WcfRequest req)
         {
             WcfResponse res = new WcfResponse();
-            IMS_UP_Modu_Dal dal = new IMS_UP_Modu_Dal();
+             
+            object[] objs;
 
-            List<IMS_UP_MK> dataList;
-            IMS_UP_MK ent;
-            int moduleid;
             switch (req.Head.RequestMethodName)
             {
                 case "GetRootModule":
-                    dataList= dal.GetRootModule();
-                    res.Body.SetBody(dataList);
+                    res.Body.Data= dal.GetRootModule();
                     break;
                     
                 case "GetEntityByModuleID":
-                    moduleid = (int)req.Body.GetParameters<object>();
-                    ent = dal.GetEntityByModuleID(moduleid);
-                    res.Body.SetBody(ent);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetEntityByModuleID((int)objs[0]);
                     break;
 
                 case "GetChildModuleList":
-                    moduleid = (int)req.Body.GetParameters<object>();
-                    dataList = dal.GetChildModuleList(moduleid);
-                    res.Body.SetBody(dataList);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetChildModuleList((int)objs[0]);
                     break;
 
                 default :

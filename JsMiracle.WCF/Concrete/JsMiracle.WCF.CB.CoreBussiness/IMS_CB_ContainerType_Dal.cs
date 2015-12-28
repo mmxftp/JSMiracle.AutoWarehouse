@@ -1,6 +1,8 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Entities.WCF;
 using JsMiracle.WCF.CB.ICoreBussiness;
+using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;
@@ -30,5 +32,29 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         }
         #endregion
 
+    }
+
+
+    public class IMS_CB_ContainerType_WCF : WcfService<IMS_CB_RQLX>, IWcfContainerType
+    {
+        IMS_CB_ContainerType_Dal dal = new IMS_CB_ContainerType_Dal();
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+            WcfResponse res = new WcfResponse();
+            switch (req.Head.RequestMethodName)
+            {
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CB_RQLX> DataLayer
+        {
+            get { return dal; }
+        }
     }
 }

@@ -2,9 +2,11 @@
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
+using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 
 namespace JsMiracle.WCF.CB.ICoreBussiness
@@ -23,22 +25,42 @@ namespace JsMiracle.WCF.CB.ICoreBussiness
         IMS_CB_WL GetEntityByWXBH(string wlbh);
     }
 
+    [ServiceContract]
+    [ServiceKnownType("GetKnownTypes", typeof(CoreKnownTypesProvider))]
+    public interface IWcfItem : IWcfService
+    {
 
-    public class WcfClientItem : WcfDalClient<IMS_CB_WL>, IItem
+    }
+    //public class WcfClientItem : WcfDalClient<IMS_CB_WL>, IItem
+    //{
+    //    const string ContactName = "IItem";
+
+    //    public WcfClientItem()
+    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
+    //    { }
+
+
+    //    public IMS_CB_WL GetEntityByWXBH(string wlbh)
+    //    {
+    //        return
+    //                WcfClient<IItem>.UseService<IMS_CB_WL>(
+    //                base.binding, base.remoteAddress,
+    //                n => n.GetEntityByWXBH(wlbh));
+    //    }
+    //}
+
+
+    public class WcfConfigItem : WcfClientConfig<IMS_CB_WL, IWcfItem>, IItem
     {
         const string ContactName = "IItem";
 
-        public WcfClientItem()
+        public WcfConfigItem()
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
-
         public IMS_CB_WL GetEntityByWXBH(string wlbh)
         {
-            return
-                    WcfClient<IItem>.UseService<IMS_CB_WL>(
-                    base.binding, base.remoteAddress,
-                    n => n.GetEntityByWXBH(wlbh));
+            return RequestFunc<object[], IMS_CB_WL>("GetEntityByWXBH", new object[] { wlbh });
         }
     }
 }

@@ -10,6 +10,7 @@ using JsMiracle.WCF.UP.IAuthMng;
 using JsMiracle.WCF.WcfBaseService;
 using JsMiracle.WCF.Interface;
 using JsMiracle.Framework;
+using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
@@ -18,7 +19,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
         public List<IMS_UP_YH> GetUserList(string roleid)
         {
-
+            
 
             var data = from r in this.DbContext.IMS_UP_JSYH_S
                        join u in this.DbContext.IMS_UP_YH_S
@@ -84,7 +85,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_UserRole_WCF : WcfService<IMS_UP_JSYH>, IWcfService
+    public class IMS_UP_RoleUser_WCF : WcfService<IMS_UP_JSYH>, IWcfRoleUser
     {
 
         IMS_UP_RoUr_Dal dal = new IMS_UP_RoUr_Dal();
@@ -101,33 +102,24 @@ namespace JsMiracle.WCF.UP.AuthMng
 
         protected override WcfResponse RequestFun(WcfRequest req)
         {
-
             WcfResponse res = new WcfResponse();
-
-
-            string roleid;
             object[] objs;
-            List<IMS_UP_YH> dataList;
-            int effectRowCount;
 
             switch (req.Head.RequestMethodName)
             {
                 case "GetUserList":
-                    roleid = (string)req.Body.GetParameters<object>();
-                    dataList = dal.GetUserList(roleid);
-                    res.Body.SetBody(dataList);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetUserList((string)objs[0]);
                     break;
 
                 case "SaveRoleUser":
-                    objs = req.Body.GetParameters<object[]>();
-                    effectRowCount = dal.SaveRoleUser((string)objs[0], (string)objs[1]);
-                    res.Body.SetBody(effectRowCount);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.SaveRoleUser((string)objs[0], (string)objs[1]);
                     break;
 
                 case "RemoveRoleUser":
-                    objs = req.Body.GetParameters<object[]>();
-                    effectRowCount = dal.RemoveRoleUser((string)objs[0], (string)objs[1]);
-                    res.Body.SetBody(effectRowCount);
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.RemoveRoleUser((string)objs[0], (string)objs[1]);
                     break;
 
                 // 没有方法交给父类处理

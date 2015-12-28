@@ -14,12 +14,6 @@ namespace JsMiracle.Entities.TabelEntities
     
     public partial class IMS_CB_WZLX
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IMS_CB_WZLX()
-        {
-            this.IMS_CB_WZ_S = new HashSet<IMS_CB_WZ>();
-        }
-    
         public long ID { get; set; }
         public string LXDM { get; set; }
         public string LXMC { get; set; }
@@ -37,8 +31,5 @@ namespace JsMiracle.Entities.TabelEntities
         public int FCDJ { get; set; }
         public int WDDJ { get; set; }
         public string CJR { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IMS_CB_WZ> IMS_CB_WZ_S { get; set; }
     }
 }

@@ -9,6 +9,8 @@ using System.Linq.Dynamic;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.CB.ICoreBussiness;
 using JsMiracle.WCF.WcfBaseService;
+using JsMiracle.WCF.Interface;
+using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
@@ -57,5 +59,38 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
 
 
+    }
+
+
+    public class IMS_CB_Item_WCF : WcfService<IMS_CB_WL>, IWcfItem
+    {
+        IMS_CB_Item_Dal dal = new IMS_CB_Item_Dal();
+
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+            WcfResponse res = new WcfResponse();
+
+            object[] objs;
+
+            switch (req.Head.RequestMethodName)
+            {
+                case "GetEntityByWXBH":
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetEntityByWXBH((string)objs[0]);
+                    break;
+
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CB_WL> DataLayer
+        {
+            get { return dal; }
+        }
     }
 }

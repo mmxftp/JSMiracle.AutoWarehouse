@@ -65,6 +65,7 @@
     <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\CodeTypeEnum.cs" />
+    <Compile Include="Enum\SerializedType.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="IDataLayer.cs" />
     <Compile Include="Partial\IMS_CB_RQ.cs" />
@@ -147,9 +148,14 @@
     <Compile Include="TabelEntities\IMS_UP_YH.cs">
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="TabelEntities\sysdiagrams.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
     <Compile Include="View\TableColumnsModule.cs" />
     <Compile Include="WCF\SplitPageParameters.cs" />
+    <Compile Include="WCF\WcfRequest.cs" />
+    <Compile Include="WCF\WcfResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

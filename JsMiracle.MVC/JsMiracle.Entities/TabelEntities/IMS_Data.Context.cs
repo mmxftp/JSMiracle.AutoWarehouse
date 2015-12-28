@@ -42,5 +42,6 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_UP_YH> IMS_UP_YH_S { get; set; }
         public virtual DbSet<IMS_CM_DXXX> IMS_CM_DXXX_S { get; set; }
         public virtual DbSet<IMS_CM_YHDX> IMS_CM_YHDX_S { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

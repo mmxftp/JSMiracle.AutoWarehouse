@@ -1,7 +1,11 @@
 ﻿using JsMiracle.Entities;
+using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Entities.WCF;
 using JsMiracle.Framework;
+using JsMiracle.Framework.Serialized;
 using JsMiracle.WCF.CB.ICoreBussiness;
+using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;
@@ -25,7 +29,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         }
         static readonly InventoryPositionModule maxPosition;
 
-  
+
 
         #region protected Method
 
@@ -63,7 +67,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         //    return 0;
         //}
 
-        public DataTable GetLocationState(int p)
+        public string GetLocationState(int p)
         {
             //             select FWZT,l,c,wxbh,rq.ID from ims_cb_wz_s wz 
             //left join IMS_CB_RQ_S rq on wz.WXBH = rq.DQWZ 
@@ -85,6 +89,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
                        };
 
             DataTable dt = new DataTable();
+            dt.TableName = "LocationInfo";
 
             // 最大列为 层号 加 物理层号
             var dataColNumber = maxPosition.MaxL + 1;
@@ -129,7 +134,10 @@ namespace JsMiracle.WCF.CB.CoreBussiness
                 }
             }
 
-            return dt;
+            PaginationModel pageModel = new PaginationModel(dt);
+            return JsonSerialization.Serialize(pageModel);
+
+            //return dt;
         }
 
         //public int MaxP
@@ -150,7 +158,48 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
         public InventoryPositionModule GetMaxPosition()
         {
-            throw new NotImplementedException();
+            return maxPosition;
+        }
+    }
+
+
+
+    public class IMS_CB_Location_WCF : WcfService<IMS_CB_WZ>, IWcfLocation
+    {
+        IMS_CB_Location_Dal dal = new IMS_CB_Location_Dal();
+
+        protected override WcfResponse RequestFun(WcfRequest req)
+        {
+
+            WcfResponse res = new WcfResponse();
+
+            InventoryPositionModule position;
+            string dt;
+            object[] objs;
+
+            switch (req.Head.RequestMethodName)
+            {
+                case "GetMaxPosition":
+                    res.Body.Data = dal.GetMaxPosition();
+                    break;
+
+                case "GetLocationState":
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetLocationState(Convert.ToInt32(objs[0]));
+
+                    break;
+
+                default:
+                    return null;
+            }
+
+            res.Head.IsSuccess = true;
+            return res;
+        }
+
+        protected override IDataLayer<IMS_CB_WZ> DataLayer
+        {
+            get { return dal; }
         }
     }
 }

@@ -13,11 +13,11 @@ using System.Web.Mvc;
 namespace JsMiracle.InversionOfControl
 {
 
-    public class DependencyInstallerFail : IWindsorInstaller
+    public class DependencyInstaller : IWindsorInstaller
     {
         readonly string mainAssemble;
 
-        public DependencyInstallerFail(string mainAssembleName)
+        public DependencyInstaller(string mainAssembleName)
         {
             mainAssemble = mainAssembleName;
         } 
@@ -25,28 +25,27 @@ namespace JsMiracle.InversionOfControl
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IUser>()
-                
-                .ImplementedBy<WcfClientUser>().LifeStyle.PerWebRequest,
+                Component.For<IUser>()              
+                .ImplementedBy<WcfConfigUser>().LifeStyle.PerWebRequest,
 
                 Component.For<IMembershipService>()
-                .ImplementedBy<WcfClientMembershipService>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigMembershipService>().LifeStyle.PerWebRequest,
 
 
                 Component.For<IModule>()
-                .ImplementedBy<WcfClientModule>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigModule>().LifeStyle.PerWebRequest,
 
                 Component.For<IModuleFunction>()
-                .ImplementedBy<WcfClientModuleFunction>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigModuleFunction>().LifeStyle.PerWebRequest,
 
                 Component.For<IRole>()
-                .ImplementedBy<WcfClientRole>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigRole>().LifeStyle.PerWebRequest,
 
                 Component.For<IPermission>()
-                .ImplementedBy<WcfClientPermission>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigPermission>().LifeStyle.PerWebRequest,
 
                 Component.For<IRoleUser>()
-                .ImplementedBy<WcfClientRoleUser>().LifeStyle.PerWebRequest,
+                .ImplementedBy<WcfConfigRoleUser>().LifeStyle.PerWebRequest,
 
                 Component.For<IFormsAuthentication>()
                 .ImplementedBy<FormsAuthenticationService>().LifeStyle.PerWebRequest,
@@ -58,34 +57,34 @@ namespace JsMiracle.InversionOfControl
                 //.ImplementedBy<ActionPermission>().LifeStyle.PerWebRequest,
 
                 Component.For<IItem>()
-                     .ImplementedBy<WcfClientItem>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigItem>().LifeStyle.PerWebRequest,
 
                 Component.For<ICode>()
-                     .ImplementedBy<WcfClientCode>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigCode>().LifeStyle.PerWebRequest,
 
                 Component.For<ICodeType>()
-                     .ImplementedBy<WcfClientCodeType>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigCodeType>().LifeStyle.PerWebRequest,
 
                 Component.For<IContainerType>()
-                     .ImplementedBy<WcfClientContainerType>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigContainerType>().LifeStyle.PerWebRequest,
 
                 Component.For<IContainer>()
-                     .ImplementedBy<WcfClientContainer>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigContainer>().LifeStyle.PerWebRequest,
 
                 Component.For<ILocation>()
-                     .ImplementedBy<WcfClientLocation>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigLocation>().LifeStyle.PerWebRequest,
 
                 Component.For<ILocationType>()
-                     .ImplementedBy<WcfClientLocationType>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigLocationType>().LifeStyle.PerWebRequest,
 
                 Component.For<ILocationRelationship>()
-                     .ImplementedBy<WcfClientLocationRelationship>().LifeStyle.PerWebRequest,
+                     .ImplementedBy<WcfConfigLocationRelationship>().LifeStyle.PerWebRequest,
 
                 Component.For<IObjectDataDictionary>()
-                    .ImplementedBy<WcfClientObjectDataDictionary>().LifeStyle.PerWebRequest,
+                    .ImplementedBy<WcfConfigObjectDataDictionary>().LifeStyle.PerWebRequest,
 
                 Component.For<IUserObject>()
-                    .ImplementedBy<WcfClientUserObject>().LifeStyle.PerWebRequest,
+                    .ImplementedBy<WcfConfigUserObject>().LifeStyle.PerWebRequest,
 
                 Component.For<JsMiracle.Framework.Log.ILog>()
                 .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,

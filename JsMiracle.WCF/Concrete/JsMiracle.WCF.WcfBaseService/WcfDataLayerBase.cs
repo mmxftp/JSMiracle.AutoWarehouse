@@ -11,7 +11,7 @@ using JsMiracle.Framework;
 namespace JsMiracle.WCF.WcfBaseService
 {
 
-    public abstract class WcfDataLayerBase<T> :  IDataLayer<T> where T : class ,new()
+    public abstract class WcfDataLayerBase<T> : IDataLayer<T> where T : class ,new()
     {
         private ORGModels _dbContext;
 
@@ -136,7 +136,7 @@ namespace JsMiracle.WCF.WcfBaseService
         protected virtual List<T> GetAllEntitesByFilter(string filter)
         {
             //返回按条件过滤的记录
-            if (filter != null)
+            if (!string.IsNullOrEmpty(filter))
                 return DbContext.Set<T>().Where(filter).ToList();
 
             //条件为空返回全部
@@ -167,7 +167,7 @@ namespace JsMiracle.WCF.WcfBaseService
         //public virtual bool Exists(Expression<Func<T, bool>> filter)
         public virtual bool Exists(string filter)
         {
-            if (filter != null)
+            if (!string.IsNullOrEmpty(filter))
             {
                 var data = DbContext.Set<T>().Where(filter).FirstOrDefault();
 

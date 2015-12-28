@@ -4,10 +4,10 @@
     <WcfService ID="001">
       <ServiceID>IUser</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20001/WCFService/IUser</Address>
       <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_User_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfUser</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50001/WCFService/IUser</BehaviorHttpGetUrl>
     </WcfService>
 
@@ -24,20 +24,20 @@
     <WcfService ID="003">
       <ServiceID>IModule</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20003/WCFService/IModule</Address>
       <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Modu_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfModule</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50003/WCFService/IModule</BehaviorHttpGetUrl>
     </WcfService>
 
     <WcfService ID="004">
       <ServiceID>IModuleFunction</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20004/WCFService/IModuleFunction</Address>
       <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_MoFn_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfModuleFunction</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50004/WCFService/IModuleFunction</BehaviorHttpGetUrl>
 
     </WcfService>
@@ -45,32 +45,142 @@
     <WcfService ID="005">
       <ServiceID>IPermission</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20005/WCFService/IPermission</Address>
       <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Permission_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfPermission</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50005/WCFService/IPermission</BehaviorHttpGetUrl>
     </WcfService>
 
     <WcfService ID="006">
       <ServiceID>IRole</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20006/WCFService/IRole</Address>
       <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_Role_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfRole</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50006/WCFService/IRole</BehaviorHttpGetUrl>
     </WcfService>
 
     <WcfService ID="007">
       <ServiceID>IRoleUser</ServiceID>
       <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.AuthMng.dll</ServiceLibraryFile>
-      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.Interface.dll</ClientLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.UP.IAuthMng.dll</ClientLibraryFile>
       <Address>net.tcp://127.0.0.1:20007/WCFService/IRoleUser</Address>
-      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_UserRole_WCF</ServiceName>
-      <Contract>JsMiracle.WCF.Interface.IWcfService</Contract>
+      <ServiceName>JsMiracle.WCF.UP.AuthMng.IMS_UP_RoleUser_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.UP.IAuthMng.IWcfRoleUser</Contract>
       <BehaviorHttpGetUrl>http://127.0.0.1:50007/WCFService/IRoleUser</BehaviorHttpGetUrl>
     </WcfService>
+
+
+    <!--begin JsMiracle.WCF.CB.CoreBussiness.dll-->
+    <WcfService ID="008">
+      <ServiceID>IContainer</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20008/WCFService/IContainer</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_Container_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfContainer</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50008/WCFService/IContainer</BehaviorHttpGetUrl>
+    </WcfService>
+
+
+    <WcfService ID="009">
+      <ServiceID>IContainerType</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20009/WCFService/IContainerType</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_ContainerType_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfContainerType</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50009/WCFService/IContainerType</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="010">
+      <ServiceID>IItem</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20010/WCFService/IItem</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_Item_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfItem</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50010/WCFService/IItem</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="011">
+      <ServiceID>ILocation</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20011/WCFService/ILocation</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_Location_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfLocation</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50011/WCFService/ILocation</BehaviorHttpGetUrl>
+    </WcfService>
+
+
+    <WcfService ID="012">
+      <ServiceID>ILocationRelationship</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20012/WCFService/ILocationRelationship</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_LocationRelationship_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfLocationRelationship</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50012/WCFService/ILocationRelationship</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="013">
+      <ServiceID>ILocationType</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.CoreBussiness.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CB.ICoreBussiness.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20013/WCFService/ILocationType</Address>
+      <ServiceName>JsMiracle.WCF.CB.CoreBussiness.IMS_CB_LocationType_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CB.ICoreBussiness.IWcfLocationType</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50013/WCFService/ILocationType</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <!--end JsMiracle.WCF.CB.CoreBussiness.dll-->
+
+
+    <!--begin JsMiracle.WCF.CM.CommonMng.dll-->
+    <WcfService ID="014">
+      <ServiceID>ICode</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.CommonMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.ICommonMng.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20014/WCFService/ICode</Address>
+      <ServiceName>JsMiracle.WCF.CM.CommonMng.IMS_CM_Code_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CM.ICommonMng.IWcfCode</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50014/WCFService/ICode</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="015">
+      <ServiceID>ICodeType</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.CommonMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.ICommonMng.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20015/WCFService/ICodeType</Address>
+      <ServiceName>JsMiracle.WCF.CM.CommonMng.IMS_CM_CodeType_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CM.ICommonMng.IWcfCodeType</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50015/WCFService/ICodeType</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="016">
+      <ServiceID>IObjectDataDictionary</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.CommonMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.ICommonMng.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20016/WCFService/IObjectDataDictionary</Address>
+      <ServiceName>JsMiracle.WCF.CM.CommonMng.IMS_CM_DXXX_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CM.ICommonMng.IWcfObjectDataDictionary</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50016/WCFService/IObjectDataDictionary</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <WcfService ID="017">
+      <ServiceID>IUserObject</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.CommonMng.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.CM.ICommonMng.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20017/WCFService/IUserObject</Address>
+      <ServiceName>JsMiracle.WCF.CM.CommonMng.IMS_CM_YHDX_WCF</ServiceName>
+      <Contract>JsMiracle.WCF.CM.ICommonMng.IWcfUserObject</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50017/WCFService/IUserObject</BehaviorHttpGetUrl>
+    </WcfService>
+
+    <!--end JsMiracle.WCF.CM.CommonMng.dll-->
 
   </Services>
 

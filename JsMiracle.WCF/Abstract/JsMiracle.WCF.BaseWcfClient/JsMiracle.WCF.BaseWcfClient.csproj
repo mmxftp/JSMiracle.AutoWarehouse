@@ -43,7 +43,6 @@
     <Compile Include="WcfClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WcfClientConfig.cs" />
-    <Compile Include="WcfDalClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\JsMiracle.Infrastructure\JsMiracle.Framework\JsMiracle.Framework.csproj">

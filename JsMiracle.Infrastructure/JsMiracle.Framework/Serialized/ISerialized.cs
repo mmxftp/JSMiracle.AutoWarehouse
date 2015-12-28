@@ -7,8 +7,8 @@ namespace JsMiracle.Framework.Serialized
 {
     public interface ISerialized
     {
-        T Deserialize<T>(string xml) where T : class;
+        T Deserialize<T>(string xml);
 
-        string Serialize<T>(T obj) where T : class;
+        string Serialize<T>(T obj);
     }
 }

@@ -23,7 +23,8 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         ILocationType dalLocationType;
         ILocationRelationship dalLocationRelationship;
         IContainer dalContainer;
-        
+
+        InventoryPositionModule maxPosition;
 
         public LocationController(ILocation repoLocation
             , ILocationType repoLocationType
@@ -34,6 +35,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             this.dalLocationType = repoLocationType;
             this.dalLocationRelationship = repoLocationRelationship;
             this.dalContainer = repoContainer;
+            maxPosition = dalLocation.GetMaxPosition();
         }
 
         #region IMS_CB_WZ
@@ -42,6 +44,8 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         [AuthViewPage]
         public ActionResult IndexLocation()
         {
+
+            ViewBag.MaxP = maxPosition.MaxP;
             return View();
         }
 
@@ -62,13 +66,13 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
 
             var frozenColumnsString =  JsonConvert.SerializeObject(frozenColumns);
             
-            var position = dalLocation.GetMaxPosition();
+            //var position = dalLocation.GetMaxPosition();
 
 
-            var columns = new DataGridColumn[position.MaxL];
+            var columns = new DataGridColumn[maxPosition.MaxL];
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < position.MaxL; i++)
+            for (int i = 0; i < maxPosition.MaxL; i++)
             {
                 columns[i] = new DataGridColumn()
                 {
@@ -109,13 +113,18 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
         /// </summary>
         /// <param name="p">第几排,默认第1排</param>
         /// <returns></returns>
-        public ActionResult GetLocationList(int p=1)
+        public MvcHtmlString GetLocationList(int p = 1)
         {
-            var dt = dalLocation.GetLocationState(p);
+            //var dt = dalLocation.GetLocationState(p);
 
-            var info = new PaginationModel(dt);
-            return this.JsonFormat(info);
+            //var info = new PaginationModel(dt);
+            //return this.JsonFormat(info) ;
+            var info = dalLocation.GetLocationState(p);
+            return MvcHtmlString.Create(info);
         }
+
+ 
+
 
         [AuthViewPage]
         public ActionResult EditLocation(string wxbh)
