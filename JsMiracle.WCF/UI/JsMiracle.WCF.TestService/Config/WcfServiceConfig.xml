@@ -182,6 +182,29 @@
 
     <!--end JsMiracle.WCF.CM.CommonMng.dll-->
 
+    <!--begin JsMiracle.WCF.VC.OrderForm.dll-->
+    <WcfService ID="018">
+      <ServiceID>IOrderData</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.VC.OrderForm.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.VC.IOrderForm.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20018/WCFService/IOrderData</Address>
+      <ServiceName>JsMiracle.WCF.VC.OrderForm.IMS_VC_DJH_WCF</ServiceName>
+      <Contract>JsMiracle.Wcf.VC.IOrderForm.IWcfOrderData</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50018/WCFService/IOrderData</BehaviorHttpGetUrl>
+    </WcfService>
+
+
+    <WcfService ID="019">
+      <ServiceID>IOrderForm</ServiceID>
+      <ServiceLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.VC.OrderForm.dll</ServiceLibraryFile>
+      <ClientLibraryFile>D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary\JsMiracle.WCF.VC.IOrderForm.dll</ClientLibraryFile>
+      <Address>net.tcp://127.0.0.1:20019/WCFService/IOrderForm</Address>
+      <ServiceName>JsMiracle.WCF.VC.OrderForm.IMS_VC_DJT_WCF</ServiceName>
+      <Contract>JsMiracle.Wcf.VC.IOrderForm.IWcfOrderForm</Contract>
+      <BehaviorHttpGetUrl>http://127.0.0.1:50019/WCFService/IOrderForm</BehaviorHttpGetUrl>
+    </WcfService>
+    <!--end JsMiracle.WCF.VC.OrderForm.dll-->
+
   </Services>
 
 </configuration>

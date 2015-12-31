@@ -30,5 +30,6 @@ namespace JsMiracle.Entities.TabelEntities
         public System.DateTime RKSJ { get; set; }
         public Nullable<System.DateTime> ZHXGSJ { get; set; }
         public string BZ { get; set; }
+        public string YYCKPZ { get; set; }
     }
 }

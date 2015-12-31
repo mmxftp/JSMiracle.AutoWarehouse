@@ -21,7 +21,7 @@ namespace JsMiracle.WCF.CM.ICommonMng
         /// </summary>
         /// <param name="lxdm">类型代码</param>
         /// <returns></returns>
-        IMS_CM_DMLX GetEntity(string lxdm);
+        IMS_CM_DMLX GetEntityBylxdm(string lxdm);
     }
 
     [ServiceContract]
@@ -60,9 +60,9 @@ namespace JsMiracle.WCF.CM.ICommonMng
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
-        public IMS_CM_DMLX GetEntity(string lxdm)
+        public IMS_CM_DMLX GetEntityBylxdm(string lxdm)
         {
-            return RequestFunc<object[], IMS_CM_DMLX>("ReSaveObjectData", new object[] { lxdm });
+            return RequestFunc<object[], IMS_CM_DMLX>("GetEntityBylxdm", new object[] { lxdm });
         }
     }
 }

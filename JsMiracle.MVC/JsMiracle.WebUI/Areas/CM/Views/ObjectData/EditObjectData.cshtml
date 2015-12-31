@@ -8,8 +8,12 @@
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmObjectData" }))
 {
+    @Html.HiddenFor(n=>n.ID)
     @Html.HiddenFor(n => n.XGR)
     @Html.HiddenFor(n => n.XGRQ)
+    @Html.HiddenFor(n=>n.DXDM)
+    @Html.HiddenFor(n=>n.DXZD)
+    @Html.HiddenFor(n=>n.ZDLX)
 
     <table class="TB">
         <tr>
@@ -33,3 +37,41 @@
         </tr>
     </table>
 }
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#frmObjectData').form({
+            success: function (data) {
+                //console.log(data);
+                //var data = eval('(' + data + ')');
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('模块编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow(-1, ret.parentid);
+                    });
+                }
+                else {
+                    $.messager.alert('类型代码编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtDXDM").textbox({
+            disabled: true,
+        });
+
+        $("#txtDXZD").textbox({
+            disabled: true,
+        });
+
+        $("#txtZDMC").textbox({
+            required: true,
+            missingMessage: '显示名称不得为空'
+        });
+    });
+</script>

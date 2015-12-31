@@ -12,19 +12,24 @@ namespace JsMiracle.Entities.EasyUI_Model
         //public IList<dynamic> rows { get;private set; }
         public object rows { get; private set; }
 
-        public PaginationModel(object data)
+        public PaginationModel(object data, int dataRowCount)
         {
-            total = 0;
+            total = dataRowCount;
             if (data != null)
             {
                 var col = data as System.Collections.IList;
 
-                if ( col != null)
-                    total = col.Count;
-                else
+                if (total == 0)
                 {
-                    var dt = data as System.Data.DataTable;
-                    total = dt.Rows.Count;
+                    if (col != null)
+                    {
+                        total = col.Count;
+                    }
+                    else
+                    {
+                        var dt = data as System.Data.DataTable;
+                        total = dt.Rows.Count;
+                    }
                 }
             }
 

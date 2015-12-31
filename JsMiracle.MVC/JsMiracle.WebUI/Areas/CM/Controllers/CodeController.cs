@@ -13,6 +13,7 @@ using JsMiracle.WebUI.Controllers;
 using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WCF.CM.ICommonMng;
+using JsMiracle.Entities.Enum;
 
 namespace JsMiracle.WebUI.Areas.CM.Controllers
 {
@@ -85,7 +86,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 , "MC", filter);
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             //var info = new PaginationModel();
             //info.SetRows(dataList);
             //info.total = totalCount;
@@ -124,7 +125,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             if (data == null)
                 throw new JsMiracleException("要修改的代码配置不存在,请刷新后重试");
 
-            var ent = dalCodeType.GetEntity(data.LXDM);
+            var ent = dalCodeType.GetEntityBylxdm(data.LXDM);
             if (ent == null)
                 throw new JsMiracleException("代码大类不存在");
 
@@ -173,12 +174,15 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 //entity.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
                 entity.XGR = CurrentUser.GetCurrentUser().UserInfo.YHID;
                 entity.XGRQ = System.DateTime.Now;
+                if (entity.LXDM == CodeTypeEnum.TableName.ToString())
+                    entity.DM = entity.DM.ToUpperInvariant();
+
                 dalCode.SaveOrUpdate(entity);
                 ExtResult ret = new ExtResult();
                 ret.success = true;
                 ret.msg = "保存成功";
 
-                var codeTypeEnt = dalCodeType.GetEntity(entity.LXDM);
+                var codeTypeEnt = dalCodeType.GetEntityBylxdm(entity.LXDM);
                 if (codeTypeEnt != null)
                     ret.parentid = codeTypeEnt.LXDM;
 

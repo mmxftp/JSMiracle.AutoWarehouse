@@ -65,7 +65,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             if (parentid == null)
             {
                 // 解决easyui length的问题
-                var nullInfo = new PaginationModel(new List<IMS_UP_MK>());
+                var nullInfo = new PaginationModel(new List<IMS_UP_MK>(),0);
                 return Json(nullInfo);
             }
 
@@ -84,7 +84,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             var dataList = dalModule.GetDataByPageDynamic(pageIndex, pageSize, out totalCount, " MKMC ", filter);
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
 
             //var json = Json(info);
             return this.JsonFormat(info);
@@ -168,7 +168,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
         {
             var data = dalFunction.GetModuleFunctionList(moduleid);
 
-            var info = new PaginationModel(data);
+            var info = new PaginationModel(data,0);
             //var info = new PaginationModel();
 
 

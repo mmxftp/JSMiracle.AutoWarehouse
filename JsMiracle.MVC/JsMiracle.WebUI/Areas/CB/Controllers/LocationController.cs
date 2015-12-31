@@ -123,9 +123,6 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             return MvcHtmlString.Create(info);
         }
 
- 
-
-
         [AuthViewPage]
         public ActionResult EditLocation(string wxbh)
         {
@@ -209,7 +206,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             var dataList = dalLocationType.GetDataByPageDynamic(pageIndex, pageSize, out totalCount, "LXDM", "");
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
 
@@ -289,7 +286,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             var dataList = dalLocationRelationship.GetDataByPageDynamic(pageSize, pageIndex, out totalCount, " LX ", "");
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
 

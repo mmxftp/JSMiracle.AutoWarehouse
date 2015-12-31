@@ -82,7 +82,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
 
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             //info.total = totalCount;
             //info.rows = dataList;
 

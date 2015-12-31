@@ -16,7 +16,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 {
     public class IMS_UP_User_Dal : WcfDataLayerBase<IMS_UP_YH>, IUser, IMembershipService
     {
-        public override void SaveOrUpdate(IMS_UP_YH entity)
+        public override IMS_UP_YH SaveOrUpdate(IMS_UP_YH entity)
         {
             if (entity.ID == 0)
             {
@@ -51,7 +51,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
                 base.SaveEntity(entity);
             }
-
+            return entity;
         }
 
         public List<IMS_UP_YH> GetAllUserList(bool userNameFormatter = false)

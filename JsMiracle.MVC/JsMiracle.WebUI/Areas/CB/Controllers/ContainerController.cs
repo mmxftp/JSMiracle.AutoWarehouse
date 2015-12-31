@@ -49,7 +49,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
                 , " LXBH ", null);
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList,totalCount);
 
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
@@ -96,14 +96,14 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             {
                 if (entity.ID == 0)
                 {
-                    string filter = string.Format("LXBH = \"{0}\" ", entity.LXBH);
+                    string filter = string.Format(" LXBH = \"{0}\" ", entity.LXBH);
                     if (dalContainerType.Exists(filter))
                         throw new JsMiracleException("容器类型编号不得重覆");
 
                 }
                 else
                 {
-                    string filter = string.Format("LXBH = \"{0}\" && ID != {1} ", entity.LXBH, entity.ID);
+                    string filter = string.Format(" LXBH = \"{0}\" && ID != {1} ", entity.LXBH, entity.ID);
                     if (dalContainerType.Exists(filter))
                         throw new JsMiracleException("容器类型编号不得重覆");
                 }
@@ -140,7 +140,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
                 , " rq.RQBH ", null);
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             return this.JsonFormat(info, JsonRequestBehavior.AllowGet);
         }
 

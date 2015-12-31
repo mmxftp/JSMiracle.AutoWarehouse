@@ -103,6 +103,7 @@
         $('#frmItem').form({
             success: function (data) {
                 var ret = JSON.parse(data);
+                
                 if (ret.success) {
                     $.messager.alert('物料编辑', ret.msg, "info", function () {
                         console.log($("#chkContinue").switchbutton('options').checked);

@@ -13,7 +13,7 @@ namespace JsMiracle.Framework.Serialized
         /// <summary>
         /// 反序列化
         /// </summary>
-        /// <param name="type">类型</param>
+        /// <typeparam name="T">所有可序列化类型</typeparam>
         /// <param name="xml">XML字符串</param>
         /// <returns></returns>
         public static T DeserializeString<T>(string xml)
@@ -25,6 +25,12 @@ namespace JsMiracle.Framework.Serialized
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">所有可序列化类型</typeparam>
+        /// <param name="filepath">文件</param>
+        /// <returns></returns>
         public static T DeserializeFile<T>(string filepath)
         {
             using (StreamReader reader = new StreamReader(filepath))
@@ -38,7 +44,7 @@ namespace JsMiracle.Framework.Serialized
         /// <summary>
         /// 序列化
         /// </summary>
-        /// <param name="type">类型</param>
+        /// <typeparam name="T">所有可序列化类型</typeparam>
         /// <param name="obj">对象</param>
         /// <returns></returns>
         public static string SerializeString<T>(T obj)
@@ -56,7 +62,8 @@ namespace JsMiracle.Framework.Serialized
         /// <summary>
         /// 序列化
         /// </summary>
-        /// <param name="type">类型</param>
+        /// <typeparam name="T">所有可序列化类型</typeparam>
+        /// <param name="filepath">文件</param>
         /// <param name="obj">对象</param>
         /// <returns></returns>
         public static void SerializeFile<T>(string filepath, T obj)

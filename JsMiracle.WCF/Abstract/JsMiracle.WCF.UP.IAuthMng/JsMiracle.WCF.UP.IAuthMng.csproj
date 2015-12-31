@@ -51,10 +51,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\JsMiracle.Infrastructure\JsMiracle.Framework\JsMiracle.Framework.csproj">
-      <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>
-      <Name>JsMiracle.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\JsMiracle.MVC\JsMiracle.Entities\JsMiracle.Entities.csproj">
       <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
       <Name>JsMiracle.Entities</Name>

@@ -18,18 +18,16 @@
     $(function () {
         cmObjectData = {
 
-            showEdit: function (id) {
-                var width = '350px';
-                var height = '300px';
+            showEdit: function (op, id) {
+                var width = '300px';
+                var height = '250px';
                 var title = '';
                 var url = '';
-
-                var codeTypeID = $('#cboCodeType').combobox('getValue');
 
                 url = '@Url.Action("EditObjectData")' + '?id=' + id;
                 title = '编辑代码';
                 
-                JsMiracleCommon.showWindow(title, url, width, height, cmCode.reloadDataGrid);
+                JsMiracleCommon.showWindow(title, url, width, height, this.refreshDatagrid);
             },
 
             refreshDatagrid: function () {

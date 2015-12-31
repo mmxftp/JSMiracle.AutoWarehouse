@@ -49,9 +49,10 @@ namespace JsMiracle.WCF.WcfBaseService
         }
 
 
-        public virtual void SaveOrUpdate(T entity)
+        public virtual T SaveOrUpdate(T entity)
         {
             SaveEntity(entity);
+            return entity;
         }
 
         #region protected method
@@ -150,10 +151,11 @@ namespace JsMiracle.WCF.WcfBaseService
             DeleteByKey(id);
         }
 
-        public virtual void Insert(T entity)
+        public virtual T Insert(T entity)
         {
             DbContext.Set<T>().Add(entity);
             DbContext.SaveChanges();
+            return entity;
         }
 
 

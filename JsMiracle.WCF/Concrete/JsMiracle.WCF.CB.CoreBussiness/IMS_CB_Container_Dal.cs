@@ -23,8 +23,9 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
             var query = from rq in DbContext.IMS_CB_RQ_S
                         join rqlx in DbContext.IMS_CB_RQLX_S
-                        on rq.LXBH equals rqlx.LXBH
-                        select new { rq, rqlx.LXMC ,rqlx.LXBH };
+                        on rq.LXBH equals rqlx.LXBH into view
+                        from v in view.DefaultIfEmpty()
+                        select new { rq, v.LXMC ,v.LXBH };
 
             if (!string.IsNullOrEmpty(where))
             {

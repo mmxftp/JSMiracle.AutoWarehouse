@@ -25,6 +25,7 @@
           <Property Name="RKSJ" Type="datetime" Nullable="false" />
           <Property Name="ZHXGSJ" Type="datetime" />
           <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+          <Property Name="YYCKPZ" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="IMS_CB_RQ_S">
           <Key>
@@ -201,6 +202,18 @@
           <Property Name="XGR" Type="nvarchar" MaxLength="64" />
           <Property Name="XGRQ" Type="datetime" />
         </EntityType>
+        <EntityType Name="IMS_CM_XTCS_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CSLX" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CSDM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CSZ" Type="int" Nullable="false" />
+          <Property Name="CSMC" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZHXGSJ" Type="datetime" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <EntityType Name="IMS_CM_YHDX_S">
           <Key>
             <PropertyRef Name="ID" />
@@ -281,15 +294,206 @@
           <Property Name="XGRQ" Type="datetime" />
           <Property Name="ZT" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="IMS_VC_DJH_S">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DJBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="HH" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="HXW" Type="int" Nullable="false" />
+          <Property Name="SKU" Type="bigint" Nullable="false" />
+          <Property Name="PCBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DJSL" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="WCSL" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="LYSYZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="MDSYZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="LYD" Type="nvarchar" MaxLength="64" />
+          <Property Name="MDD" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZT" Type="int" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+          <Property Name="XSDDH" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="IMS_VC_DJT_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DJBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="YWLX" Type="int" Nullable="false" />
+          <Property Name="MS" Type="nvarchar" MaxLength="128" />
+          <Property Name="SWDJLX" Type="int" Nullable="false" />
+          <Property Name="SWSJBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="DJZT" Type="int" Nullable="false" />
+          <Property Name="SFGX" Type="int" Nullable="false" />
+          <Property Name="DJLY" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="WCR" Type="nvarchar" MaxLength="64" />
+          <Property Name="WCSJ" Type="datetime" />
+          <Property Name="GLDJ" Type="nvarchar" MaxLength="64" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_VC_YWYS_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YWLX" Type="bigint" Nullable="false" />
+          <Property Name="YSZD" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="YSBDS" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="KYZT" Type="int" Nullable="false" />
+          <Property Name="XGSJ" Type="datetime" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WN_TZ_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TZXXXH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="BJLX" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="BJBM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="BCNR" Type="nvarchar(max)" />
+          <Property Name="TZLY" Type="nvarchar" MaxLength="64" />
+          <Property Name="TZSJ" Type="datetime" Nullable="false" />
+          <Property Name="JHZT" Type="int" Nullable="false" />
+          <Property Name="QRZT" Type="int" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WN_TZLX_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BJLX" Type="int" Nullable="false" />
+          <Property Name="BJBM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="TZNR" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DZFS" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_BYRW_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RWBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="RWLX" Type="int" />
+          <Property Name="FRWID" Type="bigint" Nullable="false" />
+          <Property Name="RWYXJ" Type="int" />
+          <Property Name="DJID" Type="bigint" />
+          <Property Name="RQBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="QSWZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="MDWZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZT" Type="int" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_CWRW_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RWBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="RWLX" Type="int" Nullable="false" />
+          <Property Name="FRWID" Type="bigint" Nullable="false" />
+          <Property Name="RWYXJ" Type="int" Nullable="false" />
+          <Property Name="DJHID" Type="bigint" Nullable="false" />
+          <Property Name="CCID" Type="bigint" Nullable="false" />
+          <Property Name="RQBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="RWSL" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SJSL" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MDRQ" Type="nvarchar" MaxLength="64" />
+          <Property Name="BYRW" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZT" Type="int" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_DZRW_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RWBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="RWLX" Type="int" Nullable="false" />
+          <Property Name="FRWID" Type="bigint" Nullable="false" />
+          <Property Name="RWYXJ" Type="int" Nullable="false" />
+          <Property Name="RQBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZXZ" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZXMS" Type="int" Nullable="false" />
+          <Property Name="ZXLJ" Type="bigint" Nullable="false" />
+          <Property Name="QSWZ" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="MDWZ" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZT" Type="int" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_XTJD_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JDBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="JDMC" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="JDMS" Type="nvarchar" MaxLength="128" />
+          <Property Name="JDRL" Type="int" Nullable="false" />
+          <Property Name="ZT" Type="int" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_YWRW_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DJBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="HH" Type="nvarchar" MaxLength="20" />
+          <Property Name="HXW" Type="int" />
+          <Property Name="SKU" Type="bigint" Nullable="false" />
+          <Property Name="PCBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="DJSL" Type="bigint" />
+          <Property Name="LYSYZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="MDSYZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="LYD" Type="nvarchar" MaxLength="64" />
+          <Property Name="MDD" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZT" Type="int" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_ZXLJ_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QSJD" Type="bigint" Nullable="false" />
+          <Property Name="MDJD" Type="bigint" Nullable="false" />
+          <Property Name="ZXZ" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZXMS" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="YCSJ" Type="int" />
+          <Property Name="QZ" Type="int" />
+          <Property Name="ZT" Type="int" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" />
+          <Property Name="CJSJ" Type="datetime" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="IMS_WT_ZXZ_S">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZXZLX" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZXZDM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZXZMC" Type="nvarchar" MaxLength="64" />
+          <Property Name="ZXT" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="FJZBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
           <EntitySet Name="IMS_CB_KC_S" EntityType="Self.IMS_CB_KC_S" Schema="dbo" store:Type="Tables" />
@@ -302,6 +506,7 @@
           <EntitySet Name="IMS_CM_DM_S" EntityType="Self.IMS_CM_DM_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CM_DMLX_S" EntityType="Self.IMS_CM_DMLX_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CM_DXXX_S" EntityType="Self.IMS_CM_DXXX_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_CM_XTCS_S" EntityType="Self.IMS_CM_XTCS_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CM_YHDX_S" EntityType="Self.IMS_CM_YHDX_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_JS_S" EntityType="Self.IMS_UP_JS_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_JSMK_S" EntityType="Self.IMS_UP_JSMK_S" Schema="dbo" store:Type="Tables" />
@@ -309,7 +514,18 @@
           <EntitySet Name="IMS_UP_MK_S" EntityType="Self.IMS_UP_MK_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_MKGN_S" EntityType="Self.IMS_UP_MKGN_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_UP_YH_S" EntityType="Self.IMS_UP_YH_S" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_VC_DJH_S" EntityType="Self.IMS_VC_DJH_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_VC_DJT_S" EntityType="Self.IMS_VC_DJT_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_VC_YWYS_S" EntityType="Self.IMS_VC_YWYS_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WN_TZ_S" EntityType="Self.IMS_WN_TZ_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WN_TZLX_S" EntityType="Self.IMS_WN_TZLX_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_BYRW_S" EntityType="Self.IMS_WT_BYRW_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_CWRW_S" EntityType="Self.IMS_WT_CWRW_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_DZRW_S" EntityType="Self.IMS_WT_DZRW_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_XTJD_S" EntityType="Self.IMS_WT_XTJD_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_YWRW_S" EntityType="Self.IMS_WT_YWRW_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_ZXLJ_S" EntityType="Self.IMS_WT_ZXLJ_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMS_WT_ZXZ_S" EntityType="Self.IMS_WT_ZXZ_S" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -335,6 +551,7 @@
           <Property Name="RKSJ" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ZHXGSJ" Type="DateTime" Precision="3" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="YYCKPZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_CB_RQ">
           <Key>
@@ -586,7 +803,19 @@
           <EntitySet Name="IMS_UP_YH_S" EntityType="IIMS_ORGModel.IMS_UP_YH" />
           <EntitySet Name="IMS_CM_DXXX_S" EntityType="IIMS_ORGModel.IMS_CM_DXXX" />
           <EntitySet Name="IMS_CM_YHDX_S" EntityType="IIMS_ORGModel.IMS_CM_YHDX" />
-          <EntitySet Name="sysdiagrams" EntityType="IIMS_ORGModel.sysdiagrams" />
+          <EntitySet Name="IMS_CM_XTCS_S" EntityType="IIMS_ORGModel.IMS_CM_XTCS" />
+          <EntitySet Name="IMS_VC_DJH_S" EntityType="IIMS_ORGModel.IMS_VC_DJH" />
+          <EntitySet Name="IMS_VC_DJT_S" EntityType="IIMS_ORGModel.IMS_VC_DJT" />
+          <EntitySet Name="IMS_VC_YWYS_S" EntityType="IIMS_ORGModel.IMS_VC_YWYS" />
+          <EntitySet Name="IMS_WN_TZ_S" EntityType="IIMS_ORGModel.IMS_WN_TZ" />
+          <EntitySet Name="IMS_WN_TZLX_S" EntityType="IIMS_ORGModel.IMS_WN_TZLX" />
+          <EntitySet Name="IMS_WT_BYRW_S" EntityType="IIMS_ORGModel.IMS_WT_BYRW" />
+          <EntitySet Name="IMS_WT_CWRW_S" EntityType="IIMS_ORGModel.IMS_WT_CWRW" />
+          <EntitySet Name="IMS_WT_DZRW_S" EntityType="IIMS_ORGModel.IMS_WT_DZRW" />
+          <EntitySet Name="IMS_WT_XTJD_S" EntityType="IIMS_ORGModel.IMS_WT_XTJD" />
+          <EntitySet Name="IMS_WT_YWRW_S" EntityType="IIMS_ORGModel.IMS_WT_YWRW" />
+          <EntitySet Name="IMS_WT_ZXLJ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXLJ" />
+          <EntitySet Name="IMS_WT_ZXZ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXZ" />
         </EntityContainer>
         <EntityType Name="IMS_CM_DXXX">
           <Key>
@@ -611,15 +840,218 @@
           <Property Name="DXTJ" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="XGRQ" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="IMS_CM_XTCS">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CSLX" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CSDM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CSZ" Type="Int32" Nullable="false" />
+          <Property Name="CSMC" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZHXGSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_VC_DJH">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DJBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="HH" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HXW" Type="Int32" Nullable="false" />
+          <Property Name="SKU" Type="Int64" Nullable="false" />
+          <Property Name="PCBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DJSL" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="WCSL" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="LYSYZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDSYZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LYD" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDD" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZT" Type="Int32" Nullable="false" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="XSDDH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_VC_DJT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DJBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="YWLX" Type="Int32" Nullable="false" />
+          <Property Name="MS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SWDJLX" Type="Int32" Nullable="false" />
+          <Property Name="SWSJBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DJZT" Type="Int32" Nullable="false" />
+          <Property Name="SFGX" Type="Int32" Nullable="false" />
+          <Property Name="DJLY" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WCR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WCSJ" Type="DateTime" Precision="3" />
+          <Property Name="GLDJ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_VC_YWYS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YWLX" Type="Int64" Nullable="false" />
+          <Property Name="YSZD" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="YSBDS" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="KYZT" Type="Int32" Nullable="false" />
+          <Property Name="XGSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WN_TZ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TZXXXH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BJLX" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BJBM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BCNR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TZLY" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TZSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JHZT" Type="Int32" Nullable="false" />
+          <Property Name="QRZT" Type="Int32" Nullable="false" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WN_TZLX">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BJLX" Type="Int32" Nullable="false" />
+          <Property Name="BJBM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TZNR" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DZFS" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_BYRW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RWBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RWLX" Type="Int32" />
+          <Property Name="FRWID" Type="Int64" Nullable="false" />
+          <Property Name="RWYXJ" Type="Int32" />
+          <Property Name="DJID" Type="Int64" />
+          <Property Name="RQBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="QSWZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDWZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZT" Type="Int32" />
+          <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_CWRW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RWBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RWLX" Type="Int32" Nullable="false" />
+          <Property Name="FRWID" Type="Int64" Nullable="false" />
+          <Property Name="RWYXJ" Type="Int32" Nullable="false" />
+          <Property Name="DJHID" Type="Int64" Nullable="false" />
+          <Property Name="CCID" Type="Int64" Nullable="false" />
+          <Property Name="RQBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RWSL" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SJSL" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MDRQ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BYRW" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZT" Type="Int32" Nullable="false" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_DZRW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RWBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RWLX" Type="Int32" Nullable="false" />
+          <Property Name="FRWID" Type="Int64" Nullable="false" />
+          <Property Name="RWYXJ" Type="Int32" Nullable="false" />
+          <Property Name="RQBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXZ" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXMS" Type="Int32" Nullable="false" />
+          <Property Name="ZXLJ" Type="Int64" Nullable="false" />
+          <Property Name="QSWZ" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDWZ" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZT" Type="Int32" Nullable="false" />
+          <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_XTJD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JDBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="JDMC" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="JDMS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="JDRL" Type="Int32" Nullable="false" />
+          <Property Name="ZT" Type="Int32" Nullable="false" />
+          <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_YWRW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DJBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="HH" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HXW" Type="Int32" />
+          <Property Name="SKU" Type="Int64" Nullable="false" />
+          <Property Name="PCBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DJSL" Type="Int64" />
+          <Property Name="LYSYZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDSYZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LYD" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MDD" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZT" Type="Int32" />
+          <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_ZXLJ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QSJD" Type="Int64" Nullable="false" />
+          <Property Name="MDJD" Type="Int64" Nullable="false" />
+          <Property Name="ZXZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXMS" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="YCSJ" Type="Int32" />
+          <Property Name="QZ" Type="Int32" />
+          <Property Name="ZT" Type="Int32" />
+          <Property Name="CJR" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IMS_WT_ZXZ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZXZLX" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXZDM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXZMC" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ZXT" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FJZBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -630,6 +1062,7 @@
           <EntitySetMapping Name="IMS_CB_KC_S">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CB_KC">
               <MappingFragment StoreEntitySet="IMS_CB_KC_S">
+                <ScalarProperty Name="YYCKPZ" ColumnName="YYCKPZ" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RQBH" ColumnName="RQBH" />
                 <ScalarProperty Name="WKBH" ColumnName="WKBH" />
@@ -920,14 +1353,229 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="IMS_CM_XTCS_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_XTCS">
+              <MappingFragment StoreEntitySet="IMS_CM_XTCS_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="ZHXGSJ" ColumnName="ZHXGSJ" />
+                <ScalarProperty Name="CSMC" ColumnName="CSMC" />
+                <ScalarProperty Name="CSZ" ColumnName="CSZ" />
+                <ScalarProperty Name="CSDM" ColumnName="CSDM" />
+                <ScalarProperty Name="CSLX" ColumnName="CSLX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_VC_DJH_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_VC_DJH">
+              <MappingFragment StoreEntitySet="IMS_VC_DJH_S">
+                <ScalarProperty Name="XSDDH" ColumnName="XSDDH" />
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="MDD" ColumnName="MDD" />
+                <ScalarProperty Name="LYD" ColumnName="LYD" />
+                <ScalarProperty Name="MDSYZ" ColumnName="MDSYZ" />
+                <ScalarProperty Name="LYSYZ" ColumnName="LYSYZ" />
+                <ScalarProperty Name="WCSL" ColumnName="WCSL" />
+                <ScalarProperty Name="DJSL" ColumnName="DJSL" />
+                <ScalarProperty Name="PCBH" ColumnName="PCBH" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="HXW" ColumnName="HXW" />
+                <ScalarProperty Name="HH" ColumnName="HH" />
+                <ScalarProperty Name="DJBH" ColumnName="DJBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_VC_DJT_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_VC_DJT">
+              <MappingFragment StoreEntitySet="IMS_VC_DJT_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="GLDJ" ColumnName="GLDJ" />
+                <ScalarProperty Name="WCSJ" ColumnName="WCSJ" />
+                <ScalarProperty Name="WCR" ColumnName="WCR" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="DJLY" ColumnName="DJLY" />
+                <ScalarProperty Name="SFGX" ColumnName="SFGX" />
+                <ScalarProperty Name="DJZT" ColumnName="DJZT" />
+                <ScalarProperty Name="SWSJBH" ColumnName="SWSJBH" />
+                <ScalarProperty Name="SWDJLX" ColumnName="SWDJLX" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="YWLX" ColumnName="YWLX" />
+                <ScalarProperty Name="DJBH" ColumnName="DJBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_VC_YWYS_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_VC_YWYS">
+              <MappingFragment StoreEntitySet="IMS_VC_YWYS_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="XGSJ" ColumnName="XGSJ" />
+                <ScalarProperty Name="KYZT" ColumnName="KYZT" />
+                <ScalarProperty Name="YSBDS" ColumnName="YSBDS" />
+                <ScalarProperty Name="YSZD" ColumnName="YSZD" />
+                <ScalarProperty Name="YWLX" ColumnName="YWLX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WN_TZ_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WN_TZ">
+              <MappingFragment StoreEntitySet="IMS_WN_TZ_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="QRZT" ColumnName="QRZT" />
+                <ScalarProperty Name="JHZT" ColumnName="JHZT" />
+                <ScalarProperty Name="TZSJ" ColumnName="TZSJ" />
+                <ScalarProperty Name="TZLY" ColumnName="TZLY" />
+                <ScalarProperty Name="BCNR" ColumnName="BCNR" />
+                <ScalarProperty Name="BJBM" ColumnName="BJBM" />
+                <ScalarProperty Name="BJLX" ColumnName="BJLX" />
+                <ScalarProperty Name="TZXXXH" ColumnName="TZXXXH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WN_TZLX_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WN_TZLX">
+              <MappingFragment StoreEntitySet="IMS_WN_TZLX_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="DZFS" ColumnName="DZFS" />
+                <ScalarProperty Name="TZNR" ColumnName="TZNR" />
+                <ScalarProperty Name="BJBM" ColumnName="BJBM" />
+                <ScalarProperty Name="BJLX" ColumnName="BJLX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_BYRW_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_BYRW">
+              <MappingFragment StoreEntitySet="IMS_WT_BYRW_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="MDWZ" ColumnName="MDWZ" />
+                <ScalarProperty Name="QSWZ" ColumnName="QSWZ" />
+                <ScalarProperty Name="RQBH" ColumnName="RQBH" />
+                <ScalarProperty Name="DJID" ColumnName="DJID" />
+                <ScalarProperty Name="RWYXJ" ColumnName="RWYXJ" />
+                <ScalarProperty Name="FRWID" ColumnName="FRWID" />
+                <ScalarProperty Name="RWLX" ColumnName="RWLX" />
+                <ScalarProperty Name="RWBH" ColumnName="RWBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_CWRW_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_CWRW">
+              <MappingFragment StoreEntitySet="IMS_WT_CWRW_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="BYRW" ColumnName="BYRW" />
+                <ScalarProperty Name="MDRQ" ColumnName="MDRQ" />
+                <ScalarProperty Name="SJSL" ColumnName="SJSL" />
+                <ScalarProperty Name="RWSL" ColumnName="RWSL" />
+                <ScalarProperty Name="RQBH" ColumnName="RQBH" />
+                <ScalarProperty Name="CCID" ColumnName="CCID" />
+                <ScalarProperty Name="DJHID" ColumnName="DJHID" />
+                <ScalarProperty Name="RWYXJ" ColumnName="RWYXJ" />
+                <ScalarProperty Name="FRWID" ColumnName="FRWID" />
+                <ScalarProperty Name="RWLX" ColumnName="RWLX" />
+                <ScalarProperty Name="RWBH" ColumnName="RWBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_DZRW_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_DZRW">
+              <MappingFragment StoreEntitySet="IMS_WT_DZRW_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="MDWZ" ColumnName="MDWZ" />
+                <ScalarProperty Name="QSWZ" ColumnName="QSWZ" />
+                <ScalarProperty Name="ZXLJ" ColumnName="ZXLJ" />
+                <ScalarProperty Name="ZXMS" ColumnName="ZXMS" />
+                <ScalarProperty Name="ZXZ" ColumnName="ZXZ" />
+                <ScalarProperty Name="RQBH" ColumnName="RQBH" />
+                <ScalarProperty Name="RWYXJ" ColumnName="RWYXJ" />
+                <ScalarProperty Name="FRWID" ColumnName="FRWID" />
+                <ScalarProperty Name="RWLX" ColumnName="RWLX" />
+                <ScalarProperty Name="RWBH" ColumnName="RWBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_XTJD_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_XTJD">
+              <MappingFragment StoreEntitySet="IMS_WT_XTJD_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="JDRL" ColumnName="JDRL" />
+                <ScalarProperty Name="JDMS" ColumnName="JDMS" />
+                <ScalarProperty Name="JDMC" ColumnName="JDMC" />
+                <ScalarProperty Name="JDBH" ColumnName="JDBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_YWRW_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_YWRW">
+              <MappingFragment StoreEntitySet="IMS_WT_YWRW_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="MDD" ColumnName="MDD" />
+                <ScalarProperty Name="LYD" ColumnName="LYD" />
+                <ScalarProperty Name="MDSYZ" ColumnName="MDSYZ" />
+                <ScalarProperty Name="LYSYZ" ColumnName="LYSYZ" />
+                <ScalarProperty Name="DJSL" ColumnName="DJSL" />
+                <ScalarProperty Name="PCBH" ColumnName="PCBH" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="HXW" ColumnName="HXW" />
+                <ScalarProperty Name="HH" ColumnName="HH" />
+                <ScalarProperty Name="DJBH" ColumnName="DJBH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_ZXLJ_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_ZXLJ">
+              <MappingFragment StoreEntitySet="IMS_WT_ZXLJ_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="ZT" ColumnName="ZT" />
+                <ScalarProperty Name="QZ" ColumnName="QZ" />
+                <ScalarProperty Name="YCSJ" ColumnName="YCSJ" />
+                <ScalarProperty Name="ZXMS" ColumnName="ZXMS" />
+                <ScalarProperty Name="ZXZ" ColumnName="ZXZ" />
+                <ScalarProperty Name="MDJD" ColumnName="MDJD" />
+                <ScalarProperty Name="QSJD" ColumnName="QSJD" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_WT_ZXZ_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WT_ZXZ">
+              <MappingFragment StoreEntitySet="IMS_WT_ZXZ_S">
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="FJZBH" ColumnName="FJZBH" />
+                <ScalarProperty Name="ZXT" ColumnName="ZXT" />
+                <ScalarProperty Name="ZXZMC" ColumnName="ZXZMC" />
+                <ScalarProperty Name="ZXZDM" ColumnName="ZXZDM" />
+                <ScalarProperty Name="ZXZLX" ColumnName="ZXZLX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

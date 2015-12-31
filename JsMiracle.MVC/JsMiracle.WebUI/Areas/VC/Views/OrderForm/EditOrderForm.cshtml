@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "EditOrderForm";
+}
+
+<style type="text/css">
+    .TB td {
+        width: 80px;
+        padding-left: 5px;
+    }
+</style>
+@using JsMiracle.WebUI.CommonSupport
+@model JsMiracle.Entities.TabelEntities.IMS_VC_DJT
+
+<div id="dvTarget">
+    @using (Ajax.BeginForm("SaveOrderForm", "OrderForm"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmOrderForm" }))
+    {
+        @Html.HiddenFor(n => n.ID);
+                                  if (Model.ID != 0)
+                                  {
+                                    @Html.HiddenFor(n => n.CJR);
+        @Html.HiddenFor(n => n.CJSJ);
+                                  }
+
+
+                                <div id="orderFormTools">
+                                    <table class="TB" style="width:1600px">
+                                        <tr>
+                                            <td>单据编号</td>
+                                            <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
+                                            <td>业务类型</td>
+                                            <td>@Html.TextBoxFor(n => n.YWLX, new { @id = "txtYWLX" })</td>
+                                            <td>来源</td>
+                                            <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
+                                            <td>创建人</td>
+                                            <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
+                                        </tr>
+                                        <tr>
+                                            <td>上位单据类型</td>
+                                            <td>@Html.TextBoxFor(n => n.SWDJLX, new { @id = "txtSWDJLX" })</td>
+                                            <td>上位单据编号</td>
+                                            <td>@Html.TextBoxFor(n => n.SWSJBH, new { @id = "txtSWSJBH" })</td>
+                                            <td>单据状态</td>
+                                            <td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>
+                                            <td>创建日期</td>
+                                            <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ", @Value = System.DateTime.Now })</td>
+                                        </tr>
+                                        <tr>
+                                            <td>关联单据</td>
+                                            <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
+                                            <td>备注</td>
+                                            <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+                                        </tr>
+                                        <tr style="text-align:center;display:table-row;">
+                                            <td colspan="7">
+                                                <a class="easyui-linkbutton" iconcls="icon-save"
+                                                   href="javascript:$('#frmOrderForm').form('submit')">保存</a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a class="easyui-linkbutton" iconcls="icon-cancel"
+                                                   href="javascript:$('#frmOrderForm').form('reset')">取消</a>
+
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                @if (Model.ID != 0)
+                                                {
+                                                    <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                                                       onclick="editOrderForm.edit(false)">新增订单数据</a>
+                                                }
+                                            </td>
+                                            <td style="width:200px;text-align:right;">
+                                                <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+                                <table id="orderDataGrid" style="padding:10px"></table>
+    }
+</div>
+
+<script type="text/javascript">
+
+    var editOrderForm;
+
+    $(function () {
+        $('#frmOrderForm').form({
+            success: function (data) {
+                console.log(data);
+                var ret = eval('(' + data + ')');
+                if (ret.success) {
+                    $.messager.alert('订单信息', ret.msg, "info", function () {
+                        //JsMiracleCommon.closeWindow();
+                        @*$("#frmOrderForm").form('load', '@Url.Action("EditOrderForm")' + '?id=' + ret.id);
+
+                        editOrderForm.reloadDataGrid();*@
+
+                        var url = '@Url.Action("EditOrderForm")' + '?id=' + ret.id;
+
+                        var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
+                        tab.panel('refresh', url);
+                    });
+                }
+                else {
+                    $.messager.alert('订单信息', data.msg, "error");
+                }
+            }
+        });
+
+        $("#orderDataGrid").datagrid({
+            url: '@Url.Action("GetOrderData")' + '?djbh=' + '@Model.DJBH',
+            singleSelect: true,
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#orderFormTools',
+            frozenColumns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                          , formatter: function (value, row, index) {
+                              var editFunStr = 'editOrderForm.edit(true, ' + row.ID + ');';
+                              var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                                  + row.HH + '\',\'@Url.Action("RemoveOrderData")\',orderformOp.refreshGrd)';
+
+                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
+                                        + ' onclick="' + removeFunStr + '" >删除</a>'
+                                        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                        + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                        + ' onclick="' + editFunStr + '">修改</a>';
+                              return html;
+                          }
+                }
+            ]],
+            columns: [[
+                { field: 'HH', title: '行号', width: 100, align: 'center' },
+                { field: 'HXW', title: '行为类型', width: 100, align: 'center' },
+                { field: 'SKU', title: '品规ID', width: 100, align: 'center' },
+                { field: 'PCBH', title: '批次编号', width: 100, align: 'center' },
+                { field: 'DJSL', title: '单据数量', width: 100, align: 'center' },
+                { field: 'WCSL', title: '完成数量', width: 100, align: 'center' },
+                { field: 'LYSYZ', title: '来源所有者', width: 100, align: 'center' },
+                { field: 'MDSYZ', title: '目的所有者', width: 100, align: 'center' },
+                { field: 'LYD', title: '来源地', width: 100, align: 'center' },
+                { field: 'MDD', title: '目的地', width: 100, align: 'center' },
+                { field: 'ZT', title: '状态', width: 100, align: 'center' },
+                { field: 'CJR', title: '创建人', width: 100, align: 'center' },
+                { field: 'CJSJ', title: '创建时间', width: 100, align: 'center' },
+                { field: 'BZ', title: '备注', width: 100, align: 'center' },
+                { field: 'XSDDH', title: '销售订单号', width: 100, align: 'center' },
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+
+        $("#txtDJBH").textbox({
+            required: true,
+            missingMessage: '单据编号不得为空'
+        });
+
+        $("#txtYWLX").numberbox({
+            required: true,
+            missingMessage: '业务类型不得为空'
+        });
+
+        $("#txtDJLY").textbox({
+            required: true,
+            missingMessage: '来源不得为空'
+        });
+
+        $("#txtCJR").textbox({
+            disabled: true,
+        });
+
+        $("#txtSWDJLX").textbox({
+            required: true,
+            missingMessage: '上位单据类型不得为空'
+        });
+
+        $("#txtSWSJBH").textbox({
+            required: true,
+            missingMessage: '上位单据编号不得为空'
+        });
+
+        $("#txtDJZT").textbox({
+            required: true,
+            missingMessage: '单据状态不得为空'
+        });
+
+        $("#txtCJSJ").textbox({
+            disabled: true,
+        });
+
+        $("#txtBZ").textbox();
+        $("#txtGLDJ").textbox();
+
+        editOrderForm = {
+
+            edit: function (op, id) {
+                var width = '550px';
+                var height = '400px';
+
+                var title = '订单内容新增';
+                var url = '@Url.Action("CreateOrderData", new { djbh = Model.DJBH })';
+
+                if (op) {
+                    url = '@Url.Action("EditOrderData")' + '?id=' + id;
+                    title = '订单内容编辑';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                $("#orderDataGrid").datagrid('reload');
+            },
+
+            changeRef: function () {
+                var url = '@Url.Action("Index")';
+                // 调用 'refresh' 方法更新选项卡面板的内容
+                var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
+                tab.panel('refresh', url);
+            }
+        };
+
+    });
+</script>

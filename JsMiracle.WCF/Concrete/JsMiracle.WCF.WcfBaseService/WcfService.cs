@@ -4,6 +4,7 @@ using JsMiracle.Framework;
 using JsMiracle.WCF.Interface;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -54,7 +55,8 @@ namespace JsMiracle.WCF.WcfBaseService
 
                     case "SaveOrUpdate":
                         ent = (T)req.Body.Parameters;
-                        DataLayer.SaveOrUpdate(ent);
+                        ent = DataLayer.SaveOrUpdate(ent);
+                        res.Body.Data = ent;
                         break;
 
                     case "Delete":
@@ -64,7 +66,8 @@ namespace JsMiracle.WCF.WcfBaseService
 
                     case "Insert":
                         ent = (T)req.Body.Parameters;
-                        DataLayer.Insert(ent);
+                        ent = DataLayer.Insert(ent);
+                        res.Body.Data = ent;
                         break;
 
                     case "GetDataByPageDynamic":
@@ -82,17 +85,6 @@ namespace JsMiracle.WCF.WcfBaseService
                                 , (string)objs[3]   // Where
                                 , (object[])objs[4]); //WhereParams
 
-
-                        //dataList =
-                        //DataLayer.GetDataByPageDynamic(    
-                        //splitPar.PageIndex
-                        //, splitPar.PageSize
-                        //, out rowCount
-                        //, splitPar.OrderBy
-                        //, splitPar.Where
-                        //, splitPar.WhereParams);
-                        //data.TotalRow = rowCount;
-
                         res.Body.Data = new object[] { rowCount, dataList };
                         break;
 
@@ -105,12 +97,40 @@ namespace JsMiracle.WCF.WcfBaseService
                 res.Head.IsSuccess = true;
 
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                StringBuilder sb = new StringBuilder();
+                if (dbEx.EntityValidationErrors != null)
+                {
+                    foreach (var err in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var valerr in err.ValidationErrors)
+                            sb.AppendFormat("{0}:{1}", valerr.PropertyName, valerr.ErrorMessage);
+                        //valerr.PropertyName , valerr.
+                    }
+                    res.Head.Message = sb.ToString();
+                }
+                else
+                {
+                    res.Head.Message = dbEx.Message;
+                }
+                res.Head.IsSuccess = false;
+            }
             catch (Exception ex)
             {
                 if (ex is JsMiracle.Framework.JsMiracleException)
                     res.Head.Message = ex.Message;
                 else
-                    res.Head.Message = ex.Message + '|' + ex.StackTrace;
+                {
+
+                    Exception innerExp = ex;
+
+                    while (innerExp.InnerException != null)
+                    {
+                        innerExp = innerExp.InnerException;
+                    }
+                    res.Head.Message = string.Format("{0}-{1}", ex.Message, innerExp.Message);
+                }
 
                 res.Head.IsSuccess = false;
             }

@@ -138,7 +138,7 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             var dataList = dalItem.GetDataByPageDynamic(pageIndex, pageSize, out totalCount, "item.WLMC", "");
 
             //数据组装到viewModel
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
             
 
             return this.JsonFormat(info);

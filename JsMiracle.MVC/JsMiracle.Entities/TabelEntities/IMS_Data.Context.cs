@@ -42,6 +42,18 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_UP_YH> IMS_UP_YH_S { get; set; }
         public virtual DbSet<IMS_CM_DXXX> IMS_CM_DXXX_S { get; set; }
         public virtual DbSet<IMS_CM_YHDX> IMS_CM_YHDX_S { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<IMS_CM_XTCS> IMS_CM_XTCS_S { get; set; }
+        public virtual DbSet<IMS_VC_DJH> IMS_VC_DJH_S { get; set; }
+        public virtual DbSet<IMS_VC_DJT> IMS_VC_DJT_S { get; set; }
+        public virtual DbSet<IMS_VC_YWYS> IMS_VC_YWYS_S { get; set; }
+        public virtual DbSet<IMS_WN_TZ> IMS_WN_TZ_S { get; set; }
+        public virtual DbSet<IMS_WN_TZLX> IMS_WN_TZLX_S { get; set; }
+        public virtual DbSet<IMS_WT_BYRW> IMS_WT_BYRW_S { get; set; }
+        public virtual DbSet<IMS_WT_CWRW> IMS_WT_CWRW_S { get; set; }
+        public virtual DbSet<IMS_WT_DZRW> IMS_WT_DZRW_S { get; set; }
+        public virtual DbSet<IMS_WT_XTJD> IMS_WT_XTJD_S { get; set; }
+        public virtual DbSet<IMS_WT_YWRW> IMS_WT_YWRW_S { get; set; }
+        public virtual DbSet<IMS_WT_ZXLJ> IMS_WT_ZXLJ_S { get; set; }
+        public virtual DbSet<IMS_WT_ZXZ> IMS_WT_ZXZ_S { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using System.Text;
 
 namespace JsMiracle.WCF.BaseWcfClient
 {
-    public abstract class WcfClientConfig<T, Channel> : WcfClient<Channel>, IDataLayer<T> 
-        where T : class
+    public abstract class WcfClientConfig<Entity, Channel> : WcfClient<Channel>, IDataLayer<Entity>
+        where Entity : class
         where Channel : class,IWcfService
     {
         protected WcfClientConfig(EndpointAddress edpAddr)
@@ -39,8 +39,10 @@ namespace JsMiracle.WCF.BaseWcfClient
         /// <returns></returns>
         protected virtual Return RequestFunc<P, Return>(string methodName, P parameters)
         {
-            try
-            {
+#if DEBUG
+            //try
+            //{
+#endif
                 WcfRequest req = new WcfRequest();
                 req.Head.RequestMethodName = methodName;
                 req.Head.ClassName = this.GetType().Name;
@@ -53,12 +55,14 @@ namespace JsMiracle.WCF.BaseWcfClient
 
                 // 返回不是真 抛出异常
                 throw new JsMiracleException(res.Head.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return default(Return);
-            }
+#if DEBUG
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    return default(Return);
+            //}
+#endif
         }
 
 
@@ -85,14 +89,14 @@ namespace JsMiracle.WCF.BaseWcfClient
         }
 
 
-        public T GetEntity(object id)
+        public Entity GetEntity(object id)
         {
-            return this.RequestFunc<object[], T>("GetEntity", new object[] { id });
+            return this.RequestFunc<object[], Entity>("GetEntity", new object[] { id });
         }
 
-        public List<T> GetAllEntites(string filter)
+        public List<Entity> GetAllEntites(string filter)
         {
-            return this.RequestFunc<object[], List<T>>("GetAllEntites", new object[] { filter });
+            return this.RequestFunc<object[], List<Entity>>("GetAllEntites", new object[] { filter });
         }
 
         public bool Exists(string filter)
@@ -100,9 +104,11 @@ namespace JsMiracle.WCF.BaseWcfClient
             return this.RequestFunc<object[], bool>("Exists", new object[] { filter });
         }
 
-        public void SaveOrUpdate(T entity)
+        public Entity SaveOrUpdate(Entity entity)
         {
-            this.RequestAction<T>("SaveOrUpdate", entity);
+            var ent = this.RequestFunc<Entity, Entity>("SaveOrUpdate", entity);
+            CopyID(ent, entity);
+            return entity;
         }
 
         public void Delete(object id)
@@ -110,12 +116,26 @@ namespace JsMiracle.WCF.BaseWcfClient
             this.RequestAction<object[]>("Delete", new object[] { id });
         }
 
-        public void Insert(T entity)
+        public Entity Insert(Entity entity)
         {
-            this.RequestAction<T>("Insert", entity);
+            var ent = this.RequestFunc<Entity, Entity>("Insert", entity);
+            CopyID(ent, entity);
+            //ModuleMemberCopy.SameValueCopier(ent, entity);
+            return entity;
         }
 
-        public List<T> GetDataByPageDynamic(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)
+        private void CopyID(Entity entSource, Entity entTarget)
+        {
+            var sourceProperty = entSource.GetType().GetProperty("ID");
+            var targetProperty = entTarget.GetType().GetProperty("ID");
+
+            if (sourceProperty != null &&targetProperty != null )
+            {
+                targetProperty.SetValue(entTarget, sourceProperty.GetValue(entSource, null), null);
+            }
+        }
+
+        public List<Entity> GetDataByPageDynamic(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)
         {
             object[] obj = new object[] { 
                 intPageIndex,
@@ -128,7 +148,7 @@ namespace JsMiracle.WCF.BaseWcfClient
             var data = this.RequestFunc<object[], object[]>("GetDataByPageDynamic", obj);
 
             rowCount = (int)data[0];
-            return (List<T>)data[1];
+            return (List<Entity>)data[1];
 
         }
     }

@@ -1,6 +1,5 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
-using JsMiracle.Framework;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
 using JsMiracle.WCF.Interface;

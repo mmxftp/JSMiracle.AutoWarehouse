@@ -50,7 +50,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
         /// <returns></returns>
         public ActionResult GetTableInfo(string tablename)
         {
-            string filter = string.Format(" MC = \"{0}\" &&  LXDM = \"{1}\" "
+            string filter = string.Format(" DM = \"{0}\" &&  LXDM = \"{1}\" "
                 , tablename, CodeTypeEnum.TableName.ToString());
 
             //var code = dalCode.GetAllEntites(n => n.MC.Equals(tablename)
@@ -109,7 +109,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
             var code = dalCode.GetAllEntites(filter).FirstOrDefault();
 
-            ViewBag.DXMC = code.MC;
+            ViewBag.DXMC = string.Format("{0}({1})", code.MC,ent.DXDM);
 
             //var ent = dalObjectData.GetEntity(id);
             return View(ent);

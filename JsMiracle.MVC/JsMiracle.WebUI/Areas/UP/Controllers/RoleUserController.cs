@@ -49,7 +49,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
                 //info.total = 0;
                 //info.rows = new List<IMS_UP_YH>();   // 解决easyui length的问题
                 //info.SetRows( new List<IMS_UP_YH>());
-                var nullInfo = new PaginationModel(new List<IMS_UP_YH>());
+                var nullInfo = new PaginationModel(new List<IMS_UP_YH>(),0);
                 return this.JsonFormat(nullInfo);
             }
 
@@ -58,7 +58,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             //info.SetRows(data);
             //info.rows = data;
 
-            var info = new PaginationModel(data);
+            var info = new PaginationModel(data,0);
 
             return this.JsonFormat(info);
         }
@@ -106,7 +106,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             //数据组装到viewModel
             //info.total = totalCount;
             //info.rows = dataList;
-            var info = new PaginationModel(dataList);
+            var info = new PaginationModel(dataList, totalCount);
 
             //var json = Json(info);
             return this.JsonFormat(info);

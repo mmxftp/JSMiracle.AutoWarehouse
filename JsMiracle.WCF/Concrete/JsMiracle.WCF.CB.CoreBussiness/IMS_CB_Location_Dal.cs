@@ -134,7 +134,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
                 }
             }
 
-            PaginationModel pageModel = new PaginationModel(dt);
+            PaginationModel pageModel = new PaginationModel(dt,dt.Rows.Count);
             return JsonSerialization.Serialize(pageModel);
 
             //return dt;

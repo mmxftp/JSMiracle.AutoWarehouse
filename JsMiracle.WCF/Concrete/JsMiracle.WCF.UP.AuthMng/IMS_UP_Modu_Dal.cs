@@ -14,7 +14,6 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class IMS_UP_Modu_Dal : WcfDataLayerBase<IMS_UP_MK>, IModule
     {
 
@@ -31,7 +30,7 @@ namespace JsMiracle.WCF.UP.AuthMng
             return dataList.ToList();
         }
 
-        public override void SaveOrUpdate(IMS_UP_MK entity)
+        public override IMS_UP_MK SaveOrUpdate(IMS_UP_MK entity)
         {
 
             // 新增时自动计算模块号
@@ -63,7 +62,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
                 // 得到当前序号中断开的最小号码
                 // 如:   1,2,3,4,6 , => 5
-                //       1,2,3       => 4 
+                //       1,2,3       => 4                 
                 var nextModuleIDQueryable =
                     from a in this.DbContext.IMS_UP_MK_S.Where(n => n.FMKID == entity.FMKID)
                     join b in this.DbContext.IMS_UP_MK_S.Where(n => n.FMKID == entity.FMKID)
@@ -81,7 +80,7 @@ namespace JsMiracle.WCF.UP.AuthMng
             }
 
             base.SaveEntity(entity);
-
+            return entity;
         }
 
         public override void Delete(object id)

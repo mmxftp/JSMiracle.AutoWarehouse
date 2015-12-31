@@ -38,7 +38,7 @@ namespace JsMiracle.Entities
         /// </summary>
         /// <param name="entity"></param>
         //[OperationContract]
-        void SaveOrUpdate(T entity);
+        T SaveOrUpdate(T entity);
 
         /// <summary>
         /// 删除记录
@@ -52,7 +52,7 @@ namespace JsMiracle.Entities
         /// </summary>
         /// <param name="entity">数据实体</param>
         //[OperationContract]
-        void Insert(T entity);
+        T Insert(T entity);
 
         ///// <summary>
         ///// 分页查询

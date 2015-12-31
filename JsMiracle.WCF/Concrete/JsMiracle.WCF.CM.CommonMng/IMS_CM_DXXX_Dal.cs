@@ -22,20 +22,19 @@ namespace JsMiracle.WCF.CM.CommonMng
 
         public void ReSaveObjectData(string tablename, string opUser)
         {
-            var dxdm = "";
-            DeleteObjectData(tablename, out dxdm);
-
+            tablename = tablename.ToUpperInvariant();
             var columns = GetColumns(tablename);
 
             using (var tran = base.DbContext.Database.BeginTransaction())
             {
                 try
                 {
+                    DeleteObjectData(tablename);
                     foreach (var col in columns)
                     {
                         var ent = new IMS_CM_DXXX()
                         {
-                            DXDM = dxdm,
+                            DXDM = tablename,
                             DXZD = col.ColumnName,
                             ZDMC = col.ColumnNote,
                             XGR = opUser,
@@ -59,18 +58,14 @@ namespace JsMiracle.WCF.CM.CommonMng
         /// 删除对象对应的数据
         /// </summary>
         /// <param name="tablename">表名</param>
-        /// <param name="dxdm">对象代码</param>
-        private void DeleteObjectData(string tablename, out string dxdm)
+        private void DeleteObjectData(string tablename)
         {
-            var ent = base.DbContext.IMS_CM_DM_S.Where(n => n.MC.Equals(tablename)
+            var ent = base.DbContext.IMS_CM_DM_S.Where(n => n.DM.Equals(tablename, StringComparison.CurrentCultureIgnoreCase)
                        && n.LXDM == CodeTypeEnum.TableName.ToString()).FirstOrDefault();
 
-            dxdm = "";
 
             if (ent != null)
             {
-                dxdm = ent.DM;
-
                 if (base.DbContext.IMS_CM_YHDX_S.Any(n => n.DXDM == ent.DM))
                     throw new JsMiracleException("对应信息已被用户表(IMS_CM_YHDX_S)使用中不得删除");
 
@@ -81,20 +76,24 @@ namespace JsMiracle.WCF.CM.CommonMng
                 var data = this.GetAllEntitesByFilter(filter);
 
                 base.DbContext.IMS_CM_DXXX_S.RemoveRange(data);
-                base.DbContext.SaveChanges();
+                //base.DbContext.SaveChanges();
             }
+            else
+                throw new JsMiracleException("表未定义，请先在IMS_CM_DM_S表中定义表名称");
         }
 
 
 
         private IList<TableColumnsModule> GetColumns(string tablename)
         {
-            var sql = @"select c.name as columnName,p.value as columnNote, tp.name as columnType from sys.tables t 
+            var sql = @"select c.name as columnName,p.value as columnNote, tp.name as columnType
+                        from sys.tables t 
                         join sys.columns c on t.object_id = c.object_id 
                         left join sys.extended_properties p on p.major_id = c.object_id 
                                 AND p.minor_id = c.column_id 
 						left join systypes tp on c.system_type_id = tp.xtype
-                        where t.name = @tablename ";
+                        where t.name = @tablename
+                            and tp.status = 0 ";
 
             var par = new SqlParameter()
             {

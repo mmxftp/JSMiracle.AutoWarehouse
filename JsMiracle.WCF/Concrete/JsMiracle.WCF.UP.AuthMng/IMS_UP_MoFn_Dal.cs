@@ -21,7 +21,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
 
 
-        public override void SaveOrUpdate(IMS_UP_MKGN entity)
+        public override IMS_UP_MKGN SaveOrUpdate(IMS_UP_MKGN entity)
         {
 
             if (entity.GNID == 0)
@@ -52,7 +52,7 @@ namespace JsMiracle.WCF.UP.AuthMng
             }
 
             base.SaveEntity(entity);
-
+            return entity;
         }
 
         public override void Delete(object id)

@@ -4,6 +4,7 @@ using Castle.Windsor;
 using JsMiracle.Framework.Cache;
 using JsMiracle.Framework.FormAuth;
 using JsMiracle.Framework.Log;
+using JsMiracle.Wcf.VC.IOrderForm;
 using JsMiracle.WCF.CB.ICoreBussiness;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.UP.IAuthMng;
@@ -20,12 +21,12 @@ namespace JsMiracle.InversionOfControl
         public DependencyInstaller(string mainAssembleName)
         {
             mainAssemble = mainAssembleName;
-        } 
+        }
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IUser>()              
+                Component.For<IUser>()
                 .ImplementedBy<WcfConfigUser>().LifeStyle.PerWebRequest,
 
                 Component.For<IMembershipService>()
@@ -85,6 +86,12 @@ namespace JsMiracle.InversionOfControl
 
                 Component.For<IUserObject>()
                     .ImplementedBy<WcfConfigUserObject>().LifeStyle.PerWebRequest,
+                    
+                Component.For<IOrderForm>()
+                    .ImplementedBy<WcfConfigOrderForm>().LifeStyle.PerWebRequest,
+
+                Component.For<IOrderData>()
+                    .ImplementedBy<WcfConfigOrderData>().LifeStyle.PerWebRequest,
 
                 Component.For<JsMiracle.Framework.Log.ILog>()
                 .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,

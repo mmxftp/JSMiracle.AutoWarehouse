@@ -14,12 +14,12 @@ namespace JsMiracle.WCF.CM.CommonMng
 {
     public class IMS_CM_CodeType_Dal : WcfDataLayerBase<IMS_CM_DMLX>, ICodeType
     {
-        public IMS_CM_DMLX GetEntity(string lxdm)
+
+        public IMS_CM_DMLX GetEntityBylxdm(string lxdm)
         {
             var ent = this.DbContext.IMS_CM_DMLX_S.Where(n => n.LXDM.Equals(lxdm, StringComparison.CurrentCultureIgnoreCase));
             return ent.FirstOrDefault();
         }
-
     }
 
 
@@ -33,9 +33,9 @@ namespace JsMiracle.WCF.CM.CommonMng
             object[] objs;
             switch (req.Head.RequestMethodName)
             {
-                case "GetEntity":
+                case "GetEntityBylxdm":
                     objs = (object[])req.Body.Parameters;
-                    res.Body.Data = dal.GetEntity(objs[0]);
+                    res.Body.Data = dal.GetEntityBylxdm((string)objs[0]);
                     break;
                 default:
                     return null;
