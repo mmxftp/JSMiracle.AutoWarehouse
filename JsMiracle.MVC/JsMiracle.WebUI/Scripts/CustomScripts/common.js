@@ -19,6 +19,10 @@ var JsMiracleCommon = {
     // 弹出浮层 名称
     layerWindowName: 'floatingLayerWindow',
 
+    cancelWidow:function(formID){
+        this.closeWindow();
+        //$('#' + formID).form('submit');
+    },
 
     // 关闭当前子窗体, 并刷新父窗体
     closeWindow: function () {

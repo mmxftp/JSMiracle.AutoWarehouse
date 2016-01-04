@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2196EA50-BF0C-4155-92B7-03825B4CFE59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JsMiracle.MVC.UnitTests</RootNamespace>
+    <AssemblyName>JsMiracle.MVC.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\JsMiracle.Infrastructure\JsMiracle.Framework\JsMiracle.Framework.csproj">
+      <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>
+      <Name>JsMiracle.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.Infrastructure\JsMiracle.InversionOfControl\JsMiracle.InversionOfControl.csproj">
+      <Project>{a5251262-7e10-491d-95ef-cd2ee9864b98}</Project>
+      <Name>JsMiracle.InversionOfControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.CB.ICoreBussiness\JsMiracle.WCF.CB.ICoreBussiness.csproj">
+      <Project>{69e262e1-c0c9-45d3-83c4-2663d9483710}</Project>
+      <Name>JsMiracle.WCF.CB.ICoreBussiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.CM.ICommonMng\JsMiracle.WCF.CM.ICommonMng.csproj">
+      <Project>{5bd397d5-8f70-43c4-849e-725a7caebc0c}</Project>
+      <Name>JsMiracle.WCF.CM.ICommonMng</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.UP.IAuthMng\JsMiracle.WCF.UP.IAuthMng.csproj">
+      <Project>{2c471699-de0d-4c66-b3ac-7f53366f55d3}</Project>
+      <Name>JsMiracle.WCF.UP.IAuthMng</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.Wcf.VC.IOrderForm\JsMiracle.WCF.VC.IOrderForm.csproj">
+      <Project>{c8d62465-110b-4976-b720-59f47a13baaf}</Project>
+      <Name>JsMiracle.WCF.VC.IOrderForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Configuration\JsMiracle.WCF.Config\JsMiracle.WCF.Config.csproj">
+      <Project>{95cce93b-312f-45a5-b9f9-63466240dac3}</Project>
+      <Name>JsMiracle.WCF.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.Entities\JsMiracle.Entities.csproj">
+      <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
+      <Name>JsMiracle.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WebUI\JsMiracle.WebUI.csproj">
+      <Project>{ea17367b-1635-4867-9526-debe74799715}</Project>
+      <Name>JsMiracle.WebUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

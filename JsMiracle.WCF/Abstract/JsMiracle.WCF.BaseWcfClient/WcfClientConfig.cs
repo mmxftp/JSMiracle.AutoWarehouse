@@ -40,8 +40,8 @@ namespace JsMiracle.WCF.BaseWcfClient
         protected virtual Return RequestFunc<P, Return>(string methodName, P parameters)
         {
 #if DEBUG
-            //try
-            //{
+            try
+            {
 #endif
                 WcfRequest req = new WcfRequest();
                 req.Head.RequestMethodName = methodName;
@@ -56,12 +56,12 @@ namespace JsMiracle.WCF.BaseWcfClient
                 // 返回不是真 抛出异常
                 throw new JsMiracleException(res.Head.Message);
 #if DEBUG
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    return default(Return);
-            //}
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return default(Return);
+            }
 #endif
         }
 
@@ -124,15 +124,16 @@ namespace JsMiracle.WCF.BaseWcfClient
             return entity;
         }
 
-        private void CopyID(Entity entSource, Entity entTarget)
+        private void CopyID(dynamic entSource, dynamic entTarget)
         {
-            var sourceProperty = entSource.GetType().GetProperty("ID");
-            var targetProperty = entTarget.GetType().GetProperty("ID");
+            entTarget.ID = entSource.ID;
+            //var sourceProperty = entSource.GetType().GetProperty("ID");
+            //var targetProperty = entTarget.GetType().GetProperty("ID");
 
-            if (sourceProperty != null &&targetProperty != null )
-            {
-                targetProperty.SetValue(entTarget, sourceProperty.GetValue(entSource, null), null);
-            }
+            //if (sourceProperty != null &&targetProperty != null )
+            //{
+            //    targetProperty.SetValue(entTarget, sourceProperty.GetValue(entSource, null), null);
+            //}
         }
 
         public List<Entity> GetDataByPageDynamic(int intPageIndex, int intPageSize, out int rowCount, string orderBy, string where, params object[] whereParams)

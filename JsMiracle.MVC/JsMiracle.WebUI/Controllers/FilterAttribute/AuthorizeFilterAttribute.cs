@@ -32,9 +32,9 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 bool validating = true;
 
                 // 只有已配置的权限才是需要验证的权限,否则不验证
-                if (permissions.ExistsPermissions(controllerName, actionName))
+                if (permissions.ExistsPermissions(areaName, controllerName, actionName))
                 {
-                    validating = user.Permissions.ExistsPermissions(controllerName, actionName);
+                    validating = user.Permissions.ExistsPermissions(areaName, controllerName, actionName);
                 }
             }
             catch
@@ -48,12 +48,14 @@ namespace JsMiracle.WebUI.Controllers.Filter
 
         private string controllerName;
         private string actionName;
+        private string areaName;
 
         // 是否需要权限判断
         private bool isAuthViewPage;
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            this.areaName = Convert.ToString(filterContext.RouteData.DataTokens["area"]);
             this.controllerName = filterContext.RouteData.Values["controller"].ToString();
             this.actionName = filterContext.RouteData.Values["action"].ToString();
             object[] attrs = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AuthViewPageAttribute), true);
@@ -82,7 +84,7 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 string msg = string.Format(
                     @"<script type=""text/javascript"">
                             window.location = '{0}'
-                      </script>",  "/Account/LogIn");
+                      </script>", "/Account/LogIn");
 
                 filterContext.Result = new ContentResult { Content = msg };
             }
@@ -104,7 +106,7 @@ namespace JsMiracle.WebUI.Controllers.Filter
                 //    Data = ret
                 //};
             }
-            
+
         }
     }
 

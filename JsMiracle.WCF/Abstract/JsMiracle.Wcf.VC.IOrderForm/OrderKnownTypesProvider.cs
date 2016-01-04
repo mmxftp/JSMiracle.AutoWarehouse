@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace JsMiracle.Wcf.VC.IOrderForm
+namespace JsMiracle.WCF.VC.IOrderForm
 {
     /// <summary>
     /// 用于WCF序列化为值的类型数组
@@ -21,10 +21,12 @@ namespace JsMiracle.Wcf.VC.IOrderForm
             //return contractType.GetGenericArguments();
             return new Type[] { 
                 typeof(object[]) 
+                ,typeof(IMS_VC_YWYS)
                 ,typeof(IMS_VC_DJT)
                 ,typeof(IMS_VC_DJH)
                 ,typeof(List<IMS_VC_DJT>)
                 ,typeof(List<IMS_VC_DJH>)
+                ,typeof(List<IMS_VC_YWYS>)
             };
         }
     }

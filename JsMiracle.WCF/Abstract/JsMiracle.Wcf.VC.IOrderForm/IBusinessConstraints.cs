@@ -1,6 +1,6 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
-using JsMiracle.Wcf.VC.IOrderForm;
+using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
 using JsMiracle.WCF.Interface;
@@ -30,7 +30,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
 
     public class WcfConfigBusinessConstraints : WcfClientConfig<IMS_VC_YWYS, IWcfBusinessConstraints>, IBusinessConstraints, IWcfBusinessConstraints
     {
-        const string ContactName = "IWcfBusinessConstraints";
+        const string ContactName = "IBusinessConstraints";
 
         public WcfConfigBusinessConstraints()
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())

@@ -97,7 +97,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
         public IMS_UP_MK GetEntityByModuleID(int moduleid)
         {
-            return RequestFunc<object[], IMS_UP_MK>("GetRootModule", new object[] { moduleid });
+            return RequestFunc<object[], IMS_UP_MK>("GetEntityByModuleID", new object[] { moduleid });
         }
 
         public List<IMS_UP_MK> GetChildModuleList(int parentid)

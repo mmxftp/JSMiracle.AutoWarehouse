@@ -1,5 +1,5 @@
 ﻿using JsMiracle.Entities.EasyUI_Model;
-using JsMiracle.Wcf.VC.IOrderForm;
+using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WebUI.Controllers;
 using JsMiracle.WebUI.Controllers.Filter;
 using System;

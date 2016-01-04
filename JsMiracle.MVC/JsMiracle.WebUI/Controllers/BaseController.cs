@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Framework;
+using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.WebUI.Controllers.Filter;
 using JsMiracle.WebUI.Controllers.FilterAttribute;
 using System;
@@ -15,6 +16,58 @@ namespace JsMiracle.WebUI.Controllers
     [ExceptionFilter]
     public class BaseController : Controller
     {
+        public BaseController() { }
+
+        [AllowAnonymous]
+        public virtual ActionResult GetPermissionFunction(string actionName)
+        {
+            //ViewContext.RouteData.DataTokens["area"].ToString().ToLower();
+            //ControllerContext.RouteData.DataTokens["area"]
+
+
+            var areaName = Convert.ToString(ControllerContext.RouteData.DataTokens["area"]);
+            var controllerName = this.RouteData.Values["controller"].ToString();
+            //var actionName = this.RouteData.Values["action"].ToString();
+
+            if (string.Equals(controllerName, "Account", StringComparison.CurrentCultureIgnoreCase))
+                return JavaScript("");
+
+
+            var user = CurrentUser.GetCurrentUser();
+
+            var userFunList = user.Permissions.GetFunctionList(areaName, controllerName, actionName);
+
+            if (userFunList == null)
+                userFunList = new List<Entities.TabelEntities.IMS_UP_MKGN>();
+
+            // 得所有配置的权限
+            var permissions = ActionPermission.GetAllPermission();
+
+            var allFunList = permissions.GetFunctionList(areaName, controllerName, actionName);
+
+            //var controlsDisabledDictionary = new Dictionary<string, bool>();
+
+            if (allFunList == null)
+                return JavaScript("");
+
+            StringBuilder scriptBuilder = new StringBuilder();
+
+            foreach (var fun in allFunList)
+            {
+                // 为true时禁用按钮。
+                var disabled = !userFunList.Exists(n => n.GNID == fun.GNID);
+                //controlsDisabledDictionary.Add(fun.KJID, disabled);
+
+                if (disabled)
+                {
+                    scriptBuilder.AppendFormat("$('#{0}').hide();\r\n", fun.KJID);
+                }
+            }
+
+            return JavaScript(scriptBuilder.ToString());
+        }
+
+
         /// <summary>
         /// 保存数据实体操作
         /// </summary>
@@ -57,7 +110,7 @@ namespace JsMiracle.WebUI.Controllers
                 {
                     Exception innerExp = ex;
 
-                    while(innerExp.InnerException!= null)
+                    while (innerExp.InnerException != null)
                     {
                         innerExp = innerExp.InnerException;
                     }

@@ -7,6 +7,7 @@ using JsMiracle.InversionOfControl;
 using JsMiracle.WCF.UP.IAuthMng;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -17,7 +18,10 @@ namespace JsMiracle.WebUI.CommonSupport
         public static bool IsAdmin = false;
         static CurrentUser()
         {
-            IsAdmin = true;
+            var key = ConfigurationManager.AppSettings["AdminKey"] ?? "";
+
+            IsAdmin = !string.IsNullOrEmpty(key);
+            //IsAdmin = true;
         }
 
         /// <summary>

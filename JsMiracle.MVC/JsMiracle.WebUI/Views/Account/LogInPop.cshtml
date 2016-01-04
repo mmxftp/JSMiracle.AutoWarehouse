@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "LogInPop";
+    ViewBag.Title = "LogInPop";    
 }
 
 @model JsMiracle.WebUI.Models.LoginModel
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:center;">
-                            <a class="easyui-linkbutton" iconcls="icon-lockopen" href="###" onclick="javascript:$('#frmLoginPop').form('submit')">登录</a>
+                            <a id="btnLoginPop" href="###" onclick="$('#frmLoginPop').form('submit')">登录</a>
                         </td>
                     </tr>
                 </table>
@@ -58,6 +58,10 @@
 <script type="text/javascript">
 
     $(function () {
+        $("#btnLoginPop").linkbutton({
+            iconCls: 'icon-lockopen'
+        });
+
         $('#txtUser').validatebox({
             required: true,
             iconCls: 'icon-man',
@@ -87,7 +91,7 @@
 
                     //window.location.href = ret.msg;
                 }
-            },
+            }
 
         });
     });

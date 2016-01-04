@@ -4,9 +4,16 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-
     @RenderBody()
 
     @RenderSection("scripts", required: false)
+
+    @*用到前面的代码必须放在最后
+        隐藏无权限操作的linkbutton*@
+    <script type="text/javascript" 
+            src='@Url.Action("GetPermissionFunction"
+            , @ViewContext.RouteData.Values["controller"].ToString()
+            , new { actionName = @ViewContext.RouteData.Values["action"].ToString() })'>
+    </script>
 </body>
 </html>

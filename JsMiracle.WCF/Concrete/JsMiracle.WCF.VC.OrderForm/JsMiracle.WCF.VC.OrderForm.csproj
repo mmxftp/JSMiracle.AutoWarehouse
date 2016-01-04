@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="IMS_VC_DJH_Dal.cs" />
     <Compile Include="IMS_VC_DJT_Dal.cs" />
+    <Compile Include="IMS_VC_YWYS_Dal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

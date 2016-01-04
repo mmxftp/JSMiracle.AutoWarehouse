@@ -44,13 +44,11 @@ namespace JsMiracle.WCF.WcfBaseService
                     case "GetAllEntites":
                         objs = (object[])req.Body.Parameters;
                         res.Body.Data = DataLayer.GetAllEntites((string)objs[0]);
-                        ;
                         break;
 
                     case "Exists":
                         objs = (object[])req.Body.Parameters;
                         res.Body.Data = DataLayer.Exists((string)objs[0]);
-
                         break;
 
                     case "SaveOrUpdate":

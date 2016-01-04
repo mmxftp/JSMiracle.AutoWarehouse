@@ -4,7 +4,7 @@ using Castle.Windsor;
 using JsMiracle.Framework.Cache;
 using JsMiracle.Framework.FormAuth;
 using JsMiracle.Framework.Log;
-using JsMiracle.Wcf.VC.IOrderForm;
+using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WCF.CB.ICoreBussiness;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.UP.IAuthMng;
@@ -92,6 +92,9 @@ namespace JsMiracle.InversionOfControl
 
                 Component.For<IOrderData>()
                     .ImplementedBy<WcfConfigOrderData>().LifeStyle.PerWebRequest,
+
+                Component.For<IBusinessConstraints>()
+                    .ImplementedBy<WcfConfigBusinessConstraints>().LifeStyle.PerWebRequest,
 
                 Component.For<JsMiracle.Framework.Log.ILog>()
                 .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,

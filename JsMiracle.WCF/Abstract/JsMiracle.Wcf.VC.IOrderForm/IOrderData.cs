@@ -9,7 +9,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 
-namespace JsMiracle.Wcf.VC.IOrderForm
+namespace JsMiracle.WCF.VC.IOrderForm
 {
     /// <summary>
     /// 单据行

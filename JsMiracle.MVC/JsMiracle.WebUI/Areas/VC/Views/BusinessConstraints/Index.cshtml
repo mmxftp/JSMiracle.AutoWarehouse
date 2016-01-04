@@ -2,4 +2,100 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+
+<div>
+    <div id="businessConstraintsToolbar">
+        <div style="padding-left:5px;">
+
+        </div>
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="cbBusinessConstraints.Edit('add')">新增业务类型</a>
+        </div>
+    </div>
+
+    <table id="grdBusinessConstraints"></table>
+
+</div>
+<script type="text/javascript">
+
+    var cbBusinessConstraints;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        cbBusinessConstraints = {
+
+            Edit: function (op, id) {
+                var width = '600px';
+                var height = '250px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("Create")';
+                    title = '新增业务信息';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("Edit")' + '?id=' + id;
+                    title = '编辑业务信息';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                // 刷新模块子类
+                $("#grdBusinessConstraints").datagrid('reload');
+
+            }
+        };
+
+
+        $("#grdBusinessConstraints").datagrid({
+            url: '@Url.Action("GetBusinessConstraintsList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#businessConstraintsToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.YWLX + '\',\'@Url.Action("Remove")\',cbBusinessConstraints.reloadDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cbBusinessConstraints.Edit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'YWLX', title: '业务类型', width: 100, align: 'center' },
+                { field: 'YSZD', title: '约束字段', width: 100, align: 'center' },
+                { field: 'YSBDS', title: '约束表达式', width: 250, align: 'center' },
+                { field: 'KYZT', title: '可用状态', width: 100, align: 'center' },
+                { field: 'XGSJ', title: '修改时间', width: 200, align: 'center', formatter: JsMiracleCommon.dateTimeFormatter },
+                { field: 'BZ', title: '备注', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

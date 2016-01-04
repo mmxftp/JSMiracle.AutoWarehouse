@@ -16,6 +16,28 @@ namespace JsMiracle.WCF.UP.AuthMng
 {
     public class IMS_UP_Modu_Dal : WcfDataLayerBase<IMS_UP_MK>, IModule
     {
+        protected override bool IsAddEntity(IMS_UP_MK entity)
+        {
+            // 修改
+            if (entity.ID != 0)
+            {
+                return false;
+            }
+
+            if (entity.FMKID == -1)
+            {
+                if (base.DbContext.IMS_UP_MK_S.Any(n => n.FMKID == -1 && n.MKID == entity.MKID))
+                    throw new JsMiracleException("mkid重覆不得新增");
+            }
+            else
+            {
+                if (base.DbContext.IMS_UP_MK_S.Any(n=> n.MKID == entity.MKID || n.URL == entity.URL ))
+                    throw new JsMiracleException("mkid重覆不得新增");                
+            }
+
+            return true;
+        }
+
 
         public List<IMS_UP_MK> GetRootModule()
         {
@@ -153,15 +175,15 @@ namespace JsMiracle.WCF.UP.AuthMng
         protected override WcfResponse RequestFun(WcfRequest req)
         {
             WcfResponse res = new WcfResponse();
-             
+
             object[] objs;
 
             switch (req.Head.RequestMethodName)
             {
                 case "GetRootModule":
-                    res.Body.Data= dal.GetRootModule();
+                    res.Body.Data = dal.GetRootModule();
                     break;
-                    
+
                 case "GetEntityByModuleID":
                     objs = (object[])req.Body.Parameters;
                     res.Body.Data = dal.GetEntityByModuleID((int)objs[0]);
@@ -172,7 +194,7 @@ namespace JsMiracle.WCF.UP.AuthMng
                     res.Body.Data = dal.GetChildModuleList((int)objs[0]);
                     break;
 
-                default :
+                default:
                     return null;
             }
 

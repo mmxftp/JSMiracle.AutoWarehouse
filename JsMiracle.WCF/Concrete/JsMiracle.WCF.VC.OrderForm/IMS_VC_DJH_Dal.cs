@@ -1,6 +1,6 @@
 ﻿using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.WCF;
-using JsMiracle.Wcf.VC.IOrderForm;
+using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;

@@ -103,6 +103,8 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             {
                 module.URL = module.GetUrl();
 
+
+
                 dalModule.SaveOrUpdate(module);
 
                 var parentModule = dalModule.GetEntityByModuleID(module.FMKID);

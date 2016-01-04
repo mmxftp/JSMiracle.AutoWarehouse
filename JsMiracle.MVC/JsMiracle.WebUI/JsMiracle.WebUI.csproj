@@ -512,6 +512,7 @@
     <Content Include="Areas\VC\Views\OrderForm\EditOrderForm.cshtml" />
     <Content Include="Areas\VC\Views\OrderForm\EditOrderData.cshtml" />
     <Content Include="Areas\VC\Views\BusinessConstraints\Index.cshtml" />
+    <Content Include="Areas\VC\Views\BusinessConstraints\Edit.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />

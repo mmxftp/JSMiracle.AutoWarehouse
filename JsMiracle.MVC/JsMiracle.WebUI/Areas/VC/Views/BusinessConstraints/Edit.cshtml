@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@using JsMiracle.WebUI.CommonSupport
+@model JsMiracle.Entities.TabelEntities.IMS_VC_YWYS
+
+@using (Ajax.BeginForm("Save", "BusinessConstraints"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmBusinessConstraints" }))
+{
+    @Html.HiddenFor(n => n.ID)
+    @Html.HiddenFor(n => n.XGSJ, new { @Value = System.DateTime.Now })
+
+    <table class="TB">
+        <tr>
+            <td>业务类型</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.YWLX, new { @id = "txtYWLX" })</td>
+            <td>约束字段</td>
+            <td>
+                @Html.TextBoxFor(n => n.YSZD, new { @id = "txtYSZD" })
+            </td>
+        </tr>
+        <tr>
+            <td>约束表达式</td>
+            <td colspan="3">
+                @Html.TextBoxFor(n => n.YSBDS, new { @id = "txtYSBDS" })
+            </td>
+        </tr>
+        <tr>
+            <td>可用状态</td>
+            <td>
+                @Html.TextBoxFor(n => n.KYZT, new { @id = "txtKYZT" })
+            </td>
+            <td>备注</td>
+            <td>
+                @Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })
+            </td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmBusinessConstraints').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmBusinessConstraints')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmBusinessConstraints').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('业务约束编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('业务约束编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtYWLX").textbox({
+            required: true,
+            missingMessage: '业务类型不得为空'
+        });
+
+        $("#txtYSZD").textbox({
+            required: true,
+            missingMessage: '约束字段不得为空'
+        });
+
+        $("#txtYSBDS").textbox({
+            required: true,
+            missingMessage: '约束表达式不得为空',
+            width: '430px',
+            height:'50px',
+            multiline:true
+        });
+
+        $("#txtKYZT").textbox({
+            required: true,
+            missingMessage: '可用状态不得为空'
+        });
+
+        $("#txtBZ").textbox();
+    });
+
+
+</script>

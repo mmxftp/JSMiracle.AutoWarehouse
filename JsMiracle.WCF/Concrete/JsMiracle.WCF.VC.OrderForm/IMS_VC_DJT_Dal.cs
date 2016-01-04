@@ -1,5 +1,5 @@
 ﻿using JsMiracle.Entities.TabelEntities;
-using JsMiracle.Wcf.VC.IOrderForm;
+using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WCF.WcfBaseService;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace JsMiracle.WCF.VC.OrderForm
 {
-    public class IMS_VC_DJT_Dal : WcfDataLayerBase<IMS_VC_DJT>, JsMiracle.Wcf.VC.IOrderForm.IOrderForm
+    public class IMS_VC_DJT_Dal : WcfDataLayerBase<IMS_VC_DJT>, JsMiracle.WCF.VC.IOrderForm.IOrderForm
     {
         public override void Delete(object id)
         {

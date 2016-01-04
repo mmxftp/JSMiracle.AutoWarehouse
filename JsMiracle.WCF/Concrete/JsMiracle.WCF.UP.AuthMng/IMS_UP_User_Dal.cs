@@ -162,8 +162,8 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
 
     }
-   
-    public class IMS_UP_User_WCF : WcfService<IMS_UP_YH>,IWcfUser
+
+    public class IMS_UP_User_WCF : WcfService<IMS_UP_YH>, IWcfUser, IWcfMembershipService
     {
         IMS_UP_User_Dal dal = new IMS_UP_User_Dal();
 
