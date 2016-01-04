@@ -36,15 +36,19 @@
         </tr>
         <tr>
             <td>登录密码</td>
-            <td>@Html.TextBoxFor(n => n.MM, new { id = "txtPwd", type = "password" })</td>
+            <td>@Html.TextBoxFor(n => n.MM, new { id = "txtPwd" })</td>
         </tr>
         <tr style="text-align:center;display:table-row;">
             <td colspan="2">
-                @*<input type="submit" value="提交" class="easyui-linkbutton" />*@
+                @*<input type="submit" value="提交" class="easyui-linkbutton" />
             
-                <a class="easyui-linkbutton" iconcls="icon-save" href="javascript:$('#frmUser').form('submit')">提交</a>
+                <input type="reset" value="取消" class="easyui-linkbutton" />*@
+                
+               <a class="easyui-linkbutton" iconcls="icon-save" href="###"
+                  onclick="$('#frmUser').form('submit')">提交</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:$('#frmUser').form('reset')">取消</a>
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###"
+                    onclick="javascript:$('#frmUser').form('reset')">取消</a>
             </td>
         </tr>
     </table>
@@ -74,15 +78,18 @@
             disabled: (@Model.ID != 0 )
         });
 
-        $("#txtUserName").validatebox({
+        $("#txtUserName").textbox({
             required: true,
             missingMessage: '此框不得为空'
         });
 
-        $("#txtPwd").validatebox({
+        $("#txtPwd").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '此框不得为空',
+            type:'password'
         });
+
+        $("#txtEmail").textbox();
 
         // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
         $("#frmUser").enterAsTab({ 'allowSubmit': true });

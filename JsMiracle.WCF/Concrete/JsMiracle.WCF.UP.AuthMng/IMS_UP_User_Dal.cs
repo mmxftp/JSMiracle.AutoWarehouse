@@ -186,11 +186,6 @@ namespace JsMiracle.WCF.UP.AuthMng
 
             switch (req.Head.RequestMethodName)
             {
-                case "SaveOrUpdate":
-                    ent = (IMS_UP_YH)req.Body.Parameters;
-                    dal.SaveOrUpdate(ent);
-                    break;
-
                 case "GetAllUserList":
                     objs = (object[])req.Body.Parameters;
                     res.Body.Data  = dal.GetAllUserList((bool)objs[0]);

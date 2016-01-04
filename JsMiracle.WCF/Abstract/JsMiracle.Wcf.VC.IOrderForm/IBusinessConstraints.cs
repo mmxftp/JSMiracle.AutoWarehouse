@@ -1,5 +1,6 @@
 ﻿using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
+using JsMiracle.Wcf.VC.IOrderForm;
 using JsMiracle.WCF.BaseWcfClient;
 using JsMiracle.WCF.Config;
 using JsMiracle.WCF.Interface;
@@ -9,28 +10,29 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 
-namespace JsMiracle.Wcf.VC.IOrderForm
+namespace JsMiracle.WCF.VC.IOrderForm
 {
     /// <summary>
-    /// 单据头
+    /// 业务约束
     /// </summary>
-    public interface IOrderForm : IDataLayer<IMS_VC_DJT>
+    public interface IBusinessConstraints : IDataLayer<IMS_VC_YWYS>
     {
+
     }
 
 
     [ServiceContract]
     [ServiceKnownType("GetKnownTypes", typeof(OrderKnownTypesProvider))]
-    public interface IWcfOrderForm : IWcfService
+    public interface IWcfBusinessConstraints : IWcfService
     {
 
     }
 
-    public class WcfConfigOrderForm : WcfClientConfig<IMS_VC_DJT, IWcfOrderForm>, IOrderForm, IWcfOrderForm
+    public class WcfConfigBusinessConstraints : WcfClientConfig<IMS_VC_YWYS, IWcfBusinessConstraints>, IBusinessConstraints, IWcfBusinessConstraints
     {
-        const string ContactName = "IOrderForm";
+        const string ContactName = "IWcfBusinessConstraints";
 
-        public WcfConfigOrderForm()
+        public WcfConfigBusinessConstraints()
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
     }

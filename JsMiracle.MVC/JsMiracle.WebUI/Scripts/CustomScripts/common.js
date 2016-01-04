@@ -38,7 +38,7 @@ var JsMiracleCommon = {
 
 
     // 加入需显示的内容，并打开此层
-    showWindow: function (title, href, width, height, fun, modal, minimizable, maximizable) {
+    showWindow: function (title, url, width, height, fun, modal, minimizable, maximizable) {
         //console.log(fun);
         $('#' + this.layerWindowName).window(
         {
@@ -49,9 +49,9 @@ var JsMiracleCommon = {
             width: width,
             height: height,
             iconCls: 'icon-edit',
-            href: href,
+            href: url,
             //content: '<iframe scrolling="yes" frameborder="0"  src="'
-            //        + href
+            //        + url
             //        + '" style="width:98%;height:98%;" ></iframe>',
 
             modal: modal === undefined ? true : modal,

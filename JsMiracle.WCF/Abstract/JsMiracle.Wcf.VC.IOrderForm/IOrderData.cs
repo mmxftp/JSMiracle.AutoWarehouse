@@ -11,6 +11,9 @@ using System.Text;
 
 namespace JsMiracle.Wcf.VC.IOrderForm
 {
+    /// <summary>
+    /// 单据行
+    /// </summary>
     public interface IOrderData : IDataLayer<IMS_VC_DJH>
     {
         /// <summary>

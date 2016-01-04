@@ -15,7 +15,7 @@
     <AssemblyName>JsMiracle.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -159,6 +159,7 @@
     <Compile Include="Areas\CM\Controllers\ObjectDataController.cs" />
     <Compile Include="Areas\UP\Controllers\UserController.cs" />
     <Compile Include="Areas\UP\UPAreaRegistration.cs" />
+    <Compile Include="Areas\VC\Controllers\BusinessConstraintsController.cs" />
     <Compile Include="Areas\VC\Controllers\OrderFormController.cs" />
     <Compile Include="Areas\VC\VCAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
@@ -510,6 +511,7 @@
     <Content Include="Areas\VC\Views\OrderForm\Index.cshtml" />
     <Content Include="Areas\VC\Views\OrderForm\EditOrderForm.cshtml" />
     <Content Include="Areas\VC\Views\OrderForm\EditOrderData.cshtml" />
+    <Content Include="Areas\VC\Views\BusinessConstraints\Index.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
     <Content Include="Scripts\easyloader.js" />
@@ -647,7 +649,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2346</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2346/</IISUrl>
+          <IISUrl>http://localhost/JsMiracle.WebUI</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -16,66 +16,65 @@
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmOrderForm" }))
     {
+        if (Model.ID != 0)
+        {
+            @Html.HiddenFor(n => n.CJR);
+            @Html.HiddenFor(n => n.CJSJ);
+        }
         @Html.HiddenFor(n => n.ID);
-                                  if (Model.ID != 0)
-                                  {
-                                    @Html.HiddenFor(n => n.CJR);
-        @Html.HiddenFor(n => n.CJSJ);
-                                  }
+
+        <div id="orderFormTools">
+            <table class="TB" style="width:1600px">
+                <tr>
+                    <td>单据编号</td>
+                    <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
+                    <td>业务类型</td>
+                    <td>@Html.TextBoxFor(n => n.YWLX, new { @id = "txtYWLX" })</td>
+                    <td>来源</td>
+                    <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
+                    <td>创建人</td>
+                    <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
+                </tr>
+                <tr>
+                    <td>上位单据类型</td>
+                    <td>@Html.TextBoxFor(n => n.SWDJLX, new { @id = "txtSWDJLX" })</td>
+                    <td>上位单据编号</td>
+                    <td>@Html.TextBoxFor(n => n.SWSJBH, new { @id = "txtSWSJBH" })</td>
+                    <td>单据状态</td>
+                    <td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>
+                    <td>创建日期</td>
+                    <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ", @Value = System.DateTime.Now })</td>
+                </tr>
+                <tr>
+                    <td>关联单据</td>
+                    <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
+                    <td>备注</td>
+                    <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+                </tr>
+                <tr style="text-align:center;display:table-row;">
+                    <td colspan="7">
+                        <a class="easyui-linkbutton" iconcls="icon-save"
+                           href="javascript:$('#frmOrderForm').form('submit')">保存</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="easyui-linkbutton" iconcls="icon-cancel"
+                           href="javascript:$('#frmOrderForm').form('reset')">取消</a>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        @if (Model.ID != 0)
+                        {
+                            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                               onclick="editOrderForm.edit(false)">新增订单数据</a>
+                        }
+                    </td>
+                    <td style="width:200px;text-align:right;">
+                        <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
 
-                                <div id="orderFormTools">
-                                    <table class="TB" style="width:1600px">
-                                        <tr>
-                                            <td>单据编号</td>
-                                            <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
-                                            <td>业务类型</td>
-                                            <td>@Html.TextBoxFor(n => n.YWLX, new { @id = "txtYWLX" })</td>
-                                            <td>来源</td>
-                                            <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
-                                            <td>创建人</td>
-                                            <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
-                                        </tr>
-                                        <tr>
-                                            <td>上位单据类型</td>
-                                            <td>@Html.TextBoxFor(n => n.SWDJLX, new { @id = "txtSWDJLX" })</td>
-                                            <td>上位单据编号</td>
-                                            <td>@Html.TextBoxFor(n => n.SWSJBH, new { @id = "txtSWSJBH" })</td>
-                                            <td>单据状态</td>
-                                            <td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>
-                                            <td>创建日期</td>
-                                            <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ", @Value = System.DateTime.Now })</td>
-                                        </tr>
-                                        <tr>
-                                            <td>关联单据</td>
-                                            <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
-                                            <td>备注</td>
-                                            <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
-                                        </tr>
-                                        <tr style="text-align:center;display:table-row;">
-                                            <td colspan="7">
-                                                <a class="easyui-linkbutton" iconcls="icon-save"
-                                                   href="javascript:$('#frmOrderForm').form('submit')">保存</a>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a class="easyui-linkbutton" iconcls="icon-cancel"
-                                                   href="javascript:$('#frmOrderForm').form('reset')">取消</a>
-
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                @if (Model.ID != 0)
-                                                {
-                                                    <a href="###" class="easyui-linkbutton" iconcls="icon-add"
-                                                       onclick="editOrderForm.edit(false)">新增订单数据</a>
-                                                }
-                                            </td>
-                                            <td style="width:200px;text-align:right;">
-                                                <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-
-                                <table id="orderDataGrid" style="padding:10px"></table>
+        <table id="orderDataGrid" style="padding:10px"></table>
     }
 </div>
 

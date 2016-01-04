@@ -23,10 +23,12 @@ namespace JsMiracle.InversionOfControl
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {
-
+        {            
             if (controllerType == null)
             {
+                if (requestContext.HttpContext.Request.Path.Contains("favicon.ico"))
+                    return null;
+
                 throw new HttpException(404, string.Format("The controller for path '{0}' could not be found.", requestContext.HttpContext.Request.Path));
             }
 
