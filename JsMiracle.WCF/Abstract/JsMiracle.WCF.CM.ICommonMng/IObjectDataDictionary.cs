@@ -13,7 +13,7 @@ using System.Text;
 namespace JsMiracle.WCF.CM.ICommonMng
 {
     /// <summary>
-    /// 
+    /// IMS_CM_DXXX
     /// </summary>
     public interface IObjectDataDictionary : IDataLayer<IMS_CM_DXXX>
     {

@@ -40,8 +40,8 @@ namespace JsMiracle.WCF.BaseWcfClient
         protected virtual Return RequestFunc<P, Return>(string methodName, P parameters)
         {
 #if DEBUG
-            try
-            {
+            //try
+            //{
 #endif
                 WcfRequest req = new WcfRequest();
                 req.Head.RequestMethodName = methodName;
@@ -56,12 +56,12 @@ namespace JsMiracle.WCF.BaseWcfClient
                 // 返回不是真 抛出异常
                 throw new JsMiracleException(res.Head.Message);
 #if DEBUG
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return default(Return);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    return default(Return);
+            //}
 #endif
         }
 

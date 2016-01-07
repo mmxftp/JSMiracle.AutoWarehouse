@@ -24,5 +24,7 @@ namespace JsMiracle.Entities.TabelEntities
         public int JHZT { get; set; }
         public int QRZT { get; set; }
         public string BZ { get; set; }
+        public string CFDX { get; set; }
+        public string CFWZ { get; set; }
     }
 }

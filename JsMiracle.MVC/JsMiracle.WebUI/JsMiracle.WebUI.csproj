@@ -37,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -162,6 +163,9 @@
     <Compile Include="Areas\VC\Controllers\BusinessConstraintsController.cs" />
     <Compile Include="Areas\VC\Controllers\OrderFormController.cs" />
     <Compile Include="Areas\VC\VCAreaRegistration.cs" />
+    <Compile Include="Areas\WT\Controllers\HandingTaskController.cs" />
+    <Compile Include="Areas\WT\Controllers\OperationalController.cs" />
+    <Compile Include="Areas\WT\WTAreaRegistration.cs" />
     <Compile Include="CommonSupport\ActionPermission.cs" />
     <Compile Include="CommonSupport\CurrentUser.cs" />
     <Compile Include="Areas\CM\Controllers\CodeController.cs" />
@@ -183,11 +187,13 @@
   <ItemGroup>
     <Content Include="Content\images\backgroundTitle.jpg" />
     <Content Include="Content\images\favicon_32.ico" />
-    <Content Include="Content\images\Logo.jpg" />
+    <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\images\Logo1.jpg" />
     <Content Include="Content\images\Title.png" />
     <Content Include="Content\images\u.gif" />
     <Content Include="Content\images\ViewForm.GIF" />
     <Content Include="Content\menuTree.css" />
+    <Content Include="Content\queryBuilderStyles.css" />
     <Content Include="Content\themes\black\accordion.css" />
     <Content Include="Content\themes\black\calendar.css" />
     <Content Include="Content\themes\black\combo.css" />
@@ -513,8 +519,20 @@
     <Content Include="Areas\VC\Views\OrderForm\EditOrderData.cshtml" />
     <Content Include="Areas\VC\Views\BusinessConstraints\Index.cshtml" />
     <Content Include="Areas\VC\Views\BusinessConstraints\Edit.cshtml" />
+    <Content Include="Areas\UP\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CM\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CB\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\VC\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CM\Views\ObjectData\IndexUserConditions.cshtml" />
+    <Content Include="Areas\CM\Views\ObjectData\EditCondition.cshtml" />
+    <Content Include="Areas\WT\Views\Web.config" />
+    <Content Include="Areas\WT\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WT\Views\HandingTask\Index.cshtml" />
+    <Content Include="Areas\WT\Views\HandingTask\Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
+    <Content Include="Scripts\CustomScripts\knockout.QueryBuilder.js" />
     <Content Include="Scripts\easyloader.js" />
     <Content Include="Scripts\Home\Index.cshtml.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
@@ -531,6 +549,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\locale\easyui-lang-af.js" />
     <Content Include="Scripts\locale\easyui-lang-am.js" />
     <Content Include="Scripts\locale\easyui-lang-ar.js" />
@@ -598,6 +618,8 @@
     <Folder Include="Areas\UP\Views\Shared\" />
     <Folder Include="Areas\VC\Models\" />
     <Folder Include="Areas\VC\Views\Shared\" />
+    <Folder Include="Areas\WT\Models\" />
+    <Folder Include="Areas\WT\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -610,6 +632,10 @@
     <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.Wcf.VC.IOrderForm\JsMiracle.WCF.VC.IOrderForm.csproj">
       <Project>{c8d62465-110b-4976-b720-59f47a13baaf}</Project>
       <Name>JsMiracle.WCF.VC.IOrderForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.WT.IWorkTasks\JsMiracle.WCF.WT.IWorkTasks.csproj">
+      <Project>{1033f3e7-b673-4405-88af-13a8bcfb93d4}</Project>
+      <Name>JsMiracle.WCF.WT.IWorkTasks</Name>
     </ProjectReference>
     <ProjectReference Include="..\JsMiracle.Entities\JsMiracle.Entities.csproj">
       <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>

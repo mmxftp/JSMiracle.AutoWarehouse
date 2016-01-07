@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "EditCondition";
+}
+
+<style type="text/css">
+    .removeItem {
+        vertical-align: middle;
+    }
+
+    .conditionGroup {
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+        border: 1px solid transparent;
+        border-color: rgb(220, 200, 150);
+    }
+
+    .box {
+        margin: 15px 15px 15px 15px;
+        padding: 15px;
+    }
+
+    .queryMessage {
+        color: #31708f;
+        background-color: #d9edf7;
+        border: 1px solid transparent;
+        border-color: rgb(220, 200, 150);
+    }
+</style>
+<div class="container">
+    @using JsMiracle.WebUI.CommonSupport
+    @model JsMiracle.Entities.TabelEntities.IMS_CM_YHDX
+
+    @using (Ajax.BeginForm("SaveCondition", "ObjectData"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmCondition" }))
+    {
+        @Html.HiddenFor(n => n.ID)
+        @Html.HiddenFor(n => n.YHID, new { @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })
+        @Html.HiddenFor(n => n.DXDM)
+
+        <div class="box queryMessage">
+            查询名称: @Html.TextBoxFor(n => n.CXMC, new { id = "txtCXMC" })<br />
+            <strong>条件表达式</strong><br />
+            <span id="sp" data-bind="text: text"></span>
+            @Html.HiddenFor(n => n.DXTJ, new { data_bind = "value: text" })
+            @Html.HiddenFor(n => n.DXBDS, new { data_bind = "value: Express" })
+            <div style="text-align:center">
+                <a class=" easyui-linkbutton" iconcls="icon-save" href="###"
+                   onclick="javascript:$('#frmCondition').form('submit')">
+                    提交
+                </a>
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###"
+                   onclick="JsMiracleCommon.cancelWidow('frmCondition')">取消</a>
+            </div>
+        </div>
+       
+    }
+
+    <div data-bind="with: group">
+        <div data-bind="template: templateName"></div>
+    </div>
+</div>
+
+<!-- HTML Template For Conditions -->
+<script id="condition-template" type="text/html">
+    <div class="condition">
+        <select data-bind="options:fields, optionsText: 'fieldText', value: selectedField"></select>
+        <select data-bind="options: comparisons, value: selectedComparison"></select>
+        @*<input type="text" data-bind="value: value" />*@
+        <input type="text" data-bind="value: value" />
+        @*<button class="btn btn-danger btn-xs" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span></button>*@
+        <img data-bind="click: $parent.removeChild" class="removeItem"
+             src="Content/themes/icons/cancel.png" />
+    </div>
+</script>
+
+<!-- HTML Template For Groups -->
+<script id="group-template" type="text/html">
+    <div class="box conditionGroup">
+        <select data-bind="options: logicalOperators, value: selectedLogicalOperator"></select>
+        @*<button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>*@
+        @*<button class="btn btn-xs btn-success" data-bind="click: addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>*@
+        @*<button class="btn btn-xs btn-danger" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>*@
+
+        <a href="###" class="btnAddCondition"
+           data-bind="click: addCondition">增加条件</a>
+        <a href="###" class="btnAddGroup"
+           data-bind="click: addGroup">增加组</a>
+        <a href="###" class="btnRemoveGroup"
+           data-bind="click: $parent.removeChild">删除组</a>
+
+        <div class="group-conditions">
+            <div data-bind="foreach: children">
+                <div data-bind="template: templateName"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@Scripts.Render("~/Scripts/knockout-3.4.0.js",
+    "~/Scripts/CustomScripts/knockout.QueryBuilder.js")
+
+<script type="text/javascript">
+
+    var editCondition = {};
+
+    $(function () {
+        $("#txtCXMC").textbox({
+            required:true,
+            missingMessage: '此框不得为空'
+        });
+
+        // 应用group-template中easyui的样式
+        QueryBuilder.RefreshGroup = function () {
+            $(".btnAddCondition").linkbutton({ iconCls: 'icon-add' });
+            $(".btnAddGroup").linkbutton({ iconCls: 'icon-add' });
+            $(".btnRemoveGroup").linkbutton({ iconCls: 'icon-remove' });
+        };
+
+        var express = @ViewBag.Express;
+        QueryBuilder.fieldsJson = @ViewBag.fieldJson;
+
+        var vm;
+        if (express)
+            vm = new QueryBuilder.ViewModel(express);
+        else
+            vm = new QueryBuilder.ViewModel();
+
+        ko.applyBindings(vm);
+        QueryBuilder.RefreshGroup();
+
+
+        $('#frmCondition').form({
+            success: function (data) {
+                //console.log(data);
+                //var data = eval('(' + data + ')');
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('条件编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('条件编辑', ret.msg, "error");
+                }
+            }
+        });
+
+        //QueryBuilder.fieldsJson = [{ 'fieldText': '中国人', 'fieldValue': 'Points', 'isString': true },
+        //       { 'fieldText': '名称', 'fieldValue': 'Name', 'isString': true },
+        //       { 'fieldText': '数值', 'fieldValue': 'Number', 'isString': false }];
+
+
+        //express = JSON.parse(express);
+        //console.log(express);
+        //var vm = new QueryBuilder.ViewModel();
+
+        //if ( express )
+        //    vm = new QueryBuilder.ViewModel(express);
+        //else
+        //    vm = new QueryBuilder.ViewModel();
+
+        //ko.applyBindings(vm);
+        //QueryBuilder.RefreshGroup();
+
+    });
+
+</script>

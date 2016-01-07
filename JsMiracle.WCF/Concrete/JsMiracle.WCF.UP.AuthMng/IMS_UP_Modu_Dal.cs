@@ -32,7 +32,7 @@ namespace JsMiracle.WCF.UP.AuthMng
             else
             {
                 if (base.DbContext.IMS_UP_MK_S.Any(n=> n.MKID == entity.MKID || n.URL == entity.URL ))
-                    throw new JsMiracleException("mkid重覆不得新增");                
+                    throw new JsMiracleException("mkid或url重覆不得新增");                
             }
 
             return true;

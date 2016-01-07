@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div>
@@ -17,7 +16,7 @@
                onclick="cmCode.showCodeTypeEdit('add')">新增代码大类</a>
         </div>
         <div>
-            <a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="cmCode.showCodeEdit('add')">新增子模块类</a>
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="cmCode.showCodeEdit('add')">新增代码信息</a>
         </div>
     </div>
 
@@ -184,7 +183,7 @@
             //url: '@Url.Action("GetCodeList")',
             singleSelect: true,
             loadMsg: '数据载入中...',
-            pagination: true, // 是否显示分页控件
+            pagination: true,  // 是否显示分页控件
             pagesize: 10,      // 每页行数
             pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
             height: '700px',

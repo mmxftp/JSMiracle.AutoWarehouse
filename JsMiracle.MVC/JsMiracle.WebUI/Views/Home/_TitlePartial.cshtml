@@ -1,10 +1,10 @@
 ﻿
 <div id="site-title">
-    <img src="~/Content/images/Logo.jpg" style="height:70px" />
+    <img src="~/Content/images/Logo.png" style="height:70px;padding-left:15px;padding-top:5px;" />
 
     <div id="login">
         <b>
-            你好:@User.Identity.Name
+            你好: @User.Identity.Name
         </b>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
         {

@@ -173,8 +173,6 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
             WcfResponse res = new WcfResponse();
 
-            InventoryPositionModule position;
-            string dt;
             object[] objs;
 
             switch (req.Head.RequestMethodName)

@@ -11,6 +11,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CM.ICommonMng
 {
+    /// <summary>
+    /// IMS_CM_YHDX
+    /// </summary>
     public interface IUserObject : IDataLayer<IMS_CM_YHDX>
     {
     }

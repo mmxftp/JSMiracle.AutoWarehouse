@@ -20,5 +20,6 @@ namespace JsMiracle.Entities.TabelEntities
         public string DXDM { get; set; }
         public string DXTJ { get; set; }
         public Nullable<System.DateTime> XGRQ { get; set; }
+        public string DXBDS { get; set; }
     }
 }

@@ -367,12 +367,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         {
             WcfResponse res = new WcfResponse();
 
-
-            List<TreeModel> dataList;
             object[] objs;
-            int effectRowCount;
-            PermissionViewModule permissions;
-            List<IMS_UP_JSMK> rolePermissions;
 
             switch (req.Head.RequestMethodName)
             {

@@ -181,7 +181,6 @@ namespace JsMiracle.WCF.UP.AuthMng
         {
             WcfResponse res = new WcfResponse();
 
-            IMS_UP_YH ent;
             object[] objs;
 
             switch (req.Head.RequestMethodName)

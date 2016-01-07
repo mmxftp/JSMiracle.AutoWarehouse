@@ -8,6 +8,7 @@ using JsMiracle.WCF.VC.IOrderForm;
 using JsMiracle.WCF.CB.ICoreBussiness;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.UP.IAuthMng;
+using JsMiracle.WCF.WT.IWorkTasks;
 using System.Web.Http.Controllers;
 using System.Web.Mvc;
 
@@ -26,12 +27,13 @@ namespace JsMiracle.InversionOfControl
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
+                
+                #region JsMiracle.WCF.UP.IAuthMng
                 Component.For<IUser>()
                 .ImplementedBy<WcfConfigUser>().LifeStyle.PerWebRequest,
 
                 Component.For<IMembershipService>()
                 .ImplementedBy<WcfConfigMembershipService>().LifeStyle.PerWebRequest,
-
 
                 Component.For<IModule>()
                 .ImplementedBy<WcfConfigModule>().LifeStyle.PerWebRequest,
@@ -50,12 +52,13 @@ namespace JsMiracle.InversionOfControl
 
                 Component.For<IFormsAuthentication>()
                 .ImplementedBy<FormsAuthenticationService>().LifeStyle.PerWebRequest,
-
-                Component.For<ICache>()
-                .ImplementedBy<WebCache>().LifeStyle.PerWebRequest,
+ 
+                #endregion
 
                 //Component.For<IActionPermission>()
                 //.ImplementedBy<ActionPermission>().LifeStyle.PerWebRequest,
+
+                #region JsMiracle.WCF.CB.ICoreBussiness
 
                 Component.For<IItem>()
                      .ImplementedBy<WcfConfigItem>().LifeStyle.PerWebRequest,
@@ -80,13 +83,17 @@ namespace JsMiracle.InversionOfControl
 
                 Component.For<ILocationRelationship>()
                      .ImplementedBy<WcfConfigLocationRelationship>().LifeStyle.PerWebRequest,
+                #endregion
 
+                #region JsMiracle.WCF.CM.ICommonMng
                 Component.For<IObjectDataDictionary>()
                     .ImplementedBy<WcfConfigObjectDataDictionary>().LifeStyle.PerWebRequest,
 
                 Component.For<IUserObject>()
                     .ImplementedBy<WcfConfigUserObject>().LifeStyle.PerWebRequest,
-                    
+                #endregion
+
+                #region JsMiracle.WCF.VC.IOrderForm
                 Component.For<IOrderForm>()
                     .ImplementedBy<WcfConfigOrderForm>().LifeStyle.PerWebRequest,
 
@@ -95,9 +102,36 @@ namespace JsMiracle.InversionOfControl
 
                 Component.For<IBusinessConstraints>()
                     .ImplementedBy<WcfConfigBusinessConstraints>().LifeStyle.PerWebRequest,
+                #endregion
+
+                #region JsMiracle.WCF.WT.IWorkTasks
+                Component.For<IHandlingTasks>()
+                    .ImplementedBy<WcfConfigHandlingTasks>().LifeStyle.PerWebRequest,
+
+                Component.For<IActionTasks>()
+                    .ImplementedBy<WcfConfigActionTasks>().LifeStyle.PerWebRequest,
+
+                Component.For<IBusinessTasks>()
+                    .ImplementedBy<WcfConfigBusinessTasks>().LifeStyle.PerWebRequest,
+
+                Component.For<IExecutionPath>()
+                    .ImplementedBy<WcfConfigExecutionPath>().LifeStyle.PerWebRequest,
+
+                Component.For<IExecutor>()
+                    .ImplementedBy<WcfConfigExecutor>().LifeStyle.PerWebRequest,
+
+                Component.For<IOperationalTasks>()
+                    .ImplementedBy<WcfConfigOperationalTasks>().LifeStyle.PerWebRequest,
+
+                Component.For<ISystemNode>()
+                    .ImplementedBy<WcfConfigSystemNode>().LifeStyle.PerWebRequest,
+            #endregion
+
+                Component.For<ICache>()
+                    .ImplementedBy<WebCache>().LifeStyle.PerWebRequest,
 
                 Component.For<JsMiracle.Framework.Log.ILog>()
-                .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,
+                    .ImplementedBy<Net4Log>().LifeStyle.PerWebRequest,
 
                 //Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
                 //Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient()

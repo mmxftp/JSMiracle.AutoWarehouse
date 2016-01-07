@@ -31,14 +31,7 @@ namespace JsMiracle.WebUI.Controllers.UP
         public ActionResult Index()
         {
             return View();
-        }
-
-        private IEnumerable<IMS_UP_MK> GetChildModule(PermissionViewModule module, int parentid)
-        {
-            return module.Modules.Where(n => n.FMKID == parentid);
-        }
-
-     
+        }     
 
         [AllowAnonymous]
         public PartialViewResult _MenuPartial()

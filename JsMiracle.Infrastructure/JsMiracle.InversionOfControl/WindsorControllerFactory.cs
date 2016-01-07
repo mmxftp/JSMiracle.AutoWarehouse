@@ -26,7 +26,7 @@ namespace JsMiracle.InversionOfControl
         {            
             if (controllerType == null)
             {
-                return null;
+                //return null;
                 //if (requestContext.HttpContext.Request.Path.Contains("favicon.ico"))
                 //    return null;
 

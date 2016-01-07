@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{853BF6DF-8A72-4056-90F2-277193609F1A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JsMiracle.WCF.WT.WorkTasks</RootNamespace>
+    <AssemblyName>JsMiracle.WCF.WT.WorkTasks</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IMS_WT_ZXZ_Dal.cs" />
+    <Compile Include="IMS_WT_ZXLJ_Dal.cs" />
+    <Compile Include="IMS_WT_YWRW_Dal.cs" />
+    <Compile Include="IMS_WT_XTJD_Dal.cs" />
+    <Compile Include="IMS_WT_DZRW_Dal.cs" />
+    <Compile Include="IMS_WT_CWRW_Dal.cs" />
+    <Compile Include="IMS_WT_BYRW_Dal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\JsMiracle.MVC\JsMiracle.Entities\JsMiracle.Entities.csproj">
+      <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
+      <Name>JsMiracle.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.WT.IWorkTasks\JsMiracle.WCF.WT.IWorkTasks.csproj">
+      <Project>{1033f3e7-b673-4405-88af-13a8bcfb93d4}</Project>
+      <Name>JsMiracle.WCF.WT.IWorkTasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.WcfBaseService\JsMiracle.WCF.WcfBaseService.csproj">
+      <Project>{b6242f08-7ee1-4d6e-88a9-75c425c8fd00}</Project>
+      <Name>JsMiracle.WCF.WcfBaseService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetFileName) D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,5 +1,4 @@
-﻿
-using JsMiracle.Entities.EasyUI_Model;
+﻿using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WebUI.Controllers;
 using JsMiracle.WebUI.Controllers.Filter;
@@ -13,6 +12,7 @@ using JsMiracle.Framework;
 using JsMiracle.Entities.Enum;
 using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.WCF.CM.ICommonMng;
+using JsMiracle.Framework.Serialized;
 
 namespace JsMiracle.WebUI.Areas.CM.Controllers
 {
@@ -40,6 +40,13 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
         public ActionResult GetTables()
         {
             var data = dalCode.GetCodeList(CodeTypeEnum.TableName);
+            if (data != null)
+            {
+                foreach (var d in data)
+                {
+                    d.MC = string.Format("{0}({1})", d.MC, d.DM);
+                }
+            }
             return this.JsonFormat(data);
         }
 
@@ -109,7 +116,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
             var code = dalCode.GetAllEntites(filter).FirstOrDefault();
 
-            ViewBag.DXMC = string.Format("{0}({1})", code.MC,ent.DXDM);
+            ViewBag.DXMC = string.Format("{0}({1})", code.MC, ent.DXDM);
 
             //var ent = dalObjectData.GetEntity(id);
             return View(ent);
@@ -127,6 +134,114 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 ret.success = true;
                 ret.msg = "保存成功";
 
+                return ret;
+            };
+
+            return base.Save(saveFun);
+        }
+
+        public ActionResult IndexUserConditions()
+        {
+            return View();
+        }
+
+
+
+        public ActionResult GetConditionList(int? rows, int? page, string tablename)
+        {
+            int totalCount = 0;
+
+            int pageIndex = page ?? 1;
+            int pageSize = rows ?? 10;
+
+            string filter = string.Format(" YHID =\"{0}\" ", CurrentUser.GetCurrentUser().UserInfo.YHID);
+
+            if (!string.IsNullOrEmpty(tablename))
+            {
+                filter += string.Format(" and DXDM =\"{0}\" ", tablename);
+            }
+
+
+            var dataList = dalUserObj.GetDataByPageDynamic(pageIndex, pageSize, out totalCount
+                , "CXMC", filter);
+
+            //数据组装到viewModel
+            var info = new PaginationModel(dataList, totalCount);
+
+            return this.JsonFormat(info);
+        }
+
+
+        public ActionResult EditCondition(long id)
+        {
+            var ent = dalUserObj.GetEntity(id);
+
+            ViewBag.fieldJson = "[]";
+            ViewBag.Express = MvcHtmlString.Create("null");
+            if (ent != null)
+            {
+                ViewBag.fieldJson = GetFieldList(ent.DXDM);
+                ViewBag.Express = MvcHtmlString.Create(ent.DXBDS);
+            }
+            return View(ent);
+        }
+
+        public ActionResult CreateCondition(string tablename)
+        {
+            var ent = new IMS_CM_YHDX()
+            {
+                DXDM = tablename,
+                YHID = CurrentUser.GetCurrentUser().UserInfo.YHID
+            };
+            ViewBag.fieldJson = GetFieldList(ent.DXDM);
+            ViewBag.Express = MvcHtmlString.Create("null");
+        
+            return View("EditCondition", ent);
+        }
+
+        public ActionResult RemoveCondition(long id)
+        {
+            Func<ExtResult> removeFun = () =>
+            {
+                dalUserObj.Delete(id);
+                var ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
+
+            return base.Remove(removeFun);
+        }
+
+        public MvcHtmlString GetFieldList(string tablename)
+        {
+            if (string.IsNullOrEmpty(tablename))
+                return MvcHtmlString.Create(null);
+
+            var filter = string.Format("DXDM = \"{0}\" ", tablename);
+
+            var dataList =
+                dalObjectData.GetAllEntites(filter).Select(n => new
+                {
+                    fieldText = n.ZDMC,
+                    fieldValue = n.DXZD,
+                    isString = string.Equals(n.ZDLX, "nvarchar", StringComparison.CurrentCultureIgnoreCase)
+                });
+
+            var str = JsonSerialization.Serialize(dataList);
+            return MvcHtmlString.Create(str);
+            //return this.JsonFormat(dataList);
+        }
+
+        public ActionResult SaveCondition(IMS_CM_YHDX entity)
+        {
+            Func<ExtResult> saveFun = () =>
+            {
+                entity.XGRQ = System.DateTime.Now;
+                entity.YHID = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                dalUserObj.SaveOrUpdate(entity);
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                ret.msg = "保存成功";
                 return ret;
             };
 

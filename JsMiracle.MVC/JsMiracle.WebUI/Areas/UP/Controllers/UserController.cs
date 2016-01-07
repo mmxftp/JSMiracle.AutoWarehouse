@@ -62,7 +62,9 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
 
             if (!string.IsNullOrEmpty(txt))
             {
-                filter = string.Format(" (YHID = \"{0}\" || YHM.Contains(\"{0}\")) && ZT = {1} "
+                //filter = string.Format(" (YHID = \"{0}\" || YHM.Contains(\"{0}\")) && ZT = {1} "
+                //    , txt, (int)UserStateEnum.Normal);
+                filter = string.Format(" (YHID = {0} || YHM.Contains({0})) && ZT = {1} "
                     , txt, (int)UserStateEnum.Normal);
                 // f => (f.YHID == txt || f.YHM.Contains(txt)) && f.ZT == (int)UserStateEnum.Normal;
             }

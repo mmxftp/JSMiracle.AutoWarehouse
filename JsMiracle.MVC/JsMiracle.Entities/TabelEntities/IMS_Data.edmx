@@ -223,6 +223,7 @@
           <Property Name="CXMC" Type="nvarchar" MaxLength="64" />
           <Property Name="DXDM" Type="nvarchar" MaxLength="64" />
           <Property Name="DXTJ" Type="nvarchar(max)" />
+          <Property Name="DXBDS" Type="nvarchar(max)" />
           <Property Name="XGRQ" Type="datetime" />
         </EntityType>
         <EntityType Name="IMS_UP_JS_S">
@@ -352,10 +353,12 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TZXXXH" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="BJLX" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="BJBM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CFDX" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CFWZ" Type="nvarchar" MaxLength="64" />
           <Property Name="BCNR" Type="nvarchar(max)" />
           <Property Name="TZLY" Type="nvarchar" MaxLength="64" />
           <Property Name="TZSJ" Type="datetime" Nullable="false" />
@@ -839,6 +842,7 @@
           <Property Name="DXDM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DXTJ" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="XGRQ" Type="DateTime" Precision="3" />
+          <Property Name="DXBDS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_CM_XTCS">
           <Key>
@@ -920,6 +924,8 @@
           <Property Name="JHZT" Type="Int32" Nullable="false" />
           <Property Name="QRZT" Type="Int32" Nullable="false" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CFDX" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CFWZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_WN_TZLX">
           <Key>
@@ -1344,6 +1350,7 @@
           <EntitySetMapping Name="IMS_CM_YHDX_S">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CM_YHDX">
               <MappingFragment StoreEntitySet="IMS_CM_YHDX_S">
+                <ScalarProperty Name="DXBDS" ColumnName="DXBDS" />
                 <ScalarProperty Name="XGRQ" ColumnName="XGRQ" />
                 <ScalarProperty Name="DXTJ" ColumnName="DXTJ" />
                 <ScalarProperty Name="DXDM" ColumnName="DXDM" />
@@ -1426,6 +1433,8 @@
           <EntitySetMapping Name="IMS_WN_TZ_S">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_WN_TZ">
               <MappingFragment StoreEntitySet="IMS_WN_TZ_S">
+                <ScalarProperty Name="CFWZ" ColumnName="CFWZ" />
+                <ScalarProperty Name="CFDX" ColumnName="CFDX" />
                 <ScalarProperty Name="BZ" ColumnName="BZ" />
                 <ScalarProperty Name="QRZT" ColumnName="QRZT" />
                 <ScalarProperty Name="JHZT" ColumnName="JHZT" />

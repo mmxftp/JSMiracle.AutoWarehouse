@@ -183,6 +183,11 @@
             if (userid == null || userid == undefined)
                 userid = $('#cboUser').combobox('getValue');
 
+            if (userid == null || userid=='') {
+                $.messager.alert('系统信息', '请先选择要操作的用户', 'info');
+                return;
+            }
+
             var rolRow = $('#tabRole').datagrid('getSelected');
 
             if (rolRow == null) {

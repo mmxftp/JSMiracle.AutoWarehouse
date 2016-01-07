@@ -140,9 +140,9 @@
       <Project>{c8d62465-110b-4976-b720-59f47a13baaf}</Project>
       <Name>JsMiracle.WCF.VC.IOrderForm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\JsMiracle.WCF\Concrete\JsMiracle.WCF.VC.OrderForm\JsMiracle.WCF.VC.OrderForm.csproj">
-      <Project>{c61ab5dc-fa6f-4ed9-acd3-97763d775513}</Project>
-      <Name>JsMiracle.WCF.VC.OrderForm</Name>
+    <ProjectReference Include="..\..\JsMiracle.WCF\Abstract\JsMiracle.WCF.WT.IWorkTasks\JsMiracle.WCF.WT.IWorkTasks.csproj">
+      <Project>{1033f3e7-b673-4405-88af-13a8bcfb93d4}</Project>
+      <Name>JsMiracle.WCF.WT.IWorkTasks</Name>
     </ProjectReference>
     <ProjectReference Include="..\JsMiracle.Framework\JsMiracle.Framework.csproj">
       <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>

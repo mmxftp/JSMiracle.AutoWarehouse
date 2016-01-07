@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "IndexUserConditions";
+}
+
+
+<div>
+    <div id="toolbarCondition">
+        表名:<select id="cboConditionTableName" />
+        <a href="###" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="userCondition.showEdit('add')">新增条件</a>
+    </div>
+
+    <table id="grdCondition"></table>
+</div>
+
+<script type="text/javascript">
+
+    var userCondition;
+
+    $(function () {
+        userCondition = {
+            refreshDatagrid: function () {
+                $("#grdCondition").datagrid('reload');
+            },
+
+            showEdit: function (op, id) {
+                var width = '600px';
+                var height = '600px';
+                var title = '编辑查询条件';
+                var url = '';
+
+                if (op == 'mod') {
+                    url = '@Url.Action("EditCondition")' + '?id=' + id;
+                }
+                else if (op=='add') {
+                    var tablename = $('#cboConditionTableName').combobox('getValue');
+
+                    if (tablename == null || tablename == '') {
+                        $.messager.alert('操作错误', '请先选择要操作的表名', "info");
+                        return;
+                    }
+
+                    url = '@Url.Action("CreateCondition")' + '?tablename=' + tablename;
+                }
+                //title = '编辑查询条件';
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.refreshDatagrid);
+            },
+
+        };
+
+        $("#cboConditionTableName").combobox({
+            valueField: "DM",
+            textField: "MC",
+            url: '@Url.Action("GetTables")',
+            width: "200px",
+            editable: false,
+            onSelect: function (rec) {
+                if (rec) {
+                    $("#grdCondition").datagrid({
+                        url: '@Url.Action("GetConditionList")',
+                        queryParams: { 'tablename': rec.DM }
+                    });
+                }
+            }
+        });
+
+        $("#grdCondition").datagrid({
+            //url: '@Url.Action("GetConditionList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#toolbarCondition',
+            frozenColumns: [[
+                  {
+                      field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.CXMC + '\',\'@Url.Action("RemoveCondition")\',userCondition.refreshDatagrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="userCondition.showEdit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                  }
+            ]],
+            columns: [[
+                //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
+                { field: 'CXMC', title: '查询名称', width: 100, align: 'center' },
+                { field: 'DXDM', title: '对象', width: 100, align: 'center' },
+                {
+                    field: 'XGRQ', title: '修改日期', width: 150, align: 'center',
+                    formatter: JsMiracleCommon.dateTimeFormatter
+                }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+
+    });
+
+</script>
