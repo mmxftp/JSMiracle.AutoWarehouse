@@ -7,16 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JsMiracle.Framework;
+using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.WT.Controllers
 {
-    public class OperationalController : BaseController
+    public class OperationalTasksController : BaseController
     {
         private IOperationalTasks dalOperationalTasks;
 
-        public OperationalController(IOperationalTasks repoOperationalTasks)
+        public OperationalTasksController(IOperationalTasks repoOperationalTasks)
         {
-
+            dalOperationalTasks = repoOperationalTasks;
         }
 
         //
@@ -25,6 +27,24 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+
+        public ActionResult GetOperationalTaskList(int? rows, int? page)
+        {
+
+            int totalCount = 0;
+
+            int pageIndex = page ?? 1;
+            int pageSize = rows ?? 10;
+
+            var dataList = dalOperationalTasks.GetDataByPageDynamic(
+                pageIndex, pageSize, out totalCount, " RWBH ", "");
+
+            //数据组装到viewModel
+            var info = new PaginationModel(dataList, totalCount);
+
+            return this.JsonFormat(info);
         }
 
         public ActionResult Edit(long id)
@@ -43,6 +63,11 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
         {
             Func<ExtResult> fun = () =>
             {
+                if (ent.ID == 0)
+                {
+                    ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                    ent.CJSJ = System.DateTime.Now;
+                }
                 ExtResult ret = new ExtResult();
                 dalOperationalTasks.SaveOrUpdate(ent);
                 ret.success = true;

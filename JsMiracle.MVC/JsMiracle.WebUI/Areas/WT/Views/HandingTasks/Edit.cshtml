@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_BYRW
+
+@using (Ajax.BeginForm("Save", "HandingTasks"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmHandingTasks" }))
+{
+    @Html.HiddenFor(n => n.ID)
+    @Html.HiddenFor(n => n.CJR)
+    @Html.HiddenFor(n => n.CJSJ)
+
+    <table class="TB">
+        <tr>
+            <td>任务编号</td>
+            <td>@Html.TextBoxFor(n => n.RWBH, new { @id = "txtRWBH" })</td>
+            <td>任务类型</td>
+            <td>
+                @Html.TextBoxFor(n => n.RWLX, new { @id = "txtRWLX" })
+            </td>
+        </tr>
+        <tr>
+            <td>父任务ID</td>
+            <td>
+                @Html.TextBoxFor(n => n.FRWID, new { @id = "txtFRWID" })
+            </td>
+            <td>任务优先级</td>
+            <td>
+                @Html.TextBoxFor(n => n.RWYXJ, new { @id = "txtRWYXJ" })
+            </td>
+        </tr>
+        <tr>
+            <td>单据ID</td>
+            <td>
+                @Html.TextBoxFor(n => n.DJID, new { @id = "txtDJID" })
+            </td>
+            <td>
+                容器编号
+            </td>
+            <td>@Html.TextBoxFor(n => n.RQBH, new { @id = "txtRQBH" })</td>
+        </tr>
+        <tr>
+            <td>起始位置</td>
+            <td>@Html.TextBoxFor(n => n.QSWZ, new { @id = "txtQSWZ" })</td>
+            <td>
+                目的位置
+            </td>
+            <td>@Html.TextBoxFor(n => n.MDWZ, new { @id = "txtMDWZ" })</td>
+        </tr>
+        <tr>
+            <td>状态</td>
+            <td>@Html.TextBoxFor(n => n.ZT, new { @id = "txtZT" })</td>
+            <td>
+                备注
+            </td>
+            <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+
+        </tr>
+
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmHandingTasks').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmHandingTasks')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmHandingTasks').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('搬运任务编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('搬运任务编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtFRWID").textbox({
+            required: true,
+            missingMessage: '父任务ID不得为空'
+        });
+
+        $("#txtRWBH").textbox();
+
+        $("#txtRWLX").textbox();
+
+        $("#txtRWYXJ").textbox();
+
+        $("#txtDJID").textbox();
+
+
+        $("#txtRQBH").textbox();
+        $("#txtQSWZ").textbox();
+
+        $("#txtMDWZ").textbox();
+        $("#txtZT").textbox();
+        $("#txtBZ").textbox();
+
+    });
+
+
+</script>

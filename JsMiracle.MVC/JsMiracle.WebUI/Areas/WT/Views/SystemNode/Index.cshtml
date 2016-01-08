@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div>
+    <div id="systemNodeToolbar">
+        <div style="padding-left:5px;">
+
+        </div>
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="wtSystemNode.Edit('add')">新增系统节点</a>
+        </div>
+    </div>
+
+    <table id="grdSystemNode"></table>
+
+</div>
+<script type="text/javascript">
+
+    var wtSystemNode;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        wtSystemNode = {
+
+            Edit: function (op, id) {
+                var width = '600px';
+                var height = '300px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("Create")';
+                    title = '新增搬运任务';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("Edit")' + '?id=' + id;
+                    title = '编辑搬运任务';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                // 刷新模块子类
+                $("#grdSystemNode").datagrid('reload');
+
+            }
+        };
+
+
+        $("#grdSystemNode").datagrid({
+            url: '@Url.Action("GetSystemNodeList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#systemNodeToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.JDMC + '\',\'@Url.Action("Remove")\',wtSystemNode.reloadDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="wtSystemNode.Edit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'JDBH', title: '节点编号', width: 100, align: 'center' },
+                { field: 'JDMC', title: '节点名称', width: 100, align: 'center' },
+                { field: 'JDMS', title: '节点描述', width: 100, align: 'center' },
+                { field: 'JDRL', title: '容量', width: 100, align: 'center' },
+                { field: 'ZT', title: '状态', width: 100, align: 'center' },
+                { field: 'CJR', title: '创建人', width: 100, align: 'center' },
+                { field: 'CJSJ', title: '创建时间', width: 100, align: 'center', formatter: JsMiracleCommon.dateTimeFormatter },
+                { field: 'BZ', title: '备注', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

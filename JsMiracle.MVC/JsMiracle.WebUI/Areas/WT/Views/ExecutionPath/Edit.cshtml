@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_ZXLJ
+
+@using (Ajax.BeginForm("Save", "ExecutionPath"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmExecutionPath" }))
+{
+    @Html.HiddenFor(n => n.ID)
+    @Html.HiddenFor(n => n.CJR)
+    @Html.HiddenFor(n => n.CJSJ)
+
+
+    <table class="TB">
+        <tr>
+            <td>起始节点</td>
+            <td>@Html.TextBoxFor(n => n.QSJD, new { @id = "txtQSJD" })</td>
+            <td>目的节点</td>
+            <td>
+                @Html.TextBoxFor(n => n.MDJD, new { @id = "txtMDJD" })
+            </td>
+        </tr>
+        <tr>
+            <td>执行者</td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXZ, new { @id = "txtZXZ" })
+            </td>
+            <td>执行模式</td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXMS, new { @id = "txtZXMS" })
+            </td>
+        </tr>
+        <tr>
+            <td>延迟时间</td>
+            <td>
+                @Html.TextBoxFor(n => n.YCSJ, new { @id = "txtYCSJ" })
+            </td>
+            <td>
+                权值
+            </td>
+            <td>@Html.TextBoxFor(n => n.QZ, new { @id = "txtQZ" })</td>
+        </tr>       
+        <tr>
+            <td>状态</td>
+            <td>@Html.TextBoxFor(n => n.ZT, new { @id = "txtZT" })</td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmExecutionPath').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmExecutionPath')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmExecutionPath').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                var title = '操作执行路径';
+                if (ret.success) {
+                    $.messager.alert(title, ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert(title, ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtQSJD").textbox({
+            required: true,
+            missingMessage: '起始节点不得为空'
+        });
+
+        $("#txtMDJD").textbox({
+            required: true,
+            missingMessage: '目的节点不得为空'
+        });
+
+        $("#txtZXZ").textbox();
+
+        $("#txtZXMS").textbox({
+            required: true,
+            missingMessage: '执行模式不得为空'
+        });
+
+        $("#txtYCSJ").numberbox();
+
+
+        $("#txtQZ").numberbox();
+
+        $("#txtZT").textbox();
+        $("#txtBZ").textbox({ width:'430px'});
+
+    });
+
+
+</script>

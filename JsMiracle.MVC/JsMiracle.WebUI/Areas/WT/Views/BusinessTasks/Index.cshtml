@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div>
+    <div id="businessTasksToolbar">
+        <div style="padding-left:5px;">
+
+        </div>
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="wtBusinessTasks.Edit('add')">新增操作任务</a>
+        </div>
+    </div>
+
+    <table id="grdBusinessTasks"></table>
+
+</div>
+<script type="text/javascript">
+
+    var wtBusinessTasks;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        wtBusinessTasks = {
+
+            Edit: function (op, id) {
+                var width = '600px';
+                var height = '400px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("Create")';
+                    title = '新增业务任务';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("Edit")' + '?id=' + id;
+                    title = '编辑业务任务';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                // 刷新模块子类
+                $("#grdBusinessTasks").datagrid('reload');
+
+            }
+        };
+
+
+        $("#grdBusinessTasks").datagrid({
+            url: '@Url.Action("GetBusinessTaskList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#businessTasksToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.RWBH + '\',\'@Url.Action("Remove")\',wtBusinessTasks.reloadDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="wtBusinessTasks.Edit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'DJBH', title: '单据编号', width: 100, align: 'center' },
+                { field: 'HH', title: '行号', width: 100, align: 'center' },
+                { field: 'HXW', title: '行为类型', width: 100, align: 'center' },
+                { field: 'SKU', title: '品规ID', width: 100, align: 'center' },
+                { field: 'PCBH', title: '批次编号', width: 100, align: 'center' },
+                { field: 'DJSL', title: '单据数量', width: 100, align: 'center' },
+                { field: 'LYSYZ', title: '来源所有者', width: 100, align: 'center' },
+                { field: 'MDSYZ', title: '目的所有者', width: 100, align: 'center' },
+                { field: 'LYD', title: '来源地', width: 100, align: 'center' },
+                { field: 'MDD', title: '目的地', width: 100, align: 'center' },
+                { field: 'ZT', title: '状态', width: 100, align: 'center' },
+                { field: 'CJR', title: '创建人', width: 100, align: 'center' },
+                { field: 'CJSJ', title: '创建时间', width: 100, align: 'center', formatter: JsMiracleCommon.dateTimeFormatter },
+                { field: 'BZ', title: '备注', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_DZRW
+
+@using (Ajax.BeginForm("Save", "ActionTasks"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmActionTasks" }))
+{
+    @Html.HiddenFor(n => n.ID)
+    @Html.HiddenFor(n => n.CJR)
+    @Html.HiddenFor(n => n.CJSJ)
+
+
+    <table class="TB">
+        <tr>
+            <td>任务编号</td>
+            <td>@Html.TextBoxFor(n => n.RWBH, new { @id = "txtRWBH" })</td>
+            <td>任务类型</td>
+            <td>
+                @Html.TextBoxFor(n => n.RWLX, new { @id = "txtRWLX" })
+            </td>
+        </tr>
+        <tr>
+            <td>父任务ID</td>
+            <td>
+                @Html.TextBoxFor(n => n.FRWID, new { @id = "txtFRWID" })
+            </td>
+            <td>任务优先级</td>
+            <td>
+                @Html.TextBoxFor(n => n.RWYXJ, new { @id = "txtRWYXJ" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                容器编号
+            </td>
+            <td>@Html.TextBoxFor(n => n.RQBH, new { @id = "txtRQBH" })</td>
+            <td>执行者</td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXZ, new { @id = "txtZXZ" })
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                执行模式
+            </td>
+            <td>@Html.TextBoxFor(n => n.ZXMS, new { @id = "txtZXMS" })</td>
+            <td>
+                执行路径
+            </td>
+            <td>@Html.TextBoxFor(n => n.ZXLJ, new { @id = "txtZXLJ" })</td>
+
+        </tr>
+        <tr>
+            <td>起始位置</td>
+            <td>@Html.TextBoxFor(n => n.QSWZ, new { @id = "txtQSWZ" })</td>
+            <td>
+                目的位置
+            </td>
+            <td>@Html.TextBoxFor(n => n.MDWZ, new { @id = "txtMDWZ" })</td>
+        </tr>
+        <tr>
+            <td>状态</td>
+            <td>@Html.TextBoxFor(n => n.ZT, new { @id = "txtZT" })</td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmActionTasks').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmActionTasks')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmActionTasks').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('操作任务编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('操作任务编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtFRWID").textbox({
+            required: true,
+            missingMessage: '父任务ID不得为空'
+        });
+
+        $("#txtRWBH").textbox({
+            required: true,
+            missingMessage: '任务编号不得为空'
+        });
+
+        $("#txtRWLX").textbox({
+            required: true,
+            missingMessage: '任务类型不得为空'
+        });
+
+        $("#txtRWYXJ").textbox({
+            required: true,
+            missingMessage: '任务优先级不得为空'
+        });
+
+
+        $("#txtRQBH").textbox();
+
+        $("#txtZXZ").textbox({
+            required: true,
+            missingMessage: '执行者不得为空'
+        });
+
+
+
+        $("#txtZXMS").textbox({
+            required: true,
+            missingMessage: '执行模式不得为空'
+        });
+        $("#txtZXLJ").textbox({
+            required: true,
+            missingMessage: '执行路径不得为空'
+        });
+
+        $("#txtQSWZ").textbox({
+            required: true,
+            missingMessage: '起始位置不得为空'
+        });
+
+        $("#txtMDWZ").textbox({
+            required: true,
+            missingMessage: '目的位置不得为空'
+        });
+
+
+        $("#txtZT").textbox();
+        $("#txtBZ").textbox({ width: '430px' });
+
+    });
+
+
+</script>

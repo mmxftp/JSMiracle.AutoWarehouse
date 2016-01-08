@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div>
+    <div id="handingTaskToolbar">
+        <div style="padding-left:5px;">
+
+        </div>
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="wtHandingtask.Edit('add')">新增搬运任务</a>
+        </div>
+    </div>
+
+    <table id="grdHandingTask"></table>
+
+</div>
+<script type="text/javascript">
+
+    var wtHandingtask;
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        wtHandingtask = {
+
+            Edit: function (op, id) {
+                var width = '600px';
+                var height = '330px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("Create")';
+                    title = '新增搬运任务';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("Edit")' + '?id=' + id;
+                    title = '编辑搬运任务';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                // 刷新模块子类
+                $("#grdHandingTask").datagrid('reload');
+
+            }
+        };
+
+
+        $("#grdHandingTask").datagrid({
+            url: '@Url.Action("GetHandingTaskList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#handingTaskToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.RWBH + '\',\'@Url.Action("Remove")\',wtHandingtask.reloadDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="wtHandingtask.Edit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'RWBH', title: '任务编号', width: 100, align: 'center' },
+                { field: 'RWLX', title: '任务类型', width: 100, align: 'center' },
+                { field: 'FRWID', title: '父任务ID', width: 100, align: 'center' },
+                { field: 'RWYXJ', title: '任务优先级', width: 100, align: 'center' },
+                { field: 'DJID', title: '单据ID', width: 100, align: 'center' },
+                { field: 'RQBH', title: '容器编号', width: 100, align: 'center' },
+                { field: 'QSWZ', title: '起始位置', width: 100, align: 'center' },
+                { field: 'MDWZ', title: '目的位置', width: 100, align: 'center' },
+                { field: 'ZT', title: '状态', width: 100, align: 'center' },
+                { field: 'CRJ', title: '创建人', width: 100, align: 'center' },
+                { field: 'CJSJ', title: '创建时间', width: 200, align: 'center', formatter: JsMiracleCommon.dateTimeFormatter },
+                { field: 'BZ', title: '备注', width: 100, align: 'center' }
+
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

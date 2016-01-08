@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_ZXZ
+
+@using (Ajax.BeginForm("Save", "Executor"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmExecutor" }))
+{
+    @Html.HiddenFor(n => n.ID)
+
+
+    <table class="TB">
+        <tr>
+            <td>执行者类型</td>
+            <td>@Html.TextBoxFor(n => n.ZXZLX, new { @id = "txtZXZLX" })</td>
+            <td>
+                执行者代码
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXZDM, new { @id = "txtZXZDM" })
+            </td>
+        </tr>
+        <tr>
+            <td>执行者名称</td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXZMC, new { @id = "txtZXZMC" })
+            </td>
+            <td>子系统</td>
+            <td>
+                @Html.TextBoxFor(n => n.ZXT, new { @id = "txtZXT" })
+            </td>
+        </tr>
+        <tr>
+            <td>附加组编号</td>
+            <td>
+                @Html.TextBoxFor(n => n.FJZBH, new { @id = "txtFJZBH" })
+            </td>          
+        </tr>       
+        <tr>
+            <td>备注</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmExecutor').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmExecutor')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmExecutor').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                var title = '操作执行路径';
+                if (ret.success) {
+                    $.messager.alert(title, ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert(title, ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtZXZLX").textbox({
+            required: true,
+            missingMessage: '执行者类型不得为空'
+        });
+
+        $("#txtZXZDM").textbox({
+            required: true,
+            missingMessage: '执行者代码不得为空'
+        });
+
+        $("#txtZXZMC").textbox();
+
+        $("#txtZXT").textbox({
+            required: true,
+            missingMessage: '子系统不得为空'
+        });
+
+        $("#txtFJZBH").textbox();
+
+
+        $("#txtBZ").textbox({ width: '430px' });
+
+    });
+
+
+</script>

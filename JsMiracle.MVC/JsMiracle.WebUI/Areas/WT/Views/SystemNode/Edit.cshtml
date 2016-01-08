@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_XTJD
+
+    @using (Ajax.BeginForm("Save", "OperationalTasks"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmSystemNode" }))
+    {
+        @Html.HiddenFor(n => n.ID)
+        @Html.HiddenFor(n => n.CJR)
+        @Html.HiddenFor(n => n.CJSJ)
+        
+        <table class="TB">
+            <tr>
+                <td>节点编号</td>
+                <td>@Html.TextBoxFor(n => n.JDBH, new { @id = "txtJDBH" })</td>
+                <td>节点名称</td>
+                <td>
+                    @Html.TextBoxFor(n => n.JDMC, new { @id = "txtJDMC" })
+                </td>
+            </tr>
+            <tr>
+                <td>节点描述</td>
+                <td>
+                    @Html.TextBoxFor(n => n.JDMS, new { @id = "txtJDMS" })
+                </td>
+                <td>容量</td>
+                <td>
+                    @Html.TextBoxFor(n => n.JDRL, new { @id = "txtJDRL" })
+                </td>
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td>@Html.TextBoxFor(n => n.ZT, new { @id = "txtZT" })</td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+            </tr>
+            <tr style="text-align:center;display:table-row;">
+                <td colspan="4">
+                    <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmSystemNode').form('submit')">提交</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmSystemNode')">取消</a>
+                </td>
+            </tr>
+        </table>
+    }
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#frmSystemNode').form({
+                success: function (data) {
+                    var ret = JSON.parse(data);
+                    var title = '系统节点编辑';
+                    if (ret.success) {
+                        $.messager.alert(title, ret.msg, "info", function () {
+
+                            // 关闭当前div 刷新父窗体
+                            JsMiracleCommon.closeWindow();
+                        });
+                    }
+                    else {
+                        $.messager.alert(title, ret.msg, "error");
+                    }
+                }
+            });
+
+
+            $("#txtJDBH").textbox({
+                required: true,
+                missingMessage: '节点编号不得为空'
+            });
+
+            $("#txtJDMC").textbox({
+                required: true,
+                missingMessage: '节点名称不得为空'
+            });
+
+            $("#txtJDMS").textbox();
+
+            $("#txtJDRL").numberbox({
+                required: true,
+                missingMessage: '容量不得为空'
+            });
+
+            $("#txtZT").textbox({
+                required: true,
+                missingMessage: '状态不得为空'
+            });
+
+            $("#txtBZ").textbox({ width: '430px' });
+
+        });
+
+
+    </script>

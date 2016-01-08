@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div>
+    <div id="executorToolbar">
+        <div style="padding-left:5px;">
+
+        </div>
+        <div style="padding-left:5px;">
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+               onclick="wtExecutor.Edit('add')">新增执行者</a>
+        </div>
+    </div>
+
+    <table id="grdExecutor"></table>
+
+</div>
+<script type="text/javascript">
+
+    var wtExecutor
+
+    $(function () {
+
+        // 初始化所有用到的方法
+        wtExecutor = {
+
+            Edit: function (op, id) {
+                var width = '600px';
+                var height = '300px';
+                var title = '';
+                var url = '';
+
+                if (op == 'add') {
+                    url = '@Url.Action("Create")';
+                    title = '新增执行路径';
+                }
+                else if (op == 'mod') {
+
+                    url = '@Url.Action("Edit")' + '?id=' + id;
+                    title = '编辑执行路径';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+            },
+
+            reloadDataGrid: function () {
+                // 刷新模块子类
+                $("#grdExecutor").datagrid('reload');
+
+            }
+        };
+
+
+        $("#grdExecutor").datagrid({
+            url: '@Url.Action("GetExecutorList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true, // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#executorToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            +  row.ZXZMC + '\',\'@Url.Action("Remove")\',wtExecutor.reloadDataGrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="wtExecutor.Edit(\'mod\',' + row.ID + ');">修改</a>';
+
+                        return html;
+                    }
+                },
+                { field: 'ZXZLX', title: '执行者类型', width: 100, align: 'center' },
+                { field: 'ZXZDM', title: '执行者代码', width: 100, align: 'center' },
+                { field: 'ZXZMC', title: '执行者名称', width: 100, align: 'center' },
+                { field: 'ZXT', title: '子系统', width: 100, align: 'center' },
+                { field: 'FJZBH', title: '附加组编号', width: 100, align: 'center' },
+                { field: 'BZ', title: '备注', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

@@ -7,14 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JsMiracle.Framework;
+using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.WT.Controllers
 {
-    public class HandingTaskController : BaseController
+    public class HandingTasksController : BaseController
     {
         private IHandlingTasks dalHandlingTasks;
 
-        public HandingTaskController(IHandlingTasks repoHandlingTasks)
+        public HandingTasksController(IHandlingTasks repoHandlingTasks)
         {
             dalHandlingTasks = repoHandlingTasks;
         }
@@ -26,6 +28,25 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
         {
             return View();
         }
+
+
+        public ActionResult GetHandingTaskList(int? rows, int? page)
+        {
+
+            int totalCount = 0;
+
+            int pageIndex = page ?? 1;
+            int pageSize = rows ?? 10;
+
+            var dataList = dalHandlingTasks.GetDataByPageDynamic(
+                pageIndex, pageSize, out totalCount, " RWBH ", "");
+
+            //数据组装到viewModel
+            var info = new PaginationModel(dataList, totalCount);
+
+            return this.JsonFormat(info);
+        }
+
 
         public ActionResult Edit(long id)
         {
@@ -43,6 +64,11 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
         {
             Func<ExtResult> fun = () =>
             {
+                if (ent.ID == 0)
+                {
+                    ent.CJR = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                    ent.CJSJ = System.DateTime.Now;
+                }
                 ExtResult ret = new ExtResult();
                 dalHandlingTasks.SaveOrUpdate(ent);
                 ret.success = true;

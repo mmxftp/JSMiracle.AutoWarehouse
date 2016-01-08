@@ -21,6 +21,9 @@ namespace JsMiracle.WCF.UP.AuthMng
             // 修改
             if (entity.ID != 0)
             {
+                if (base.DbContext.IMS_UP_MK_S.Any(n => n.ID != entity.ID &&  n.URL == entity.URL))
+                    throw new JsMiracleException("url重覆不得修改");             
+
                 return false;
             }
 

@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@model JsMiracle.Entities.TabelEntities.IMS_WT_YWRW
+
+@using (Ajax.BeginForm("Save", "BusinessTasks"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmBusinessTasks" }))
+{
+    @Html.HiddenFor(n => n.ID)
+    @Html.HiddenFor(n => n.CJR)
+    @Html.HiddenFor(n => n.CJSJ)
+
+
+    <table class="TB">
+        <tr>
+            <td>单据编号</td>
+            <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
+            <td>行号</td>
+            <td>
+                @Html.TextBoxFor(n => n.HH, new { @id = "txtHH" })
+            </td>
+        </tr>
+        <tr>
+            <td>行为类型</td>
+            <td>
+                @Html.TextBoxFor(n => n.HXW, new { @id = "txtHXW" })
+            </td>
+            <td>品规ID</td>
+            <td>
+                @Html.TextBoxFor(n => n.SKU, new { @id = "txtSKU" })
+            </td>
+        </tr>
+        <tr>
+            <td>批次编号</td>
+            <td>
+                @Html.TextBoxFor(n => n.PCBH, new { @id = "txtPCBH" })
+            </td>
+            <td>
+                单据数量
+            </td>
+            <td>@Html.TextBoxFor(n => n.DJSL, new { @id = "txtDJSL" })</td>
+        </tr>
+        <tr>
+            <td>
+                来源所有者
+            </td>
+            <td>@Html.TextBoxFor(n => n.LYSYZ, new { @id = "txtLYSYZ" })</td>
+            <td>
+                目的所有者
+            </td>
+            <td>@Html.TextBoxFor(n => n.MDSYZ, new { @id = "txtMDSYZ" })</td>
+        </tr>
+        <tr>
+            <td>来源地</td>
+            <td>@Html.TextBoxFor(n => n.LYD, new { @id = "txtLYD" })</td>
+            <td>
+                目的地
+            </td>
+            <td>@Html.TextBoxFor(n => n.MDD, new { @id = "txtMDD" })</td>
+        </tr>
+        <tr>           
+            <td>状态</td>
+            <td>@Html.TextBoxFor(n => n.ZT, new { @id = "txtZT" })</td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td colspan="3">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+        </tr>
+        <tr style="text-align:center;display:table-row;">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript: $('#frmBusinessTasks').form('submit')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmBusinessTasks')">取消</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#frmBusinessTasks').form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('业务任务编辑', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('业务任务编辑', ret.msg, "error");
+                }
+            }
+        });
+
+
+        $("#txtDJBH").textbox();
+
+        $("#txtHH").textbox();
+
+        $("#txtHXW").numberbox();
+
+        $("#txtSKU").textbox({
+            required: true,
+            missingMessage: '品规ID不得为空'
+        });
+
+        $("#txtPCBH").textbox();
+
+
+        $("#txtDJSL").numberbox({
+            required: true,
+            missingMessage: '单据数量不得为空'
+        });
+
+        $("#txtLYSYZ").textbox();
+        $("#txtMDSYZ").textbox();
+
+        $("#txtLYD").textbox();
+
+        $("#txtMDD").textbox();
+
+        $("#txtZT").textbox();
+        $("#txtBZ").textbox({ width:'430px'});
+
+    });
+
+
+</script>

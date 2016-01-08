@@ -81,7 +81,7 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             //    , pageIndex, pageSize, out totalCount);
 
             string filter = string.Format( "FMKID = {0} ",parentid.Value) ;
-            var dataList = dalModule.GetDataByPageDynamic(pageIndex, pageSize, out totalCount, " MKMC ", filter);
+            var dataList = dalModule.GetDataByPageDynamic(pageIndex, pageSize, out totalCount, " PXID ", filter);
 
             //数据组装到viewModel
             var info = new PaginationModel(dataList, totalCount);
