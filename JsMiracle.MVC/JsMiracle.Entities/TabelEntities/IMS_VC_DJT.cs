@@ -18,7 +18,7 @@ namespace JsMiracle.Entities.TabelEntities
         public string DJBH { get; set; }
         public int YWLX { get; set; }
         public string MS { get; set; }
-        public int SWDJLX { get; set; }
+        public Nullable<int> SWDJLX { get; set; }
         public string SWSJBH { get; set; }
         public int DJZT { get; set; }
         public int SFGX { get; set; }

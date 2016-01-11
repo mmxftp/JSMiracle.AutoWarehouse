@@ -1,5 +1,4 @@
-﻿
-using JsMiracle.Entities;
+﻿using JsMiracle.Entities;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.WCF;
@@ -11,12 +10,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Linq.Dynamic;
 using System.Text;
 
 namespace JsMiracle.WCF.CM.CommonMng
 {
     public class IMS_CM_Code_Dal : WcfDataLayerBase<IMS_CM_DM>, ICode
     {
+        protected override bool IsAddEntity(IMS_CM_DM entity)
+        {
+            if (entity.ID == 0)
+            {
+                if (base.DbContext.IMS_CM_DM_S.Any(n => n.LXDM == entity.LXDM
+                    && n.DM == entity.DM))
+                    throw new JsMiracleException("代码编号重覆不得修改");
+            }
+            else
+            {
+                if (base.DbContext.IMS_CM_DM_S.Any(n => n.ID != entity.ID
+                    && n.SZ == entity.SZ
+                    && n.DM == entity.DM))
+                    throw new JsMiracleException("代码编号重覆不得修改");
+            }
+
+            return base.IsAddEntity(entity);
+        }
+
 
         public List<IMS_CM_DM> GetCodeList(CodeTypeEnum codeType)
         {
@@ -34,6 +53,17 @@ namespace JsMiracle.WCF.CM.CommonMng
         }
 
 
+
+
+        public IMS_CM_DM GetCode(CodeTypeEnum codeType, int sz)
+        {
+            if (codeType == CodeTypeEnum.None)
+                throw new JsMiracleException("codeType不得为空");
+
+            var filter = " LXDM == @0 and sz == @1 ";
+
+            return base.DbContext.IMS_CM_DM_S.Where(filter, codeType.ToString(), sz).FirstOrDefault();
+        }
     }
 
     public class IMS_CM_Code_WCF : WcfService<IMS_CM_DM>, IWcfCode
@@ -56,11 +86,12 @@ namespace JsMiracle.WCF.CM.CommonMng
             {
                 case "GetCodeList":
                     objs = (object[])req.Body.Parameters;
-                    //var enumVal = FunctionHelp.GetEnum<CodeTypeEnum>((long)objs[0]);
-                    var enumVal = (CodeTypeEnum)objs[0];
-                    res.Body.Data = dal.GetCodeList(enumVal);
-                    //Enum.
-                    //res.Body.SetBody(dataList);
+                    res.Body.Data = dal.GetCodeList((CodeTypeEnum)objs[0]);
+                    break;
+
+                case "GetCode":
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetCode((CodeTypeEnum)objs[0], (int)objs[1]);
                     break;
 
                 default:

@@ -65,6 +65,8 @@
     <Compile Include="EasyUI_Model\PaginationModel.cs" />
     <Compile Include="EasyUI_Model\TreeModel.cs" />
     <Compile Include="Enum\CodeTypeEnum.cs" />
+    <Compile Include="Enum\EnumBusinessType.cs" />
+    <Compile Include="Enum\EnumHostSystemDocumentType.cs" />
     <Compile Include="Enum\SerializedType.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="IDataLayer.cs" />

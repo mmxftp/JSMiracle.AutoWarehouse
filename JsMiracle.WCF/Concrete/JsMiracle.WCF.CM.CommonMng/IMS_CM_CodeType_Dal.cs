@@ -2,6 +2,7 @@
 using JsMiracle.Entities;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.WCF;
+using JsMiracle.Framework;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.Interface;
 using JsMiracle.WCF.WcfBaseService;
@@ -14,6 +15,22 @@ namespace JsMiracle.WCF.CM.CommonMng
 {
     public class IMS_CM_CodeType_Dal : WcfDataLayerBase<IMS_CM_DMLX>, ICodeType
     {
+
+        protected override bool IsAddEntity(IMS_CM_DMLX entity)
+        {
+            if (entity.ID != 0)
+            {
+                if (base.DbContext.IMS_CM_DMLX_S.Any(n => n.ID != entity.ID && n.LXDM == entity.LXDM))
+                    throw new JsMiracleException("代码类型重覆不得修改");
+            }
+            else
+            {
+                if (base.DbContext.IMS_CM_DMLX_S.Any(n=>n.LXDM == entity.LXDM))
+                    throw new JsMiracleException("代码类型重覆不得修改");
+            }
+
+            return base.IsAddEntity(entity);
+        }
 
         public IMS_CM_DMLX GetEntityBylxdm(string lxdm)
         {

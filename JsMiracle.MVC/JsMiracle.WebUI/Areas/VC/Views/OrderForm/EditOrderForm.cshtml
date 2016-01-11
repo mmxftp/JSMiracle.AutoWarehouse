@@ -3,11 +3,12 @@
 }
 
 <style type="text/css">
-    .TB td {
-        width: 80px;
-        padding-left: 5px;
+    .box td{
+        width:80px;
     }
+
 </style>
+
 @using JsMiracle.WebUI.CommonSupport
 @model JsMiracle.Entities.TabelEntities.IMS_VC_DJT
 
@@ -22,57 +23,65 @@
             @Html.HiddenFor(n => n.CJSJ);
         }
         @Html.HiddenFor(n => n.ID);
+        @Html.HiddenFor(n => n.YWLX);
+        @Html.HiddenFor(n => n.SWDJLX);
+        @Html.HiddenFor(n => n.SWSJBH);
 
         <div id="orderFormTools">
-            <table class="TB" style="width:1600px">
-                <tr>
-                    <td>单据编号</td>
-                    <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
-                    <td>业务类型</td>
-                    <td>@Html.TextBoxFor(n => n.YWLX, new { @id = "txtYWLX" })</td>
-                    <td>来源</td>
-                    <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
-                    <td>创建人</td>
-                    <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
-                </tr>
-                <tr>
-                    <td>上位单据类型</td>
-                    <td>@Html.TextBoxFor(n => n.SWDJLX, new { @id = "txtSWDJLX" })</td>
-                    <td>上位单据编号</td>
-                    <td>@Html.TextBoxFor(n => n.SWSJBH, new { @id = "txtSWSJBH" })</td>
-                    <td>单据状态</td>
-                    <td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>
-                    <td>创建日期</td>
-                    <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ", @Value = System.DateTime.Now })</td>
-                </tr>
-                <tr>
-                    <td>关联单据</td>
-                    <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
-                    <td>备注</td>
-                    <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
-                </tr>
-                <tr style="text-align:center;display:table-row;">
-                    <td colspan="7">
-                        <a class="easyui-linkbutton" iconcls="icon-save"
-                           href="javascript:$('#frmOrderForm').form('submit')">保存</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="easyui-linkbutton" iconcls="icon-cancel"
-                           href="javascript:$('#frmOrderForm').form('reset')">取消</a>
+            <div class="box">
+                <span class="boxTitle">@ViewBag.BizType</span>
+                <table style="width:98%">
+                    <tr>
+                        <td>单据编号</td>
+                        <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
+                        <td>单据状态</td>
+                        @*<td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>*@
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        @if (Model.ID != 0)
+                        <td>@Html.DropDownListFor(n => n.DJZT, ViewBag.DocumentStatus as IEnumerable<SelectListItem>
+                            , new { id = "ddlDJZT", style = "width:150px;" })</td>
+                        <td>来源</td>
+                        <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
+                    </tr>
+                    <tr>
+                        <td>创建人</td>
+                        <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
+                        <td>创建日期</td>
+                        <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ" })</td>
+                        <td>完成时间</td>
+                        <td>@Html.TextBoxFor(n => n.WCSJ, new { @id = "txtWCSJ" })</td>
+                    </tr>
+                    <tr>
+                        <td>关联单据</td>
+                        <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
+                        <td>备注</td>
+                        <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
+                    </tr>
+                    <tr style="text-align:center;display:table-row;">
+                        <td colspan="7">
+                            <a class="easyui-linkbutton" iconcls="icon-save"
+                               href="javascript:$('#frmOrderForm').form('submit')">保存</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="easyui-linkbutton" iconcls="icon-cancel"
+                               href="javascript:$('#frmOrderForm').form('reset')">取消</a>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                           
+                        </td>
+                        <td style="width:200px;text-align:right;">
+                            <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@if (Model.ID != 0)
                         {
                             <a href="###" class="easyui-linkbutton" iconcls="icon-add"
                                onclick="editOrderForm.edit(false)">新增订单数据</a>
-                        }
-                    </td>
-                    <td style="width:200px;text-align:right;">
-                        <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                        }</td>
+                    </tr>
+                </table>
 
+            </div>
+        </div>
 
         <table id="orderDataGrid" style="padding:10px"></table>
     }
@@ -186,12 +195,17 @@
         });
 
         $("#txtDJZT").textbox({
-            required: true,
+            disabled:true,
+            required:true,
             missingMessage: '单据状态不得为空'
         });
 
         $("#txtCJSJ").textbox({
             disabled: true,
+        });
+
+        $("#txtWCSJ").textbox({
+            disabled:true,
         });
 
         $("#txtBZ").textbox();

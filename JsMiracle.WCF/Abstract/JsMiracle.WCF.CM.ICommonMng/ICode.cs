@@ -21,8 +21,17 @@ namespace JsMiracle.WCF.CM.ICommonMng
         /// 得到代码类型对应的所有代码信息的集合
         /// </summary>
         /// <param name="codeType">代码类型</param>
-        /// <returns></returns>
+        /// <returns>代码实体</returns>
         List<IMS_CM_DM> GetCodeList(CodeTypeEnum codeType);
+
+        /// <summary>
+        /// 得代码信息
+        /// </summary>
+        /// <param name="codeType">代码类型</param>
+        /// <param name="sz">数值</param>
+        /// <returns>代码实体</returns>
+        IMS_CM_DM GetCode(CodeTypeEnum codeType, int sz);
+
     }
 
     [ServiceContract]
@@ -61,6 +70,12 @@ namespace JsMiracle.WCF.CM.ICommonMng
         public List<IMS_CM_DM> GetCodeList(CodeTypeEnum codeType)
         {
             return RequestFunc<object[], List<IMS_CM_DM>>("GetCodeList", new object[] { codeType });
+        }
+
+
+        public IMS_CM_DM GetCode(CodeTypeEnum codeType, int sz)
+        {
+            return RequestFunc<object[], IMS_CM_DM>("GetCode", new object[] { codeType, sz });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using JsMiracle.Entities.EasyUI_Model;
+using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.View;
 using JsMiracle.Entities.WCF;
@@ -21,6 +22,8 @@ namespace JsMiracle.WCF.VC.IOrderForm
             //return contractType.GetGenericArguments();
             return new Type[] { 
                 typeof(object[]) 
+                ,typeof(EnumHostSystemDocumentType)
+                ,typeof(EnumBusinessType)
                 ,typeof(IMS_VC_YWYS)
                 ,typeof(IMS_VC_DJT)
                 ,typeof(IMS_VC_DJH)

@@ -11,6 +11,8 @@ using JsMiracle.Framework;
 using JsMiracle.Entities.TabelEntities;
 using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.Framework.Serialized;
+using JsMiracle.Entities.Enum;
+using JsMiracle.WCF.CM.ICommonMng;
 
 namespace JsMiracle.WebUI.Areas.VC.Controllers
 {
@@ -18,11 +20,13 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
     {
         IOrderForm dalorderform;
         IOrderData dalorderdata;
+        ICode dalCode;
 
-        public OrderFormController(IOrderForm repoOrderForm, IOrderData repoOrderData)
+        public OrderFormController(IOrderForm repoOrderForm, IOrderData repoOrderData, ICode repoCode)
         {
             this.dalorderform = repoOrderForm;
             this.dalorderdata = repoOrderData;
+            this.dalCode = repoCode;
         }
 
         //
@@ -34,8 +38,24 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
             return View();
         }
 
+        [AuthViewPage]
+        public ActionResult InStorageIndex()
+        {
+            return View();
+        }
 
-        public ActionResult GetOrderList(int? rows, int? page)
+        public ActionResult GetInStorageOrderList(int? rows, int? page)
+        {
+            return GetOrderList(rows, page, EnumBusinessType.InStorage);
+        }
+
+        public ActionResult GetOutputStorageOrderList(int? rows, int? page)
+        {
+            return GetOrderList(rows, page, EnumBusinessType.OutputStorage);
+        }
+
+        public ActionResult GetOrderList(int? rows, int? page
+            , EnumBusinessType bizType = EnumBusinessType.None)
         {
             int totalCount = 0;
 
@@ -43,6 +63,11 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
             int pageSize = rows ?? 10;
 
             string filter = null;
+
+            if (bizType != EnumBusinessType.None)
+            {
+                filter = string.Format(" YWLX = {0} ", (int)bizType);
+            }
 
             var dataList = dalorderform.GetDataByPageDynamic(
                 pageIndex, pageSize, out totalCount
@@ -57,9 +82,65 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
         public ActionResult EditOrderForm(long id)
         {
-            var module = dalorderform.GetEntity(id);
-            return View(module);
+            var order = dalorderform.GetEntity(id);
+            ViewBag.BizType = "";
+
+            ViewBag.DocumentStatus = new SelectList(
+                GetDocumentStatusList(), "SZ", "MC", order.DJZT);
+
+            if (order != null)
+            {
+                var code = dalCode.GetCode(CodeTypeEnum.BusinessType, order.YWLX);
+                if (code != null)
+                    ViewBag.BizType = code.MC;
+                else
+                    ViewBag.BizType = order.YWLX;
+
+            }
+
+            return View(order);
         }
+
+
+        public ActionResult CreateInStorageOrder()
+        {
+             var code = dalCode.GetCode(CodeTypeEnum.BusinessType, (int)EnumBusinessType.InStorage );
+             if (code != null)
+                 ViewBag.BizType = code.MC + "单据编辑";
+
+
+            var module = new IMS_VC_DJT();
+            module.YWLX = (int)EnumBusinessType.InStorage;
+            module.CJSJ = System.DateTime.Now;
+
+            ViewBag.DocumentStatus = new SelectList(
+              GetDocumentStatusList(), "SZ", "MC", -1);
+
+            return View("EditOrderForm", module);
+        }
+
+        public ActionResult CreateOutputStorageOrder()
+        {
+            var code = dalCode.GetCode(CodeTypeEnum.BusinessType, (int)EnumBusinessType.OutputStorage);
+            if (code != null)
+                ViewBag.BizType = code.MC + "单据编辑";
+
+            var module = new IMS_VC_DJT();
+            module.YWLX = (int)EnumBusinessType.OutputStorage;
+            module.CJSJ = System.DateTime.Now;
+
+            ViewBag.DocumentStatus = new SelectList(
+                GetDocumentStatusList(), "SZ", "MC", -1);
+            return View("EditOrderForm", module);
+        }
+
+        private IList<IMS_CM_DM> GetDocumentStatusList()
+        {
+            var data = dalCode.GetCodeList(CodeTypeEnum.VH_STS);
+            data.Insert(0, new IMS_CM_DM() { SZ = -1, MC = "--请选择--" });
+            return data;
+        }
+
 
         public ActionResult CreateOrderForm()
         {
@@ -76,7 +157,7 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
         public ActionResult CreateOrderData(string djbh)
         {
-            return View("EditOrderData", new IMS_VC_DJH() { DJBH = djbh});
+            return View("EditOrderData", new IMS_VC_DJH() { DJBH = djbh });
         }
 
         public ActionResult SaveOrderForm(IMS_VC_DJT ent)
@@ -113,19 +194,21 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
         public ActionResult RemoveOrderData(long id)
         {
-            Func<ExtResult> fun=()=>{
+            Func<ExtResult> fun = () =>
+            {
                 ExtResult ret = new ExtResult();
                 dalorderdata.Delete(id);
                 ret.success = true;
                 return ret;
-            } ;
+            };
 
             return base.Remove(fun);
         }
 
         public ActionResult RemoveOrderForm(long id)
         {
-            Func<ExtResult> fun = () => {
+            Func<ExtResult> fun = () =>
+            {
                 ExtResult ret = new ExtResult();
                 dalorderform.Delete(id);
                 ret.success = true;
@@ -149,6 +232,7 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
             return base.Save(fun);
         }
+
 
     }
 }

@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "CodeIndex";
+}
+
+<div>
+    <div id="codeToolbar">
+        <div style="padding-left:5px;">
+            代码大类&nbsp;&nbsp;&nbsp;<select id="cboCodeType" class="easyui-combobox" style="width:200px;"></select>
+        </div>
+        <div>
+            <a href="###" class="easyui-linkbutton" iconcls="icon-add" onclick="cmCode.showCodeEdit('add')">新增代码信息</a>
+        </div>
+    </div>
+
+    <table id="grdCode"></table>
+
+</div>
+<script type="text/javascript">
+    var cmCode;
+
+    $(function () {
+
+        cmCode = {
+
+            removeCodeTypeByCombo: function () {
+                var id = $('#cboCodeType').combobox('getValue');
+                var name = $('#cboCodeType').combobox('getText');
+                cmCode.removeCodeType(id, name);
+
+            },
+
+            removeCodeType: function (id, name) {
+                JsMiracleCommon.removeItem(id, name, '@Url.Action("RemoveCodeType")', this.refreshCodeType)
+            },
+
+            refreshCodeType: function () {
+                // 刷新模块大类
+                $("#cboCodeType").combobox('reload');
+                $("#cboCodeType").combobox("select", '');
+                // 刷新模块子类
+                $('#grdCode').datagrid('reload');    // 重新加载用户数据
+            },
+
+
+            //refreshModuleByCombo: function () {
+            //    // 刷新模块大类
+            //    $("#cboModule").combobox('reload');
+            //    $("#cboModule").combobox("select", '');
+            //    //// 刷新模块子类
+            //    $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
+            //},
+
+            //refreshModule: function () {
+            //    var id = $('#cboModule').combobox('getValue');
+
+            //    $("#cboModule").combobox("select", id);
+            //    // 刷新模块子类
+            //    $('#tabChildModule').datagrid('reload');    // 重新加载用户数据
+            //},
+
+
+            refreshDatagrid: function () {
+                $('#grdCode').datagrid('reload');
+            },
+
+            showCodeTypeEdit: function (op) {
+                var width = '350px';
+                var height = '400px';
+                var title = '';
+                var url = '';
+
+                var codeTypeID = $('#cboCodeType').combobox('getValue');
+
+                if (op == 'add') {
+                    url = '@Url.Action("CreateCodeType")';
+                    title = '新增代码大类';
+                }
+                else if (op == 'mod') {
+
+                    if (codeTypeID == null || codeTypeID == '') {
+                        $.messager.alert('信息', '请选择代码大类', "info");
+                        return;
+                    }
+
+                    url = '@Url.Action("EditCodeType")' + '?id=' + codeTypeID;
+                    title = '编辑代码大类';
+                }
+
+                JsMiracleCommon.showWindow(title, url, width, height, cmCode.reloadDataGrid);
+
+            },
+
+            showCodeEdit: function (op, id) {
+                var width = '350px';
+                var height = '300px';
+                var title = '';
+                var url = '';
+
+                var codeTypeID = $('#cboCodeType').combobox('getValue');
+
+                if (op == 'add') {
+                    if (codeTypeID == null || codeTypeID == '') {
+                        $.messager.alert('信息', '请选择代码大类', "info");
+                        return;
+                    }
+
+                    url = '@Url.Action("CreateCode")' + '?codeTypeID=' + codeTypeID;
+                    title = '新增代码';
+
+                }
+                else if (op == 'mod') {
+                    url = '@Url.Action("EditCode")' + '?id=' + id;
+                    title = '编辑代码';
+
+                }
+                JsMiracleCommon.showWindow(title, url, width, height, cmCode.reloadDataGrid);
+            },
+
+            reloadDataGrid: function (parentid) {
+                var pid = null;
+                var mid = null;
+
+                if (JsMiracleCommon.isArray(parentid)) {
+                    mid = parseInt(parentid[0]);
+                    pid = parentid[1];
+                }
+                console.log(parentid);
+
+                if (mid != -1) {
+                    // 刷新模块大类
+                    $("#cboCodeType").combobox('reload');
+                    $("#cboCodeType").combobox("select", mid);
+                }
+
+                if (pid != -1) {
+                    // 刷新模块子类
+                    $("#grdCode").datagrid('reload',
+                        {
+                            codeType: pid
+                        });
+                }
+            }
+        };
+
+        $("#cboCodeType").combobox(
+            {
+                url: '@Url.Action("GetAllCodeType")',
+                valueField: 'ID',
+                textField: 'LXMC',
+                editable: false,
+                onSelect: function (rec) {
+                    if (rec) {
+                        $("#grdCode").datagrid({
+                            url: '@Url.Action("GetCodeList")',
+                            queryParams: { 'codeType': rec.LXDM }
+                        });
+                    }
+                },
+                onLoadSuccess: function () { //加载完成后,设置选中第一项
+                    var val = $(this).combobox('getValue')
+                    console.log(val);
+                    if (val == '') {
+                        var dataVal = $(this).combobox("getData");
+                        if (dataVal && dataVal.length > 0)
+                            $(this).combobox("select", dataVal[0].ID);
+                    }
+                },
+                onLoadError: function (XMLHttpRequest) {
+                    JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                        , "500px", "500px");
+                }
+            });
+
+        $("#grdCode").datagrid({
+            //url: '@Url.Action("GetCodeList")',
+            singleSelect: true,
+            loadMsg: '数据载入中...',
+            pagination: true,  // 是否显示分页控件
+            pagesize: 10,      // 每页行数
+            pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
+            height: '700px',
+            rownumbers: true,
+            toolbar: '#codeToolbar',
+            columns: [[
+                {
+                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    , formatter: function (value, row, index) {
+                        var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                            + row.MC + '\',\'@Url.Action("RemoveCode")\',cmCode.refreshDatagrid)';
+
+                        var html = '<a href="javascript:void(0)"  class="loan_remove_button"'
+                                  + 'onclick="' + removeFunStr + '" >删除</a>'
+                                  + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                  + '<a href="javascript:void(0)"  class="loan_edit_button" '
+                                  + ' onclick="cmCode.showCodeEdit(\'mod\',' + row.ID + ');">修改</a>';
+                        //+ ' onclick="showWindow(\'模块信息编辑\',' + editActionUrl + ', 500,420);" >修改</a>';
+                        //alert(JSON.stringify(row));
+                        return html;
+                    }
+                },
+                //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
+                { field: 'DM', title: '代码', width: 100, align: 'center' },
+                { field: 'MC', title: '名称', width: 100, align: 'center' },
+                { field: 'SZ', title: '数值', width: 150, align: 'center' },
+                {
+                    field: 'XGRQ', title: '修改日期', width: 150, align: 'center',
+                    formatter: JsMiracleCommon.dateTimeFormatter
+                },
+                { field: 'XGR', title: '修改人', width: 100, align: 'center' },
+                { field: 'ZS', title: '注释', width: 200, align: 'center' }
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+                $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+    });
+
+
+</script>

@@ -28,15 +28,15 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             this.dalCodeType = repoCodeType;
         }
 
+        #region IMS_CM_DM_S  操作
+
         //
         // GET: /Code/
         [AuthViewPage]
-        public ActionResult Index()
+        public ActionResult CodeIndex()
         {
             return View();
         }
-
-        #region IMS_CM_DM_S  操作
 
         public ActionResult GetCode(string lxdm, int sz)
         {
@@ -195,6 +195,41 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
         #endregion
 
         #region IMS_CM_DMLX_S 操作
+        public ActionResult CodeTypeList()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <param name="page"></param>
+        /// <param name="codeType">类型代码</param>
+        /// <returns></returns>
+        public ActionResult GetCodeTypeList(int? rows, int? page)
+        {
+            int totalCount = 0;
+
+            int pageIndex = page ?? 1;
+            int pageSize = rows ?? 10;
+
+            string filter = null;
+         
+            var dataList = dalCodeType.GetDataByPageDynamic(pageIndex, pageSize, out totalCount
+                , "LXMC", filter);
+
+            //数据组装到viewModel
+            var info = new PaginationModel(dataList, totalCount);
+            //var info = new PaginationModel();
+            //info.SetRows(dataList);
+            //info.total = totalCount;
+            //info.rows = dataList;
+
+            return this.JsonFormat(info);
+        }
+
+
         public ActionResult GetAllCodeType()
         {
             var data = dalCodeType.GetAllEntites("");

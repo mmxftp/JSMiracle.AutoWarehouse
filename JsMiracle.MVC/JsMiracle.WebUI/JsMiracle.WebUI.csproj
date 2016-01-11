@@ -495,7 +495,6 @@
     </Content>
     <Content Include="Scripts\CustomScripts\common.js" />
     <Content Include="Areas\CM\Views\Web.config" />
-    <Content Include="Areas\CM\Views\Code\Index.cshtml" />
     <Content Include="Areas\CM\Views\Code\EditCodeType.cshtml" />
     <Content Include="Areas\CB\Views\Web.config" />
     <Content Include="Areas\CM\Views\Code\EditCode.cshtml" />
@@ -546,6 +545,9 @@
     <Content Include="Areas\WT\Views\ExecutionPath\Edit.cshtml" />
     <Content Include="Areas\WT\Views\Executor\Index.cshtml" />
     <Content Include="Areas\WT\Views\Executor\Edit.cshtml" />
+    <Content Include="Areas\CM\Views\Code\CodeTypeList.cshtml" />
+    <Content Include="Areas\CM\Views\Code\CodeIndex.cshtml" />
+    <Content Include="Areas\VC\Views\OrderForm\InStorageIndex.cshtml" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />

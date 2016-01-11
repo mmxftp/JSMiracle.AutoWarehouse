@@ -325,7 +325,7 @@
           <Property Name="DJBH" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="YWLX" Type="int" Nullable="false" />
           <Property Name="MS" Type="nvarchar" MaxLength="128" />
-          <Property Name="SWDJLX" Type="int" Nullable="false" />
+          <Property Name="SWDJLX" Type="int" />
           <Property Name="SWSJBH" Type="nvarchar" MaxLength="64" />
           <Property Name="DJZT" Type="int" Nullable="false" />
           <Property Name="SFGX" Type="int" Nullable="false" />
@@ -886,7 +886,7 @@
           <Property Name="DJBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="YWLX" Type="Int32" Nullable="false" />
           <Property Name="MS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SWDJLX" Type="Int32" Nullable="false" />
+          <Property Name="SWDJLX" Type="Int32" />
           <Property Name="SWSJBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DJZT" Type="Int32" Nullable="false" />
           <Property Name="SFGX" Type="Int32" Nullable="false" />
