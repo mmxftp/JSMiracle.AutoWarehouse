@@ -77,20 +77,11 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                    // f => (f.LXDM.Equals(codeType, StringComparison.CurrentCultureIgnoreCase));
             }
 
-            //var dataList = dalCode.GetDataByPage(
-            //    o => o.MC,
-            //    filter,
-            //    pageIndex, pageSize, out totalCount);
-
             var dataList = dalCode.GetDataByPageDynamic(pageIndex, pageSize, out totalCount
-                , "MC", filter);
+                , "SZ", filter);
 
             //数据组装到viewModel
             var info = new PaginationModel(dataList, totalCount);
-            //var info = new PaginationModel();
-            //info.SetRows(dataList);
-            //info.total = totalCount;
-            //info.rows = dataList;
 
             return this.JsonFormat(info);
         }

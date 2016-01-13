@@ -52,6 +52,14 @@
         {
             <tr>
                 <td>
+                    Area
+                </td>
+                <td>
+                    @Html.TextBoxFor(n => n.YY, new { id = "txtArea" })
+                </td>
+            </tr>
+            <tr>
+                <td>
                     Controller
                 </td>
                 <td>
@@ -71,6 +79,7 @@
         }
         else
         {
+            @Html.HiddenFor(n => n.YY, new { @Value = Model.YY });
             @Html.HiddenFor(n => n.KZMC, new { @Value = Model.KZMC });
             @Html.HiddenFor(n => n.HDMC, new { @Value = Model.HDMC });
             @Html.HiddenFor(n => n.URL, new { @Value = Model.URL });
@@ -123,6 +132,7 @@
             //    required: true,
             //    missingMessage:'此框不得为空'
             //});
+            $("#txtArea").textbox();
 
             $("#txtController").textbox({
                 required: true,

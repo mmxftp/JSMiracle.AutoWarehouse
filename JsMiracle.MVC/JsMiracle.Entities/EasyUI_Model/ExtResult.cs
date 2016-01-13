@@ -18,5 +18,7 @@ namespace JsMiracle.Entities.EasyUI_Model
         public object parentid { get; set; }
 
         public object id { get; set; }
+
+        public string retString { get; set; }
     }
 }

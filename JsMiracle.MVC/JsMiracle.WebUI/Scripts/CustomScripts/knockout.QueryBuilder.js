@@ -4,14 +4,14 @@
     //[{
     //    'fieldText':'显示名称',
     //    'fieldValue':'数值',
-    //    'isString': 是否字符串 true / false
+    //    'splitChar': 分割字符
 //}]
 //External variables must be defined "exports.fieldsJson" (JSON array)
 //Format: 
 //[{
 //    'fieldText': 'Display Name',
 //    'fieldValue': 'value',
-//    'isString': true / false
+//    'splitChar': null
 //}]
 window.QueryBuilder = (function (exports, ko) {
 
@@ -53,15 +53,20 @@ window.QueryBuilder = (function (exports, ko) {
 
         // the text() function is just an example to show output
         self.text = ko.computed(function () {
+            var pChar = '';
+
+            if (self.selectedField().splitChar)
+                pChar = self.selectedField().splitChar;
+
             return self.selectedField().fieldValue +
                   ' ' +
                   self.selectedComparison() +
                   ' ' +
-                  (self.selectedField().isString ? '"' : '')
+                  pChar
                   +
                   self.value()
                   +
-                  (self.selectedField().isString ? '"' : '');
+                  pChar;
         });
 
         self.fieldsCondition = ko.computed(function () {

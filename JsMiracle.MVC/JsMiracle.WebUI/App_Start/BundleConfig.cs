@@ -9,11 +9,16 @@ namespace JsMiracle.WebUI
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.easyui-{version}.js",
-                        "~/Scripts/moment*"
-                        //,"~/Scripts/knockout-3.4.0*"
+                        "~/Scripts/jquery-{version}.js"                       
                         ));
+
+            //bundles.Add(new ScriptBundle("~/Scripts/easyui").Include(
+            //       "~/Scripts/jquery.easyui-1.4.3.js" )
+            //    );
+
+            bundles.Add(new ScriptBundle("~/Scripts/moment").Include(
+                        "~/Scripts/moment*")
+                );
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -32,11 +37,14 @@ namespace JsMiracle.WebUI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css",
-                "~/Content/themes/default/easyui.css",
-                "~/Content/themes/icon.css",
                 "~/Content/queryBuilderStyles.css"
             ));
 
+            bundles.Add(new StyleBundle("~/Content/themes/default/cssEasyui").Include(
+                "~/Content/themes/default/easyui.css"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/cssIcon").Include(
+                "~/Content/themes/icon.css"));
 
             //bundles.Add(new StyleBundle("~/EasyUI/themes/base").Include(
             //"~/Content/themes/default/easyui.css",

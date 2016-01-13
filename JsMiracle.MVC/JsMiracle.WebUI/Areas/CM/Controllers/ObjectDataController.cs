@@ -174,6 +174,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
 
         public ActionResult EditCondition(long id)
         {
+            ViewBag.OnlyFind = false;
             var ent = dalUserObj.GetEntity(id);
 
             ViewBag.fieldJson = "[]";
@@ -186,8 +187,10 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             return View(ent);
         }
 
-        public ActionResult CreateCondition(string tablename)
+        public ActionResult CreateCondition(string tablename, bool onlyFind=false )
         {
+            ViewBag.OnlyFind = onlyFind;
+
             var ent = new IMS_CM_YHDX()
             {
                 DXDM = tablename,
@@ -217,19 +220,10 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             if (string.IsNullOrEmpty(tablename))
                 return MvcHtmlString.Create(null);
 
-            var filter = string.Format("DXDM = \"{0}\" ", tablename);
-
-            var dataList =
-                dalObjectData.GetAllEntites(filter).Select(n => new
-                {
-                    fieldText = n.ZDMC,
-                    fieldValue = n.DXZD,
-                    isString = string.Equals(n.ZDLX, "nvarchar", StringComparison.CurrentCultureIgnoreCase)
-                });
+            var dataList =  dalObjectData.GetObjectColumnList(tablename);
 
             var str = JsonSerialization.Serialize(dataList);
             return MvcHtmlString.Create(str);
-            //return this.JsonFormat(dataList);
         }
 
         public ActionResult SaveCondition(IMS_CM_YHDX entity)
@@ -242,6 +236,7 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
                 ExtResult ret = new ExtResult();
                 ret.success = true;
                 ret.msg = "保存成功";
+                ret.retString = entity.DXTJ;
                 return ret;
             };
 

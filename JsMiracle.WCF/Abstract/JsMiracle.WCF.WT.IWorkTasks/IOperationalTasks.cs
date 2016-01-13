@@ -16,7 +16,12 @@ namespace JsMiracle.WCF.WT.IWorkTasks
     /// </summary>
     public interface IOperationalTasks : IDataLayer<IMS_WT_CWRW>
     {
-
+        ///// <summary>
+        ///// 入库组盘
+        ///// </summary>
+        ///// <param name="itemId">物料编号</param>
+        ///// <param name="number">数量</param>
+        //void CombinedPallet(string itemId, int number);
     }
 
     [ServiceContract]
@@ -34,5 +39,6 @@ namespace JsMiracle.WCF.WT.IWorkTasks
             : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
         { }
 
+     
     }
 }

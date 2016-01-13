@@ -31,7 +31,7 @@ namespace JsMiracle.WebUI.Controllers.UP
         public ActionResult Index()
         {
             return View();
-        }     
+        }
 
         [AllowAnonymous]
         public PartialViewResult _MenuPartial()
@@ -67,7 +67,7 @@ namespace JsMiracle.WebUI.Controllers.UP
             }
 
 
-            if (permissionModule == null )
+            if (permissionModule == null)
                 return PartialView(menuList);
 
             foreach (var m in rootMenus)
@@ -87,6 +87,18 @@ namespace JsMiracle.WebUI.Controllers.UP
 
                 //var x = dalModule.GetChildModuleList(m.ModuleID);
                 //menuList.AddRange(x);
+            }
+
+            foreach (var m in menuList)
+            {
+                // 根节点不需要url地址
+                if (m.FMKID == -1)
+                    continue;
+
+                if (string.IsNullOrEmpty(m.YY))
+                    m.URL = Url.Action(m.HDMC, m.KZMC);
+                else
+                    m.URL = Url.Action(m.HDMC, m.KZMC, new { area = m.YY });
             }
 
             return PartialView(menuList);

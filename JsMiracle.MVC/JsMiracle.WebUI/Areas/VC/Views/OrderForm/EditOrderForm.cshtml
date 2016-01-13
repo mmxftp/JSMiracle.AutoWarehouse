@@ -3,8 +3,12 @@
 }
 
 <style type="text/css">
-    .box td{
-        width:80px;
+    .formTable{
+        padding-left:20px;
+    }
+
+    .formTable td{
+        width:30px;
     }
 
 </style>
@@ -15,93 +19,91 @@
 <div id="dvTarget">
     @using (Ajax.BeginForm("SaveOrderForm", "OrderForm"
             , new AjaxOptions()
-            , new { enctype = "multipart/form-data", id = "frmOrderForm" }))
+            , new { enctype = "multipart/form-data", id = "frmOrderForm" + @ViewBag.BizType }))
     {
         if (Model.ID != 0)
         {
-            @Html.HiddenFor(n => n.CJR);
-            @Html.HiddenFor(n => n.CJSJ);
+            @Html.HiddenFor(n => n.CJR)
+            @Html.HiddenFor(n => n.CJSJ)
         }
-        @Html.HiddenFor(n => n.ID);
-        @Html.HiddenFor(n => n.YWLX);
-        @Html.HiddenFor(n => n.SWDJLX);
-        @Html.HiddenFor(n => n.SWSJBH);
+        @Html.HiddenFor(n => n.ID)
+        @Html.HiddenFor(n => n.YWLX)
+        @Html.HiddenFor(n => n.SWDJLX)
+        @Html.HiddenFor(n => n.SWSJBH)
+        @Html.HiddenFor(n => n.DJZT)
 
         <div id="orderFormTools">
             <div class="box">
-                <span class="boxTitle">@ViewBag.BizType</span>
-                <table style="width:98%">
-                    <tr>
-                        <td>单据编号</td>
-                        <td>@Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" })</td>
-                        <td>单据状态</td>
-                        @*<td>@Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" }) </td>*@
-
-                        <td>@Html.DropDownListFor(n => n.DJZT, ViewBag.DocumentStatus as IEnumerable<SelectListItem>
-                            , new { id = "ddlDJZT", style = "width:150px;" })</td>
-                        <td>来源</td>
-                        <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" })</td>
-                    </tr>
-                    <tr>
-                        <td>创建人</td>
-                        <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR", @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
-                        <td>创建日期</td>
-                        <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ" })</td>
-                        <td>完成时间</td>
-                        <td>@Html.TextBoxFor(n => n.WCSJ, new { @id = "txtWCSJ" })</td>
-                    </tr>
-                    <tr>
-                        <td>关联单据</td>
-                        <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" })</td>
-                        <td>备注</td>
-                        <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" })</td>
-                    </tr>
-                    <tr style="text-align:center;display:table-row;">
-                        <td colspan="7">
-                            <a class="easyui-linkbutton" iconcls="icon-save"
-                               href="javascript:$('#frmOrderForm').form('submit')">保存</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a class="easyui-linkbutton" iconcls="icon-cancel"
-                               href="javascript:$('#frmOrderForm').form('reset')">取消</a>
-
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                           
-                        </td>
-                        <td style="width:200px;text-align:right;">
-                            <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="editOrderForm.changeRef()">返回订单编辑</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@if (Model.ID != 0)
-                        {
-                            <a href="###" class="easyui-linkbutton" iconcls="icon-add"
-                               onclick="editOrderForm.edit(false)">新增订单数据</a>
-                        }</td>
-                    </tr>
-                </table>
-
+                <div>
+                    <a class="easyui-linkbutton" iconcls="icon-save"
+                       href="###" onclick="javascript: $('#frmOrderForm' + '@ViewBag.BizType').form('submit')">保存</a>
+                    &nbsp;
+                    <a class="easyui-linkbutton" iconcls="icon-cancel"
+                       href="###" onclick="javascript: $('#frmOrderForm' + '@ViewBag.BizType').form('reset')">取消</a>
+                    &nbsp;
+                    <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="window['editOrderForm' + '@ViewBag.BizType'].changeRef()">返回订单编辑</a>
+                </div>
+                <div style="padding-top:5px;">
+                    @if (Model.ID != 0)
+                    {
+                        <a href="###" class="easyui-linkbutton" iconcls="icon-add"
+                           onclick="window['editOrderForm' + '@ViewBag.BizType' ].edit(false)">新增订单数据</a>
+                    }
+                </div>
             </div>
-        </div>
-
-        <table id="orderDataGrid" style="padding:10px"></table>
+            <table class="formTable" style="width:98%;" cellspacing="0" cellpadding="5" >
+                <tr>
+                    <td>单据编号</td>
+                    <td>
+                        @Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" + ViewBag.BizType })
+                    </td>
+                    <td>单据状态</td>
+                    <td>
+                        @Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" + ViewBag.BizType, @Value = @ViewBag.DJStatus })
+                    </td>
+                    <td>来源</td>
+                    <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" + ViewBag.BizType })</td>
+                    <td>已上报</td>
+                    <td>@Html.TextBoxFor(n => n.SFGX, new { @id = "txtSFGX" + ViewBag.BizType })</td>
+                </tr>
+                <tr>
+                    <td>创建人</td>
+                    <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR" + ViewBag.BizType, @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
+                    <td>创建日期</td>
+                    <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ" + ViewBag.BizType })</td>
+                    <td>完成人</td>
+                    <td>@Html.TextBoxFor(n => n.WCR, new { @id = "txtWCR" + ViewBag.BizType })</td>
+                    <td>完成时间</td>
+                    <td>@Html.TextBoxFor(n => n.WCSJ, new { @id = "txtWCSJ" + ViewBag.BizType })</td>
+                </tr>
+                <tr>
+                    <td>关联单据</td>
+                    <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" + ViewBag.BizType })</td>
+                    <td>备注</td>
+                    <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" + ViewBag.BizType })</td>
+                    <td>描述</td>
+                    <td>@Html.TextBoxFor(n => n.MS, new { @id = "txtMS" + ViewBag.BizType })</td>
+                </tr>
+            </table>
+    </div>
     }
+    <table id="orderDataGrid" style="padding:10px"></table>
 </div>
 
 <script type="text/javascript">
 
-    var editOrderForm;
+    window['editOrderForm' + '@ViewBag.BizType'];
 
     $(function () {
-        $('#frmOrderForm').form({
+        $("#orderFormTools").attr('id', 'orderFormTools' + '@ViewBag.BizType');
+        $("#orderDataGrid").attr('id', 'orderDataGrid' + '@ViewBag.BizType');
+
+        $('#frmOrderForm' + '@ViewBag.BizType').form({
             success: function (data) {
                 console.log(data);
                 var ret = eval('(' + data + ')');
                 if (ret.success) {
                     $.messager.alert('订单信息', ret.msg, "info", function () {
-                        //JsMiracleCommon.closeWindow();
-                        @*$("#frmOrderForm").form('load', '@Url.Action("EditOrderForm")' + '?id=' + ret.id);
-
-                        editOrderForm.reloadDataGrid();*@
 
                         var url = '@Url.Action("EditOrderForm")' + '?id=' + ret.id;
 
@@ -115,12 +117,12 @@
             }
         });
 
-        $("#orderDataGrid").datagrid({
+        $("#orderDataGrid" + '@ViewBag.BizType').datagrid({
             url: '@Url.Action("GetOrderData")' + '?djbh=' + '@Model.DJBH',
             singleSelect: true,
-            height: '700px',
+            height: '650px',
             rownumbers: true,
-            toolbar: '#orderFormTools',
+            toolbar: '#orderFormTools' + '@ViewBag.BizType',
             frozenColumns: [[
                 {
                     field: '_operate', title: '操作', width: 150, align: 'center'
@@ -165,53 +167,56 @@
             }
         });
 
-        $("#txtDJBH").textbox({
+        $("#txtDJBH" + '@ViewBag.BizType').textbox({
             required: true,
             missingMessage: '单据编号不得为空'
         });
 
-        $("#txtYWLX").numberbox({
-            required: true,
-            missingMessage: '业务类型不得为空'
-        });
 
-        $("#txtDJLY").textbox({
+        $("#txtDJLY" + '@ViewBag.BizType').textbox({
             required: true,
             missingMessage: '来源不得为空'
         });
 
-        $("#txtCJR").textbox({
+        $("#txtCJR" + '@ViewBag.BizType').textbox({
             disabled: true,
         });
 
-        $("#txtSWDJLX").textbox({
+        $("#txtSFGX" + '@ViewBag.BizType').switchbutton({
+            onText: '是',
+            offText:'否'
+        });
+
+        @*$("#txtSWDJLX" + '@ViewBag.BizType').textbox({
             required: true,
             missingMessage: '上位单据类型不得为空'
         });
 
-        $("#txtSWSJBH").textbox({
+        $("#txtSWSJBH" + '@ViewBag.BizType').textbox({
             required: true,
             missingMessage: '上位单据编号不得为空'
-        });
+        });*@
 
-        $("#txtDJZT").textbox({
-            disabled:true,
-            required:true,
-            missingMessage: '单据状态不得为空'
-        });
-
-        $("#txtCJSJ").textbox({
+        $("#txtDJZT" + '@ViewBag.BizType').textbox({
             disabled: true,
         });
 
-        $("#txtWCSJ").textbox({
-            disabled:true,
+        $("#txtCJSJ" + '@ViewBag.BizType').textbox({
+            disabled: true,
         });
 
-        $("#txtBZ").textbox();
-        $("#txtGLDJ").textbox();
+        $("#txtWCR" + '@ViewBag.BizType').textbox({
+            disabled: true,
+        });
 
-        editOrderForm = {
+        $("#txtWCSJ" + '@ViewBag.BizType').textbox({
+            disabled: true,
+        });
+
+        $("#txtBZ" + '@ViewBag.BizType').textbox();
+        $("#txtGLDJ" + '@ViewBag.BizType').textbox();
+
+        window['editOrderForm' + '@ViewBag.BizType'] = {
 
             edit: function (op, id) {
                 var width = '600px';
@@ -229,11 +234,15 @@
             },
 
             reloadDataGrid: function () {
-                $("#orderDataGrid").datagrid('reload');
+                $("#orderDataGrid" + '@ViewBag.BizType').datagrid('reload');
             },
 
             changeRef: function () {
-                var url = '@Url.Action("Index")';
+                var url = '@ViewBag.ReturnUrl';
+
+                if (url == '' || url == null)
+                    url = '@Url.Action("Index")';
+
                 // 调用 'refresh' 方法更新选项卡面板的内容
                 var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
                 tab.panel('refresh', url);

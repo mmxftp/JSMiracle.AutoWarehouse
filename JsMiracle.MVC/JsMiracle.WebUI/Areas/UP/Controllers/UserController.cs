@@ -45,10 +45,10 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             return View();
         }
 
-        public ActionResult GetUserList(int? rows, int? page, string txt)
+        public ActionResult GetUserList(int? rows, int? page, string txt,string where)
         {
             int totalCount = 0;
-
+            System.Web.Http.WebHost.HttpControllerHandler d;
             int pageIndex = page ?? 1;
             int pageSize = rows ?? 10;
 
@@ -60,18 +60,18 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
 
             string filter = null;
 
-            if (!string.IsNullOrEmpty(txt))
+            if (!string.IsNullOrEmpty(where))
             {
-                //filter = string.Format(" (YHID = \"{0}\" || YHM.Contains(\"{0}\")) && ZT = {1} "
-                //    , txt, (int)UserStateEnum.Normal);
+                filter = where;
+            }
+            else if (!string.IsNullOrEmpty(txt))
+            {
                 filter = string.Format(" (YHID = {0} || YHM.Contains({0})) && ZT = {1} "
                     , txt, (int)UserStateEnum.Normal);
-                // f => (f.YHID == txt || f.YHM.Contains(txt)) && f.ZT == (int)UserStateEnum.Normal;
             }
             else
             {
                 filter = string.Format(" ZT = {0} " , (int)UserStateEnum.Normal);
-                // f => f.ZT == (int)UserStateEnum.Normal;
             }
 
             //var dataList = dalUser.GetDataByPage(

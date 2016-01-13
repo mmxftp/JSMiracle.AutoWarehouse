@@ -190,6 +190,7 @@
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
+    <Compile Include="View\QueryBuilderModule.cs" />
     <Compile Include="View\TableColumnsModule.cs" />
     <Compile Include="WCF\SplitPageParameters.cs" />
     <Compile Include="WCF\WcfRequest.cs" />

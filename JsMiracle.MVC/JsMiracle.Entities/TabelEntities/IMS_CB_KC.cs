@@ -16,7 +16,6 @@ namespace JsMiracle.Entities.TabelEntities
     {
         public long ID { get; set; }
         public string RQBH { get; set; }
-        public string WKBH { get; set; }
         public decimal KQSL { get; set; }
         public decimal KYSL { get; set; }
         public string PCBH { get; set; }
@@ -31,5 +30,6 @@ namespace JsMiracle.Entities.TabelEntities
         public Nullable<System.DateTime> ZHXGSJ { get; set; }
         public string BZ { get; set; }
         public string YYCKPZ { get; set; }
+        public string WLBH { get; set; }
     }
 }

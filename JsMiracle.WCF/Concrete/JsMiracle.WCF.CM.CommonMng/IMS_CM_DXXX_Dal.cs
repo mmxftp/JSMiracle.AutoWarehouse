@@ -106,6 +106,43 @@ namespace JsMiracle.WCF.CM.CommonMng
         }
 
 
+        public List<QueryBuilderModule> GetObjectColumnList(string objectName)
+        {
+            var dataList = base.DbContext.IMS_CM_DXXX_S.Where(n => n.DXDM == objectName)
+                .Select(n => new
+                {
+                    fieldText = n.ZDMC,
+                    fieldValue = n.DXZD,
+                    n.ZDLX
+                });
+
+            if (dataList == null)
+                return null;
+
+            List<QueryBuilderModule> qList = new List<QueryBuilderModule>();
+
+            foreach (var data in dataList)
+            {
+                var model = new QueryBuilderModule();
+                model.fieldText = data.fieldText;
+                model.fieldValue = data.fieldValue;
+
+                if (string.Equals(data.ZDLX, "nvarchar", StringComparison.CurrentCultureIgnoreCase)
+                    || string.Equals(data.ZDLX, "varchar", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    model.splitChar = "\"";
+                }
+                else if (string.Equals(data.ZDLX, "datetime", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    model.splitChar = "'";
+                }
+
+                qList.Add(model);
+            }
+
+            return qList;
+
+        }
     }
 
 
@@ -123,6 +160,11 @@ namespace JsMiracle.WCF.CM.CommonMng
                 case "ReSaveObjectData":
                     objs = (object[])req.Body.Parameters;
                     dal.ReSaveObjectData((string)objs[0], (string)objs[1]);
+                    break;
+
+                case "GetObjectColumnList":
+                    objs = (object[])req.Body.Parameters;
+                    res.Body.Data = dal.GetObjectColumnList((string)objs[0]);
                     break;
 
                 default:

@@ -11,7 +11,7 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RQBH" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="WKBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="WLBH" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="KQSL" Type="decimal" Precision="2" Scale="0" Nullable="false" />
           <Property Name="KYSL" Type="decimal" Precision="2" Scale="0" Nullable="false" />
           <Property Name="PCBH" Type="nvarchar" MaxLength="64" Nullable="false" />
@@ -266,6 +266,7 @@
           <Property Name="MKID" Type="int" Nullable="false" />
           <Property Name="FMKID" Type="int" Nullable="false" />
           <Property Name="PXID" Type="int" Nullable="false" />
+          <Property Name="YY" Type="nvarchar" MaxLength="50" />
           <Property Name="KZMC" Type="nvarchar" MaxLength="255" />
           <Property Name="HDMC" Type="nvarchar" MaxLength="255" />
         </EntityType>
@@ -540,7 +541,6 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RQBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WKBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="KQSL" Type="Decimal" Precision="2" Scale="0" Nullable="false" />
           <Property Name="KYSL" Type="Decimal" Precision="2" Scale="0" Nullable="false" />
           <Property Name="PCBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
@@ -555,6 +555,7 @@
           <Property Name="ZHXGSJ" Type="DateTime" Precision="3" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="YYCKPZ" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WLBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_CB_RQ">
           <Key>
@@ -761,6 +762,7 @@
           <Property Name="PXID" Type="Int32" Nullable="false" />
           <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="YY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IMS_UP_MKGN">
           <Key>
@@ -1068,10 +1070,10 @@
           <EntitySetMapping Name="IMS_CB_KC_S">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_CB_KC">
               <MappingFragment StoreEntitySet="IMS_CB_KC_S">
+                <ScalarProperty Name="WLBH" ColumnName="WLBH" />
                 <ScalarProperty Name="YYCKPZ" ColumnName="YYCKPZ" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RQBH" ColumnName="RQBH" />
-                <ScalarProperty Name="WKBH" ColumnName="WKBH" />
                 <ScalarProperty Name="KQSL" ColumnName="KQSL" />
                 <ScalarProperty Name="KYSL" ColumnName="KYSL" />
                 <ScalarProperty Name="PCBH" ColumnName="PCBH" />
@@ -1293,6 +1295,7 @@
           <EntitySetMapping Name="IMS_UP_MK_S">
             <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MK">
               <MappingFragment StoreEntitySet="IMS_UP_MK_S">
+                <ScalarProperty Name="YY" ColumnName="YY" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MKMC" ColumnName="MKMC" />
                 <ScalarProperty Name="URL" ColumnName="URL" />

@@ -26,11 +26,13 @@ namespace JsMiracle.WCF.CM.ICommonMng
                 ,typeof(IMS_CM_DM)
                 ,typeof(IMS_CM_DMLX)
                 ,typeof(IMS_CM_DXXX)
-                ,typeof(IMS_CM_YHDX)      
+                ,typeof(IMS_CM_YHDX)
+                ,typeof(QueryBuilderModule)
                 ,typeof(List<IMS_CM_DM>)
                 ,typeof(List<IMS_CM_DMLX>)
                 ,typeof(List<IMS_CM_DXXX>)
-                ,typeof(List<IMS_CM_YHDX>)  
+                ,typeof(List<IMS_CM_YHDX>)
+                ,typeof(List<QueryBuilderModule>)
             };
         }
     }

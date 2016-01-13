@@ -14,11 +14,6 @@
         border-color: rgb(220, 200, 150);
     }
 
-    .box {
-        margin: 15px 15px 15px 15px;
-        padding: 15px;
-    }
-
     .queryMessage {
         color: #31708f;
         background-color: #d9edf7;
@@ -42,19 +37,28 @@
             查询名称: @Html.TextBoxFor(n => n.CXMC, new { id = "txtCXMC" })<br />
             <strong>条件表达式</strong><br />
             <span id="sp" data-bind="text: text"></span>
-            @Html.HiddenFor(n => n.DXTJ, new { data_bind = "value: text" })
+            @Html.HiddenFor(n => n.DXTJ, new { @id = "txtDXTJ", data_bind = "value: text" })
             @Html.HiddenFor(n => n.DXBDS, new { data_bind = "value: Express" })
             <div style="text-align:center">
-                <a class=" easyui-linkbutton" iconcls="icon-save" href="###"
-                   onclick="javascript:$('#frmCondition').form('submit')">
-                    提交
-                </a>
+                @if ((bool)ViewBag.OnlyFind)
+                {
+                    <a class=" easyui-linkbutton" iconcls="icon-save" href="###"
+                       onclick="javascript:cmEditCondition.search()">
+                        查询
+                    </a>
+                }
+                else
+                {
+                    <a class=" easyui-linkbutton" iconcls="icon-save" href="###"
+                       onclick="javascript:$('#frmCondition').form('submit')">
+                        提交
+                    </a>
+                }
                 &nbsp; &nbsp; &nbsp; &nbsp;
                 <a class="easyui-linkbutton" iconcls="icon-cancel" href="###"
                    onclick="JsMiracleCommon.cancelWidow('frmCondition')">取消</a>
             </div>
         </div>
-       
     }
 
     <div data-bind="with: group">
@@ -103,7 +107,7 @@
 
 <script type="text/javascript">
 
-    var editCondition = {};
+    var cmEditCondition = {};
 
     $(function () {
         $("#txtCXMC").textbox({
@@ -138,9 +142,9 @@
                 var ret = JSON.parse(data);
                 if (ret.success) {
                     $.messager.alert('条件编辑', ret.msg, "info", function () {
-
+                        //console.log(ret.retString );
                         // 关闭当前div 刷新父窗体
-                        JsMiracleCommon.closeWindow();
+                        JsMiracleCommon.closeWindow($("#txtDXTJ").val());
                     });
                 }
                 else {
@@ -149,22 +153,12 @@
             }
         });
 
-        //QueryBuilder.fieldsJson = [{ 'fieldText': '中国人', 'fieldValue': 'Points', 'isString': true },
-        //       { 'fieldText': '名称', 'fieldValue': 'Name', 'isString': true },
-        //       { 'fieldText': '数值', 'fieldValue': 'Number', 'isString': false }];
-
-
-        //express = JSON.parse(express);
-        //console.log(express);
-        //var vm = new QueryBuilder.ViewModel();
-
-        //if ( express )
-        //    vm = new QueryBuilder.ViewModel(express);
-        //else
-        //    vm = new QueryBuilder.ViewModel();
-
-        //ko.applyBindings(vm);
-        //QueryBuilder.RefreshGroup();
+        cmEditCondition={
+            search:function(){
+                console.log($("#txtDXTJ").val());
+                JsMiracleCommon.closeWindow($("#txtDXTJ").val());
+            }
+        }
 
     });
 

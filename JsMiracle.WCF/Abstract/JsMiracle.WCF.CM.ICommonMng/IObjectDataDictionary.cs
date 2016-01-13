@@ -31,6 +31,14 @@ namespace JsMiracle.WCF.CM.ICommonMng
         /// <param name="opUser">操作用户</param>
         void ReSaveObjectData(string tablename, string opUser);
 
+
+        /// <summary>
+        /// 根据对象名（表/视图）得字段名
+        /// </summary>
+        /// <param name="objectName">对象名</param>
+        /// <returns></returns>
+        List<QueryBuilderModule> GetObjectColumnList(string objectName);
+
         ///// <summary>
         ///// 删除对象代码对应的所有数据
         ///// </summary>
@@ -75,6 +83,12 @@ namespace JsMiracle.WCF.CM.ICommonMng
         public void ReSaveObjectData(string tablename, string opUser)
         {
             RequestAction<object[]>("ReSaveObjectData", new object[] { tablename, opUser });
+        }
+
+
+        public List<QueryBuilderModule> GetObjectColumnList(string objectName)
+        {
+            return RequestFunc<object[], List<QueryBuilderModule>>("GetObjectColumnList", new object[] { objectName });
         }
     }
 

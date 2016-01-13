@@ -24,5 +24,6 @@ namespace JsMiracle.Entities.TabelEntities
         public int PXID { get; set; }
         public string KZMC { get; set; }
         public string HDMC { get; set; }
+        public string YY { get; set; }
     }
 }

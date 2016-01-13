@@ -10,9 +10,14 @@
         <input type="text" id="txt" class="easyui-textbox" style="width:200px;" />
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search" id="txtSearch"
            onclick="userOp.reloadDataGrid()">查询</a>
+
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search" id="txtAdvSearch"
+           onclick="userOp.advSearch()">高级查询</a>
+        <br/>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
            onclick="userOp.editUser(false);">新增</a>
     </div>
+    
     <div>
         <table id="userGrid" style="padding:10px"></table>
     </div>
@@ -44,7 +49,7 @@
                                   + row.YHM + '\',\'@Url.Action("Remove")\',userOp.refreshGrd)';
 
                               var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
-                                        + ' onclick="'+removeFunStr+'" >删除</a>'
+                                        + ' onclick="' + removeFunStr + '" >删除</a>'
                                         + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                         + '<a href="javascript:void(0)"  class="loan_edit_button" '
                                         + ' onclick="' + editFunStr + '">修改</a>';
@@ -74,11 +79,11 @@
     // 每个页面的所有函数都定义成一个集合,访止方法名重覆
     var userOp = {
 
-        refreshGrd:function(){
+        refreshGrd: function () {
             $('#userGrid').datagrid('reload');
         },
 
-        editUser : function (isEdit, id) {
+        editUser: function (isEdit, id) {
             var height = '300px';
             var width = '350px';
             var title = '用户信息新增';
@@ -96,19 +101,35 @@
         reloadDataGrid: function (txtV) {
             var txtVal = $("#txt").val();
 
-            if (JsMiracleCommon.isArray(txtV)) {
-                if (txtV[0])
-                    txtVal = txtV[0];
+            var strWhere = '';
+            if ($.isArray(txtV))
+            {
+                strWhere = txtV[0];
             }
-            else if (txtV) {
-                txtVal = txtV;
+            if (txtV) {
+                txt = txtV;
             }
 
             $("#userGrid").datagrid('reload',
                 {
                     txt: txtVal,
+                    where:strWhere
                 });
+        },
+
+        advSearch: function () {
+
+            var width = '600px';
+            var height = '600px';
+            var title = '编辑查询条件';
+            var url = '@Html.Raw(@Url.Action("CreateCondition", "ObjectData"
+            , new { area = "CM", @tablename = "IMS_UP_YH_S", @onlyFind= true }))';
+
+            var url1 = '@Url.Action("CreateCondition", "ObjectData"
+, new { area = "CM", @tablename = "IMS_UP_YH_S", @onlyFind= true })';
+            JsMiracleCommon.showWindow(title, url, width, height, userOp.reloadDataGrid);
         }
+
     }
 
 </script>

@@ -37,8 +37,10 @@ namespace JsMiracle.WebUI.HtmlHelpers
                 {
                     result.Append("<li>");
                     //result.AppendFormat("<a href='{0}' target='ibody'>{1}</a>", menu.URL, menu.ModuleName);
-                    result.AppendFormat(@"<a href='###' onclick=""mainPage.onMenuClick('{0}','{1}','{2}');"">{1}</a>", menu.ID, menu.MKMC, menu.URL);
+                    result.AppendFormat(@"<a href='###' onclick=""mainPage.onMenuClick('{0}','{1}','{2}');"">{1}</a>", menu.ID, menu.MKMC,   menu.URL);
                     result.Append("</li>");
+
+
                 }
             }
             result.Append("</ul></div>");

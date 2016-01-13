@@ -1,15 +1,16 @@
 ﻿@{
     ViewBag.Title = "Index";
+    
 }
 
 <div style="height:750px;">
-    <div id="orderListToolbar">
+    <div id='orderListToolbar'>
         <b><label style="padding-left:10px">查询明细</label></b>&nbsp;&nbsp;&nbsp;
         <input type="text" id="txt" class="easyui-textbox" style="width:200px;" />
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search"
-           onclick="orderformOp.reloadDataGrid()">查询</a>
+           onclick="window['orderformOp' + '@ViewBag.BizType'].reloadDataGrid()">查询</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
-           onclick="orderformOp.edit(false);">新增</a>
+           onclick="window['orderformOp'+ '@ViewBag.BizType'].edit(false);">新增</a>
     </div>
     <div>
         <table id="orderFormGrid" style="padding:10px"></table>
@@ -18,30 +19,33 @@
 
 <script type="text/javascript">
 
-    var orderformOp;
+    // 动态生成变量名，因为此页面被多个对象使用
+    window['orderformOp' + '@ViewBag.BizType'];
 
     $(function () {
 
+        $("#orderListToolbar").attr('id', 'orderListToolbar' + '@ViewBag.BizType');
+        $("#orderFormGrid").attr('id', 'orderFormGrid' + '@ViewBag.BizType')
 
         // 必须在页面加载后执行，否则边框画不全，应该是easyui加载时边框距离计算错误的原因
-        $("#orderFormGrid").datagrid(
+        $("#orderFormGrid" + '@ViewBag.BizType').datagrid(
               {
-                  url: '@Url.Action("GetOrderList")',
+                  url: '@Url.Action("GetOrderList", new { bizType = ViewBag.BizType })',
                   singleSelect: true,
                   loadMsg: '数据载入中...',
                   pagination: true, // 是否显示分页控件
                   pagesize: 10,      // 每页行数
                   pageList: [10],    // 要选的每页行数 为了界面显示正确一定要和pagesize的值相同
                   height: '750px',
-                  toolbar: '#orderListToolbar',
+                  toolbar: '#orderListToolbar' + '@ViewBag.BizType',
                   rownumbers: true,
                   frozenColumns: [[
                       {
                           field: '_operate', title: '操作', width: 150, align: 'center'
                           , formatter: function (value, row, index) {
-                              var editFunStr = 'orderformOp.edit(true, ' + row.ID + ');';
+                              var editFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit(true, ' + row.ID + ');';
                               var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
-                                  + row.DJBH + '\',\'@Url.Action("RemoveOrderForm")\',orderformOp.reloadDataGrid)';
+                                  + row.DJBH + '\',\'@Url.Action("RemoveOrderForm")\',orderformOp' + '@ViewBag.BizType' + '.reloadDataGrid)';
 
                               var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
                                         + ' onclick="' + removeFunStr + '" >删除</a>'
@@ -89,9 +93,9 @@
               });
 
         // 每个页面的所有函数都定义成一个集合,访止方法名重覆
-        orderformOp = {
+        window['orderformOp' + '@ViewBag.BizType'] = {
             edit: function (op, id) {
-                var url = '@Url.Action("CreateOrderForm")';
+                var url = '@Url.Action("CreateOrderForm", new { bizType = ViewBag.BizType })';
 
                 if (op) {
                     title = '订单信息编辑';
@@ -107,7 +111,7 @@
             reloadDataGrid: function () {
                 var txtVal = $("#txt").val();
 
-                $("#orderFormGrid").datagrid('reload', {
+                $("#orderFormGrid" + '@ViewBag.BizType').datagrid('reload', {
                     txt: txtVal,
                 });
             }

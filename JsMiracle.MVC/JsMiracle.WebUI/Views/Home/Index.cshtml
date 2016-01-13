@@ -8,11 +8,16 @@
 <head profile="http://www.w3.org/2005/10/profile">
     <title></title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/default/cssEasyui")
+    @Styles.Render("~/Content/themes/cssIcon")
     @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/Scripts/easyui")*@
+    <script src="~/Scripts/jquery.easyui-1.4.3.min.js" ></script>
+    @Scripts.Render("~/Scripts/moment")
     @Scripts.Render("~/Scripts/CustomScripts/jquery.easyui.extend.js"
-    , "~/Scripts/CustomScripts/common.js")
-    @Scripts.Render("~/Scripts/Home/Index.cshtml.js")
-    @Scripts.Render("~/bundles/jqueryval")
+            , "~/Scripts/CustomScripts/common.js"
+            , "~/Scripts/Home/Index.cshtml.js")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     <link rel="icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="~/Content/images/favicon_32.ico" type="image/x-icon" />
 </head>
