@@ -160,6 +160,7 @@
     <Compile Include="Areas\CM\CMAreaRegistration.cs" />
     <Compile Include="Areas\CM\Controllers\ObjectDataController.cs" />
     <Compile Include="Areas\UP\Controllers\UserController.cs" />
+    <Compile Include="Areas\UP\Models\ChangePasswordModule.cs" />
     <Compile Include="Areas\UP\UPAreaRegistration.cs" />
     <Compile Include="Areas\VC\Controllers\BusinessConstraintsController.cs" />
     <Compile Include="Areas\VC\Controllers\OrderFormController.cs" />
@@ -548,6 +549,7 @@
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />
+    <Content Include="Scripts\CustomScripts\jquery.md5.js" />
     <Content Include="Scripts\CustomScripts\knockout.QueryBuilder.js" />
     <Content Include="Scripts\easyloader.js" />
     <Content Include="Scripts\Home\Index.cshtml.js" />
@@ -630,7 +632,6 @@
     <Folder Include="Areas\CB\Views\Shared\" />
     <Folder Include="Areas\CM\Models\" />
     <Folder Include="Areas\CM\Views\Shared\" />
-    <Folder Include="Areas\UP\Models\" />
     <Folder Include="Areas\UP\Views\Shared\" />
     <Folder Include="Areas\VC\Models\" />
     <Folder Include="Areas\VC\Views\Shared\" />

@@ -43,11 +43,11 @@ namespace JsMiracle.WCF.UP.AuthMng
                             && n.ID != entity.ID))
                     throw new JsMiracleException("员工编号已存在不得重复添加");
 
-                if (entity.MM != ent.MM)
-                {
-                    if (IMS_UP_YH.GetPwdMD5(entity.MM) != ent.MM)
-                        entity.MM = IMS_UP_YH.GetPwdMD5(entity.MM);
-                }
+                //if (entity.MM != ent.MM)
+                //{
+                //    if (IMS_UP_YH.GetPwdMD5(entity.MM) != ent.MM)
+                //        entity.MM = IMS_UP_YH.GetPwdMD5(entity.MM);
+                //}
 
                 base.SaveEntity(entity);
             }
@@ -109,8 +109,10 @@ namespace JsMiracle.WCF.UP.AuthMng
 
             var user = ents.First();
 
-            // md5 验证是否密码相同
-            return IMS_UP_YH.GetPwdMD5(password) == user.MM;
+            return user.MM == password;
+
+            //// md5 验证是否密码相同
+            //return IMS_UP_YH.GetPwdMD5(password) == user.MM;
         }
 
         public void CreateUser(

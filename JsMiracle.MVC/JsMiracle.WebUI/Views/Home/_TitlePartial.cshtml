@@ -9,10 +9,11 @@
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
         {
             @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()" id="btnLogout">注销</a>
+            <a href="###" onclick="javascript:document.getElementById('logoutForm').submit()" id="btnLogout">注销</a>
         }
-        <a href="javascript:cmTitle.openRegist()" id="btnRegion">注册</a>
-        <a href="javascript:cmTitle.openLogin()" id="btnLogin">登录</a>
+        <a href="###" onclick="javascript:cmTitle.openRegist()" id="btnRegion">注册</a>
+        <a href="###" onclick="javascript:cmTitle.openLogin()" id="btnLogin">登录</a>
+        <a href="###" onclick="javascript: cmTitle.changePwd()" id="btnChangPwd">改密码</a>
     </div>
 </div>
 <script type="text/javascript">
@@ -37,6 +38,14 @@
             var url = '@Url.Action("LogInPop","Account")';
             JsMiracleCommon.showWindow(title, url, width, height, cmTitle.reloadWindow);
         },
+
+        changePwd: function () {
+            var height = '350px';
+            var width = '350px';
+            var title = '密码修改';
+            var url = '@Url.Action("ChangePassword", "User", new { Area = "UP" })';
+            JsMiracleCommon.showWindow(title, url, width, height, cmTitle.reloadWindow);
+        }
     };
 
     // 当前是否有用户已登录
@@ -50,9 +59,14 @@
             disabled: !isLogIn
         });
 
+        $("#btnChangPwd").linkbutton({
+            disabled: !isLogIn
+        });
+
         // 已登录,则登录功能无效,必须登出当前用户才能再登录
         $("#btnLogin").linkbutton({
-            disabled:isLogIn
-            });
+            disabled: isLogIn
+        });
+
     });
 </script>

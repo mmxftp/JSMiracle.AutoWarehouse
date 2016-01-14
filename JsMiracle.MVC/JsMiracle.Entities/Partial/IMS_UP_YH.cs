@@ -14,5 +14,6 @@ namespace JsMiracle.Entities.TabelEntities
         {
             return FormsAuthentication.HashPasswordForStoringInConfigFile(pwd, "MD5");
         }
+
     }
 }

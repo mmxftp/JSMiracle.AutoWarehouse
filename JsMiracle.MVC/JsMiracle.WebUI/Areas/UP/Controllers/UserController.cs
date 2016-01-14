@@ -11,6 +11,8 @@ using JsMiracle.Entities.TabelEntities;
 using JsMiracle.Entities.Enum;
 using JsMiracle.Entities.EasyUI_Model;
 using JsMiracle.WCF.UP.IAuthMng;
+using JsMiracle.WebUI.Areas.UP.Models;
+using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.UP.Controllers
 {
@@ -150,9 +152,8 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
         {
             Func<ExtResult> saveFun = () =>
             {
-                // 新增用户,密码需要md5一下
-                if (user.ID == 0)
-                    user.MM = IMS_UP_YH.GetPwdMD5(user.MM);
+                // 新增用户,密码需要md5一下              
+                user.MM = IMS_UP_YH.GetPwdMD5(user.MM);
 
                 dalUser.SaveOrUpdate(user);
 
@@ -164,20 +165,45 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
             return base.Save(saveFun);
         }
 
+
+        [AllowAnonymous]
         public ActionResult ChangePassword()
         {
-
+            ChangePasswordModule module = new ChangePasswordModule(); 
             if (!User.Identity.IsAuthenticated)
             {
-
+                ViewBag.Login = 0;
+                return View(module);
             }
 
-            //var user =  CurrentUser.GetCurrentUser();
-
-            return View(new IMS_UP_YH());
+            var user =  CurrentUser.GetCurrentUser().UserInfo;
+            module.ID = user.ID;
+            module.UserID = user.YHID;
+            module.UserName = user.YHM;
+            module.OldPasswordMD5 = user.MM;
+            ViewBag.Login = 1;
+            return View(module);
         }
 
 
+        
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(ChangePasswordModule module)
+        {
+            var user = dalUser.GetEntity(module.ID);
+            user.MM = IMS_UP_YH.GetPwdMD5(module.NewPassword);
 
+            Func<ExtResult> saveFun = () =>
+            {              
+                dalUser.SaveOrUpdate(user);
+
+                ExtResult ret = new ExtResult();
+                ret.success = true;
+                return ret;
+            };
+
+            return base.Save(saveFun);
+        }
     }
 }

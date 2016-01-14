@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:center;">
-                            <a id="btnLoginPop" href="###" onclick="$('#frmLoginPop').form('submit')">登录</a>
+                            <a id="btnLoginPop" href="###" onclick="account.LoginPop()">登录</a>
                         </td>
                     </tr>
                 </table>
@@ -56,6 +56,15 @@
 
 
 <script type="text/javascript">
+
+    var account = {
+        LoginPop: function () {
+
+            var btn = document.getElementById('btnLoginPop');
+            JsMiracleCommon.submit(btn, 'frmLoginPop');
+        }
+    };
+
 
     $(function () {
         $("#btnLoginPop").linkbutton({
@@ -91,6 +100,8 @@
 
                     //window.location.href = ret.msg;
                 }
+
+                $("#btnLoginPop").linkbutton('enable');
             }
 
         });

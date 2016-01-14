@@ -27,7 +27,11 @@
 </head>
 <body style="padding-bottom: 0px; background-color: #c8e5f7; margin: 0px;">
     @using (Ajax.BeginForm("LogIn", "Account", new AjaxOptions()
-    , new { returnUrl = ViewBag, enctype = "multipart/form-data", id = "ff"
+    , new
+    {
+        returnUrl = ViewBag,
+        enctype = "multipart/form-data",
+        id = "frmAccountLogIn"
     }))
     {
         @Html.AntiForgeryToken()
@@ -63,7 +67,8 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center;">
-                                <input type="submit" value="登录" class="easyui-linkbutton" style="width:100px;height:30px;" />
+                                <input type="submit" value="登录" class="easyui-linkbutton"
+                                       style="width:100px;height:30px;" />
                             </td>
                         </tr>
                     </table>
@@ -77,22 +82,34 @@
 
 <script type="text/javascript">
 
+    var account = {
+        Login: function () {
+            var pwd = $.md5($("#txtPwd").val());
+            console.log(pwd);
+            $("#frmAccountLogIn").form('submit');
+        }
+    };
+
     $(function () {
-        $('#txtUser').validatebox({
+        $('#txtUser').textbox({
             required: true,
             iconCls: 'icon-man',
             iconAlign: 'left',
             missingMessage: '员工号不得为空'
         });
 
-        $('#txtPwd').validatebox({
+        $('#txtPwd').textbox({
             required: true,
             iconCls: 'icon-lock',
             iconAlign: 'left',
             missingMessage: '密码不得为空'
         });
 
-        $('#ff').form({
+        $("#btnLogin").linkbutton({
+            iconCls: 'icon-lockopen',
+        });
+
+        $('#frmAccountLogIn').form({
 
             success: function (data) {
 

@@ -44,24 +44,24 @@ namespace JsMiracle.WebUI.CommonSupport
 
             if (cache.GetSessionCache(userid) == null)
             {
-                // 管理员的操作
-                if (IsAdmin)
-                {
-                    userid = "admin";
-
-                    CurrentUser cu = new CurrentUser();
-                    cu.UserInfo = new IMS_UP_YH() { YHID = "admin", YHM = "admin" };
-
-                    cu.Permissions = ActionPermission.GetAllPermission();
-                    cache.SetSessionCache(userid, cu);
-                }
-                else
+                // 成功用户的操作
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     CurrentUser cu = new CurrentUser();
                     var user = WindsorContaineFactory.GetContainer().Resolve<IUser>();
                     cu.UserInfo = user.GetEntityByYHBH(HttpContext.Current.User.Identity.Name);
                     var per = WindsorContaineFactory.GetContainer().Resolve<IPermission>();
                     cu.Permissions = per.GetPermissionListByUserID(userid);
+                    cache.SetSessionCache(userid, cu);
+                }
+                else if (IsAdmin)
+                {
+                    // 管理员的操作
+                    userid = "admin";
+                    CurrentUser cu = new CurrentUser();
+                    cu.UserInfo = new IMS_UP_YH() { YHID = "admin", YHM = "admin" };
+
+                    cu.Permissions = ActionPermission.GetAllPermission();
                     cache.SetSessionCache(userid, cu);
                 }
             }

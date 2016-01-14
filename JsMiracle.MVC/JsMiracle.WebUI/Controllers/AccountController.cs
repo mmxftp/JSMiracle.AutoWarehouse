@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using JsMiracle.WCF.UP.IAuthMng;
 using JsMiracle.Framework.FormAuth;
+using JsMiracle.Entities.TabelEntities;
 
 namespace JsMiracle.WebUI.Controllers.UP
 {
@@ -46,7 +47,9 @@ namespace JsMiracle.WebUI.Controllers.UP
         {
             try
             {
-                if (membership.ValidateUser(model.UserID, model.Password))
+                var md5Pwd = IMS_UP_YH.GetPwdMD5(model.Password);
+
+                if (membership.ValidateUser(model.UserID, md5Pwd))
                 {
                     formAuth.SignIn(model.UserID, false);
 
