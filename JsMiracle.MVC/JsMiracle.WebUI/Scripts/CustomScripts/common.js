@@ -90,6 +90,11 @@ var JsMiracleCommon = {
         $('#' + this.layerWindowName).window('open');
     },
 
+    submit:function(btn, frmid){
+        $(btn).linkbutton('disable');
+        $("#"+frmid).form('submit');
+    },
+
     //判断是否为数组
     isArray: function (source) {
         return '[object Array]' == Object.prototype.toString.call(source);

@@ -36,7 +36,7 @@
             <div class="box">
                 <div>
                     <a class="easyui-linkbutton" iconcls="icon-save"
-                       href="###" onclick="javascript: $('#frmOrderForm' + '@ViewBag.BizType').form('submit')">保存</a>
+                       href="###" onclick="JsMiracleCommon.submit(this, 'frmOrderForm' + '@ViewBag.BizType')">保存</a>
                     &nbsp;
                     <a class="easyui-linkbutton" iconcls="icon-cancel"
                        href="###" onclick="javascript: $('#frmOrderForm' + '@ViewBag.BizType').form('reset')">取消</a>

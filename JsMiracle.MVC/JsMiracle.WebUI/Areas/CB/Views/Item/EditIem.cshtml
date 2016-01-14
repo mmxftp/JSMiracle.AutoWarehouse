@@ -86,11 +86,13 @@
         </tr>
         <tr style="text-align:center;display:table-row;">
             <td colspan="2">
-                @*<input id="chkContinue">*@
+                <input id="chkContinue">
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript:$('#frmItem').form('submit')">提交</a>
+                <a id="btnItemEdit" class="easyui-linkbutton" iconcls="icon-save" href="###" 
+                   onclick="JsMiracleCommon.submit(this, 'frmItem')">提交</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmItem')">取消</a>
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" 
+                   onclick="JsMiracleCommon.cancelWidow('frmItem')">取消</a>
             </td>
         </tr>
     </table>
@@ -106,10 +108,11 @@
                 
                 if (ret.success) {
                     $.messager.alert('物料编辑', ret.msg, "info", function () {
-                        console.log($("#chkContinue").switchbutton('options').checked);
+                        //console.log($("#chkContinue").switchbutton('options').checked);
                         if ( $("#chkContinue").switchbutton('options').checked){
                             $('#frmItem').form('reset');
                             $("#chkContinue").switchbutton("check");
+                            $("#btnItemEdit").linkbutton('enable');
                         }
                         else {
                             // 关闭当前div 刷新父窗体
@@ -183,11 +186,11 @@
         $("#txtZXBZDW").numberbox();
         $("#txtZDKCL").numberbox();
 
-        //$("#chkContinue").switchbutton({
-        //    onText:'是',
-        //    offText:'否',
-        //    checked:false,
-        //});
+        $("#chkContinue").switchbutton({
+            onText:'是',
+            offText:'否',
+            checked:false,
+        });
 
         // 此句必须放在最后,需要在easyui 所有控件加载完成后处理
         $("#frmItem").enterAsTab({ 'allowSubmit': true });

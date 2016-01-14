@@ -58,7 +58,8 @@
             @Html.TextAreaFor(n => n.MS, new { @id = "txtMS" })
         </div>
         <div style="text-align:center">
-            <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="javascript:$('#frmLocationType').form('submit')">提交</a>
+            <a class="easyui-linkbutton" iconcls="icon-save" href="###"
+                onclick="JsMiracleCommon.submit(this, 'frmLocationType')">提交</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmLocationType')">取消</a>
         </div>
