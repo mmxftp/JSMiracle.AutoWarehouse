@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
 
     }
 
-    public class WcfConfigOrderForm : WcfClientConfig<IMS_VC_DJT, IWcfOrderForm>, IOrderForm, IWcfOrderForm
+    public class WcfConfigOrderForm : WcfClientConfig<IMS_VC_DJT, IWcfOrderForm>, IOrderForm
     {
         const string ContactName = "IOrderForm";
 

@@ -28,7 +28,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
 
     }
 
-    public class WcfConfigBusinessConstraints : WcfClientConfig<IMS_VC_YWYS, IWcfBusinessConstraints>, IBusinessConstraints, IWcfBusinessConstraints
+    public class WcfConfigBusinessConstraints : WcfClientConfig<IMS_VC_YWYS, IWcfBusinessConstraints>, IBusinessConstraints
     {
         const string ContactName = "IBusinessConstraints";
 

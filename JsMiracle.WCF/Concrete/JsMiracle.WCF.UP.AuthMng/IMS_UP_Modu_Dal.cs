@@ -14,6 +14,9 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 模块信息
+    /// </summary>
     public class IMS_UP_Modu_Dal : WcfDataLayerBase<IMS_UP_MK>, IModule
     {
         protected override bool IsAddEntity(IMS_UP_MK entity)
@@ -161,7 +164,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
     }
 
-    public class IMS_UP_Modu_WCF : WcfService<IMS_UP_MK>, IWcfModule
+    public class IMS_UP_Modu_WCF : WcfDataServiceBase<IMS_UP_MK>, IWcfModule
     {
         IMS_UP_Modu_Dal dal = new IMS_UP_Modu_Dal();
 

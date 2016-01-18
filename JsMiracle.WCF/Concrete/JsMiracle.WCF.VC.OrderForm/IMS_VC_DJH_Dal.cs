@@ -9,6 +9,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.VC.OrderForm
 {
+    /// <summary>
+    /// 单据行
+    /// </summary>
     public class IMS_VC_DJH_Dal : WcfDataLayerBase<IMS_VC_DJH>, IOrderData
     {
         public List<IMS_VC_DJH> GetDataListByDJBH(string djbh)
@@ -19,7 +22,7 @@ namespace JsMiracle.WCF.VC.OrderForm
     }
 
 
-    public class IMS_VC_DJH_WCF : WcfService<IMS_VC_DJH>, IWcfOrderData
+    public class IMS_VC_DJH_WCF : WcfDataServiceBase<IMS_VC_DJH>, IWcfOrderData
     {
         IMS_VC_DJH_Dal dal = new IMS_VC_DJH_Dal();
 
@@ -28,7 +31,7 @@ namespace JsMiracle.WCF.VC.OrderForm
             var res = new WcfResponse();
 
             object[] objs;
-            switch (req.Head.ClassName)
+            switch (req.Head.RequestMethodName)
             {
                 case "GetDataListByDJBH":
                     objs = (object[])req.Body.Parameters;

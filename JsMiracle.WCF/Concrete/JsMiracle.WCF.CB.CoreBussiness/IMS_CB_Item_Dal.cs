@@ -14,6 +14,9 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 物料
+    /// </summary>
     public class IMS_CB_Item_Dal : WcfDataLayerBase<IMS_CB_WL>, IItem
     {
         public IMS_CB_WL GetEntityByWXBH(string wlbh)
@@ -58,11 +61,17 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         }
 
 
-
+        public List<IMS_CB_WL> GetAllList()
+        {
+            var t = this.DbContext.IMS_CB_WL_S.ToList().Select(
+                n => new IMS_CB_WL { ID = n.ID, WLBH = n.WLBH, WLMC = n.WLMC });
+            var data = t.ToList();
+            return data;
+        }
     }
 
 
-    public class IMS_CB_Item_WCF : WcfService<IMS_CB_WL>, IWcfItem
+    public class IMS_CB_Item_WCF : WcfDataServiceBase<IMS_CB_WL>, IWcfItem
     {
         IMS_CB_Item_Dal dal = new IMS_CB_Item_Dal();
 
@@ -78,6 +87,9 @@ namespace JsMiracle.WCF.CB.CoreBussiness
                 case "GetEntityByWXBH":
                     objs = (object[])req.Body.Parameters;
                     res.Body.Data = dal.GetEntityByWXBH((string)objs[0]);
+                    break;
+                case "GetAllList":
+                    res.Body.Data = dal.GetAllList();
                     break;
 
                 default:

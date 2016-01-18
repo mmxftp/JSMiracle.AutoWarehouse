@@ -23,32 +23,20 @@ namespace JsMiracle.WCF.CB.ICoreBussiness
         /// <param name="wlbh">完整的物料编号</param>
         /// <returns></returns>
         IMS_CB_WL GetEntityByWXBH(string wlbh);
+
+
+        /// <summary>
+        /// 得到所有物料信息 只有ID,WLBH,WLMC
+        /// </summary>
+        /// <returns></returns>
+        List<IMS_CB_WL> GetAllList();
     }
 
     [ServiceContract]
     [ServiceKnownType("GetKnownTypes", typeof(CoreKnownTypesProvider))]
     public interface IWcfItem : IWcfService
     {
-
     }
-    //public class WcfClientItem : WcfDalClient<IMS_CB_WL>, IItem
-    //{
-    //    const string ContactName = "IItem";
-
-    //    public WcfClientItem()
-    //        : base(WCFServiceConfiguration.cfgDic[ContactName].GetEndPointAddress())
-    //    { }
-
-
-    //    public IMS_CB_WL GetEntityByWXBH(string wlbh)
-    //    {
-    //        return
-    //                WcfClient<IItem>.UseService<IMS_CB_WL>(
-    //                base.binding, base.remoteAddress,
-    //                n => n.GetEntityByWXBH(wlbh));
-    //    }
-    //}
-
 
     public class WcfConfigItem : WcfClientConfig<IMS_CB_WL, IWcfItem>, IItem
     {
@@ -61,6 +49,11 @@ namespace JsMiracle.WCF.CB.ICoreBussiness
         public IMS_CB_WL GetEntityByWXBH(string wlbh)
         {
             return RequestFunc<object[], IMS_CB_WL>("GetEntityByWXBH", new object[] { wlbh });
+        }
+
+        public List<IMS_CB_WL> GetAllList()
+        {
+            return RequestFunc<object[], List<IMS_CB_WL>>("GetAllList", new object[] { null });
         }
     }
 }

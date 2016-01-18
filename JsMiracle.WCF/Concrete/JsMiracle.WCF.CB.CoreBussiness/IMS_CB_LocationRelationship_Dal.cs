@@ -11,13 +11,16 @@ using System.Text;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 位置关系
+    /// </summary>
     public class IMS_CB_LocationRelationship_Dal:WcfDataLayerBase<IMS_CB_WZGX>,ILocationRelationship
     {
 
     }
 
 
-    public class IMS_CB_LocationRelationship_WCF : WcfService<IMS_CB_WZGX>, IWcfLocationRelationship
+    public class IMS_CB_LocationRelationship_WCF : WcfDataServiceBase<IMS_CB_WZGX>, IWcfLocationRelationship
     {
         IMS_CB_LocationRelationship_Dal dal = new IMS_CB_LocationRelationship_Dal();
 

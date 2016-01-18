@@ -8,6 +8,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.VC.OrderForm
 {
+    /// <summary>
+    /// 单据头
+    /// </summary>
     public class IMS_VC_DJT_Dal : WcfDataLayerBase<IMS_VC_DJT>, JsMiracle.WCF.VC.IOrderForm.IOrderForm
     {
         public override void Delete(object id)
@@ -36,7 +39,7 @@ namespace JsMiracle.WCF.VC.OrderForm
         }
     }
 
-    public class IMS_VC_DJT_WCF : WcfService<IMS_VC_DJT>, IWcfOrderForm
+    public class IMS_VC_DJT_WCF : WcfDataServiceBase<IMS_VC_DJT>, IWcfOrderForm
     {
         IMS_VC_DJT_Dal dal = new IMS_VC_DJT_Dal();
 

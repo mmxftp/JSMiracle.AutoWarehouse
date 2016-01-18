@@ -266,7 +266,7 @@
           <Property Name="MKID" Type="int" Nullable="false" />
           <Property Name="FMKID" Type="int" Nullable="false" />
           <Property Name="PXID" Type="int" Nullable="false" />
-          <Property Name="YY" Type="nvarchar" MaxLength="50" />
+          <Property Name="QY" Type="nvarchar" MaxLength="50" />
           <Property Name="KZMC" Type="nvarchar" MaxLength="255" />
           <Property Name="HDMC" Type="nvarchar" MaxLength="255" />
         </EntityType>
@@ -748,22 +748,6 @@
           <Property Name="JSID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="YHID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityType Name="IMS_UP_MK">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MKMC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CJRQ" Type="DateTime" Precision="3" />
-          <Property Name="MS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MKID" Type="Int32" Nullable="false" />
-          <Property Name="FMKID" Type="Int32" Nullable="false" />
-          <Property Name="PXID" Type="Int32" Nullable="false" />
-          <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="YY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="IMS_UP_MKGN">
           <Key>
             <PropertyRef Name="ID" />
@@ -803,7 +787,6 @@
           <EntitySet Name="IMS_UP_JS_S" EntityType="IIMS_ORGModel.IMS_UP_JS" />
           <EntitySet Name="IMS_UP_JSMK_S" EntityType="IIMS_ORGModel.IMS_UP_JSMK" />
           <EntitySet Name="IMS_UP_JSYH_S" EntityType="IIMS_ORGModel.IMS_UP_JSYH" />
-          <EntitySet Name="IMS_UP_MK_S" EntityType="IIMS_ORGModel.IMS_UP_MK" />
           <EntitySet Name="IMS_UP_MKGN_S" EntityType="IIMS_ORGModel.IMS_UP_MKGN" />
           <EntitySet Name="IMS_UP_YH_S" EntityType="IIMS_ORGModel.IMS_UP_YH" />
           <EntitySet Name="IMS_CM_DXXX_S" EntityType="IIMS_ORGModel.IMS_CM_DXXX" />
@@ -821,6 +804,7 @@
           <EntitySet Name="IMS_WT_YWRW_S" EntityType="IIMS_ORGModel.IMS_WT_YWRW" />
           <EntitySet Name="IMS_WT_ZXLJ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXLJ" />
           <EntitySet Name="IMS_WT_ZXZ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXZ" />
+          <EntitySet Name="IMS_UP_MK_S" EntityType="IIMS_ORGModel.IMS_UP_MK" />
         </EntityContainer>
         <EntityType Name="IMS_CM_DXXX">
           <Key>
@@ -1061,6 +1045,22 @@
           <Property Name="FJZBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="IMS_UP_MK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MKMC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CJRQ" Type="DateTime" Precision="3" />
+          <Property Name="MS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MKID" Type="Int32" Nullable="false" />
+          <Property Name="FMKID" Type="Int32" Nullable="false" />
+          <Property Name="PXID" Type="Int32" Nullable="false" />
+          <Property Name="QY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1289,23 +1289,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="JSID" ColumnName="JSID" />
                 <ScalarProperty Name="YHID" ColumnName="YHID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IMS_UP_MK_S">
-            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MK">
-              <MappingFragment StoreEntitySet="IMS_UP_MK_S">
-                <ScalarProperty Name="YY" ColumnName="YY" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="MKMC" ColumnName="MKMC" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
-                <ScalarProperty Name="MS" ColumnName="MS" />
-                <ScalarProperty Name="MKID" ColumnName="MKID" />
-                <ScalarProperty Name="FMKID" ColumnName="FMKID" />
-                <ScalarProperty Name="PXID" ColumnName="PXID" />
-                <ScalarProperty Name="KZMC" ColumnName="KZMC" />
-                <ScalarProperty Name="HDMC" ColumnName="HDMC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1587,6 +1570,23 @@
                 <ScalarProperty Name="ZXZMC" ColumnName="ZXZMC" />
                 <ScalarProperty Name="ZXZDM" ColumnName="ZXZDM" />
                 <ScalarProperty Name="ZXZLX" ColumnName="ZXZLX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMS_UP_MK_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.IMS_UP_MK">
+              <MappingFragment StoreEntitySet="IMS_UP_MK_S">
+                <ScalarProperty Name="HDMC" ColumnName="HDMC" />
+                <ScalarProperty Name="KZMC" ColumnName="KZMC" />
+                <ScalarProperty Name="QY" ColumnName="QY" />
+                <ScalarProperty Name="PXID" ColumnName="PXID" />
+                <ScalarProperty Name="FMKID" ColumnName="FMKID" />
+                <ScalarProperty Name="MKID" ColumnName="MKID" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="MKMC" ColumnName="MKMC" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -14,6 +14,9 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 角色用户
+    /// </summary>
     public class IMS_UP_RoUr_Dal : WcfDataLayerBase<IMS_UP_JSYH>, IRoleUser
     {
 
@@ -85,7 +88,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_RoleUser_WCF : WcfService<IMS_UP_JSYH>, IWcfRoleUser
+    public class IMS_UP_RoleUser_WCF : WcfDataServiceBase<IMS_UP_JSYH>, IWcfRoleUser
     {
 
         IMS_UP_RoUr_Dal dal = new IMS_UP_RoUr_Dal();

@@ -11,6 +11,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 容器类型
+    /// </summary>
     public class IMS_CB_ContainerType_Dal : WcfDataLayerBase<IMS_CB_RQLX>, IContainerType
     {
 
@@ -35,7 +38,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
     }
 
 
-    public class IMS_CB_ContainerType_WCF : WcfService<IMS_CB_RQLX>, IWcfContainerType
+    public class IMS_CB_ContainerType_WCF : WcfDataServiceBase<IMS_CB_RQLX>, IWcfContainerType
     {
         IMS_CB_ContainerType_Dal dal = new IMS_CB_ContainerType_Dal();
 

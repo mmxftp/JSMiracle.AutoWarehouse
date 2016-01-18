@@ -41,7 +41,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
     }
 
-    public class WcfConfigUser : WcfClientConfig<IMS_UP_YH, IWcfUser>, IUser, IWcfUser
+    public class WcfConfigUser : WcfClientConfig<IMS_UP_YH, IWcfUser>, IUser
     {
         const string ContactName = "IUser";
 

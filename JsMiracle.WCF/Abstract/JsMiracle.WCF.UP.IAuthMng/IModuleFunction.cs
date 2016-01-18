@@ -51,7 +51,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
 
     }
 
-    public class WcfConfigModuleFunction : WcfClientConfig<IMS_UP_MKGN, IWcfModuleFunction>, IModuleFunction, IWcfModuleFunction
+    public class WcfConfigModuleFunction : WcfClientConfig<IMS_UP_MKGN, IWcfModuleFunction>, IModuleFunction
     {
         const string ContactName = "IModuleFunction";
 

@@ -17,6 +17,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CM.CommonMng
 {
+    /// <summary>
+    /// 对象类型
+    /// </summary>
     public class IMS_CM_DXXX_Dal : WcfDataLayerBase<IMS_CM_DXXX>, IObjectDataDictionary
     {
 
@@ -146,7 +149,7 @@ namespace JsMiracle.WCF.CM.CommonMng
     }
 
 
-    public class IMS_CM_DXXX_WCF : WcfService<IMS_CM_DXXX>, IWcfObjectDataDictionary
+    public class IMS_CM_DXXX_WCF : WcfDataServiceBase<IMS_CM_DXXX>, IWcfObjectDataDictionary
     {
         IMS_CM_DXXX_Dal dal = new IMS_CM_DXXX_Dal();
 

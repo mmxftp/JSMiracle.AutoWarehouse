@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigHandlingTasks : WcfClientConfig<IMS_WT_BYRW, IWcfHandlingTasks>, IHandlingTasks, IWcfHandlingTasks
+    public class WcfConfigHandlingTasks : WcfClientConfig<IMS_WT_BYRW, IWcfHandlingTasks>, IHandlingTasks
     {
         const string ContactName = "IHandlingTasks";
 

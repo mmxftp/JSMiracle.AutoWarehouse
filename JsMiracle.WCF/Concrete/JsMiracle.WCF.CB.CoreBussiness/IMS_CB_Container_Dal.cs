@@ -12,6 +12,9 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 容器
+    /// </summary>
     public class IMS_CB_Container_Dal : WcfDataLayerBase<IMS_CB_RQ>, IContainer
     {
         public override List<IMS_CB_RQ> GetDataByPageDynamic(int intPageIndex, int intPageSize, out int rowCount
@@ -84,7 +87,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
 
 
-    public class IMS_CB_Container_WCF : WcfService<IMS_CB_RQ>, IWcfContainer
+    public class IMS_CB_Container_WCF : WcfDataServiceBase<IMS_CB_RQ>, IWcfContainer
     {
         IMS_CB_Container_Dal dal = new IMS_CB_Container_Dal();
 

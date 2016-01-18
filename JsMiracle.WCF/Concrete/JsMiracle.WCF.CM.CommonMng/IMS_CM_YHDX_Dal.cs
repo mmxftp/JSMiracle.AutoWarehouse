@@ -12,13 +12,16 @@ using System.Text;
 
 namespace JsMiracle.WCF.CM.CommonMng
 {
+    /// <summary>
+    /// 用户对象
+    /// </summary>
     public class IMS_CM_YHDX_Dal : WcfDataLayerBase<IMS_CM_YHDX>, IUserObject
     {
     }
 
 
 
-    public class IMS_CM_YHDX_WCF : WcfService<IMS_CM_YHDX>, IWcfUserObject
+    public class IMS_CM_YHDX_WCF : WcfDataServiceBase<IMS_CM_YHDX>, IWcfUserObject
     {
         IMS_CM_YHDX_Dal dal = new IMS_CM_YHDX_Dal();
 

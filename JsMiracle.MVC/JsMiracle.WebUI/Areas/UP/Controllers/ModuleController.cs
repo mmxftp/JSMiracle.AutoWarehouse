@@ -100,15 +100,15 @@ namespace JsMiracle.WebUI.Areas.UP.Controllers
         public ActionResult SaveModule(IMS_UP_MK module)
         {
             Func<ExtResult> saveFun = () =>
-            {           
+            {
 
-                if (string.IsNullOrEmpty(module.YY))
+                if (string.IsNullOrEmpty(module.QY))
                 {
                     module.URL = Url.Action(module.HDMC, module.KZMC);
                 }
                 else
                 {
-                    module.URL = Url.Action(module.HDMC, module.KZMC, new { area = module.YY });
+                    module.URL = Url.Action(module.HDMC, module.KZMC, new { area = module.QY });
                 }
 
                 dalModule.SaveOrUpdate(module);

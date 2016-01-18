@@ -11,6 +11,9 @@ using JsMiracle.Entities.WCF;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 模块功能
+    /// </summary>
     public class IMS_UP_MoFn_Dal : WcfDataLayerBase<IMS_UP_MKGN>, IModuleFunction
     {
 
@@ -80,7 +83,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_MoFn_WCF : WcfService<IMS_UP_MKGN>, IWcfModuleFunction
+    public class IMS_UP_MoFn_WCF : WcfDataServiceBase<IMS_UP_MKGN>, IWcfModuleFunction
     {
         IMS_UP_MoFn_Dal dal = new IMS_UP_MoFn_Dal();
 

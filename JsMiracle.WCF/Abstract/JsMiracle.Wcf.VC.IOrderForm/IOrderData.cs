@@ -33,7 +33,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
 
     }
 
-    public class WcfConfigOrderData : WcfClientConfig<IMS_VC_DJH, IWcfOrderData>, IOrderData, IWcfOrderData
+    public class WcfConfigOrderData : WcfClientConfig<IMS_VC_DJH, IWcfOrderData>, IOrderData
     {
         const string ContactName = "IOrderData";
 

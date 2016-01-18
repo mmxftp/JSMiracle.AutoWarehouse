@@ -13,6 +13,7 @@ using JsMiracle.WebUI.CommonSupport;
 using JsMiracle.Framework.Serialized;
 using JsMiracle.Entities.Enum;
 using JsMiracle.WCF.CM.ICommonMng;
+using JsMiracle.WCF.CB.ICoreBussiness;
 
 namespace JsMiracle.WebUI.Areas.VC.Controllers
 {
@@ -21,12 +22,17 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         IOrderForm dalorderform;
         IOrderData dalorderdata;
         ICode dalCode;
+        IItem dalItem;
 
-        public OrderFormController(IOrderForm repoOrderForm, IOrderData repoOrderData, ICode repoCode)
+        public OrderFormController(IOrderForm repoOrderForm
+            , IOrderData repoOrderData
+            , ICode repoCode
+            , IItem repoItem)
         {
             this.dalorderform = repoOrderForm;
             this.dalorderdata = repoOrderData;
             this.dalCode = repoCode;
+            this.dalItem = repoItem;
         }
 
         //
@@ -78,58 +84,18 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
             return this.JsonFormat(info);
         }
 
-        public ActionResult EditOrderForm(long id)
+        private void GetDJT(EnumBusinessType bizType, ref IMS_VC_DJT module)
         {
-            var order = dalorderform.GetEntity(id);
+
             ViewBag.BizType = "";
-
-            ViewBag.DocumentStatus = new SelectList(
-                GetDocumentStatusList(), "SZ", "MC", order.DJZT);
-
-            if (order != null)
-            {
-                var code = dalCode.GetCode(CodeTypeEnum.BusinessType, order.YWLX);
-                if (code != null)
-                {
-                    ViewBag.BizType = code.MC;
-                    if (code.SZ == (int)EnumBusinessType.InStorage)
-                    {
-                        ViewBag.ReturnUrl = Url.Action("InStorageIndex");
-                        ViewBag.BizType = EnumBusinessType.InStorage;
-                    }
-                    else if (code.SZ == (int)EnumBusinessType.OutputStorage)
-                    {
-                        ViewBag.ReturnUrl = Url.Action("OutputStorageIndex");
-                        ViewBag.BizType = EnumBusinessType.InStorage;
-                    }
-                }
-                else
-                    ViewBag.BizType = order.YWLX;
-
-
-                ViewBag.DJStatus = GetStatus(order.DJZT);
-            }
-
-            return View(order);
-        }
-
-        private IList<IMS_CM_DM> GetDocumentStatusList()
-        {
-            var data = dalCode.GetCodeList(CodeTypeEnum.VH_STS);
-            data.Insert(0, new IMS_CM_DM() { SZ = -1, MC = "--请选择--" });
-            return data;
-        }
-
-
-        public ActionResult CreateOrderForm(EnumBusinessType bizType)
-        {
-            var module = new IMS_VC_DJT();
 
             if (bizType == EnumBusinessType.InStorage)
             {
                 module.YWLX = (int)EnumBusinessType.InStorage;
                 ViewBag.ReturnUrl = Url.Action("InStorageIndex");
                 ViewBag.BizType = EnumBusinessType.InStorage;
+
+                //GetBizTypeList();
             }
             else if (bizType == EnumBusinessType.OutputStorage)
             {
@@ -143,18 +109,91 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
             ViewBag.DocumentStatus = new SelectList(
               GetDocumentStatusList(), "SZ", "MC", -1);
 
-            return View("EditOrderForm", module);
+            ViewBag.DJStatus = GetStatus(module.DJZT);
         }
 
 
+        public ActionResult CreateOrderForm(EnumBusinessType bizType)
+        {
+            var module = new IMS_VC_DJT();
+            module.DJZT = 0;
+            GetDJT(bizType, ref module);
+
+            module.CJSJ = System.DateTime.Now;
+
+            return View("EditOrderForm", module);
+        }
+
+        [AuthViewPage]
+        public ActionResult EditOrderForm(long id)
+        {
+            var order = dalorderform.GetEntity(id);
+
+            ViewBag.BizType = "";
+
+            ViewBag.DocumentStatus = new SelectList(
+                GetDocumentStatusList(), "SZ", "MC", order.DJZT);
+
+            if (order == null)
+                throw new JsMiracleException("单据不存在");
+
+            var code = dalCode.GetCode(CodeTypeEnum.BusinessType, order.YWLX);
+            if (code == null)
+                throw new JsMiracleException("业务类型不存在");
+
+            var bizType = FunctionHelp.GetEnum<EnumBusinessType>(code.SZ);
+            GetDJT(bizType, ref order);
+
+            return View(order);
+        }
+
+        /// <summary>
+        /// 单据状态
+        /// </summary>
+        /// <returns></returns>
+        private IList<IMS_CM_DM> GetDocumentStatusList()
+        {
+            var data = dalCode.GetCodeList(CodeTypeEnum.VH_STS);
+            data.Insert(0, new IMS_CM_DM() { SZ = -1, MC = "--请选择--" });
+            return data;
+        }
+
+        ///// <summary>
+        ///// 业务类型
+        ///// </summary>
+        ///// <returns></returns>
+        //private IList<IMS_CM_DM> GetBizTypeList(string startNumber)
+        //{
+        //    var data = dalCode.GetCodeList(CodeTypeEnum.BusinessType);
+        //    data.Insert(0, new IMS_CM_DM() { SZ = -1, MC = "--请选择--" });
+        //    return data;
+        //}
+
+
+        private IList<IMS_CB_WL> GetItemList()
+        {
+            var data = dalItem.GetAllList();
+            data.Insert(0, new IMS_CB_WL() { ID = -1, WLBH = "--请选择--" });
+            return data;
+        }
+
+        [AuthViewPage]
         public ActionResult EditOrderData(long id)
         {
+            ViewBag.Items = new SelectList(
+                GetItemList(), "ID", "WLBH", -1);
+
             var ent = dalorderdata.GetEntity(id);
             return View(ent);
         }
 
+
+        [AuthViewPage]
         public ActionResult CreateOrderData(string djbh)
         {
+            ViewBag.Items = new SelectList(
+                GetItemList(), "ID", "WLBH", -1);
+
             return View("EditOrderData", new IMS_VC_DJH() { DJBH = djbh });
         }
 
@@ -244,6 +283,7 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
             return MvcHtmlString.Create("");
         }
+
 
     }
 }

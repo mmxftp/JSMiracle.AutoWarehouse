@@ -37,7 +37,6 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_UP_JS> IMS_UP_JS_S { get; set; }
         public virtual DbSet<IMS_UP_JSMK> IMS_UP_JSMK_S { get; set; }
         public virtual DbSet<IMS_UP_JSYH> IMS_UP_JSYH_S { get; set; }
-        public virtual DbSet<IMS_UP_MK> IMS_UP_MK_S { get; set; }
         public virtual DbSet<IMS_UP_MKGN> IMS_UP_MKGN_S { get; set; }
         public virtual DbSet<IMS_UP_YH> IMS_UP_YH_S { get; set; }
         public virtual DbSet<IMS_CM_DXXX> IMS_CM_DXXX_S { get; set; }
@@ -55,5 +54,6 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_WT_YWRW> IMS_WT_YWRW_S { get; set; }
         public virtual DbSet<IMS_WT_ZXLJ> IMS_WT_ZXLJ_S { get; set; }
         public virtual DbSet<IMS_WT_ZXZ> IMS_WT_ZXZ_S { get; set; }
+        public virtual DbSet<IMS_UP_MK> IMS_UP_MK_S { get; set; }
     }
 }

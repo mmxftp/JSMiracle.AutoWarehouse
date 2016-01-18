@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigBusinessTasks : WcfClientConfig<IMS_WT_YWRW, IWcfBusinessTasks>, IBusinessTasks, IWcfBusinessTasks
+    public class WcfConfigBusinessTasks : WcfClientConfig<IMS_WT_YWRW, IWcfBusinessTasks>, IBusinessTasks
     {
         const string ContactName = "IBusinessTasks";
 

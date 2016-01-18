@@ -31,7 +31,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigOperationalTasks : WcfClientConfig<IMS_WT_CWRW, IWcfOperationalTasks>, IOperationalTasks, IWcfOperationalTasks
+    public class WcfConfigOperationalTasks : WcfClientConfig<IMS_WT_CWRW, IWcfOperationalTasks>, IOperationalTasks
     {
         const string ContactName = "IOperationalTasks";
 

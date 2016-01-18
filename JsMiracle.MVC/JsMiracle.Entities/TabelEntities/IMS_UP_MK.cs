@@ -22,8 +22,8 @@ namespace JsMiracle.Entities.TabelEntities
         public int MKID { get; set; }
         public int FMKID { get; set; }
         public int PXID { get; set; }
+        public string QY { get; set; }
         public string KZMC { get; set; }
         public string HDMC { get; set; }
-        public string YY { get; set; }
     }
 }

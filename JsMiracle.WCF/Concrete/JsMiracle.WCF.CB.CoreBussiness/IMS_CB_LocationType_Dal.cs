@@ -12,6 +12,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 位置类型
+    /// </summary>
     public class IMS_CB_LocationType_Dal : WcfDataLayerBase<IMS_CB_WZLX>, ILocationType
     {
 
@@ -38,7 +41,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
     }
 
 
-    public class IMS_CB_LocationType_WCF : WcfService<IMS_CB_WZLX>, IWcfLocationType
+    public class IMS_CB_LocationType_WCF : WcfDataServiceBase<IMS_CB_WZLX>, IWcfLocationType
     {
         IMS_CB_LocationType_Dal dal = new IMS_CB_LocationType_Dal();
 

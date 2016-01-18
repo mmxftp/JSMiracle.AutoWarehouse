@@ -15,6 +15,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CM.CommonMng
 {
+    /// <summary>
+    /// 代码
+    /// </summary>
     public class IMS_CM_Code_Dal : WcfDataLayerBase<IMS_CM_DM>, ICode
     {
         protected override bool IsAddEntity(IMS_CM_DM entity)
@@ -66,7 +69,7 @@ namespace JsMiracle.WCF.CM.CommonMng
         }
     }
 
-    public class IMS_CM_Code_WCF : WcfService<IMS_CM_DM>, IWcfCode
+    public class IMS_CM_Code_WCF : WcfDataServiceBase<IMS_CM_DM>, IWcfCode
     {
         IMS_CM_Code_Dal dal = new IMS_CM_Code_Dal();
 

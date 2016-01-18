@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 角色
+    /// </summary>
     public class IMS_UP_Role_Dal : WcfDataLayerBase<IMS_UP_JS>, IRole
     {
 
@@ -60,7 +63,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_Role_WCF : WcfService<IMS_UP_JS>, IWcfRole
+    public class IMS_UP_Role_WCF : WcfDataServiceBase<IMS_UP_JS>, IWcfRole
     {
         IMS_UP_Role_Dal dal = new IMS_UP_Role_Dal();
 

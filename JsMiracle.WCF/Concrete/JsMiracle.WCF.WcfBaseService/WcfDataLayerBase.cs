@@ -10,7 +10,10 @@ using JsMiracle.Framework;
 
 namespace JsMiracle.WCF.WcfBaseService
 {
-
+    /// <summary>
+    /// 处理数据的基类
+    /// </summary>
+    /// <typeparam name="T">entity framework的实例</typeparam>
     public abstract class WcfDataLayerBase<T> : IDataLayer<T> where T : class ,new()
     {
         private ORGModels _dbContext;

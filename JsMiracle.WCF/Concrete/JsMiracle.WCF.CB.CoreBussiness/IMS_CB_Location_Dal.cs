@@ -15,6 +15,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CB.CoreBussiness
 {
+    /// <summary>
+    /// 库存
+    /// </summary>
     public class IMS_CB_Location_Dal : WcfDataLayerBase<IMS_CB_WZ>, ILocation
     {
         static IMS_CB_Location_Dal()
@@ -164,7 +167,7 @@ namespace JsMiracle.WCF.CB.CoreBussiness
 
 
 
-    public class IMS_CB_Location_WCF : WcfService<IMS_CB_WZ>, IWcfLocation
+    public class IMS_CB_Location_WCF : WcfDataServiceBase<IMS_CB_WZ>, IWcfLocation
     {
         IMS_CB_Location_Dal dal = new IMS_CB_Location_Dal();
 

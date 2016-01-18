@@ -69,7 +69,7 @@
 
         $("#tabChildModule").datagrid({
             //url: '@Url.Action("GetChildModuleList")',
-            title: '子模块信息',
+            //title: '子模块信息',
             singleSelect: true,
             loadMsg: '数据载入中...',
             pagination: true, // 是否显示分页控件
@@ -78,8 +78,11 @@
             height: '650px',
             rownumbers: true,
             toolbar: "#moduleToolbar",
-            columns: [[
-                {
+
+            columns: [[{
+                title: '子模块信息', colspan: 9
+                }],
+                [{
                     field: '_operate', title: '操作', width: 150, align: 'center'
                     , formatter: function (value, row, index) {
                         //var editActionUrl = '\'' + '@Url.Action("EditModule")' + '?id=' + row.ID + '\'';
@@ -99,8 +102,9 @@
                 //{ field: 'ID', title: 'ID', width: 100, align: 'center' },
                 { field: 'MKID', title: '子模块号', width: 100, align: 'center' },
                 { field: 'MKMC', title: '子模块名称', width: 100, align: 'center' },
-                { field: 'URL', title: '访问地址', width: 250, align: 'center' },
+                { field: 'URL', title: '访问地址', width: 300, align: 'center' },
                 { field: 'PXID', title: '排序号', width: 100, align: 'center' },
+                { field: 'QY', title: 'Area', width: 100, align: 'center' },
                 { field: 'KZMC', title: 'Controller', width: 100, align: 'center' },
                 { field: 'HDMC', title: 'Action', width: 100, align: 'center' },
                 {

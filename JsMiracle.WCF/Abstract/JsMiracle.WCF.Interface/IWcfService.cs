@@ -8,8 +8,6 @@ using System.Text;
 namespace JsMiracle.WCF.Interface
 {
     [ServiceContract]
-    //[ServiceKnownType("GetKnownTypes", typeof(KnownTypesProvider))]
-
     public interface IWcfService 
     {
         [OperationContract]

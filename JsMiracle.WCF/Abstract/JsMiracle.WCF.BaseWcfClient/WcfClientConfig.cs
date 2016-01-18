@@ -28,66 +28,7 @@ namespace JsMiracle.WCF.BaseWcfClient
             return base.Channel.Request(req);
         }
 
-        /// <summary>
-        /// 执行wcf方法并返回数据
-        /// </summary>
-        /// <typeparam name="P">参数类型</typeparam>
-        /// <typeparam name="Return">返回类型</typeparam>
-        /// <param name="methodName">方法名</param>
-        /// <param name="parameters">参数</param>
-        /// <param name="serType"></param>
-        /// <returns></returns>
-        protected virtual Return RequestFunc<P, Return>(string methodName, P parameters)
-        {
-#if DEBUG
-            //try
-            //{
-#endif
-                WcfRequest req = new WcfRequest();
-                req.Head.RequestMethodName = methodName;
-                req.Head.ClassName = this.GetType().Name;
-                if (parameters != null)
-                    req.Body.Parameters = parameters;
-
-                var res = base.Channel.Request(req);
-                if (res.Head.IsSuccess)
-                    return (Return)res.Body.Data;
-
-                // 返回不是真 抛出异常
-                throw new JsMiracleException(res.Head.Message);
-#if DEBUG
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    return default(Return);
-            //}
-#endif
-        }
-
-
-
-        /// <summary>
-        /// 执行wcf方法没有返回数据
-        /// </summary>
-        /// <typeparam name="P">参数类型</typeparam>
-        /// <param name="methodName">方法名</param>
-        /// <param name="parameters">参数</param>
-        /// <returns></returns>
-        protected virtual void RequestAction<P>(string methodName, P parameters)
-        {
-            WcfRequest req = new WcfRequest();
-            req.Head.RequestMethodName = methodName;
-            req.Body.Parameters = parameters;
-
-            var res = base.Channel.Request(req);
-            if (res.Head.IsSuccess)
-                return;
-
-            // 返回不是真 抛出异常
-            throw new JsMiracleException(res.Head.Message);
-        }
-
+      
 
         public Entity GetEntity(object id)
         {

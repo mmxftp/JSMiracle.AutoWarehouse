@@ -87,7 +87,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
     }
 
     public class WcfConfigMembershipService
-        : WcfClientConfig<IMS_UP_YH, IWcfMembershipService>, IMembershipService, IWcfMembershipService
+        : WcfClientConfig<IMS_UP_YH, IWcfMembershipService>, IMembershipService
     {
         const string ContactName = "IMembershipService";
 

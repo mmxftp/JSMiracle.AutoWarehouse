@@ -95,10 +95,10 @@ namespace JsMiracle.WebUI.Controllers.UP
                 if (m.FMKID == -1)
                     continue;
 
-                if (string.IsNullOrEmpty(m.YY))
+                if (string.IsNullOrEmpty(m.QY))
                     m.URL = Url.Action(m.HDMC, m.KZMC);
                 else
-                    m.URL = Url.Action(m.HDMC, m.KZMC, new { area = m.YY });
+                    m.URL = Url.Action(m.HDMC, m.KZMC, new { area = m.QY });
             }
 
             return PartialView(menuList);

@@ -129,7 +129,7 @@ namespace JsMiracle.WCF.UP.IAuthMng
     }
 
 
-    public class WcfConfigPermission : WcfClientConfig<IMS_UP_JSMK, IWcfPermission>, IPermission, IWcfPermission
+    public class WcfConfigPermission : WcfClientConfig<IMS_UP_JSMK, IWcfPermission>, IPermission
     {
         const string ContactName = "IPermission";
 

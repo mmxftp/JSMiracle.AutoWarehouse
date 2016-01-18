@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigSystemNode : WcfClientConfig<IMS_WT_XTJD, IWcfSystemNode>, ISystemNode, IWcfSystemNode
+    public class WcfConfigSystemNode : WcfClientConfig<IMS_WT_XTJD, IWcfSystemNode>, ISystemNode
     {
         const string ContactName = "ISystemNode";
 

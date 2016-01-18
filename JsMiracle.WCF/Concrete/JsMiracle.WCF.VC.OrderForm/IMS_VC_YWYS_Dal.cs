@@ -8,6 +8,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.VC.OrderForm
 {   
+    /// <summary>
+    /// 业务约束
+    /// </summary>
     public class IMS_VC_YWYS_Dal : WcfDataLayerBase<IMS_VC_YWYS>, IBusinessConstraints
     {
 
@@ -16,7 +19,7 @@ namespace JsMiracle.WCF.VC.OrderForm
 
 
 
-    public class IMS_VC_YWYS_WCF : WcfService<IMS_VC_YWYS>, IWcfBusinessConstraints
+    public class IMS_VC_YWYS_WCF : WcfDataServiceBase<IMS_VC_YWYS>, IWcfBusinessConstraints
     {
         IMS_VC_YWYS_Dal dal = new IMS_VC_YWYS_Dal();
 

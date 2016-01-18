@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7484E0CF-C2D8-4D19-B42B-468A22164CFB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JsMiracle.WCF.BusinessOperations</RootNamespace>
+    <AssemblyName>JsMiracle.WCF.BusinessOperations</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IMS_LocationAssigner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\JsMiracle.Infrastructure\JsMiracle.Framework\JsMiracle.Framework.csproj">
+      <Project>{64474a41-6745-4ddb-801e-9f745aa20742}</Project>
+      <Name>JsMiracle.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\JsMiracle.MVC\JsMiracle.Entities\JsMiracle.Entities.csproj">
+      <Project>{aa0525a6-1245-4d83-a127-535c7f29d5b4}</Project>
+      <Name>JsMiracle.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.CB.ICoreBussiness\JsMiracle.WCF.CB.ICoreBussiness.csproj">
+      <Project>{69e262e1-c0c9-45d3-83c4-2663d9483710}</Project>
+      <Name>JsMiracle.WCF.CB.ICoreBussiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.IBusinessOperations\JsMiracle.WCF.IBusinessOperations.csproj">
+      <Project>{bb5a1c0c-e127-494a-abf4-080728b68eb9}</Project>
+      <Name>JsMiracle.WCF.IBusinessOperations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.Interface\JsMiracle.WCF.Interface.csproj">
+      <Project>{e692d0ee-cd35-4a1a-924e-146a19e4737c}</Project>
+      <Name>JsMiracle.WCF.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.Wcf.VC.IOrderForm\JsMiracle.WCF.VC.IOrderForm.csproj">
+      <Project>{c8d62465-110b-4976-b720-59f47a13baaf}</Project>
+      <Name>JsMiracle.WCF.VC.IOrderForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Abstract\JsMiracle.WCF.WT.IWorkTasks\JsMiracle.WCF.WT.IWorkTasks.csproj">
+      <Project>{1033f3e7-b673-4405-88af-13a8bcfb93d4}</Project>
+      <Name>JsMiracle.WCF.WT.IWorkTasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.CB.CoreBussiness\JsMiracle.WCF.CB.CoreBussiness.csproj">
+      <Project>{bf4d39dc-6b5b-48dc-bb5b-42fb5c570ed8}</Project>
+      <Name>JsMiracle.WCF.CB.CoreBussiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.VC.OrderForm\JsMiracle.WCF.VC.OrderForm.csproj">
+      <Project>{c61ab5dc-fa6f-4ed9-acd3-97763d775513}</Project>
+      <Name>JsMiracle.WCF.VC.OrderForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.WcfBaseService\JsMiracle.WCF.WcfBaseService.csproj">
+      <Project>{b6242f08-7ee1-4d6e-88a9-75c425c8fd00}</Project>
+      <Name>JsMiracle.WCF.WcfBaseService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsMiracle.WCF.WT.WorkTasks\JsMiracle.WCF.WT.WorkTasks.csproj">
+      <Project>{853bf6df-8a72-4056-90f2-277193609f1a}</Project>
+      <Name>JsMiracle.WCF.WT.WorkTasks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetFileName) D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

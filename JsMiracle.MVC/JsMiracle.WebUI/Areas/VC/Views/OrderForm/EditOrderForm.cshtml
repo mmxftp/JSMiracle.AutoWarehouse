@@ -3,14 +3,13 @@
 }
 
 <style type="text/css">
-    .formTable{
-        padding-left:20px;
+    .formTable {
+        padding-left: 20px;
     }
 
-    .formTable td{
-        width:30px;
-    }
-
+        .formTable .lab {
+            width: 50px;
+        }
 </style>
 
 @using JsMiracle.WebUI.CommonSupport
@@ -47,45 +46,50 @@
                     @if (Model.ID != 0)
                     {
                         <a href="###" class="easyui-linkbutton" iconcls="icon-add"
-                           onclick="window['editOrderForm' + '@ViewBag.BizType' ].edit(false)">新增订单数据</a>
+                           onclick="window['editOrderForm' + '@ViewBag.BizType' ].edit('add')">新增订单数据</a>
                     }
                 </div>
             </div>
-            <table class="formTable" style="width:98%;" cellspacing="0" cellpadding="5" >
+            <table class="formTable" style="width:98%;" cellspacing="0" cellpadding="5">
                 <tr>
-                    <td>单据编号</td>
+                    <td class="lab">单据编号</td>
                     <td>
                         @Html.TextBoxFor(n => n.DJBH, new { @id = "txtDJBH" + ViewBag.BizType })
                     </td>
-                    <td>单据状态</td>
+                    <td class="lab">单据状态</td>
                     <td>
                         @Html.TextBoxFor(n => n.DJZT, new { @id = "txtDJZT" + ViewBag.BizType, @Value = @ViewBag.DJStatus })
                     </td>
-                    <td>来源</td>
+                    <td class="lab">来源</td>
                     <td>@Html.TextBoxFor(n => n.DJLY, new { @id = "txtDJLY" + ViewBag.BizType })</td>
-                    <td>已上报</td>
+                    <td class="lab">已上报</td>
                     <td>@Html.TextBoxFor(n => n.SFGX, new { @id = "txtSFGX" + ViewBag.BizType })</td>
                 </tr>
                 <tr>
-                    <td>创建人</td>
+                    <td class="lab">创建人</td>
                     <td>@Html.TextBoxFor(n => n.CJR, new { @id = "txtCJR" + ViewBag.BizType, @Value = CurrentUser.GetCurrentUser().UserInfo.YHID })</td>
-                    <td>创建日期</td>
+                    <td class="lab">创建日期</td>
                     <td>@Html.TextBoxFor(n => n.CJSJ, new { @id = "txtCJSJ" + ViewBag.BizType })</td>
-                    <td>完成人</td>
+                    <td class="lab">完成人</td>
                     <td>@Html.TextBoxFor(n => n.WCR, new { @id = "txtWCR" + ViewBag.BizType })</td>
-                    <td>完成时间</td>
+                    <td class="lab">完成时间</td>
                     <td>@Html.TextBoxFor(n => n.WCSJ, new { @id = "txtWCSJ" + ViewBag.BizType })</td>
                 </tr>
                 <tr>
-                    <td>关联单据</td>
+                    <td class="lab">关联单据</td>
                     <td>@Html.TextBoxFor(n => n.GLDJ, new { @id = "txtGLDJ" + ViewBag.BizType })</td>
-                    <td>备注</td>
-                    <td>@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" + ViewBag.BizType })</td>
-                    <td>描述</td>
-                    <td>@Html.TextBoxFor(n => n.MS, new { @id = "txtMS" + ViewBag.BizType })</td>
+
+                </tr>
+                <tr>
+                    <td class="lab">备注</td>
+                    <td colspan="7">@Html.TextBoxFor(n => n.BZ, new { @id = "txtBZ" + ViewBag.BizType })</td>
+                </tr>
+                <tr>
+                    <td class="lab">描述</td>
+                    <td colspan="7">@Html.TextBoxFor(n => n.MS, new { @id = "txtMS" + ViewBag.BizType })</td>
                 </tr>
             </table>
-    </div>
+        </div>
     }
     <table id="orderDataGrid" style="padding:10px"></table>
 </div>
@@ -120,22 +124,30 @@
         $("#orderDataGrid" + '@ViewBag.BizType').datagrid({
             url: '@Url.Action("GetOrderData")' + '?djbh=' + '@Model.DJBH',
             singleSelect: true,
-            height: '650px',
+            height: '680px',
             rownumbers: true,
             toolbar: '#orderFormTools' + '@ViewBag.BizType',
             frozenColumns: [[
                 {
-                    field: '_operate', title: '操作', width: 150, align: 'center'
+                    field: '_operate', title: '操作', width: 350, align: 'center'
                           , formatter: function (value, row, index) {
-                              var editFunStr = 'editOrderForm.edit(true, ' + row.ID + ');';
+                              var editFunStr = 'window[\'editOrderForm' + '@ViewBag.BizType\''
+                                  + '].edit(\'mod\', ' + row.ID + ');';
                               var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
                                   + row.HH + '\',\'@Url.Action("RemoveOrderData")\',orderformOp.refreshGrd)';
 
                               var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
                                         + ' onclick="' + removeFunStr + '" >删除</a>'
-                                        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                                        + '&nbsp;&nbsp;'
                                         + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                        + ' onclick="' + editFunStr + '">修改</a>';
+                                        + ' onclick="' + editFunStr + '">修改</a>'
+                                        + '&nbsp;&nbsp;'
+                                        + '<a href="###" class="loan_release_button" '
+                                        + ' onclick="' + '">组盘</a>'
+                                        + '&nbsp;&nbsp;'
+                                        + '<a href="###" class="loan_detail_button" '
+                                        + ' onclick="' + '">显示明细</a>';
+
                               return html;
                           }
                 }
@@ -153,13 +165,18 @@
                 { field: 'MDD', title: '目的地', width: 100, align: 'center' },
                 { field: 'ZT', title: '状态', width: 100, align: 'center' },
                 { field: 'CJR', title: '创建人', width: 100, align: 'center' },
-                { field: 'CJSJ', title: '创建时间', width: 100, align: 'center' },
+                {
+                    field: 'CJSJ', title: '创建时间', width: 200, align: 'center'
+                    , formatter: JsMiracleCommon.dateTimeFormatter
+                },
                 { field: 'BZ', title: '备注', width: 100, align: 'center' },
                 { field: 'XSDDH', title: '销售订单号', width: 100, align: 'center' },
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+                $(".loan_release_button").linkbutton({ iconCls: 'icon-edit' });
+                $(".loan_detail_button").linkbutton({ iconCls: 'icon-edit' });
             },
             onLoadError: function (XMLHttpRequest) {
                 JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
@@ -184,7 +201,7 @@
 
         $("#txtSFGX" + '@ViewBag.BizType').switchbutton({
             onText: '是',
-            offText:'否'
+            offText: '否'
         });
 
         @*$("#txtSWDJLX" + '@ViewBag.BizType').textbox({
@@ -213,7 +230,8 @@
             disabled: true,
         });
 
-        $("#txtBZ" + '@ViewBag.BizType').textbox();
+        $("#txtBZ" + '@ViewBag.BizType').textbox({ width: '90%' });
+        $("#txtMS" + '@ViewBag.BizType').textbox({ width: '90%' });
         $("#txtGLDJ" + '@ViewBag.BizType').textbox();
 
         window['editOrderForm' + '@ViewBag.BizType'] = {
@@ -222,10 +240,18 @@
                 var width = '600px';
                 var height = '400px';
 
-                var title = '订单内容新增';
-                var url = '@Url.Action("CreateOrderData", new { djbh = Model.DJBH })';
+                var title = '';
+                var url = '';
 
-                if (op) {
+                if (op == 'add') {
+                    url = '@Url.Action("CreateOrderData", new { djbh = Model.DJBH })';
+                    title = '订单内容新增';
+                }
+                else if (op == 'mod') {
+                    url = '@Url.Action("EditOrderData")' + '?id=' + id;
+                    title = '订单内容编辑';
+                }
+                else if (op == '') {
                     url = '@Url.Action("EditOrderData")' + '?id=' + id;
                     title = '订单内容编辑';
                 }

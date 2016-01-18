@@ -43,6 +43,7 @@
     <Compile Include="CoreKnownTypesProvider.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="IContainerType.cs" />
+    <Compile Include="IInventory.cs" />
     <Compile Include="IItem.cs" />
     <Compile Include="ILocation.cs" />
     <Compile Include="ILocationRelationship.cs" />

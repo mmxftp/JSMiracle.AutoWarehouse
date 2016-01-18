@@ -14,6 +14,9 @@ using System.ServiceModel;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     public class IMS_UP_User_Dal : WcfDataLayerBase<IMS_UP_YH>, IUser, IMembershipService
     {
         public override IMS_UP_YH SaveOrUpdate(IMS_UP_YH entity)
@@ -165,7 +168,7 @@ namespace JsMiracle.WCF.UP.AuthMng
 
     }
 
-    public class IMS_UP_User_WCF : WcfService<IMS_UP_YH>, IWcfUser, IWcfMembershipService
+    public class IMS_UP_User_WCF : WcfDataServiceBase<IMS_UP_YH>, IWcfUser, IWcfMembershipService
     {
         IMS_UP_User_Dal dal = new IMS_UP_User_Dal();
 

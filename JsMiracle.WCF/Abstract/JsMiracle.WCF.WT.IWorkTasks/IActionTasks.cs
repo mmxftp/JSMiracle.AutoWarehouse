@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigActionTasks : WcfClientConfig<IMS_WT_DZRW, IWcfActionTasks>, IActionTasks, IWcfActionTasks
+    public class WcfConfigActionTasks : WcfClientConfig<IMS_WT_DZRW, IWcfActionTasks>, IActionTasks
     {
         const string ContactName = "IActionTask";
 

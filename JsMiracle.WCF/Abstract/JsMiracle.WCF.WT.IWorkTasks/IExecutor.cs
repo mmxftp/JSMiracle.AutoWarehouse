@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigExecutor : WcfClientConfig<IMS_WT_ZXZ, IWcfExecutor>, IExecutor, IWcfExecutor
+    public class WcfConfigExecutor : WcfClientConfig<IMS_WT_ZXZ, IWcfExecutor>, IExecutor
     {
         const string ContactName = "IExecutor";
 

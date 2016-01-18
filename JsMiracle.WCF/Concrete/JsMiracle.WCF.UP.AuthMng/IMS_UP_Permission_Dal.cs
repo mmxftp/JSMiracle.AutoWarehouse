@@ -18,6 +18,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.UP.AuthMng
 {
+    /// <summary>
+    /// 授权
+    /// </summary>
     public class IMS_UP_Permission_Dal : WcfDataLayerBase<IMS_UP_JSMK>, IPermission
     {
         public List<TreeModel> GetPermissionInfo(string roleid)
@@ -349,7 +352,7 @@ namespace JsMiracle.WCF.UP.AuthMng
         }
     }
 
-    public class IMS_UP_Permission_WCF : WcfService<IMS_UP_JSMK>, IWcfPermission
+    public class IMS_UP_Permission_WCF : WcfDataServiceBase<IMS_UP_JSMK>, IWcfPermission
     {
         IMS_UP_Permission_Dal dal = new IMS_UP_Permission_Dal();
 

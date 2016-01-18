@@ -18,7 +18,7 @@ namespace JsMiracle.WCF.WT.WorkTasks
     }
 
 
-    public class IMS_WT_XTJD_WCF : WcfService<IMS_WT_XTJD>, IWcfSystemNode
+    public class IMS_WT_XTJD_WCF : WcfDataServiceBase<IMS_WT_XTJD>, IWcfSystemNode
     {
         IMS_WT_XTJD_Dal dal = new IMS_WT_XTJD_Dal();
         protected override Entities.WCF.WcfResponse RequestFun(Entities.WCF.WcfRequest req)

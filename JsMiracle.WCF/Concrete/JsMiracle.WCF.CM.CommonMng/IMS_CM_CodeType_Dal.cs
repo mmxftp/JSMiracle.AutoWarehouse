@@ -13,6 +13,9 @@ using System.Text;
 
 namespace JsMiracle.WCF.CM.CommonMng
 {
+    /// <summary>
+    /// 代码类型
+    /// </summary>
     public class IMS_CM_CodeType_Dal : WcfDataLayerBase<IMS_CM_DMLX>, ICodeType
     {
 
@@ -40,7 +43,7 @@ namespace JsMiracle.WCF.CM.CommonMng
     }
 
 
-    public class IMS_CM_CodeType_WCF : WcfService<IMS_CM_DMLX>, IWcfCodeType
+    public class IMS_CM_CodeType_WCF : WcfDataServiceBase<IMS_CM_DMLX>, IWcfCodeType
     {
         IMS_CM_CodeType_Dal dal = new IMS_CM_CodeType_Dal();
 

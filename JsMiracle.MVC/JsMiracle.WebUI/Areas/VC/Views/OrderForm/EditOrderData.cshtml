@@ -45,7 +45,10 @@
         <tr>
             <td>品规ID</td>
             <td>
-                @Html.TextBoxFor(n => n.SKU, new { @id = "txtSKU" })
+                @*@Html.TextBoxFor(n => n.SKU, new { @id = "txtSKU" })*@
+
+                @Html.DropDownListFor(n => n.SKU, ViewBag.Items as IEnumerable<SelectListItem>
+                     , new { id = "ddlSKU", style = "width:150px;" })
             </td>
             <td>批次编号</td>
             <td>
@@ -126,6 +129,30 @@
             required: true,
             missingMessage: '品规ID不得为空'
         });
+
+        $("#ddlSKU").combobox({
+            //url: '@Url.Action("GetItems")',
+            valueField: 'ID',
+            textField: 'WLBH',
+            required: true,
+            validType: 'valueNotEqual["--请选择--"]',
+            missingMessage: '请从下拉框中选择物料',
+            filter: function (q, row) {
+                var opts = $(this).combobox("options");
+                return row[opts.textField].indexOf(q) > -1;    //将从头位置匹配改为任意匹配 
+            }
+        });
+
+       // $("#ddlWLLX").combobox(
+       //{
+       //    valueField: 'SZ',
+       //    textField: 'MC',
+       //    editable: false,
+       //    required: true,
+       //    validType: 'valueNotEqual["--请选择--"]',
+       //    missingMessage: '请从下拉框中选择物料类型'
+       //});
+
 
         $("#txtPCBH").textbox({
             required: true,

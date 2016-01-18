@@ -26,7 +26,7 @@ namespace JsMiracle.WCF.WT.IWorkTasks
 
     }
 
-    public class WcfConfigExecutionPath : WcfClientConfig<IMS_WT_ZXLJ, IWcfExecutionPath>, IExecutionPath, IWcfExecutionPath
+    public class WcfConfigExecutionPath : WcfClientConfig<IMS_WT_ZXLJ, IWcfExecutionPath>, IExecutionPath
     {
         const string ContactName = "IExecutionPath";
 
