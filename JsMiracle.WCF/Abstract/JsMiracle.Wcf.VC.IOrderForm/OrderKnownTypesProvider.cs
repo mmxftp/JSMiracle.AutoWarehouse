@@ -25,6 +25,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
                 ,typeof(EnumHostSystemDocumentType)
                 ,typeof(EnumBusinessType)
                 ,typeof(EnumOrderFormState)
+                ,typeof(EnumOrderDataState)
                 ,typeof(IMS_VC_YWYS)
                 ,typeof(IMS_VC_DJT)
                 ,typeof(IMS_VC_DJH)

@@ -20,7 +20,6 @@ namespace JsMiracle.WCF.TestService
 
 
                     Directory.SetCurrentDirectory(WCFServiceConfiguration.ConfigPath);
-
                     foreach (var cfg in WCFServiceConfiguration.cfgDic)
                     {
                         cfg.Value.Open();

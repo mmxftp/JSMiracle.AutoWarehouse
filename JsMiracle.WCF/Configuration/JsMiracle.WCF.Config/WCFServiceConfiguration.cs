@@ -19,11 +19,29 @@ namespace JsMiracle.WCF.Config
         {
             try
             {
+                //AppDomain.CurrentDomain.SetupInfomation.ConfigurationFile
+
+                bool isWeb = false;
+
+                if (string.Equals(
+                    Path.GetFileName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile)
+                    , "web.config", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    isWeb = true;
+                }
+                    //System.Web.HttpContext.Current.Server.MapPath("~");
+                //var fn = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
                 var configFile = ConfigurationManager.AppSettings["ServiceConfiguration"];
+
+                if (isWeb)
+                {
+                    configFile = System.Web.HttpContext.Current.Server.MapPath("~") + configFile;
+                }
+
                 if (!string.IsNullOrEmpty(configFile)
                     && File.Exists(configFile))
-                {
-
+                {          
+                    //Server.MapPath("")
                     ConfigPath = Path.GetDirectoryName(configFile);
 
                     var wcfConfig =

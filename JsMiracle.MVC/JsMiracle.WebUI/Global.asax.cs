@@ -22,7 +22,7 @@ namespace JsMiracle.WebUI
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo(Server.MapPath("~/Config/log4net.config")));
             AreaRegistration.RegisterAllAreas();
-
+            Server.MapPath("");
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
