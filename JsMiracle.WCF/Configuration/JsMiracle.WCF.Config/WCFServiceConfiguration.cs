@@ -19,20 +19,19 @@ namespace JsMiracle.WCF.Config
         {
             try
             {
-                //AppDomain.CurrentDomain.SetupInfomation.ConfigurationFile
-
                 bool isWeb = false;
 
+                // 用当前使用的配置文件判断是否web项目
                 if (string.Equals(
                     Path.GetFileName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile)
                     , "web.config", StringComparison.CurrentCultureIgnoreCase))
                 {
                     isWeb = true;
                 }
-                    //System.Web.HttpContext.Current.Server.MapPath("~");
-                //var fn = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+
                 var configFile = ConfigurationManager.AppSettings["ServiceConfiguration"];
 
+                // web项目文件路径的特殊处理
                 if (isWeb)
                 {
                     configFile = System.Web.HttpContext.Current.Server.MapPath("~") + configFile;
@@ -40,8 +39,9 @@ namespace JsMiracle.WCF.Config
 
                 if (!string.IsNullOrEmpty(configFile)
                     && File.Exists(configFile))
-                {          
-                    //Server.MapPath("")
+                {
+                    // 配置文件的所在目录，
+                    // 配置内容中没有的路径，此目录要用于后台wcf服务文件载入用
                     ConfigPath = Path.GetDirectoryName(configFile);
 
                     var wcfConfig =
