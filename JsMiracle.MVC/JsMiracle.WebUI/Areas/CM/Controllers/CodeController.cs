@@ -182,6 +182,13 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             return base.Save(saveFun);
         }
 
+        public ActionResult GetCodeListByCodeType(string codeType)
+        {
+            var ev = FunctionHelp.GetEnum<CodeTypeEnum>(codeType);
+            var data = dalCode.GetCodeList(ev);
+            return this.JsonFormat(data);
+        }
+
         #endregion
 
         #region IMS_CM_DMLX_S 操作
@@ -297,5 +304,8 @@ namespace JsMiracle.WebUI.Areas.CM.Controllers
             }
         }
         #endregion
+
+
+
     }
 }

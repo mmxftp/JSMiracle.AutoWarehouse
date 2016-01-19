@@ -55,5 +55,6 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_WT_ZXLJ> IMS_WT_ZXLJ_S { get; set; }
         public virtual DbSet<IMS_WT_ZXZ> IMS_WT_ZXZ_S { get; set; }
         public virtual DbSet<IMS_UP_MK> IMS_UP_MK_S { get; set; }
+        public virtual DbSet<V_IMS_VC_DJH> V_IMS_VC_DJH_S { get; set; }
     }
 }

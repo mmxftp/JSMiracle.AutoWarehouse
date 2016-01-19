@@ -35,6 +35,7 @@
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_WT_ZXLJ" Width="1.5" PointX="16.75" PointY="5.75" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_WT_ZXZ" Width="1.5" PointX="6.75" PointY="16.75" />
         <EntityTypeShape EntityType="IIMS_ORGModel.IMS_UP_MK" Width="1.5" PointX="17.375" PointY="9.75" />
+        <EntityTypeShape EntityType="IIMS_ORGModel.V_IMS_VC_DJH" Width="1.875" PointX="8.875" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

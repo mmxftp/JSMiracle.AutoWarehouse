@@ -49,6 +49,30 @@ namespace JsMiracle.Entities.Enum
         [EnumMember]
         VH_STS = 5,
 
+        /// <summary>
+        /// 来源地
+        /// </summary>
+        [EnumMember]
+        VL_Source = 6,
 
+        /// <summary>
+        /// 来源所有者
+        /// </summary>
+        [EnumMember]
+        VL_SourceOwner = 7,
+
+        /// <summary>
+        /// 目的地
+        /// </summary>
+        [EnumMember]
+        VL_Target = 8,
+
+        /// <summary>
+        /// 目的所有者
+        /// </summary>
+        [EnumMember]
+        VL_TargetOwner = 9,
+
+  
     }
 }

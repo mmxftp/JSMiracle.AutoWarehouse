@@ -51,6 +51,7 @@
     <Compile Include="IMS_VC_DJH_Dal.cs" />
     <Compile Include="IMS_VC_DJT_Dal.cs" />
     <Compile Include="IMS_VC_YWYS_Dal.cs" />
+    <Compile Include="OrderStateWorkFlow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,7 +81,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetFileName) D:\Code_Store\JSMiracle.AutoWarehouse\WcfOutputLibrary</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetFileName) $(SolutionDir)\WcfOutputLibrary</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

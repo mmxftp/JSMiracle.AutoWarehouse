@@ -546,6 +546,7 @@
     <Content Include="Areas\WT\Views\Executor\Edit.cshtml" />
     <Content Include="Areas\CM\Views\Code\CodeTypeList.cshtml" />
     <Content Include="Areas\CM\Views\Code\CodeIndex.cshtml" />
+    <Content Include="Areas\VC\Views\OrderForm\IndexZP.cshtml" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\CustomScripts\jquery.easyui.extend.js" />

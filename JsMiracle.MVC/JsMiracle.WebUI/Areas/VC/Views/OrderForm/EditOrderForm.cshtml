@@ -124,7 +124,7 @@
         $("#orderDataGrid" + '@ViewBag.BizType').datagrid({
             url: '@Url.Action("GetOrderData")' + '?djbh=' + '@Model.DJBH',
             singleSelect: true,
-            height: '680px',
+            height: '750px',
             rownumbers: true,
             toolbar: '#orderFormTools' + '@ViewBag.BizType',
             frozenColumns: [[
@@ -155,15 +155,20 @@
             columns: [[
                 { field: 'HH', title: '行号', width: 100, align: 'center' },
                 { field: 'HXW', title: '行为类型', width: 100, align: 'center' },
-                { field: 'SKU', title: '品规ID', width: 100, align: 'center' },
+                {
+                    field: '_SKU', title: '品规ID', width: 100, align: 'center',
+                    formatter: function (value, row, index) {
+                        return row.WLMC + '(' + row.WLBH + ')';
+                    }
+                },
                 { field: 'PCBH', title: '批次编号', width: 100, align: 'center' },
                 { field: 'DJSL', title: '单据数量', width: 100, align: 'center' },
                 { field: 'WCSL', title: '完成数量', width: 100, align: 'center' },
-                { field: 'LYSYZ', title: '来源所有者', width: 100, align: 'center' },
-                { field: 'MDSYZ', title: '目的所有者', width: 100, align: 'center' },
-                { field: 'LYD', title: '来源地', width: 100, align: 'center' },
-                { field: 'MDD', title: '目的地', width: 100, align: 'center' },
-                { field: 'ZT', title: '状态', width: 100, align: 'center' },
+                { field: 'vlso', title: '来源所有者', width: 100, align: 'center' },
+                { field: 'vlto', title: '目的所有者', width: 100, align: 'center' },
+                { field: 'vls', title: '来源地', width: 100, align: 'center' },
+                { field: 'vlt', title: '目的地', width: 100, align: 'center' },
+                { field: 'vlhst', title: '状态', width: 100, align: 'center' },
                 { field: 'CJR', title: '创建人', width: 100, align: 'center' },
                 {
                     field: 'CJSJ', title: '创建时间', width: 200, align: 'center'

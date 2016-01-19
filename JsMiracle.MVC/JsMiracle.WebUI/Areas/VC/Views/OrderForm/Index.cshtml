@@ -10,7 +10,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search"
            onclick="window['orderformOp' + '@ViewBag.BizType'].reloadDataGrid()">查询</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
-           onclick="window['orderformOp'+ '@ViewBag.BizType'].edit(false);">新增</a>
+           onclick="window['orderformOp'+ '@ViewBag.BizType'].edit('add');">新增</a>
     </div>
     <div>
         <table id="orderFormGrid" style="padding:10px"></table>
@@ -43,7 +43,7 @@
                       {
                           field: '_operate', title: '操作', width: 150, align: 'center'
                           , formatter: function (value, row, index) {
-                              var editFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit(true, ' + row.ID + ');';
+                              var editFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit("mod", ' + row.ID + ');';
                               var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
                                   + row.DJBH + '\',\'@Url.Action("RemoveOrderForm")\',orderformOp' + '@ViewBag.BizType' + '.reloadDataGrid)';
 
@@ -52,6 +52,14 @@
                                         + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                                         + '<a href="javascript:void(0)"  class="loan_edit_button" '
                                         + ' onclick="' + editFunStr + '">修改</a>';
+
+                              // 新建 或 提交 才显示就绪按钮
+                              if (row.ZT == 0 || row.ZT == 1) {
+                                  var readyFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit("ready", ' + row.ID + ');';
+                                  html += '<a href="###" class="loan_ready_button" '
+                                        + ' onclick="" >就绪</a>';
+                              }
+
                               return html;
                           }
                       }
@@ -95,12 +103,50 @@
         // 每个页面的所有函数都定义成一个集合,访止方法名重覆
         window['orderformOp' + '@ViewBag.BizType'] = {
             edit: function (op, id) {
-                var url = '@Url.Action("CreateOrderForm", new { bizType = ViewBag.BizType })';
+                var url = '';
+                var title = '';
 
-                if (op) {
+                if (op == 'mod') {
                     title = '订单信息编辑';
                     url = '@Url.Action("EditOrderForm")' + '?id=' + id;
                 }
+                else if (op == 'add') {
+                    url = '@Url.Action("CreateOrderForm", new { bizType = ViewBag.BizType })';
+                    title = '订单信息新增';
+                }
+                else if (op == 'ready') {
+                    url = '@Url.Action("")' + '?id=' + id;
+
+                    var params = { 'isAdd': isAdd, 'userid': userid, 'roleid': rolRow.JSID };
+
+                    $.ajax({
+                        url: '@Url.Action("SaveRoleUser")',
+                        type: 'POST',
+                        data: params,
+                        dataType: 'json',
+                        success: function (rec) {
+                            if (!rec.success) {
+                                $.messager.alert({
+                                    title: rec.title,
+                                    msg: rec.msg,
+                                    icon: 'info'
+                                });
+                            }
+                            else {
+                                $('#tabUser').datagrid('reload', {
+                                    roleid: rolRow.JSID
+                                });
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                                        , "500px", "500px");
+                        }
+                    });
+
+                    return;
+                }
+
 
                 // 调用 'refresh' 方法更新选项卡面板的内容
                 var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板

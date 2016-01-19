@@ -17,16 +17,19 @@ namespace JsMiracle.WCF.WcfBaseService
     /// <typeparam name="T">entityframework 实例</typeparam>
     public abstract class WcfDataServiceBase<T> : WcfServiceBase where T : class ,new()
     {
-
+    
         protected abstract WcfResponse RequestFun(WcfRequest req);
 
         protected abstract IDataLayer<T> DataLayer { get; }
 
         protected override WcfResponse BaseRequest(WcfRequest req)
         {
+            
             var res = RequestFun(req);
-            if (res != null)
+            if (res != null) {
+                res.Head.IsSuccess = true;
                 return res;
+            }
 
             res = new WcfResponse();
 

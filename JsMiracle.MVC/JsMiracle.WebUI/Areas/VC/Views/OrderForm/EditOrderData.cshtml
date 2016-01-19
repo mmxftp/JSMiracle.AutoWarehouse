@@ -45,10 +45,7 @@
         <tr>
             <td>品规ID</td>
             <td>
-                @*@Html.TextBoxFor(n => n.SKU, new { @id = "txtSKU" })*@
-
-                @Html.DropDownListFor(n => n.SKU, ViewBag.Items as IEnumerable<SelectListItem>
-                     , new { id = "ddlSKU", style = "width:150px;" })
+                @Html.TextBoxFor(n => n.SKU, new { @id = "ddlSKU" })
             </td>
             <td>批次编号</td>
             <td>
@@ -63,7 +60,7 @@
         </tr>
         <tr>
             <td>来源所有者</td>
-            <td>@Html.TextBoxFor(n => n.LYSYZ, new { @id = "txtLXSYZ" })</td>
+            <td>@Html.TextBoxFor(n => n.LYSYZ, new { @id = "ddlLXSYZ" })</td>
             <td>目的所有者</td>
             <td>@Html.TextBoxFor(n => n.MDSYZ, new { @id = "txtMDSYZ" })</td>
         </tr>
@@ -131,10 +128,11 @@
         });
 
         $("#ddlSKU").combobox({
-            //url: '@Url.Action("GetItems")',
+            url: '@Url.Action("GetAllItemList", "Item", new { Area = "CB" })',
             valueField: 'ID',
-            textField: 'WLBH',
+            textField: 'WLMC',
             required: true,
+            width:'170px',
             validType: 'valueNotEqual["--请选择--"]',
             missingMessage: '请从下拉框中选择物料',
             filter: function (q, row) {
@@ -143,15 +141,7 @@
             }
         });
 
-       // $("#ddlWLLX").combobox(
-       //{
-       //    valueField: 'SZ',
-       //    textField: 'MC',
-       //    editable: false,
-       //    required: true,
-       //    validType: 'valueNotEqual["--请选择--"]',
-       //    missingMessage: '请从下拉框中选择物料类型'
-       //});
+
 
 
         $("#txtPCBH").textbox({
@@ -171,11 +161,12 @@
             missingMessage: '完成数量不得为空'
         });
 
+        //GetCodeListByCodeType
+        $("#ddlLXSYZ").textbox();
 
-        $("#txtLXSYZ").textbox();
-        $("#txtMDSYZ").textbox();
-        $("#txtLYD").textbox();
-        $("#txtMDD").textbox();
+        $("#ddlMDSYZ").textbox();
+        $("#ddlLYD").textbox();
+        $("#ddlMDD").textbox();
 
 
         $("#txtMDD").textbox({

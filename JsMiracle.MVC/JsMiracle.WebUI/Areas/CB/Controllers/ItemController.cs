@@ -144,5 +144,15 @@ namespace JsMiracle.WebUI.Areas.CB.Controllers
             return this.JsonFormat(info);
         }
 
+
+
+        public ActionResult GetAllItemList()
+        {
+            var data = dalItem.GetAllList();
+            data.Insert(0, new IMS_CB_WL() { ID = -1, WLMC = "--请选择--" });
+            return this.JsonFormat(data);
+        }
+
+
     }
 }

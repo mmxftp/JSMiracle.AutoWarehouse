@@ -281,9 +281,7 @@
       <BehaviorHttpGetUrl>http://127.0.0.1:50046/WCFService/IOperationalTasks</BehaviorHttpGetUrl>
     </WcfService>
     <!--end JsMiracle.WCF.WT.WorkTasks.dll-->
-    
-    
-    
+       
   </Services>
 
 </configuration>

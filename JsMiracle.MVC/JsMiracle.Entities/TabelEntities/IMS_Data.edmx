@@ -499,6 +499,39 @@
           <Property Name="FJZBH" Type="nvarchar" MaxLength="64" />
           <Property Name="BZ" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“IIMS_ORG.dbo.V_IMS_VC_DJH_S”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_IMS_VC_DJH_S">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DJBH" />
+            <PropertyRef Name="HH" />
+            <PropertyRef Name="HXW" />
+            <PropertyRef Name="PCBH" />
+            <PropertyRef Name="DJSL" />
+            <PropertyRef Name="WCSL" />
+            <PropertyRef Name="CJR" />
+            <PropertyRef Name="CJSJ" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="DJBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="HH" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="HXW" Type="int" Nullable="false" />
+          <Property Name="WLMC" Type="nvarchar" MaxLength="64" />
+          <Property Name="WLBH" Type="nvarchar" MaxLength="64" />
+          <Property Name="PCBH" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DJSL" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="WCSL" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CJR" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CJSJ" Type="datetime" Nullable="false" />
+          <Property Name="BZ" Type="nvarchar" MaxLength="256" />
+          <Property Name="XSDDH" Type="nvarchar" MaxLength="64" />
+          <Property Name="vlso" Type="nvarchar" MaxLength="64" />
+          <Property Name="vlto" Type="nvarchar" MaxLength="64" />
+          <Property Name="vls" Type="nvarchar" MaxLength="64" />
+          <Property Name="vlt" Type="nvarchar" MaxLength="64" />
+          <Property Name="vlhst" Type="nvarchar" MaxLength="64" />
+        </EntityType>
         <EntityContainer Name="IIMS_ORGModelStoreContainer">
           <EntitySet Name="IMS_CB_KC_S" EntityType="Self.IMS_CB_KC_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_CB_RQ_S" EntityType="Self.IMS_CB_RQ_S" Schema="dbo" store:Type="Tables" />
@@ -530,6 +563,28 @@
           <EntitySet Name="IMS_WT_YWRW_S" EntityType="Self.IMS_WT_YWRW_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_WT_ZXLJ_S" EntityType="Self.IMS_WT_ZXLJ_S" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMS_WT_ZXZ_S" EntityType="Self.IMS_WT_ZXZ_S" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_IMS_VC_DJH_S" EntityType="Self.V_IMS_VC_DJH_S" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_IMS_VC_DJH_S].[ID] AS [ID], 
+    [V_IMS_VC_DJH_S].[DJBH] AS [DJBH], 
+    [V_IMS_VC_DJH_S].[HH] AS [HH], 
+    [V_IMS_VC_DJH_S].[HXW] AS [HXW], 
+    [V_IMS_VC_DJH_S].[WLMC] AS [WLMC], 
+    [V_IMS_VC_DJH_S].[WLBH] AS [WLBH], 
+    [V_IMS_VC_DJH_S].[PCBH] AS [PCBH], 
+    [V_IMS_VC_DJH_S].[DJSL] AS [DJSL], 
+    [V_IMS_VC_DJH_S].[WCSL] AS [WCSL], 
+    [V_IMS_VC_DJH_S].[CJR] AS [CJR], 
+    [V_IMS_VC_DJH_S].[CJSJ] AS [CJSJ], 
+    [V_IMS_VC_DJH_S].[BZ] AS [BZ], 
+    [V_IMS_VC_DJH_S].[XSDDH] AS [XSDDH], 
+    [V_IMS_VC_DJH_S].[vlso] AS [vlso], 
+    [V_IMS_VC_DJH_S].[vlto] AS [vlto], 
+    [V_IMS_VC_DJH_S].[vls] AS [vls], 
+    [V_IMS_VC_DJH_S].[vlt] AS [vlt], 
+    [V_IMS_VC_DJH_S].[vlhst] AS [vlhst]
+    FROM [dbo].[V_IMS_VC_DJH_S] AS [V_IMS_VC_DJH_S]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -805,6 +860,7 @@
           <EntitySet Name="IMS_WT_ZXLJ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXLJ" />
           <EntitySet Name="IMS_WT_ZXZ_S" EntityType="IIMS_ORGModel.IMS_WT_ZXZ" />
           <EntitySet Name="IMS_UP_MK_S" EntityType="IIMS_ORGModel.IMS_UP_MK" />
+          <EntitySet Name="V_IMS_VC_DJH_S" EntityType="IIMS_ORGModel.V_IMS_VC_DJH" />
         </EntityContainer>
         <EntityType Name="IMS_CM_DXXX">
           <Key>
@@ -1060,6 +1116,37 @@
           <Property Name="QY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="KZMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="HDMC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="V_IMS_VC_DJH">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DJBH" />
+            <PropertyRef Name="HH" />
+            <PropertyRef Name="HXW" />
+            <PropertyRef Name="PCBH" />
+            <PropertyRef Name="DJSL" />
+            <PropertyRef Name="WCSL" />
+            <PropertyRef Name="CJR" />
+            <PropertyRef Name="CJSJ" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="DJBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="HH" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HXW" Type="Int32" Nullable="false" />
+          <Property Name="WLMC" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WLBH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PCBH" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DJSL" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="WCSL" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="CJR" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CJSJ" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BZ" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="XSDDH" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="vlso" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="vlto" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="vls" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="vlt" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="vlhst" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1587,6 +1674,30 @@
                 <ScalarProperty Name="CJRQ" ColumnName="CJRQ" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="MKMC" ColumnName="MKMC" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_IMS_VC_DJH_S">
+            <EntityTypeMapping TypeName="IIMS_ORGModel.V_IMS_VC_DJH">
+              <MappingFragment StoreEntitySet="V_IMS_VC_DJH_S">
+                <ScalarProperty Name="vlhst" ColumnName="vlhst" />
+                <ScalarProperty Name="vlt" ColumnName="vlt" />
+                <ScalarProperty Name="vls" ColumnName="vls" />
+                <ScalarProperty Name="vlto" ColumnName="vlto" />
+                <ScalarProperty Name="vlso" ColumnName="vlso" />
+                <ScalarProperty Name="XSDDH" ColumnName="XSDDH" />
+                <ScalarProperty Name="BZ" ColumnName="BZ" />
+                <ScalarProperty Name="CJSJ" ColumnName="CJSJ" />
+                <ScalarProperty Name="CJR" ColumnName="CJR" />
+                <ScalarProperty Name="WCSL" ColumnName="WCSL" />
+                <ScalarProperty Name="DJSL" ColumnName="DJSL" />
+                <ScalarProperty Name="PCBH" ColumnName="PCBH" />
+                <ScalarProperty Name="WLBH" ColumnName="WLBH" />
+                <ScalarProperty Name="WLMC" ColumnName="WLMC" />
+                <ScalarProperty Name="HXW" ColumnName="HXW" />
+                <ScalarProperty Name="HH" ColumnName="HH" />
+                <ScalarProperty Name="DJBH" ColumnName="DJBH" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

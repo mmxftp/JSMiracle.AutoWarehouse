@@ -14,6 +14,7 @@ using JsMiracle.Framework.Serialized;
 using JsMiracle.Entities.Enum;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.CB.ICoreBussiness;
+using JsMiracle.Entities.MVC;
 
 namespace JsMiracle.WebUI.Areas.VC.Controllers
 {
@@ -23,16 +24,19 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         IOrderData dalorderdata;
         ICode dalCode;
         IItem dalItem;
+        IContainer dalContainer;
 
         public OrderFormController(IOrderForm repoOrderForm
             , IOrderData repoOrderData
             , ICode repoCode
-            , IItem repoItem)
+            , IItem repoItem
+            ,IContainer repoContainer)
         {
             this.dalorderform = repoOrderForm;
             this.dalorderdata = repoOrderData;
             this.dalCode = repoCode;
             this.dalItem = repoItem;
+            this.dalContainer = repoContainer;
         }
 
         //
@@ -170,18 +174,11 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         //}
 
 
-        private IList<IMS_CB_WL> GetItemList()
-        {
-            var data = dalItem.GetAllList();
-            data.Insert(0, new IMS_CB_WL() { ID = -1, WLBH = "--请选择--" });
-            return data;
-        }
-
         [AuthViewPage]
         public ActionResult EditOrderData(long id)
         {
-            ViewBag.Items = new SelectList(
-                GetItemList(), "ID", "WLBH", -1);
+            //ViewBag.Items = new SelectList(
+            //    GetItemList(), "ID", "WLBH", -1);
 
             var ent = dalorderdata.GetEntity(id);
             return View(ent);
@@ -191,8 +188,8 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         [AuthViewPage]
         public ActionResult CreateOrderData(string djbh)
         {
-            ViewBag.Items = new SelectList(
-                GetItemList(), "ID", "WLBH", -1);
+            //ViewBag.Items = new SelectList(
+            //    GetItemList(), "ID", "WLBH", -1);
 
             return View("EditOrderData", new IMS_VC_DJH() { DJBH = djbh });
         }
@@ -215,16 +212,14 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
         public ActionResult GetOrderData(string djbh)
         {
-            List<IMS_VC_DJH> dataList;
+            List<V_IMS_VC_DJH> dataList;
             if (string.IsNullOrEmpty(djbh))
             {
-                dataList = new List<IMS_VC_DJH>();
+                dataList = new List<V_IMS_VC_DJH>();
                 return this.JsonFormat(dataList);
             }
-
-            string filter = string.Format(" djbh == \"{0}\" ", djbh);
-
-            dataList = dalorderdata.GetAllEntites(filter);
+            
+            dataList = dalorderdata.GetDataListByDJBH(djbh);
 
             return this.JsonFormat(dataList);
         }
@@ -284,6 +279,52 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
             return MvcHtmlString.Create("");
         }
 
+        /// <summary>
+        /// 组盘操作界面
+        /// </summary>
+        /// <returns></returns>
+        [AuthViewPage]
+        public ActionResult IndexZP()
+        {
+            return View();
+        }
 
+        public ActionResult SaveZP(IMS_ZP entity)
+        {
+            //var rq = dalContainer.GetEntity(entity.RQBH);
+
+
+
+            Func<ExtResult> fun = () => {
+                ExtResult ret = new ExtResult();
+
+                IMS_CB_RQ rq = new IMS_CB_RQ();
+                rq.RQBH = entity.RQBH;
+
+                return ret;
+            };
+
+            return base.Save(fun);
+        }
+
+
+        public ActionResult OrderOnReady(long id)
+        {
+            ExtResult ret = new ExtResult();
+
+            try
+            {
+                //dalorderform.UpdateOrder(id, EnumOrderFormState);
+                ret.success = true;
+            }
+            catch(Exception ex)
+            {
+                ret.success = false;
+                ret.msg = ex.Message;
+            }
+
+            return this.JsonFormat(ret);
+            //var dat (dalorderform.GetEntity(id))
+        }
     }
 }

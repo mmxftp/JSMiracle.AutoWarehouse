@@ -43,63 +43,7 @@ namespace JsMiracle.Entities.WCF
 
     public class WcfResponseBody
     {
-        //public WcfResponseBody()
-        //    : this(SerializedType.Json)
-        //{
-        //}
-
-        //public WcfResponseBody(SerializedType serType)
-        //{
-        //    DataSerializedType = serType;
-        //}
-
-        /// <summary>
-        /// 数据序列化类型
-        /// </summary>
-        //public SerializedType DataSerializedType { get; set; }
         public object Data { get; set; }
-
-        //public void SetBody<T>(T t)
-        //{
-        //    //Data = XmlSerialization.SerializeString(t);
-        //    Data = JsonSerialization.Serialize(t);
-
-        //    switch (DataSerializedType)
-        //    {
-        //        case SerializedType.Json:
-        //            Data = JsonSerialization.Serialize(t);
-        //            break;
-        //        case SerializedType.Xml:
-        //            Data = XmlSerialization.SerializeString(t);
-        //            break;
-
-        //        default:
-        //            throw new JsMiracleException("未处理的序列化类型" + DataSerializedType.ToString());
-        //    }
-        //}
-
-        //public T GetBody<T>()
-        //{
-        //    //return XmlSerialization.DeserializeString<T>(Data);
-        //    //return JsonSerialization.Deserialize<T>(Data);
-
-        //    T data;
-
-        //    switch (DataSerializedType)
-        //    {
-        //        case SerializedType.Json:
-        //            data = JsonSerialization.Deserialize<T>(Data);
-        //            break;
-        //        case SerializedType.Xml:
-        //            data = XmlSerialization.DeserializeString<T>(Data);
-        //            break;
-
-        //        default:
-        //            throw new JsMiracleException("未处理的序列化类型" + DataSerializedType.ToString());
-        //    }
-
-        //    return data;
-        //}
     }
 
 }

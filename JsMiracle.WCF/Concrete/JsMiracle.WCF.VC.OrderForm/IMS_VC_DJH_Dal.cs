@@ -14,10 +14,10 @@ namespace JsMiracle.WCF.VC.OrderForm
     /// </summary>
     public class IMS_VC_DJH_Dal : WcfDataLayerBase<IMS_VC_DJH>, IOrderData
     {
-        public List<IMS_VC_DJH> GetDataListByDJBH(string djbh)
+        public List<V_IMS_VC_DJH> GetDataListByDJBH(string djbh)
         {
-            string filter = string.Format(" djbh =\"{0}\" ", djbh);
-            return base.GetAllEntitesByFilter(filter);
+            var data = base.DbContext.V_IMS_VC_DJH_S.Where(n => n.DJBH == djbh);
+            return data.ToList();
         }
     }
 

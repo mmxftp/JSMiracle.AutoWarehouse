@@ -64,7 +64,12 @@ namespace JsMiracle.WCF.CB.CoreBussiness
         public List<IMS_CB_WL> GetAllList()
         {
             var t = this.DbContext.IMS_CB_WL_S.ToList().Select(
-                n => new IMS_CB_WL { ID = n.ID, WLBH = n.WLBH, WLMC = n.WLMC });
+                n => new IMS_CB_WL
+                {
+                    ID = n.ID,
+                    WLBH = n.WLBH,
+                    WLMC = string.Format("{0}({1})", n.WLMC, n.WLBH)
+                });
             var data = t.ToList();
             return data;
         }

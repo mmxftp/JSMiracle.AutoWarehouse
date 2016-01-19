@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "组盘";
+}
+
+@model JsMiracle.Entities.MVC.IMS_ZP
+
+@using (Ajax.BeginForm("SaveZP", "OrderForm"
+            , new AjaxOptions()
+            , new { enctype = "multipart/form-data", id = "frmZP" }))
+{
+    @Html.HiddenFor(n => n.DJH_ID)
+    @Html.HiddenFor(n => n.SKU)
+
+    <table class="TB">
+        <tr>
+            <td>入库单号</td>
+            <td>@Html.TextBoxFor(n => n.DJBH, new { id = "txtDJBH" })</td>
+            <td>单据行</td>
+            <td>@Html.TextBoxFor(n => n.HH, new { id = "txtHH" })</td>
+        </tr>
+        <tr>
+            <td>销售订单</td>
+            <td>@Html.TextBoxFor(n => n.XSDDH, new { id = "txtXSDDH" })</td>
+            <td>批次号</td>
+            <td>@Html.TextBoxFor(n => n.PCBH, new { id = "txtPCBH" })</td>
+        </tr>
+        <tr>
+            <td>物料编号</td>
+            <td>@Html.TextBoxFor(n => n.WLMC, new { id = "txWLMC" })</td>
+            <td>数量</td>
+            <td>@Html.TextBoxFor(n => n.ZPSL, new { id = "txtZPSL" })</td>
+        </tr>
+        <tr>
+            <td>托盘编号</td>
+            <td>@Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })</td>
+            <td colspan="2">
+                <a href="###" class="easyui-linkbutton" iconcls="icon-save"
+                   onclick="JsMiracleCommon.submit(this, 'frmZP')">组盘</a>
+            </td>
+        </tr>
+    </table>
+}
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#frmZP").form({
+            success: function (data) {
+                var ret = JSON.parse(data);
+                if (ret.success) {
+                    $.messager.alert('入库组盘', ret.msg, "info", function () {
+
+                        // 关闭当前div 刷新父窗体
+                        JsMiracleCommon.closeWindow();
+                    });
+                }
+                else {
+                    $.messager.alert('入库组盘', ret.msg, "error");
+                }
+            }
+        });
+
+        $("#txtDJBH").textbox({
+            disabled: true
+        });
+
+        $("#txtHH").textbox({
+            disabled: true
+        });
+
+        $("#txtXSDDH").textbox({
+            disabled: true
+        });
+
+        $("#txtPCBH").textbox({
+            disabled: true
+        });
+
+        $("#txWLMC").textbox({
+            disabled: true
+        });
+
+        $("#txtZPSL").textbox();
+
+        $("#txtRQBH").textbox();
+    });
+</script>

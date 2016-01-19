@@ -21,8 +21,7 @@ namespace JsMiracle.WCF.VC.IOrderForm
         /// </summary>
         /// <param name="djbh">单据编号</param>
         /// <returns></returns>
-        List<IMS_VC_DJH> GetDataListByDJBH(string djbh);
-
+        List<V_IMS_VC_DJH> GetDataListByDJBH(string djbh);
     }
 
 
@@ -42,9 +41,9 @@ namespace JsMiracle.WCF.VC.IOrderForm
         { }
 
 
-        public List<IMS_VC_DJH> GetDataListByDJBH(string djbh)
+        public List<V_IMS_VC_DJH> GetDataListByDJBH(string djbh)
         {
-            return base.RequestFunc<object[], List<IMS_VC_DJH>>("GetDataListByDJBH", new object[] { djbh });
+            return base.RequestFunc<object[], List<V_IMS_VC_DJH>>("GetDataListByDJBH", new object[] { djbh });
         }
 
     }

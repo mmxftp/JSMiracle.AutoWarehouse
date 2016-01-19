@@ -67,9 +67,12 @@
     <Compile Include="Enum\CodeTypeEnum.cs" />
     <Compile Include="Enum\EnumBusinessType.cs" />
     <Compile Include="Enum\EnumHostSystemDocumentType.cs" />
+    <Compile Include="Enum\EnumOrderDataState.cs" />
+    <Compile Include="Enum\EnumOrderFormState.cs" />
     <Compile Include="Enum\SerializedType.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="IDataLayer.cs" />
+    <Compile Include="MVC\IMS_ZP.cs" />
     <Compile Include="Partial\IMS_CB_RQ.cs" />
     <Compile Include="Partial\IMS_CB_RQLX.cs" />
     <Compile Include="Partial\IMS_CB_WL.cs" />
@@ -187,6 +190,9 @@
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
     <Compile Include="TabelEntities\IMS_WT_ZXZ.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TabelEntities\V_IMS_VC_DJH.cs">
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
