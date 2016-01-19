@@ -1,6 +1,7 @@
 ﻿using JsMiracle.WCF.Config;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -16,6 +17,10 @@ namespace JsMiracle.WCF.TestService
             try
             {
                 if (WCFServiceConfiguration.cfgDic != null) {
+
+
+                    Directory.SetCurrentDirectory(WCFServiceConfiguration.ConfigPath);
+
                     foreach (var cfg in WCFServiceConfiguration.cfgDic)
                     {
                         cfg.Value.Open();

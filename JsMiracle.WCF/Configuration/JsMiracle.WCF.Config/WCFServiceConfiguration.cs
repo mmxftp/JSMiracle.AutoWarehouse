@@ -13,6 +13,8 @@ namespace JsMiracle.WCF.Config
     {
         public readonly static Dictionary<string, WcfService> cfgDic;
 
+        public readonly static string ConfigPath;
+
         static WCFServiceConfiguration()
         {
             try
@@ -21,6 +23,9 @@ namespace JsMiracle.WCF.Config
                 if (!string.IsNullOrEmpty(configFile)
                     && File.Exists(configFile))
                 {
+
+                    ConfigPath = Path.GetDirectoryName(configFile);
+
                     var wcfConfig =
                         XmlSerialization.DeserializeFile<WCFServiceConfigurationEntity>(configFile);
 
