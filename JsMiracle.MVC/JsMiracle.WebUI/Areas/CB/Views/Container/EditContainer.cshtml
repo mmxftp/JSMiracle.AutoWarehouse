@@ -11,66 +11,84 @@
 {
     if (@Model.ID != 0)
     {
-        @Html.HiddenFor(n => n.RQBH);
+    @Html.HiddenFor(n => n.RQBH);
     }
 
     @Html.HiddenFor(n => n.ID);
     @Html.HiddenFor(n => n.ZCSJ);
 
-
-    <div class="divTB">
-        <div>
-            <label>容器类型</label> @Html.DropDownListFor(n => n.LXBH, ViewBag.ContainerType as IEnumerable<SelectListItem>
+    <table class="TB">
+        <tr>
+            <td>
+                容器类型
+            </td>
+            <td colspan="3">
+                @Html.DropDownListFor(n => n.LXBH, ViewBag.ContainerType as IEnumerable<SelectListItem>
              , new { id = "ddlRQLXID", style = "width:250px;" })
-        </div>
-        <div>
-            <label>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 容器编号
-            </label>
-            @Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })
-            <label>扫描条码</label>
-            @Html.TextBoxFor(n => n.SMTM, new { id = "txtSMTM" })
-        </div>
-        <div>
-            <label>
+            </td>
+            <td>
+                @Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })
+            </td>
+            <td>扫描条码</td>
+            <td>@Html.TextBoxFor(n => n.SMTM, new { id = "txtSMTM" })</td>
+        </tr>
+        <tr>
+            <td>
                 当前位置
-            </label> @Html.TextBoxFor(n => n.DQWZ, new { id = "txtDQWZ" })
-            <label>当前长度</label> @Html.TextBoxFor(n => n.DQCD, new { id = "txtDQCD" })
-        </div>
-        <div>
-            <label>
+            </td>
+            <td> @Html.TextBoxFor(n => n.DQWZ, new { id = "txtDQWZ" })</td>
+            <td>当前长度</td>
+            <td>@Html.TextBoxFor(n => n.DQCD, new { id = "txtDQCD" })</td>
+        </tr>
+        <tr>
+            <td>
                 当前重量
-            </label>@Html.TextBoxFor(n => n.DQZL, new { id = "txtDQZL" })
-            <label> 当前宽度</label>@Html.TextBoxFor(n => n.DQKD, new { id = "txtDQKD" })
-        </div>
-        <div>
-            <label>
+            </td>
+            <td>@Html.TextBoxFor(n => n.DQZL, new { id = "txtDQZL" })</td>
+            <td> 当前宽度</td>
+            <td>@Html.TextBoxFor(n => n.DQKD, new { id = "txtDQKD" })</td>
+        </tr>
+        <tr>
+            <td>
                 锁定状态
-            </label>@Html.TextBoxFor(n => n.SDZT, new { id = "txtSDZT" })
-            <label> 占用状态</label> @Html.TextBoxFor(n => n.ZYZT, new { id = "txtZYZT" })
-        </div>
-        <div>
-            <label>
+            </td>
+            <td>@Html.TextBoxFor(n => n.SDZT, new { id = "txtSDZT" })</td>
+            <td> 占用状态</td>
+            <td>@Html.TextBoxFor(n => n.ZYZT, new { id = "txtZYZT" })</td>
+        </tr>
+        <tr>
+            <td>
                 位置状态
-            </label>@Html.TextBoxFor(n => n.WZZT, new { id = "txtWZZT" })
-            <label> 使用状态</label>@Html.TextBoxFor(n => n.SYZT, new { id = "txtSYZT" })
-        </div>
-        <div>
-            <label>
+            </td>
+            <td>@Html.TextBoxFor(n => n.WZZT, new { id = "txtWZZT" })</td>
+            <td> 使用状态</td>
+            <td>@Html.TextBoxFor(n => n.SYZT, new { id = "txtSYZT" })</td>
+        </tr>
+        <tr>
+            <td>
                 使用册书
-            </label>@Html.TextBoxFor(n => n.SYCS, new { id = "txtSYCS" })
-            <label>注册位置</label>@Html.TextBoxFor(n => n.ZCWZ, new { id = "txtZCWZ" })
-        </div>
-        <div>
-            <label>备注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            @Html.TextAreaFor(n => n.BZ, new { id = "txtBZ", @style = "width:300px;" })
-        </div>
-        <div style="text-align:center">
-            <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="JsMiracleCommon.submit(this, 'frmContainer')">提交</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmContainer')">取消</a>
-        </div>
-    </div>
+            </td>
+            <td>@Html.TextBoxFor(n => n.SYCS, new { id = "txtSYCS" })</td>
+            <td>注册位置</td>
+            <td>@Html.TextBoxFor(n => n.ZCWZ, new { id = "txtZCWZ" })</td>
+        </tr>
+        <tr>
+            <td>备注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td colspan="3">@Html.TextAreaFor(n => n.BZ, new { id = "txtBZ", @style = "width:300px;" })</td>
+        </tr>
+        <tr id="submitRow">
+            <td colspan="4">
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" onclick="JsMiracleCommon.submit(this, 'frmContainer')">提交</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" onclick="JsMiracleCommon.cancelWidow('frmContainer')">取消</a>
+            </td>
+        </tr>
+    </table>
 }
 
 <script type="text/javascript">
@@ -105,31 +123,31 @@
 
         $("#txtRQBH").textbox({
             required: true,
-            missingMessage: '此框不得为空',
+            missingMessage: '容器编号不得为空',
             // 修改不得改主键
             disabled: (@Model.ID != 0 )
         });
 
 
-        $("#txtSMTM").validatebox({
+        $("#txtSMTM").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '扫描条码不得为空'
         });
 
-        $("#txtDQWZ").validatebox({
+        $("#txtDQWZ").textbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '当前位置不得为空'
         });
 
         $("#txtDQCD").numberbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '当前长度不得为空'
         });
 
 
         $("#txtDQZL").numberbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '当前重量不得为空'
         });
 
         $("#txtDQKD").numberbox();
@@ -137,17 +155,17 @@
 
         $("#txtSDZT").numberbox({
             required: true,
-            missingMessage: '此框不得为空',
+            missingMessage: '锁定状态不得为空',
         });
 
 
         $("#txtZYZT").numberbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '位置状态不得为空'
         });
         $("#txtWZZT").numberbox({
             required: true,
-            missingMessage: '此框不得为空'
+            missingMessage: '注册位置不得为空'
         });
 
         $("#txtSYZT").numberbox({
@@ -160,7 +178,7 @@
             missingMessage: '此框不得为空'
         });
 
-        $("#txtZCWZ").validatebox({
+        $("#txtZCWZ").textbox({
             required: true,
             missingMessage: '此框不得为空',
         });

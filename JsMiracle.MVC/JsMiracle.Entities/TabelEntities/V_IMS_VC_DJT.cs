@@ -12,24 +12,24 @@ namespace JsMiracle.Entities.TabelEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class IMS_VC_DJH
+    public partial class V_IMS_VC_DJT
     {
         public long ID { get; set; }
         public string DJBH { get; set; }
-        public int HH { get; set; }
-        public int HXW { get; set; }
-        public long SKU { get; set; }
-        public string PCBH { get; set; }
-        public decimal DJSL { get; set; }
-        public decimal WCSL { get; set; }
-        public string LYSYZ { get; set; }
-        public string MDSYZ { get; set; }
-        public string LYD { get; set; }
-        public string MDD { get; set; }
-        public int ZT { get; set; }
+        public string MS { get; set; }
+        public Nullable<int> SWDJLX { get; set; }
+        public string SWSJBH { get; set; }
+        public int SFGX { get; set; }
+        public string DJLY { get; set; }
         public string CJR { get; set; }
         public System.DateTime CJSJ { get; set; }
+        public string WCR { get; set; }
+        public Nullable<System.DateTime> WCSJ { get; set; }
+        public string GLDJ { get; set; }
         public string BZ { get; set; }
-        public string XSDDH { get; set; }
+        public string YWLXMC { get; set; }
+        public int YWLX { get; set; }
+        public string DJZTMC { get; set; }
+        public int DJZT { get; set; }
     }
 }

@@ -37,6 +37,10 @@ namespace JsMiracle.InversionOfControl
         }
 
 
+        public static WindsorControllerFactory GetControllerFactory()
+        {
+            return new WindsorControllerFactory(WindsorContaineFactory.GetContainer().Kernel);
+        }
 
     }
 

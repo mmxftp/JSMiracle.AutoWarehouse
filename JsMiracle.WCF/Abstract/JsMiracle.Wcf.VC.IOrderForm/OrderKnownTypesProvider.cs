@@ -30,10 +30,12 @@ namespace JsMiracle.WCF.VC.IOrderForm
                 ,typeof(IMS_VC_DJT)
                 ,typeof(IMS_VC_DJH)
                 ,typeof(V_IMS_VC_DJH)
+                ,typeof(V_IMS_VC_DJT)
                 ,typeof(List<IMS_VC_DJT>)
                 ,typeof(List<IMS_VC_DJH>)
                 ,typeof(List<IMS_VC_YWYS>)
                 ,typeof(List<V_IMS_VC_DJH>)
+                ,typeof(List<V_IMS_VC_DJT>)
             };
         }
     }

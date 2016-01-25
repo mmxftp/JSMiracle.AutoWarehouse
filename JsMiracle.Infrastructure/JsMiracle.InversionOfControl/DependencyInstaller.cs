@@ -94,7 +94,7 @@ namespace JsMiracle.InversionOfControl
                 #endregion
 
                 #region JsMiracle.WCF.VC.IOrderForm
-                Component.For<IOrderForm>()
+                Component.For<IOrderForms>()
                     .ImplementedBy<WcfConfigOrderForm>().LifeStyle.PerWebRequest,
 
                 Component.For<IOrderData>()

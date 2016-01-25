@@ -76,6 +76,13 @@ $.extend($.fn.validatebox.defaults.rules, {
             return $(param[0]).val() == value;
         },
         message: '字段不匹配'
+    },
+
+    equalMoreThan: {
+        validator: function (value, param) {
+            return parseFloat(value) > parseFloat(param);
+        },
+        message: '值必须大于 {0}'
     }
 });
 

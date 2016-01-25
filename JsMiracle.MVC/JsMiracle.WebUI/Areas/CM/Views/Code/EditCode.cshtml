@@ -59,8 +59,8 @@
         </tr>
         <tr style="text-align:center;display:table-row;">
             <td colspan="2">
-                <a class="easyui-linkbutton" iconcls="icon-save" href="###" 
-                   onclick="JsMiracleCommon.submit(this,'frmCode')">提交</a>
+                <a class="easyui-linkbutton" iconcls="icon-save" href="###" id="btnCodeSubmit"
+                   onclick="JsMiracleCommon.submit(this, 'frmCode')">提交</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a class="easyui-linkbutton" iconcls="icon-cancel" href="###" 
                    onclick="JsMiracleCommon.cancelWidow('frmCode')">取消</a>
@@ -73,7 +73,9 @@
 
     $(function () {
         $('#frmCode').form({
+           
             success: function (data) {
+                //console.log(data);
                 //console.log(data);
                 //var data = eval('(' + data + ')');
                 var ret = JSON.parse(data);
@@ -86,6 +88,7 @@
                 }
                 else {
                     $.messager.alert('类型代码编辑', ret.msg, "error");
+                    
                 }
             }
         });

@@ -16,11 +16,12 @@ namespace JsMiracle.Entities.TabelEntities
     {
         public long ID { get; set; }
         public string DJBH { get; set; }
-        public string HH { get; set; }
+        public Nullable<int> HH { get; set; }
+        public Nullable<long> DJH_ID { get; set; }
         public Nullable<int> HXW { get; set; }
         public long SKU { get; set; }
         public string PCBH { get; set; }
-        public Nullable<long> DJSL { get; set; }
+        public Nullable<decimal> DJSL { get; set; }
         public string LYSYZ { get; set; }
         public string MDSYZ { get; set; }
         public string LYD { get; set; }

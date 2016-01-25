@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    
 }
 
 <div style="height:750px;">
@@ -10,7 +9,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-search"
            onclick="window['orderformOp' + '@ViewBag.BizType'].reloadDataGrid()">查询</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add"
-           onclick="window['orderformOp'+ '@ViewBag.BizType'].edit('add');">新增</a>
+           onclick="window['orderformOp'+ '@ViewBag.BizType'].edit(this,'add');">新增</a>
     </div>
     <div>
         <table id="orderFormGrid" style="padding:10px"></table>
@@ -19,13 +18,13 @@
 
 <script type="text/javascript">
 
-    // 动态生成变量名，因为此页面被多个对象使用
+    // 动态生成变量名，因为此页面被多个业务对象使用
     window['orderformOp' + '@ViewBag.BizType'];
 
     $(function () {
 
         $("#orderListToolbar").attr('id', 'orderListToolbar' + '@ViewBag.BizType');
-        $("#orderFormGrid").attr('id', 'orderFormGrid' + '@ViewBag.BizType')
+        $("#orderFormGrid").attr('id', 'orderFormGrid' + '@ViewBag.BizType');
 
         // 必须在页面加载后执行，否则边框画不全，应该是easyui加载时边框距离计算错误的原因
         $("#orderFormGrid" + '@ViewBag.BizType').datagrid(
@@ -41,36 +40,50 @@
                   rownumbers: true,
                   frozenColumns: [[
                       {
-                          field: '_operate', title: '操作', width: 150, align: 'center'
+                          field: '_opHead', title: '操作', width: 250, align: 'center'
                           , formatter: function (value, row, index) {
-                              var editFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit("mod", ' + row.ID + ');';
+
+                              /* 删除按钮  */
+                              var btnDelAttr = '';
+                              if (row.CanModify == false)
+                                  btnDelAttr = 'data-options = "disabled:true"';
+
+                              // 删除方法
                               var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
-                                  + row.DJBH + '\',\'@Url.Action("RemoveOrderForm")\',orderformOp' + '@ViewBag.BizType' + '.reloadDataGrid)';
+                                               + row.DJBH + '\',\'@Url.Action("RemoveOrderForm")\',orderformOp'
+                                               + '@ViewBag.BizType' + '.reloadDataGrid)';
 
-                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
+                              var btnDel = '<a href="###"  class="loan_remove_button' + '@ViewBag.BizType' + '" '
+                                        + btnDelAttr
                                         + ' onclick="' + removeFunStr + '" >删除</a>'
-                                        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                        + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                        + ' onclick="' + editFunStr + '">修改</a>';
 
-                              // 新建 或 提交 才显示就绪按钮
-                              if (row.ZT == 0 || row.ZT == 1) {
-                                  var readyFunStr = 'orderformOp' + '@ViewBag.BizType' + '.edit("ready", ' + row.ID + ');';
-                                  html += '<a href="###" class="loan_ready_button" '
-                                        + ' onclick="" >就绪</a>';
+                              /* 修改按钮 */
+                              var btnMod = '&nbsp;&nbsp;'
+                                       + '<a href="javascript:void(0)"  class="loan_edit_button' + '@ViewBag.BizType' + '" '
+                                       + ' onclick="' + window['orderformOp' + '@ViewBag.BizType'].funStr('mod', row) + '">修改</a>';
+
+                              /* 评审按钮 */
+                              var btnAuditAttr = '';
+                              if (row.CanAudit == false) {
+                                  btnAuditAttr = 'data-options = "disabled:true"';
                               }
+                              var btnAudit = '&nbsp;&nbsp;'
+                                    + '<a href="###" class="loan_ready_button' + '@ViewBag.BizType' + '" '
+                                    + btnAuditAttr
+                                    + ' onclick="' + window['orderformOp' + '@ViewBag.BizType'].funStr('ready', row) + '" >审核</a>';
 
-                              return html;
+
+                              return btnDel + btnMod + btnAudit;
                           }
                       }
                   ]],
                   columns: [[
 
                       { field: 'DJBH', title: '单据编号', width: 100, align: 'center' },
-                      { field: 'YWLX', title: '业务类型', width: 100, align: 'center' },
+                      { field: 'YWLXMC', title: '业务类型', width: 100, align: 'center' },
                       { field: 'SWSJBH', title: '上位单据编号', width: 150, align: 'center' },
                       { field: 'SWDJLX', title: '上位单据类型', width: 150, align: 'center' },
-                      { field: 'DJZT', title: '单据状态', width: 150, align: 'center' },
+                      { field: 'DJZTMC', title: '单据状态', width: 150, align: 'center' },
                       { field: 'SFGX', title: '是否更新', width: 150, align: 'center' },
                       { field: 'DJLY', title: '单据来源', width: 150, align: 'center' },
                       { field: 'CJR', title: '创建人', width: 150, align: 'center' },
@@ -88,11 +101,50 @@
                       { field: 'GLDJ', title: '关联单据', width: 150, align: 'center' },
                       { field: 'BZ', title: '备注', width: 150, align: 'center' },
                       { field: 'MS', title: '描述', width: 150, align: 'center' },
+                      {
+                          field: '_opTail', title: '操作', width: 250, align: 'center'
+                          , formatter: function (value, row, index) {
+                              /* 关闭按钮 */
+                              var btnCloseAttr = '';
+                              if (row.CanClose == false)
+                                  btnCloseAttr = 'data-options = "disabled:true"';
 
+                              var btnClose = '<a href="###" class="loan_close_button' + '@ViewBag.BizType' + '" '
+                                    + btnCloseAttr
+                                    + ' onclick="' + window['orderformOp' + '@ViewBag.BizType'].funStr('close', row) + '" >关闭</a>';
+
+                              /* 取消方法 */
+                              var btnCancelAttr = '';
+                              if (row.CanCancel == false)
+                                  btnCancelAttr = 'data-options = "disabled:true"';
+
+                              var btnCancel = '&nbsp;&nbsp;'
+                                    + '<a href="###" class="loan_cancel_button' + '@ViewBag.BizType' + '" '
+                                    + btnCancelAttr
+                                    + ' onclick="' + window['orderformOp' + '@ViewBag.BizType'].funStr('cancel', row) + '" >取消</a>';
+
+                              // 完成方法
+                              var btnCompleteAttr = '';
+                              if (row.CanComplete == false)
+                                  btnCompleteAttr = 'data-options = "disabled:true"';
+
+                              var btnComplete = '&nbsp;&nbsp;'
+                                    + '<a href="###" class="loan_complete_button' + '@ViewBag.BizType' + '" '
+                                    + btnCompleteAttr
+                                    + ' onclick="' + window['orderformOp' + '@ViewBag.BizType'].funStr('complete', row) + '" >完成</a>';
+
+                              return btnClose + btnCancel + btnComplete;
+                          }
+                      }
                   ]],
                   onLoadSuccess: function (data) {
-                      $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
-                      $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
+                      $(".loan_remove_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-remove' });
+                      $(".loan_edit_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-edit' });
+                      $(".loan_ready_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-edit' });
+
+                      $(".loan_close_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-edit' });
+                      $(".loan_cancel_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-edit' });
+                      $(".loan_complete_button" + "@ViewBag.BizType").linkbutton({ iconCls: 'icon-edit' });
                   },
                   onLoadError: function (XMLHttpRequest) {
                       JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
@@ -100,57 +152,70 @@
                   }
               });
 
+
+
         // 每个页面的所有函数都定义成一个集合,访止方法名重覆
         window['orderformOp' + '@ViewBag.BizType'] = {
-            edit: function (op, id) {
+            funStr: function (fnName, row) {
+                return 'orderformOp' + '@ViewBag.BizType' + '.edit(this,\'' + fnName + '\', ' + row.ID + ',\'' + row.DJBH + '\');';
+            },
+
+            edit: function (btn, op, id, DJBH) {
                 var url = '';
                 var title = '';
 
-                if (op == 'mod') {
-                    title = '订单信息编辑';
-                    url = '@Url.Action("EditOrderForm")' + '?id=' + id;
-                }
-                else if (op == 'add') {
-                    url = '@Url.Action("CreateOrderForm", new { bizType = ViewBag.BizType })';
-                    title = '订单信息新增';
-                }
-                else if (op == 'ready') {
-                    url = '@Url.Action("")' + '?id=' + id;
+                $(btn).linkbutton('disable');
 
-                    var params = { 'isAdd': isAdd, 'userid': userid, 'roleid': rolRow.JSID };
-
-                    $.ajax({
-                        url: '@Url.Action("SaveRoleUser")',
-                        type: 'POST',
-                        data: params,
-                        dataType: 'json',
-                        success: function (rec) {
-                            if (!rec.success) {
-                                $.messager.alert({
-                                    title: rec.title,
-                                    msg: rec.msg,
-                                    icon: 'info'
-                                });
-                            }
-                            else {
-                                $('#tabUser').datagrid('reload', {
-                                    roleid: rolRow.JSID
-                                });
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
-                                        , "500px", "500px");
-                        }
-                    });
-
+                if (op == 'mod' || op == 'add') {
+                    if (op == 'mod') {
+                        title = '订单信息编辑';
+                        url = '@Url.Action("EditOrderForm")' + '?id=' + id;
+                    }
+                    else if (op == 'add') {
+                        title = '订单信息新增';
+                        url = '@Url.Action("CreateOrderForm", new { bizType = ViewBag.BizType })';
+                    }
+                    $(btn).linkbutton('enable');
+                    // 调用 'refresh' 方法更新选项卡面板的内容
+                    var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
+                    tab.panel('refresh', url);
                     return;
                 }
+                else if (op == 'ready'
+                    || op == 'close'
+                    || op == 'cancel'
+                    || op == 'complete') {
 
+                    var ajaxUrl = '@Url.Action("OrderChangeState")';
+                    var confirmMsg = '';
 
-                // 调用 'refresh' 方法更新选项卡面板的内容
-                var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
-                tab.panel('refresh', url);
+                    var params = {};
+
+                    if (op == 'ready') {
+                        params = { 'id': id, 'state': 'VHSTS_Ready' };
+                        confirmMsg = '确定要评审(' + DJBH + ')吗?';
+                    }
+                    else if (op == 'close') {
+                        params = { 'id': id, 'state': 'VHSTS_Closed' };
+                        confirmMsg = '确定要关闭(' + DJBH + ')吗?';
+
+                    } else if (op == 'cancel') {
+                        params = { 'id': id, 'state': 'VHSTS_Cancel' };
+                        confirmMsg = '确定要取消(' + DJBH + ')吗?';
+
+                    } else if (op == 'complete') {
+                        params = { 'id': id, 'state': 'VHSTS_Completed' };
+                        confirmMsg = '确定要完成(' + DJBH + ')吗?';
+                    }
+
+                    JsMiracleCommon.confirmAjaxPost(confirmMsg, ajaxUrl, params,
+                        function () {
+                            $("#orderFormGrid" + '@ViewBag.BizType').datagrid('reload');
+                        });
+
+                    $(btn).linkbutton('enable');
+                    return;
+                }
             },
 
             // 子页面回调函数

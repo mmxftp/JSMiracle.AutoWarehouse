@@ -30,6 +30,6 @@ namespace JsMiracle.Entities.TabelEntities
         public Nullable<System.DateTime> ZHXGSJ { get; set; }
         public string BZ { get; set; }
         public string YYCKPZ { get; set; }
-        public string WLBH { get; set; }
+        public long SKU { get; set; }
     }
 }

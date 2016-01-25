@@ -44,7 +44,7 @@
     <Compile Include="ILocationAssigner.cs" />
     <Compile Include="OrderKnownTypesProvider.cs" />
     <Compile Include="IOrderData.cs" />
-    <Compile Include="IOrderForm.cs" />
+    <Compile Include="IOrderForms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

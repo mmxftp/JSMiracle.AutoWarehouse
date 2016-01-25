@@ -12,6 +12,9 @@ using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.WT.Controllers
 {
+    /// <summary>
+    /// 操作类任务
+    /// </summary>
     public class OperationalTasksController : BaseController
     {
         private IOperationalTasks dalOperationalTasks;
@@ -89,6 +92,13 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
             };
 
             return base.Remove(fun);
+        }
+
+
+        public ActionResult GetListByFRWID(int FRWID)
+        {
+            var data =dalOperationalTasks.GetAllEntites(string.Format(" FRWID = {0} ", FRWID));
+            return this.JsonFormat(data);
         }
 
     }

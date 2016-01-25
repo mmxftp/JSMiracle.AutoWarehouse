@@ -22,8 +22,8 @@
     {
         if (Model.ID != 0)
         {
-            @Html.HiddenFor(n => n.CJR)
-            @Html.HiddenFor(n => n.CJSJ)
+            @Html.HiddenFor(n => n.CJR);
+            @Html.HiddenFor(n => n.CJSJ);
         }
         @Html.HiddenFor(n => n.ID)
         @Html.HiddenFor(n => n.YWLX)
@@ -34,10 +34,10 @@
         <div id="orderFormTools">
             <div class="box">
                 <div>
-                    <a class="easyui-linkbutton" iconcls="icon-save"
+                    <a class="easyui-linkbutton" iconcls="icon-save" id="btnDJTSave"
                        href="###" onclick="JsMiracleCommon.submit(this, 'frmOrderForm' + '@ViewBag.BizType')">保存</a>
                     &nbsp;
-                    <a class="easyui-linkbutton" iconcls="icon-cancel"
+                    <a class="easyui-linkbutton" iconcls="icon-cancel" id="btnDJTReset"
                        href="###" onclick="javascript: $('#frmOrderForm' + '@ViewBag.BizType').form('reset')">取消</a>
                     &nbsp;
                     <a href="###" class="easyui-linkbutton" iconcls="icon-redo" onclick="window['editOrderForm' + '@ViewBag.BizType'].changeRef()">返回订单编辑</a>
@@ -45,8 +45,8 @@
                 <div style="padding-top:5px;">
                     @if (Model.ID != 0)
                     {
-                        <a href="###" class="easyui-linkbutton" iconcls="icon-add"
-                           onclick="window['editOrderForm' + '@ViewBag.BizType' ].edit('add')">新增订单数据</a>
+                        <a href="###" class="easyui-linkbutton" iconcls="icon-add" id="btnAddDJH"
+                           onclick="window['editOrderForm' + '@ViewBag.BizType' ].edit(this,'add')">新增订单数据</a>
                     }
                 </div>
             </div>
@@ -90,8 +90,10 @@
                 </tr>
             </table>
         </div>
+
+        <!--必须在form中，否则easyui会把自动把table中的内容拉出table层-->
+        <table id="orderDataGrid" style="padding:10px"></table>
     }
-    <table id="orderDataGrid" style="padding:10px"></table>
 </div>
 
 <script type="text/javascript">
@@ -102,10 +104,35 @@
         $("#orderFormTools").attr('id', 'orderFormTools' + '@ViewBag.BizType');
         $("#orderDataGrid").attr('id', 'orderDataGrid' + '@ViewBag.BizType');
 
+        $("#btnDJTSave").attr('id', 'btnDJTSave' + '@ViewBag.BizType');
+        $("#btnDJTReset").attr('id', 'btnDJTReset' + '@ViewBag.BizType');
+
+        var allowMod = ('@Model.CanModify' == 'True');
+
+        // > 0 表示存在此控件，否则不存在
+        if ($("#btnAddDJH").length > 0) {
+
+            $("#btnAddDJH").attr('id', 'btnAddDJH' + '@ViewBag.BizType');
+
+            $("#btnAddDJH" + '@ViewBag.BizType').linkbutton({
+                disabled: !allowMod
+            });
+        }
+
+        $("#btnDJTSave" + '@ViewBag.BizType').linkbutton({
+            disabled: !allowMod
+        });
+
+        $("#btnDJTReset" + '@ViewBag.BizType').linkbutton({
+            disabled: !allowMod
+        });
+
+
         $('#frmOrderForm' + '@ViewBag.BizType').form({
             success: function (data) {
-                console.log(data);
-                var ret = eval('(' + data + ')');
+                //console.log(data);
+                //var ret = eval('(' + data + ')');
+                var ret = JSON.parse(data);
                 if (ret.success) {
                     $.messager.alert('订单信息', ret.msg, "info", function () {
 
@@ -116,7 +143,8 @@
                     });
                 }
                 else {
-                    $.messager.alert('订单信息', data.msg, "error");
+                    $.messager.alert('订单信息', ret.msg, "error");
+                    $("#btnDJTSave" + '@ViewBag.BizType').linkbutton('enable');
                 }
             }
         });
@@ -129,26 +157,48 @@
             toolbar: '#orderFormTools' + '@ViewBag.BizType',
             frozenColumns: [[
                 {
-                    field: '_operate', title: '操作', width: 350, align: 'center'
+                    field: '_opHead', title: '操作', width: 350, align: 'center'
                           , formatter: function (value, row, index) {
-                              var editFunStr = 'window[\'editOrderForm' + '@ViewBag.BizType\''
-                                  + '].edit(\'mod\', ' + row.ID + ');';
                               var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
                                   + row.HH + '\',\'@Url.Action("RemoveOrderData")\',orderformOp.refreshGrd)';
 
-                              var html = '<a href="javascript:void(0)"  class="loan_remove_button" '
-                                        + ' onclick="' + removeFunStr + '" >删除</a>'
-                                        + '&nbsp;&nbsp;'
-                                        + '<a href="javascript:void(0)"  class="loan_edit_button" '
-                                        + ' onclick="' + editFunStr + '">修改</a>'
-                                        + '&nbsp;&nbsp;'
-                                        + '<a href="###" class="loan_release_button" '
-                                        + ' onclick="' + '">组盘</a>'
-                                        + '&nbsp;&nbsp;'
-                                        + '<a href="###" class="loan_detail_button" '
-                                        + ' onclick="' + '">显示明细</a>';
+                              var btnModAttr = '';
+                              if (row.CanModify == false)
+                                  btnModAttr = 'data-options = "disabled:true"';
 
-                              return html;
+                              var btnDel = '<a href="###"  class="loan_remove_button" '
+                                        + btnModAttr
+                                        + ' onclick="' + removeFunStr + '" >删除</a>';
+
+                              var btnMod = '&nbsp;&nbsp;'
+                                        + '<a href="###"  class="loan_edit_button" '
+                                        + btnModAttr
+                                        + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('mod', row) + '">修改</a>';
+
+                              var btnReleaseAttr = '';
+                              if (row.CanRelease == false)
+                                  btnReleaseAttr = 'data-options = "disabled:true"';
+
+                              var btnRelease = '&nbsp;&nbsp;'
+                                        + '<a href="###"  class="loan_release_button" '
+                                        + btnReleaseAttr
+                                        + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('release', row) + '">释放</a>';
+
+
+                              var btnZPAttr = '';
+                              if (row.CanZP == false)
+                                  btnZPAttr = 'data-options = "disabled:true"';
+
+                              var btnZP = '&nbsp;&nbsp;'
+                                        + '<a href="###" class="loan_zp_button" '
+                                        + btnZPAttr
+                                        + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('zp', row) + '">组盘</a>';
+
+                              var btnDtl = '&nbsp;&nbsp;'
+                                        + '<a href="###" class="loan_detail_button" '
+                                        + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('showDtl', row) + '">显示明细</a>';
+
+                              return btnDel + btnMod + btnRelease + btnZP + btnDtl;
                           }
                 }
             ]],
@@ -176,12 +226,40 @@
                 },
                 { field: 'BZ', title: '备注', width: 100, align: 'center' },
                 { field: 'XSDDH', title: '销售订单号', width: 100, align: 'center' },
+                {
+                    field: '_opTail', title: '操作', width: 200, align: 'center',
+                    formatter: function (value, row, index) {
+                        var btnCacelAttr = '';
+                        if (row.CanCancel == false)
+                            btnCacelAttr = 'data-options = "disabled:true"';
+
+                        var btnCacel = '<a href="###" class="loan_cancel_button" '
+                                  + btnCacelAttr
+                                  + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('cancel', row) + '">取消</a>';
+
+                        var btnCompleteAttr = '';
+                        if (row.CanComplete == false)
+                            btnCompleteAttr = 'data-options = "disabled:true"';
+
+                        var btnComplete = '&nbsp;&nbsp;'
+                                  + '<a href="###" class="loan_complete_button" '
+                                  + btnCompleteAttr
+                                  + ' onclick="' + window['editOrderForm' + '@ViewBag.BizType'].funStr('complete', row) + '">完成</a>';
+
+                        return btnCacel + btnComplete;
+                    }
+                },
             ]],
             onLoadSuccess: function (data) {
                 $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
                 $(".loan_edit_button").linkbutton({ iconCls: 'icon-edit' });
                 $(".loan_release_button").linkbutton({ iconCls: 'icon-edit' });
                 $(".loan_detail_button").linkbutton({ iconCls: 'icon-edit' });
+                $(".loan_zp_button").linkbutton({ iconCls: 'icon-edit' });
+
+                $(".loan_cancel_button").linkbutton({ iconCls: 'icon-edit' });
+                $(".loan_complete_button").linkbutton({ iconCls: 'icon-edit' });
+
             },
             onLoadError: function (XMLHttpRequest) {
                 JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
@@ -240,28 +318,66 @@
         $("#txtGLDJ" + '@ViewBag.BizType').textbox();
 
         window['editOrderForm' + '@ViewBag.BizType'] = {
+            funStr: function (fnName, row) {
+                return 'editOrderForm' + '@ViewBag.BizType' + '.edit(this,\'' + fnName + '\', ' + row.ID + ',\'' + row.HH + '\');';
+            },
 
-            edit: function (op, id) {
+            edit: function (btn, op, id, HH) {
                 var width = '600px';
                 var height = '400px';
 
                 var title = '';
                 var url = '';
 
-                if (op == 'add') {
-                    url = '@Url.Action("CreateOrderData", new { djbh = Model.DJBH })';
-                    title = '订单内容新增';
+                $(btn).linkbutton('disable');
+                if (op == 'add' || op == 'mod' || op == 'zp' || op == 'showDtl') {
+                    if (op == 'add') {
+                        url = '@Url.Action("CreateOrderData", new { djbh = Model.DJBH })';
+                        title = '订单内容新增';
+                    }
+                    else if (op == 'mod') {
+                        url = '@Url.Action("EditOrderData")' + '?id=' + id;
+                        title = '订单内容编辑';
+                    }
+                    else if (op == 'zp') {
+                        width = '600px';
+                        height = '500px';
+                        title = '组盘';
+                        url = '@Url.Action("IndexZP")' + '?id=' + id;
+                    }
+                    else if (op == 'showDtl') {
+                        title = '组盘明细';
+                    }
+
+                    JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+
                 }
-                else if (op == 'mod') {
-                    url = '@Url.Action("EditOrderData")' + '?id=' + id;
-                    title = '订单内容编辑';
-                }
-                else if (op == '') {
-                    url = '@Url.Action("EditOrderData")' + '?id=' + id;
-                    title = '订单内容编辑';
+                else if (op == 'release' || op == 'cancel' || op == 'complete') {
+                    var ajaxUrl = '@Url.Action("OrderDataState")';
+                    var confirmMsg = '';
+
+                    var params = {};
+
+                    if (op == 'release') {
+                        params = { 'id': id, 'state': 'VLSTS_Released' };
+                        confirmMsg = '确定要释放(' + HH + ')吗?';
+                    }
+                    else if (op == 'cancel') {
+                        params = { 'id': id, 'state': 'VLSTS_Cancel' };
+                        confirmMsg = '确定要取消(' + HH + ')吗?';
+                    }
+                    else if (op == 'complete') {
+                        params = { 'id': id, 'state': 'VLSTS_Completed' };
+                        confirmMsg = '确定要完成(' + HH + ')吗?';
+                    }
+
+                    JsMiracleCommon.confirmAjaxPost(confirmMsg, ajaxUrl, params
+                    , function () {
+                        $("#orderDataGrid" + '@ViewBag.BizType').datagrid('reload');
+                    });
                 }
 
-                JsMiracleCommon.showWindow(title, url, width, height, this.reloadDataGrid);
+                $(btn).linkbutton('enable');
             },
 
             reloadDataGrid: function () {

@@ -23,6 +23,8 @@
     refreshTab: function () {
         var tab = $('#mainTabs').tabs('getSelected');  // 获取选择的面板
         if (tab) {
+            //console.log(tab);
+            //alert(tab.panel('options').id);
             //tab.panel('clear');
             tab.panel('refresh');
         }

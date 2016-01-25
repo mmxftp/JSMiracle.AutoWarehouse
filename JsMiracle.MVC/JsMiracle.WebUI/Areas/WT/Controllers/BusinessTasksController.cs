@@ -12,6 +12,9 @@ using JsMiracle.WebUI.CommonSupport;
 
 namespace JsMiracle.WebUI.Areas.WT.Controllers
 {
+    /// <summary>
+    /// 业务类任务
+    /// </summary>
     public class BusinessTasksController : BaseController
     {
         IBusinessTasks dalBusinessTasks;
@@ -88,6 +91,18 @@ namespace JsMiracle.WebUI.Areas.WT.Controllers
             };
 
             return base.Remove(fun);
+        }
+
+        /// <summary>
+        /// 根据单据行主键，得业务任务数据集
+        /// </summary>
+        /// <param name="DJH_ID">单据行主键</param>
+        /// <returns></returns>
+        public ActionResult GetListByDJHID(long DJH_ID)
+        {
+            var data = dalBusinessTasks.GetAllEntites(string.Format(" DJH_ID == {0} ", DJH_ID));
+
+            return this.JsonFormat(data);
         }
 
     }

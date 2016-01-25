@@ -51,7 +51,7 @@ namespace JsMiracle.WebUI.Controllers
                 return JavaScript("");
 
             StringBuilder scriptBuilder = new StringBuilder();
-
+            
             foreach (var fun in allFunList)
             {
                 // 为true时禁用按钮。
@@ -60,7 +60,7 @@ namespace JsMiracle.WebUI.Controllers
 
                 if (disabled)
                 {
-                    scriptBuilder.AppendFormat("$('#{0}').hide();\r\n", fun.KJID);
+                    scriptBuilder.AppendFormat("$('{0}').hide();\r\n", fun.KJID);
                 }
             }
 

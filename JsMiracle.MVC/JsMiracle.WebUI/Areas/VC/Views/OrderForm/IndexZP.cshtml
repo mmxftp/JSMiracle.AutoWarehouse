@@ -2,59 +2,81 @@
     ViewBag.Title = "组盘";
 }
 
-@model JsMiracle.Entities.MVC.IMS_ZP
+@model JsMiracle.Entities.TabelEntities.IMS_WT_YWRW
 
-@using (Ajax.BeginForm("SaveZP", "OrderForm"
+<style type="text/css">
+    .TB td {
+        width: 50px;
+    }
+</style>
+
+<div>
+    @using (Ajax.BeginForm("SaveZP", "OrderForm"
             , new AjaxOptions()
             , new { enctype = "multipart/form-data", id = "frmZP" }))
-{
-    @Html.HiddenFor(n => n.DJH_ID)
-    @Html.HiddenFor(n => n.SKU)
+    {
+        //当request中有参数与model中参数相同时不可使用Html.HiddenFor(n=>n.ID)进行绑定
+        // 因为request中的同名参数的值会默认覆盖model中的值
+        @*@Html.HiddenFor(n => n.ID)*@
+        
+        @Html.HiddenFor(n => n.ID, new { @Value = @Model.ID })
+        @Html.HiddenFor(n => n.SKU)
+        @Html.HiddenFor(n => n.DJSL)
 
-    <table class="TB">
-        <tr>
-            <td>入库单号</td>
-            <td>@Html.TextBoxFor(n => n.DJBH, new { id = "txtDJBH" })</td>
-            <td>单据行</td>
-            <td>@Html.TextBoxFor(n => n.HH, new { id = "txtHH" })</td>
-        </tr>
-        <tr>
-            <td>销售订单</td>
-            <td>@Html.TextBoxFor(n => n.XSDDH, new { id = "txtXSDDH" })</td>
-            <td>批次号</td>
-            <td>@Html.TextBoxFor(n => n.PCBH, new { id = "txtPCBH" })</td>
-        </tr>
-        <tr>
-            <td>物料编号</td>
-            <td>@Html.TextBoxFor(n => n.WLMC, new { id = "txWLMC" })</td>
-            <td>数量</td>
-            <td>@Html.TextBoxFor(n => n.ZPSL, new { id = "txtZPSL" })</td>
-        </tr>
-        <tr>
-            <td>托盘编号</td>
-            <td>@Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })</td>
-            <td colspan="2">
-                <a href="###" class="easyui-linkbutton" iconcls="icon-save"
-                   onclick="JsMiracleCommon.submit(this, 'frmZP')">组盘</a>
-            </td>
-        </tr>
-    </table>
-}
+            <div id="zpTools">
+                <table class="TB">
+                    <tr>
+                        <td>入库单号</td>
+                        <td>@Html.TextBoxFor(n => n.DJBH, new { id = "txtDJBH" })</td>
+                        <td>单据行</td>
+                        <td>@Html.TextBoxFor(n => n.HH, new { id = "txtHH" })</td>
+                    </tr>
+                    <tr>
+                        <td>销售订单</td>
+                        <td><input id="txtXSDDH" value="@ViewBag.XSDDH" /></td>
+                        <td>批次号</td>
+                        <td>@Html.TextBoxFor(n => n.PCBH, new { id = "txtPCBH" })</td>
+                    </tr>
+                    <tr>
+                        <td>物料编号</td>
+                        <td>@Html.TextBoxFor(n => n.WLMC, new { id = "txWLMC" })</td>
+                        <td>数量</td>
+                        <td>@Html.TextBoxFor(n => n.ZPSL, new { id = "txtZPSL" })</td>
+                    </tr>
+                    <tr>
+                        <td>托盘编号</td>
+                        <td>@Html.TextBoxFor(n => n.RQBH, new { id = "txtRQBH" })</td>
+                        <td colspan="2" style="text-align: center;width:300px;">
+                            <a href="###" class="easyui-linkbutton" iconcls="icon-save" data-options="width:'100px'"
+                               onclick="JsMiracleCommon.submit(this, 'frmZP')">组盘</a>
+                        </td>
+                    </tr>
+                </table>
 
+            </div>
+
+            <table id="zpDataGrid" style="padding:10px"></table>
+    }
+
+</div>
 
 <script type="text/javascript">
 
+    var vcIndexZP = {};
+
     $(function () {
+
+        vcIndexZP = {
+            reloadDataGrid: function () {
+                $("#zpDataGrid").datagrid('reload');
+            },
+        };
 
         $("#frmZP").form({
             success: function (data) {
                 var ret = JSON.parse(data);
                 if (ret.success) {
-                    $.messager.alert('入库组盘', ret.msg, "info", function () {
-
-                        // 关闭当前div 刷新父窗体
-                        JsMiracleCommon.closeWindow();
-                    });
+                    vcIndexZP.reloadDataGrid();
                 }
                 else {
                     $.messager.alert('入库组盘', ret.msg, "error");
@@ -82,8 +104,57 @@
             disabled: true
         });
 
-        $("#txtZPSL").textbox();
+        $("#txtZPSL").numberbox({
+            required: true,
+            missingMessage: '托盘编号不得为空',
+            validType: 'equalMoreThan[0]'
+        });
 
-        $("#txtRQBH").textbox();
+        $("#txtRQBH").textbox({
+            required: true,
+            missingMessage: '托盘编号不得为空'
+        });
+
+        $("#zpDataGrid").datagrid({
+            url: '@Url.Action("GetListByFRWID", "OperationalTasks", new { area = "WT", FRWID = Model.ID })',
+            singleSelect: true,
+            height: '450px',
+            rownumbers: true,
+            toolbar: '#zpTools',
+            frozenColumns: [[
+                {
+                    field: '_opHead', title: '操作', width: 150, align: 'center'
+                          , formatter: function (value, row, index) {
+                              var removeFunStr = 'JsMiracleCommon.removeItem(\'' + row.ID + '\',\''
+                                  + row.HH + '\',\'@Url.Action("RemoveOrderData")\',vcIndexZP.refreshGrd)';
+
+                              var btnDel = '<a href="###"  class="loan_remove_button" '
+                                        + ' onclick="' + removeFunStr + '" >取消</a>';
+
+                              return btnDel
+                          }
+                }
+            ]],
+            columns: [[
+                { field: 'RQBH', title: '托盘号', width: 150, align: 'center' },
+                {
+                    field: '_SKU', title: '物料编号', width: 100, align: 'center',
+                    formatter: function (value, row, index) {
+                        return '@Model.WLMC';
+                        //return row.WLMC + '(' + row.WLBH + ')';
+                    }
+                },
+                { field: 'RWSL', title: '数量', width: 100, align: 'center' },
+            ]],
+            onLoadSuccess: function (data) {
+                $(".loan_remove_button").linkbutton({ iconCls: 'icon-remove' });
+
+            },
+            onLoadError: function (XMLHttpRequest) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                    , "500px", "500px");
+            }
+        });
+
     });
 </script>

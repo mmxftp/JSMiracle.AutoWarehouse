@@ -8,6 +8,10 @@ namespace JsMiracle.Entities.Enum
     public enum EnumOrderDataState
     {
         /// <summary>
+        /// 默认
+        /// </summary>
+        None = -1,
+        /// <summary>
         /// 新建
         /// </summary>
         VLSTS_New = 0,

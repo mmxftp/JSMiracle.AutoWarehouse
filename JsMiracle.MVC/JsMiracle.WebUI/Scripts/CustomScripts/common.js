@@ -20,7 +20,7 @@ var JsMiracleCommon = {
     layerWindowName: 'floatingLayerWindow',
 
     cancelWidow: function (formID) {
-        $('#' + this.layerWindowName).window('close');
+        $('#' + JsMiracleCommon.layerWindowName).window('close');
         //this.closeWindow();
         //$('#' + formID).form('submit');
     },
@@ -28,8 +28,8 @@ var JsMiracleCommon = {
     // 关闭当前子窗体, 并刷新父窗体
     closeWindow: function () {
         //parent.$('#' + layerWindowName).window('close');
-        $('#' + this.layerWindowName).window('close');
-        var fun = $('#' + this.layerWindowName).window('options').queryParams;
+        $('#' + JsMiracleCommon.layerWindowName).window('close');
+        var fun = $('#' + JsMiracleCommon.layerWindowName).window('options').queryParams;
         //console.log(fun);
 
         if (this.isFunction(fun)) {
@@ -45,7 +45,7 @@ var JsMiracleCommon = {
     // 加入需显示的内容，并打开此层
     showWindow: function (title, url, width, height, fun, modal, minimizable, maximizable) {
         //console.log(fun);
-        $('#' + this.layerWindowName).window(
+        $('#' + JsMiracleCommon.layerWindowName).window(
         {
             // 自定义函数
             queryParams: fun,
@@ -69,30 +69,45 @@ var JsMiracleCommon = {
             //resizable:false,
             loadingMessage: '正在加载数据，请稍等片刻......'
         });
-        $('#' + this.layerWindowName).window('open');
+        $('#' + JsMiracleCommon.layerWindowName).window('open');
     },
 
     // 加入需显示的内容，并打开此层
     showWindowContent: function (title, content, width, height, iconCls) {
-        $('#' + this.layerWindowName).window(
+        $('#' + JsMiracleCommon.layerWindowName).window(
         {
             title: title,
             width: width,
             height: height,
-            iconCls: iconCls === undefined ? 'icon-no' :iconCls,
+            iconCls: iconCls === undefined ? 'icon-no' : iconCls,
             content: content,
-            modal: true ,
+            modal: true,
             collapsible: false,
             closed: true,
-            resizable:true,
+            resizable: true,
             loadingMessage: '正在加载数据，请稍等片刻......'
         });
-        $('#' + this.layerWindowName).window('open');
+        $('#' + JsMiracleCommon.layerWindowName).window('open');
     },
 
-    submit:function(btn, frmid){
+    submit: function (btn, frmid) {
         $(btn).linkbutton('disable');
-        $("#"+frmid).form('submit');
+
+        $("#" + frmid).form('submit', {
+            onSubmit: function (param) {
+                //return false;
+                var isvalid2 = $(this).form('validate');
+                //console.log(isvalid2);
+                if (!isvalid2) {
+                    $.messager.alert('操作提示', '信息填写不完整！', 'error', function () {
+                        $(btn).linkbutton('enable');
+                    });
+                    return false;
+                }
+            }
+        });
+        $(btn).linkbutton('enable');
+
     },
 
     //判断是否为数组
@@ -137,7 +152,7 @@ var JsMiracleCommon = {
                 if (r) {
                     $.post(postUrl, { "id": id }, function (result) {
                         if (result.success) {
-                            if (successFunction && JsMiracleCommon.isFunction(successFunction))
+                            if (successFunction && $.isFunction(successFunction))
                                 successFunction(result);
                             //$('#' + refreshgrdid).datagrid('reload');    // 重新加载用户数据
                         } else {
@@ -149,6 +164,44 @@ var JsMiracleCommon = {
                     }, 'json');
                 }
             });
+    },
+
+    // 需要确定的ajax提交
+    confirmAjaxPost: function (confirmMessage, ajaxUrl, params, successFunction) {
+        $.messager.confirm('Confirm', confirmMessage
+        , function (r) {
+            if (r) {
+                JsMiracleCommon.ajaxPost(ajaxUrl, params, successFunction);
+            }
+        });
+    },
+
+    // ajax提交
+    ajaxPost: function (ajaxUrl, params, successFunction) {
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: params,
+            dataType: 'json',
+            success: function (rec) {
+                if (rec.success) {
+                    if (successFunction && $.isFunction(successFunction)) {
+                        successFunction();
+                    }
+                }
+                else {
+                    $.messager.alert({
+                        title: rec.title,
+                        msg: rec.msg,
+                        icon: 'info'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                JsMiracleCommon.showWindowContent("error", XMLHttpRequest.responseText
+                            , "500px", "500px");
+            }
+        });
     },
 }
 
@@ -183,7 +236,7 @@ $.fn.enterAsTab = function (options) {
             }
             try {
                 if (elements[idx + 1].tagName == "INPUT")
-                   elements[idx + 1].select();
+                    elements[idx + 1].select();
             }
             catch (err) {
                 console.error(err);

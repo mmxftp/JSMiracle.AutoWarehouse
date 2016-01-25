@@ -16,7 +16,7 @@ namespace JsMiracle.Entities.TabelEntities
     {
         public long ID { get; set; }
         public string DJBH { get; set; }
-        public string HH { get; set; }
+        public int HH { get; set; }
         public int HXW { get; set; }
         public string WLMC { get; set; }
         public string WLBH { get; set; }
@@ -27,10 +27,11 @@ namespace JsMiracle.Entities.TabelEntities
         public System.DateTime CJSJ { get; set; }
         public string BZ { get; set; }
         public string XSDDH { get; set; }
-        public string vlso { get; set; }
-        public string vlto { get; set; }
-        public string vls { get; set; }
-        public string vlt { get; set; }
+        public int ZT { get; set; }
+        public string LYSYZ { get; set; }
+        public string MDSYZ { get; set; }
+        public string LYD { get; set; }
+        public string MDD { get; set; }
         public string vlhst { get; set; }
     }
 }

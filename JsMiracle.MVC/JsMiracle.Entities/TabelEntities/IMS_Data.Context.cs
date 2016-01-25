@@ -25,7 +25,6 @@ namespace JsMiracle.Entities.TabelEntities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IMS_CB_KC> IMS_CB_KC_S { get; set; }
         public virtual DbSet<IMS_CB_RQ> IMS_CB_RQ_S { get; set; }
         public virtual DbSet<IMS_CB_RQLX> IMS_CB_RQLX_S { get; set; }
         public virtual DbSet<IMS_CB_WL> IMS_CB_WL_S { get; set; }
@@ -42,7 +41,6 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_CM_DXXX> IMS_CM_DXXX_S { get; set; }
         public virtual DbSet<IMS_CM_YHDX> IMS_CM_YHDX_S { get; set; }
         public virtual DbSet<IMS_CM_XTCS> IMS_CM_XTCS_S { get; set; }
-        public virtual DbSet<IMS_VC_DJH> IMS_VC_DJH_S { get; set; }
         public virtual DbSet<IMS_VC_DJT> IMS_VC_DJT_S { get; set; }
         public virtual DbSet<IMS_VC_YWYS> IMS_VC_YWYS_S { get; set; }
         public virtual DbSet<IMS_WN_TZ> IMS_WN_TZ_S { get; set; }
@@ -51,10 +49,13 @@ namespace JsMiracle.Entities.TabelEntities
         public virtual DbSet<IMS_WT_CWRW> IMS_WT_CWRW_S { get; set; }
         public virtual DbSet<IMS_WT_DZRW> IMS_WT_DZRW_S { get; set; }
         public virtual DbSet<IMS_WT_XTJD> IMS_WT_XTJD_S { get; set; }
-        public virtual DbSet<IMS_WT_YWRW> IMS_WT_YWRW_S { get; set; }
         public virtual DbSet<IMS_WT_ZXLJ> IMS_WT_ZXLJ_S { get; set; }
         public virtual DbSet<IMS_WT_ZXZ> IMS_WT_ZXZ_S { get; set; }
         public virtual DbSet<IMS_UP_MK> IMS_UP_MK_S { get; set; }
+        public virtual DbSet<V_IMS_VC_DJT> V_IMS_VC_DJT_S { get; set; }
+        public virtual DbSet<IMS_VC_DJH> IMS_VC_DJH_S { get; set; }
+        public virtual DbSet<IMS_WT_YWRW> IMS_WT_YWRW_S { get; set; }
+        public virtual DbSet<IMS_CB_KC> IMS_CB_KC_S { get; set; }
         public virtual DbSet<V_IMS_VC_DJH> V_IMS_VC_DJH_S { get; set; }
     }
 }

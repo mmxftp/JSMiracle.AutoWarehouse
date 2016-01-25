@@ -36,7 +36,8 @@ namespace JsMiracle.WebUI
             // 得当前程序集名称
             WindsorContaineFactory.MainAssembleName = Assembly.GetExecutingAssembly().GetName().Name;
 
-            var controllerFactory = new WindsorControllerFactory(WindsorContaineFactory.GetContainer().Kernel);
+            //var controllerFactory = new WindsorControllerFactory(WindsorContaineFactory.GetContainer().Kernel);
+            var controllerFactory = WindsorControllerFactory.GetControllerFactory();
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 
         }

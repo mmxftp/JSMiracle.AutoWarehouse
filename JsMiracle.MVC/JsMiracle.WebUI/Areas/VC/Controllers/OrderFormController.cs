@@ -14,29 +14,32 @@ using JsMiracle.Framework.Serialized;
 using JsMiracle.Entities.Enum;
 using JsMiracle.WCF.CM.ICommonMng;
 using JsMiracle.WCF.CB.ICoreBussiness;
-using JsMiracle.Entities.MVC;
+using JsMiracle.WCF.WT.IWorkTasks;
 
 namespace JsMiracle.WebUI.Areas.VC.Controllers
 {
     public class OrderFormController : BaseController
     {
-        IOrderForm dalorderform;
+        IOrderForms dalorderform;
         IOrderData dalorderdata;
         ICode dalCode;
         IItem dalItem;
         IContainer dalContainer;
+        IBusinessTasks dalBusinessTasks;
 
-        public OrderFormController(IOrderForm repoOrderForm
+        public OrderFormController(IOrderForms repoOrderForm
             , IOrderData repoOrderData
             , ICode repoCode
             , IItem repoItem
-            ,IContainer repoContainer)
+            , IContainer repoContainer
+            , IBusinessTasks repoBusinessTasks)
         {
             this.dalorderform = repoOrderForm;
             this.dalorderdata = repoOrderData;
             this.dalCode = repoCode;
             this.dalItem = repoItem;
             this.dalContainer = repoContainer;
+            this.dalBusinessTasks = repoBusinessTasks;
         }
 
         //
@@ -77,9 +80,9 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
                 filter = string.Format(" YWLX = {0} ", (int)bizType);
             }
 
-            var dataList = dalorderform.GetDataByPageDynamic(
+            var dataList = dalorderform.GetDataViewByPageDynamic(
                 pageIndex, pageSize, out totalCount
-                , "CJSJ", filter);
+                , "ID", filter);
 
 
             //数据组装到viewModel
@@ -121,6 +124,7 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         {
             var module = new IMS_VC_DJT();
             module.DJZT = 0;
+            module.CanModify = true;
             GetDJT(bizType, ref module);
 
             module.CJSJ = System.DateTime.Now;
@@ -218,7 +222,7 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
                 dataList = new List<V_IMS_VC_DJH>();
                 return this.JsonFormat(dataList);
             }
-            
+
             dataList = dalorderdata.GetDataListByDJBH(djbh);
 
             return this.JsonFormat(dataList);
@@ -284,23 +288,36 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         /// </summary>
         /// <returns></returns>
         [AuthViewPage]
-        public ActionResult IndexZP()
+        public ActionResult IndexZP(long id)
         {
-            return View();
+            var orderData = dalorderdata.GetEntity(id);
+            if ( orderData == null )
+                throw new JsMiracleException("当前记录不存在，请刷新后重试");
+
+            ViewBag.XSDDH = orderData.XSDDH;
+
+            var bizTask = dalBusinessTasks.GetTaskByDJHID(id);
+
+            if (bizTask == null)
+                throw new JsMiracleException("当前业务记录不存在，请刷新后重试");
+
+            var item = dalItem.GetEntity(bizTask.SKU);
+
+            if (item == null)
+                throw new JsMiracleException("物料信息不存在，此单据行信息不可用");
+
+            bizTask.WLMC = string.Format("{0}({1})", item.WLBH, item.WLMC);
+
+            return View(bizTask);
         }
 
-        public ActionResult SaveZP(IMS_ZP entity)
+        public ActionResult SaveZP(IMS_WT_YWRW entity)
         {
-            //var rq = dalContainer.GetEntity(entity.RQBH);
-
-
-
-            Func<ExtResult> fun = () => {
+            Func<ExtResult> fun = () =>
+            {
                 ExtResult ret = new ExtResult();
-
-                IMS_CB_RQ rq = new IMS_CB_RQ();
-                rq.RQBH = entity.RQBH;
-
+                var userid = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                dalBusinessTasks.ZPIn(entity.ID, userid, entity.SKU, entity.ZPSL, entity.RQBH);
                 return ret;
             };
 
@@ -308,16 +325,17 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
         }
 
 
-        public ActionResult OrderOnReady(long id)
+        public ActionResult OrderChangeState(long id, EnumOrderFormState state)
         {
             ExtResult ret = new ExtResult();
 
             try
             {
-                //dalorderform.UpdateOrder(id, EnumOrderFormState);
+                var userid = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                dalorderform.UpdateOrder(id,userid, state);
                 ret.success = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ret.success = false;
                 ret.msg = ex.Message;
@@ -325,6 +343,25 @@ namespace JsMiracle.WebUI.Areas.VC.Controllers
 
             return this.JsonFormat(ret);
             //var dat (dalorderform.GetEntity(id))
+        }
+
+        public ActionResult OrderDataState(long id, EnumOrderDataState state)
+        {
+            ExtResult ret = new ExtResult();
+
+            try
+            {
+                var userid = CurrentUser.GetCurrentUser().UserInfo.YHID;
+                dalorderdata.UpdateOrderData(id,userid, state);
+                ret.success = true;
+            }
+            catch (Exception ex)
+            {
+                ret.success = false;
+                ret.msg = ex.Message;
+            }
+
+            return this.JsonFormat(ret);
         }
     }
 }

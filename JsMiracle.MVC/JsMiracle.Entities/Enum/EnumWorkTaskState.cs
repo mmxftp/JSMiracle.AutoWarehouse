@@ -5,42 +5,46 @@ using System.Text;
 
 namespace JsMiracle.Entities.Enum
 {
-    public enum EnumOrderFormState
+    /// <summary>
+    /// 工作任务状态
+    /// </summary>
+    public enum EnumWorkTaskState
     {
         /// <summary>
-        /// 默认值
+        /// 创建
         /// </summary>
-        None = -1,
+        WTSTS_New = 0,
 
         /// <summary>
-        /// 新建
+        /// 已激活
         /// </summary>
-        VHSTS_New = 0,
+        WTSTS_Actived = 1,
 
         /// <summary>
-        /// 提交
+        /// 执行中
         /// </summary>
-        VHSTS_Submit = 1,
+        WTSTS_Running = 2,
 
         /// <summary>
-        /// 就绪
+        /// 暂停
         /// </summary>
-        VHSTS_Ready = 2,
+        WTSTS_Pause = 3,
+
+        /// <summary>
+        /// 异常
+        /// </summary>
+        WTSTS_Abnormal = 4,
 
         /// <summary>
         /// 已完成
         /// </summary>
-        VHSTS_Completed = 3,
+        WTSTS_Completed = 5,
 
         /// <summary>
-        /// 已取消
+        /// 取消
         /// </summary>
-        VHSTS_Cancel = 4,
+        WTSTS_Cancel = 6
 
-        /// <summary>
-        /// 已关闭
-        /// </summary>
-        VHSTS_Closed = 5
 
     }
 }

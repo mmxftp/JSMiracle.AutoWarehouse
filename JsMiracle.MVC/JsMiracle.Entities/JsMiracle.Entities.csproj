@@ -69,10 +69,10 @@
     <Compile Include="Enum\EnumHostSystemDocumentType.cs" />
     <Compile Include="Enum\EnumOrderDataState.cs" />
     <Compile Include="Enum\EnumOrderFormState.cs" />
+    <Compile Include="Enum\EnumWorkTaskState.cs" />
     <Compile Include="Enum\SerializedType.cs" />
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="IDataLayer.cs" />
-    <Compile Include="MVC\IMS_ZP.cs" />
     <Compile Include="Partial\IMS_CB_RQ.cs" />
     <Compile Include="Partial\IMS_CB_RQLX.cs" />
     <Compile Include="Partial\IMS_CB_WL.cs" />
@@ -81,6 +81,10 @@
     <Compile Include="Partial\IMS_UP_MK.cs" />
     <Compile Include="Partial\IMS_UP_YH.cs" />
     <Compile Include="Partial\DbContextExtend.cs" />
+    <Compile Include="Partial\IMS_VC_DJT.cs" />
+    <Compile Include="Partial\IMS_WT_YWRW.cs" />
+    <Compile Include="Partial\V_IMS_VC_DJH.cs" />
+    <Compile Include="Partial\V_IMS_VC_DJT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -195,6 +199,9 @@
     <Compile Include="TabelEntities\V_IMS_VC_DJH.cs">
       <DependentUpon>IMS_Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="TabelEntities\V_IMS_VC_DJT.cs">
+      <DependentUpon>IMS_Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\PermissionViewModule.cs" />
     <Compile Include="View\QueryBuilderModule.cs" />
     <Compile Include="View\TableColumnsModule.cs" />
@@ -240,7 +247,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MVC\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(TargetFileName) $(SolutionDir)\WcfOutputLibrary</PostBuildEvent>

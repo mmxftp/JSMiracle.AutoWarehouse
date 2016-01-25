@@ -34,7 +34,8 @@ namespace JsMiracle.WCF.Config
                 // web项目文件路径的特殊处理
                 if (isWeb)
                 {
-                    configFile = System.Web.HttpContext.Current.Server.MapPath("~") + configFile;
+                    if (!File.Exists(configFile))
+                        configFile = System.Web.HttpContext.Current.Server.MapPath("~") +'\\' + configFile;
                 }
 
                 if (!string.IsNullOrEmpty(configFile)
